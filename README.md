@@ -1,2 +1,3 @@
 # AuxPort_Source
-Source Code for AuxPort Library
+Generic Modules for C++ Application Development on Windows
+
