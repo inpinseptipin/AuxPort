@@ -1,3 +1,4 @@
+
 /*
 *			AuxPort Library
 			"Generic Modules to facilitate C++ Windows Application development" - inpinseptipin
@@ -35,44 +36,39 @@
 */
 
 /*===================================================================================*/
-#pragma once
-#include<ctime>
-#include<string>
-#include<sstream>
+#include "AuxPort_Time.h"
 
-
-/*===================================================================================*/
-/*
-		This is a wrapper over the C Time Library, It is used to get Date and Time formatted onto std::string
-		The wrapper provides you with an interface that can be called.
-
-		Eg: AuxPort::Time::getCurrentTime(TimeType::Time)
-
-*/
 namespace AuxPort
 {
-/*
-		TimeType is a type that can be used to set Formatting rules for the values returned by getCurrentTime() function
-*/
-
-	enum class TimeType
+	
+	std::string Time::getCurrentTime(const TimeType& timeType)
 	{
-		Day = 0x0001,
-		Date = 0x0002,
-		Time = 0x0003,
-		Year = 0x0004,
-		Raw = 0x0005
-	};
-/*===================================================================================*/
-	class Time
-	{
-	public:
+		time_t currentTime = time(0);
+		char timeBuffer[26];
+		ctime_s(timeBuffer, sizeof(timeBuffer), &currentTime);
+		std::string returnTime(timeBuffer);
+		switch (timeType)
+		{
+		case TimeType::Day:
+			return "Day : " + returnTime.substr(0, 3);
+			break;
 
-/*
-		This function is used to get current system time and returns the time typecasted into std::string.
-		Parameters
-*		TimeType : TimeType is a type that can be used to set Formatting rules for the values returned by getCurrentTime() function
-*/
-		static std::string getCurrentTime(const TimeType& timeType);		
-	};
+		case TimeType::Date:
+			return "Date : " + returnTime.substr(4, 6);
+			break;
+
+		case TimeType::Time:
+			return "Time : " + returnTime.substr(10, 9);
+			break;
+
+		case TimeType::Year:
+			return "Year : " + returnTime.substr(20, 4);
+			break;
+
+		case TimeType::Raw:
+			return returnTime.substr(0,24);
+			break;
+		}
+		return returnTime;
+	}
 }

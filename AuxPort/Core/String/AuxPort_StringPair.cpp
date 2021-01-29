@@ -1,4 +1,3 @@
-
 /*
 *			AuxPort Library
 			"Generic Modules to facilitate C++ Windows Application development" - inpinseptipin
@@ -34,12 +33,51 @@
 			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
+#include "AuxPort_StringPair.h"
 
-/*===================================================================================*/
-#pragma once
-/*
-*			Core Headers
-*/
-#include "Core/AuxPort_Log.h"
+namespace AuxPort
+{
+	StringPair::StringPair(const std::string& key, const std::string& value)
+	{
+		key.empty() ? _key = "null_key" : _key = key;
+		value.empty() ? _value = "null_value" : _value = value;
+	}
 
-/*===================================================================================*/
+	StringPair::StringPair(const char* key, const char* value)
+	{
+		if (key == nullptr)
+			_key = "null_key";
+		else
+			_key = key;
+
+		if (value == nullptr)
+			_value = "null_value";
+		else
+			_value = value;
+	}
+
+	std::string& StringPair::key()
+	{
+		return _key;
+	}
+
+	std::string& StringPair::value()
+	{
+		return _value;
+	}
+
+	std::ostream& operator << (std::ostream& out, StringPair& sPair)
+	{
+		out << sPair.key() << " : " << sPair.value();
+		return out;
+	}
+
+	void StringPair::Log()
+	{
+		setColour(ColourType::Blue);
+		std::cout << *this << std::endl;
+		setColour(ColourType::White);
+	}
+
+	/*===================================================================================*/
+}

@@ -36,42 +36,13 @@
 */
 
 /*===================================================================================*/
-#include "../../include/Core/AuxPort_Time.h"
+#pragma once
+/*
+*			Core Headers
+*/
+#include "Core/Log/AuxPort_Log.h"
+#include "Core/Time/AuxPort_Time.h"
+#include "Core/String/AuxPort_StringPair.h"
+#include "Core/String/AuxPort_StringObjectArray.h"
 
-namespace AuxPort
-{
-	
-	std::string Time::getCurrentTime(const TimeType& timeType)
-	{
-		time_t currentTime = time(0);
-		char timeBuffer[26];
-		ctime_s(timeBuffer, sizeof(timeBuffer), &currentTime);
-		std::string returnTime(timeBuffer);
-		switch (timeType)
-		{
-		case TimeType::Day:
-			return "Day : " + returnTime.substr(0, 3);
-			break;
-
-		case TimeType::Date:
-			return "Date : " + returnTime.substr(4, 6);
-			break;
-
-		case TimeType::Time:
-			return "Time : " + returnTime.substr(10, 9);
-			break;
-
-		case TimeType::Year:
-			return "Year : " + returnTime.substr(20, 4);
-			break;
-
-		case TimeType::Raw:
-			return returnTime.substr(0,24);
-			break;
-		}
-		return returnTime;
-	}
-	
-	
-
-}
+/*===================================================================================*/

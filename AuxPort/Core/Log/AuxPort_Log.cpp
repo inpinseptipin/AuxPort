@@ -36,7 +36,7 @@
 */
 #pragma once
 
-#include "../../include/Core/AuxPort_Log.h"
+#include "AuxPort_Log.h"
 
 namespace AuxPort
 {
@@ -68,7 +68,7 @@ namespace AuxPort
 		logMessage(message, LogType::Error,timeType);
 		setColour(ColourType::White);
 	}
-	void Logger::Log(const std::string& message, const LogType& logType=LogType::Info, const ColourType& colourType=ColourType::White, const TimeType& timeType=TimeType::Raw)
+	void Logger::Log(const std::string& message, const LogType& logType, const ColourType& colourType, const TimeType& timeType)
 	{
 		setColour(colourType);
 		logMessage(message, logType,timeType);
@@ -77,14 +77,17 @@ namespace AuxPort
 
 	void Logger::setColour(const ColourType& colourType)
 	{
+#ifdef _MSC_VER
 		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hStdOut, (unsigned int)colourType);
+#else
+
+#endif
 	}
 
 	void Logger::logMessage(const std::string& message,const LogType& logType,const TimeType& timeType)
 	{
-		std::string m_message = getMessageFormat(logType);
-		std::cout <<Time::getCurrentTime(timeType)<<"\n"<< m_message << message << "\n\n";
+		std::cout << getMessageFormat(logType) <<"\n"<<Time::getCurrentTime(timeType) << "\n\n" << message << "\n";
 	}
 
 	std::string Logger::getMessageFormat(const LogType& logType)
@@ -92,16 +95,26 @@ namespace AuxPort
 		unsigned char m_logType = (unsigned char)logType;
 		switch (m_logType)
 		{
-		case '1': return "[Success] : ";
+		case '1': return "[Success]";
 			break;
-		case '2': return "[Warning] : ";
+		case '2': return "[Warning]";
 			break;
-		case '3': return "[Info] : ";
+		case '3': return "[Information]";
 			break;
-		case '4': return "[Error] : ";
+		case '4': return "[Error]";
 			break;
-		default: return "[Log] : ";
+		default: return "[Log]";
 		}
+	}
+
+	void ILog::setColour(const ColourType& colourType)
+	{
+#ifdef _MSC_VER
+		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(hStdOut, (unsigned int)colourType);
+#else
+
+#endif
 	}
 
 }

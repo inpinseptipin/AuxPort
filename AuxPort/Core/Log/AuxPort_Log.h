@@ -1,3 +1,5 @@
+#ifndef LOG_H
+#define LOG_H
 /*
 *			AuxPort Library
 			"Generic Modules to facilitate C++ Windows Application development" - inpinseptipin
@@ -36,11 +38,15 @@
 
 /*===================================================================================*/
 #pragma once
+#ifdef _MSC_VER
+#include<Windows.h>
+#else
+
+#endif
 #include<string>
 #include<iostream>
 #include<cstdlib>
-#include<Windows.h>
-#include "../Core/AuxPort_Time.h"
+#include "../Time/AuxPort_Time.h"
 namespace AuxPort
 {
 /*
@@ -120,7 +126,7 @@ namespace AuxPort
 *		ColourType : Allows you to choose the colour of your logged message (Support only for Windows 16 bit Colours)
 *		TimeType : Allows you to choose between different date or time stamps for the logged messages.
 */
-		static void Log(const std::string& message, const LogType& logType, const ColourType& colourType,const TimeType& timeType);
+		static void Log(const std::string& message, const LogType& logType = LogType::Info, const ColourType& colourType = ColourType::White,const TimeType& timeType = TimeType::Time);
 /*===================================================================================*/
 
 /*
@@ -187,4 +193,15 @@ namespace AuxPort
 /*===================================================================================*/
 	};
 
+
+	class ILog
+	{
+	public:
+		void setColour(const ColourType& colourType);
+		virtual void Log()
+		{
+			std::cout << "base log";
+		}
+	};
 }
+#endif
