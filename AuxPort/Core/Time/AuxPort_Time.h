@@ -1,5 +1,5 @@
-#ifndef TIME_H
-#define TIME_H
+#ifndef TimeType_H
+#define TimeType_H
 /*
 *			AuxPort Library
 			"Generic Modules to facilitate C++ Windows Application development" - inpinseptipin
@@ -43,6 +43,7 @@
 #include<sstream>
 
 
+
 /*===================================================================================*/
 /*
 		This is a wrapper over the C Time Library, It is used to get Date and Time formatted onto std::string
@@ -59,11 +60,11 @@ namespace AuxPort
 
 	enum class TimeType
 	{
-		Day = 0x0001,
-		Date = 0x0002,
-		Time = 0x0003,
-		Year = 0x0004,
-		Raw = 0x0005
+		Day = 0x31,
+		Date = 0x32,
+		Time = 0x33,
+		Year = 0x34,
+		Raw = 0x35
 	};
 /*===================================================================================*/
 	class Time
@@ -75,7 +76,7 @@ namespace AuxPort
 		Parameters
 *		TimeType : TimeType is a type that can be used to set Formatting rules for the values returned by getCurrentTime() function
 */
-		static std::string getCurrentTime(const TimeType& timeType);		
+		static std::string getCurrentTime(const TimeType& timeType);
 	};
 }
 #endif
