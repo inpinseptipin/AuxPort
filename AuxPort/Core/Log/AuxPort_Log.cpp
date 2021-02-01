@@ -87,7 +87,7 @@ namespace AuxPort
 
 	void Logger::logMessage(const std::string& message,const LogType& logType,const TimeType& timeType)
 	{
-		std::cout << getMessageFormat(logType) <<"\n"<<Time::getCurrentTime(timeType) << "\n\n" << message << "\n";
+		std::cout << getMessageFormat(logType) <<" | "<<Time::getCurrentTime(timeType) << " | " << message << "\n";
 	}
 
 	std::string Logger::getMessageFormat(const LogType& logType)
