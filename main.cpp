@@ -2,5 +2,6 @@
 
 int main()
 {
-    AuxPort::Logger::Log("Hello There");
+    AuxPort::Logger::Log("Hello World");
+    return 0;
 }
