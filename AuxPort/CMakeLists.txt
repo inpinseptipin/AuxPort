@@ -37,6 +37,7 @@
 add_library(
     AuxPort_Debug 
     ${AuxPort_SOURCE_DIR}/AuxPort/Core/Log/AuxPort_Log.cpp
+    ${AuxPort_SOURCE_DIR}/AuxPort/Core/String/AuxPort_String.cpp
     ${AuxPort_SOURCE_DIR}/AuxPort/Core/String/AuxPort_StringObjectArray.cpp
     ${AuxPort_SOURCE_DIR}/AuxPort/Core/String/AuxPort_StringPair.cpp 
     ${AuxPort_SOURCE_DIR}/AuxPort/Core/Time/AuxPort_Time.cpp

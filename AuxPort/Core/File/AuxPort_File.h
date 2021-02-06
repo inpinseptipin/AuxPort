@@ -1,7 +1,8 @@
-#ifndef CASTER_H
-#define CASTER_H
+#ifndef FILE_H
+#define FILE_H
+
 /*
-			AuxPort Library
+*			AuxPort Library
 			"Generic Modules to facilitate C++ Windows Application development" - inpinseptipin
 
 			BSD 3-Clause License
@@ -35,27 +36,27 @@
 			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
-
-/*===================================================================================*/
 #pragma once
-#include<string>
+#include "../Log/AuxPort_Log.h"
+#include "../String/AuxPort_StringPair.h"
 
 namespace AuxPort
 {
-	class ICasters
+	class File
 	{
 	public:
-		virtual int toInt32()
-		{
-			return -1;
-		}
+		virtual bool isExist() = 0;
 	};
 
-	
+	class TextFile : public File, ILog
+	{
+	public:
+		void Log() override;
+		bool isExist() override;
+	private:
+		StringPair _file;
+
+	};
 }
 
-#endif 
-
-
-
-
+#endif

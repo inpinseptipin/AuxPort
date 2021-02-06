@@ -1,5 +1,5 @@
-#ifndef CASTER_H
-#define CASTER_H
+#ifndef SORT_H
+#define SORT_H
 /*
 			AuxPort Library
 			"Generic Modules to facilitate C++ Windows Application development" - inpinseptipin
@@ -38,20 +38,20 @@
 
 /*===================================================================================*/
 #pragma once
-#include<string>
+
+
 
 namespace AuxPort
 {
-	class ICasters
+	/*
+			ISort is an abstract class that provides pure virtual interfaces to Sort AuxPort Library Types.
+	*/
+	class ISort
 	{
 	public:
-		virtual int toInt32()
-		{
-			return -1;
-		}
+		virtual void Sort() = 0;
+		virtual void naiveSort() = 0;
 	};
-
-	
 }
 
 #endif 

@@ -42,7 +42,9 @@
 */
 #include "Core/Log/AuxPort_Log.h"
 #include "Core/Time/AuxPort_Time.h"
+#include "Core/String/AuxPort_String.h"
 #include "Core/String/AuxPort_StringPair.h"
 #include "Core/String/AuxPort_StringObjectArray.h"
+
 
 /*===================================================================================*/

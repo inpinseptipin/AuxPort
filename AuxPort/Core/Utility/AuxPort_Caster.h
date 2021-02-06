@@ -38,20 +38,26 @@
 
 /*===================================================================================*/
 #pragma once
-#include<string>
+
+typedef int int32;
+typedef unsigned int uint32;
+typedef long long int int64;
+typedef unsigned long long int uint64;
 
 namespace AuxPort
 {
+/*
+		ICasters is an abstract class that provides pure virtual interfaces to Cast AuxPort Library Types to Fundamental Datatypes and STL Types.
+*/
 	class ICasters
 	{
 	public:
-		virtual int toInt32()
-		{
-			return -1;
-		}
+		 virtual int32 toInt32()=0;
+		 virtual uint32 toUInt32()=0;
+		 virtual int64 toInt64()=0;
+		 virtual uint64 toUInt64()=0;
+		 virtual std::string toStdString() = 0;
 	};
-
-	
 }
 
 #endif 

@@ -196,12 +196,10 @@ namespace AuxPort
 
 	class ILog
 	{
-	public:
+	protected:
 		void setColour(const ColourType& colourType);
-		virtual void Log()
-		{
-			std::cout << "base log";
-		}
+	public:
+		virtual void Log() = 0;
 	};
 }
 #endif
