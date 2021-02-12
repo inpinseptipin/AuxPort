@@ -38,6 +38,7 @@
 
 /*===================================================================================*/
 #pragma once
+#include<cmath>
 #include "../Log/AuxPort_Log.h"
 #include "../Utility/AuxPort_Caster.h"
 namespace AuxPort
@@ -46,7 +47,7 @@ namespace AuxPort
 		String Class, Abstraction over C-Style Strings for ease of use.
 		For Example : AuxPort::String string = "Hello There";
 */
-	class String : public ILog,ICasters
+	class String : public ILog,ICasters,Casters
 	{
 	public:
 /*===================================================================================*/	
@@ -172,7 +173,7 @@ namespace AuxPort
 		Example : String string = "123423";
 		This can be cast into an signed 64 bit Integer.
 */
-		int64 toInt64() override { return 0; }
+		int64 toInt64() override;
 
 /*===================================================================================*/
 /*
@@ -190,9 +191,8 @@ namespace AuxPort
 	private:
 		char* _string;
 		uint64  _length;
-/*===================================================================================*/
 
-		char intToAscii(int value);
+
 /*===================================================================================*/
 
 		int32 toInt32() override { return 0; }

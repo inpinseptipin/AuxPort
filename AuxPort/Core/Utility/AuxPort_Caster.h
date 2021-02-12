@@ -52,11 +52,62 @@ namespace AuxPort
 	class ICasters
 	{
 	public:
+/*===================================================================================*/	
+/*
+	Virtual interface that can be inhertied and defined to convert a given Class Type to int32	
+*/
 		 virtual int32 toInt32()=0;
+
+/*===================================================================================*/	
+/*
+	Virtual interface that can be inhertied and defined to convert a given Class Type to uint32	
+*/		 
 		 virtual uint32 toUInt32()=0;
+/*===================================================================================*/	
+/*
+	Virtual interface that can be inhertied and defined to convert a given Class Type to int64	
+*/
 		 virtual int64 toInt64()=0;
+/*===================================================================================*/	
+/*
+	Virtual interface that can be inhertied and defined to convert a given Class Type to uint64	
+*/
 		 virtual uint64 toUInt64()=0;
+/*===================================================================================*/	
+/*
+	Virtual interface that can be inhertied and defined to convert a given Class Type to std::string	
+*/
 		 virtual std::string toStdString() = 0;
+	};
+
+/*===================================================================================*/	
+/*
+	Casters is a class that consist of functions to cast fundamental types into each other	
+*/
+	class Casters
+	{
+	protected:
+/*===================================================================================*/	
+/*
+	This casts a numerical char to int64 (Inheritable)	
+*/	
+		int64 charToInt(char value) { return value >= 48 && value <= 57 ? int64(value)-48 : -1;};
+/*===================================================================================*/	
+/*
+	This casts a int64 values to char (Inheritable)	
+*/
+		char intToChar(int64 value) { return value > 128 ? value : 0;};
+	public:
+/*===================================================================================*/	
+/*
+	This casts a numerical char to int64.	
+*/	
+		static int64 toInt(char value) { return value >= 48 && value <= 57 ? int64(value)-48 : -1;};
+/*
+	This casts a int64 to char.	
+*/
+		static char toChar(int64 value) { return value > 128 ? value : 0;}; 
+		
 	};
 }
 

@@ -39,9 +39,20 @@
 
 namespace AuxPort
 {
-	char String::intToAscii(int value)
+
+
+	int64 String::toInt64()
 	{
-		return '0' + value;
+		double power=0;
+		int64 Number=0;
+		for(int i=_length-1;i>=0;i--)
+		{
+			if(_string[i]>=48 || _string[i]<=57)
+			{
+				Number+= charToInt(_string[i]) * pow(10,power++);
+			}
+		}
+		return Number;
 	}
 
 	char* String::getCString()
