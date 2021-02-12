@@ -92,78 +92,98 @@ namespace AuxPort
 /*===================================================================================*/
 
 /*
-		char* getCString()
-		Returns a Cstyle String.
+		
+		Casts the String object to a C-Style String and returns it.
 */
 		char* getCString();
 
 /*===================================================================================*/
 
 /*
-		void operator =(String& c)
 		Overloaded the Assignment Operator. You can assign/initialize a String like:
 		String string = "Hello There"
 */
 		void operator = (String& c);
 
 /*===================================================================================*/
+
 /*
-		void operator +(const char& c)
-		Overloaded the + Operator, you can add a character to the end of the string. 
+		Overloaded the Assignment Operator. You can assign/initialize a String like:
+		String string = "Hello There"
+*/
+		void operator = (const char* c);
+
+/*===================================================================================*/
+/*
+		Overloaded the += Operator, you can add a character to the end of the string.
+		String string +='a';
 */
 		String* operator += (const char &c);
 
 /*===================================================================================*/
 /*
-		void operator +(const char& c)
-		Overloaded the + Operator, you can add a character to the end of the string. 
+		
+		Overloaded the += Operator, you can concatenate a C-Style String to the end of the string.
+		String string="Hello";
+		string+=" World";
 */
+		String* operator += (const char* c);
+
 
 /*===================================================================================*/
 /*
-		friend std::ostream& operator << (std::ostream& out, const String& c)
-		 
+		Overloaded << operator to allow console printing of String object using ostream	 
 */
 		friend std::ostream& operator << (std::ostream& out, const String& c);
 
 /*===================================================================================*/
 /*
-		friend std::ostream& operator << (std::ostream& out, String* c)
+		Overloaded >> operator to allow console printing of String object using ostream
 */
 		friend std::ostream& operator << (std::ostream& out, String* c);
 
-/*===================================================================================*/
 
-		
-		
-		//friend std::istream& operator >> (std::istream& in, const String& c);
 /*===================================================================================*/
 /*
-		void replaceCharacter(const char characterToReplace, const char replacementCharacter)
+		Searches for all instance of a character in a String and replaces it with the character provided.
 */
 		void replaceCharacter(const char characterToReplace, const char replacementCharacter);
 
 /*===================================================================================*/
 /*
-		void pushBack(const char c)
+		Concatenates a character to the end of String
 */
 		void pushBack(const char c);
-		
+
 /*===================================================================================*/
 /*
-		void Log() override;
+		Concatenates a C-Style String to the end of String
+*/
+		void pushBack(const char* c);
+
+/*===================================================================================*/
+/*
+		Overrides the Logging Module to Handle String Object Logging
 */
 		void Log() override;
 /*===================================================================================*/
-		
+/*
+		Casts the String into a signed 64-bit Integer {Only handles Numerical Strings}
+		Example : String string = "123423";
+		This can be cast into an signed 64 bit Integer.
+*/
 		int64 toInt64() override { return 0; }
 
 /*===================================================================================*/
-		
+/*
+		Casts the String object to std::string
+*/
 		std::string toStdString() override;
 		
 /*===================================================================================*/
-
+/*
+		Casts the String into an unsigned 64-bit Integer
+*/
 		uint64 toUInt64() override { return 0; }
 /*===================================================================================*/
 
