@@ -104,6 +104,11 @@ namespace AuxPort
 		return _length;
 	}
 
+	bool String::Empty()
+	{
+		return _length == 0 ? true : false; 
+	}
+
 	void String::operator = (String& c)
 	{
 		if (_length == 0)
@@ -165,6 +170,29 @@ namespace AuxPort
 		delete[] temp;
 	}
 
+	void String::pushBack(const char* c)
+	{
+		uint32 length=strlen(c);
+		char* temp = new char[_length];
+		for (int i = 0; i < _length; i++)
+			temp[i] = _string[i];
+		
+		delete[] _string;
+		_string = new char[_length+length+1];
+		for (int i = 0; i < _length; i++)
+			_string[i] = temp[i];
+		
+		for(int i = 0; i<length;i++)
+			_string[_length+i]=c[i];
+
+		_length+=length;
+		_string[_length] = '\0';
+
+		delete[] temp;
+	}
+
+	
+
 	void String::Log()
 	{
 		setColour(AuxPort::ColourType::Blue);
@@ -173,6 +201,12 @@ namespace AuxPort
 	}
 
 	String* String::operator+=(const char& c)
+	{
+		this->pushBack(c);
+		return this;
+	}
+
+	String* String::operator+=(const char* c)
 	{
 		this->pushBack(c);
 		return this;

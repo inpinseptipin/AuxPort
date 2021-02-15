@@ -39,6 +39,7 @@
 /*===================================================================================*/
 #pragma once
 #include<cmath>
+#include<cstring>
 #include "../Log/AuxPort_Log.h"
 #include "../Utility/AuxPort_Caster.h"
 namespace AuxPort
@@ -93,6 +94,14 @@ namespace AuxPort
 /*===================================================================================*/
 
 /*
+		Checks whether the String is Empty or not
+*/
+		bool Empty();
+
+
+/*===================================================================================*/
+
+/*
 		
 		Casts the String object to a C-Style String and returns it.
 */
@@ -129,6 +138,7 @@ namespace AuxPort
 		string+=" World";
 */
 		String* operator += (const char* c);
+
 
 
 /*===================================================================================*/
