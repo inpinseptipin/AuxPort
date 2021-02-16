@@ -79,6 +79,13 @@ namespace AuxPort
 /*===================================================================================*/
 
 /*
+		Intializes a String with a String Object.
+*/
+		String(String& string);		
+
+/*===================================================================================*/
+
+/*
 		Default Destructor
 		Safely Deallocates memory before destroying the String object.
 */
@@ -116,12 +123,25 @@ namespace AuxPort
 		void operator = (String& c);
 
 /*===================================================================================*/
-
 /*
 		Overloaded the Assignment Operator. You can assign/initialize a String like:
 		String string = "Hello There"
 */
 		void operator = (const char* c);
+
+/*===================================================================================*/
+/*
+		Overloaded + operator for String Concatenation with a const C-Style String
+		
+*/
+		String operator + (const char* c);
+
+/*===================================================================================*/
+/*
+		Overloaded + operator for String Concatenation with a const C-Style String
+*/
+		String operator + (const String& c);
+
 
 /*===================================================================================*/
 /*
@@ -174,6 +194,12 @@ namespace AuxPort
 
 /*===================================================================================*/
 /*
+		Concatenates a C-Style String to the end of String
+*/
+		void pushBack(const String& c);		
+
+/*===================================================================================*/
+/*
 		Overrides the Logging Module to Handle String Object Logging
 */
 		void Log() override;
@@ -195,7 +221,7 @@ namespace AuxPort
 /*
 		Casts the String into an unsigned 64-bit Integer
 */
-		uint64 toUInt64() override { return 0; }
+		uint64 toUInt64() override;
 /*===================================================================================*/
 
 	private:

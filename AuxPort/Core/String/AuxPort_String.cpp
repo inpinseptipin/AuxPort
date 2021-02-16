@@ -45,7 +45,35 @@ namespace AuxPort
 	{
 		double power=0;
 		int64 Number=0;
-		for(int i=_length-1;i>=0;i--)
+		if(_string[0]=='-')
+		{
+			for(uint32 i=_length-1;i>0;i--)
+			{
+				if(_string[i]>=48 || _string[i]<=57)
+				{
+					Number+= charToInt(_string[i]) * pow(10,power++);
+				}
+			}
+			return Number * -1;
+		}
+		else
+		{
+			for(uint32 i=_length-1;i>=0;i--)
+			{
+				if(_string[i]>=48 || _string[i]<=57)
+				{
+					Number+= charToInt(_string[i]) * pow(10,power++);
+				}
+			}
+			return Number;
+		}
+	}
+
+	uint64 String::toUInt64()
+	{
+		double power = 0;
+		uint64 Number = 0;
+		for(uint32 i=_length-1;i>=0;i--)
 		{
 			if(_string[i]>=48 || _string[i]<=57)
 			{
@@ -70,7 +98,7 @@ namespace AuxPort
 	{
 		_length = strlen(string);
 		_string = new char[_length+1];
-		for (int i = 0; i < _length; i++)
+		for (uint32 i = 0; i < _length; i++)
 			_string[i] = string[i];
 		_string[_length] = '\0';
 	}
@@ -79,7 +107,7 @@ namespace AuxPort
 	{
 		_length = strlen(string);
 		_string = new char[_length+1]; 
-		for (int i = 0; i < _length; i++)
+		for (uint32 i = 0; i < _length; i++)
 			_string[i] = string[i];
 		_string[_length] = '\0';
 	}
@@ -88,7 +116,16 @@ namespace AuxPort
 	{
 		_length = string._length;
 		_string = new char[_length+1];
-		for (int i = 0; i < _length; i++)
+		for (uint32 i = 0; i < _length; i++)
+			_string[i] = string._string[i];
+		_string[_length] = '\0';
+	}
+
+	String::String(String& string)
+	{
+		_length = string._length;
+		_string = new char[_length+1];
+		for (uint32 i = 0; i < _length; i++)
 			_string[i] = string._string[i];
 		_string[_length] = '\0';
 	}
@@ -115,7 +152,7 @@ namespace AuxPort
 		{
 			_length = c._length;
 			_string = new char[_length];
-			for (int i = 0; i < _length; i++)
+			for (uint32 i = 0; i < _length; i++)
 				_string[i] = c._string[i];
 		}
 		else
@@ -123,7 +160,7 @@ namespace AuxPort
 			delete[] _string;
 			_length = c._length;
 			_string = new char[_length];
-			for (int i = 0; i < _length; i++)
+			for (uint32 i = 0; i < _length; i++)
 				_string[i] = c._string[i];
 			
 		}
@@ -131,7 +168,7 @@ namespace AuxPort
 
 	std::ostream& operator << (std::ostream& out, const String& c)
 	{
-		for (int i = 0; i < c._length; i++)
+		for (uint32 i = 0; i < c._length; i++)
 			out << c._string[i];
 		
 		return out;
@@ -139,7 +176,7 @@ namespace AuxPort
 
 	std::ostream& operator << (std::ostream& out, String* c)
 	{
-		for (int i = 0; i < c->length(); i++)
+		for (uint32 i = 0; i < c->length(); i++)
 			out << c->_string[i];
 		
 		return out;
@@ -147,7 +184,7 @@ namespace AuxPort
 
 	void String::replaceCharacter(const char CharacterToReplace, const char replacementCharacter)
 	{
-		for (int i = 0; i < _length; i++)
+		for (uint32 i = 0; i < _length; i++)
 		{
 			if (_string[i] == CharacterToReplace)
 				_string[i] = replacementCharacter;
@@ -157,7 +194,7 @@ namespace AuxPort
 	void String::pushBack(const char c)
 	{
 		char* temp = new char[_length];
-		for (int i = 0; i < _length; i++)
+		for (uint32 i = 0; i < _length; i++)
 			temp[i] = _string[i];
 		
 		delete[] _string;
@@ -174,21 +211,43 @@ namespace AuxPort
 	{
 		uint32 length=strlen(c);
 		char* temp = new char[_length];
-		for (int i = 0; i < _length; i++)
+		for (uint32 i = 0; i < _length; i++)
 			temp[i] = _string[i];
 		
 		delete[] _string;
 		_string = new char[_length+length+1];
-		for (int i = 0; i < _length; i++)
+		for (uint32 i = 0; i < _length; i++)
 			_string[i] = temp[i];
 		
-		for(int i = 0; i<length;i++)
+		for(uint32 i = 0; i<length;i++)
 			_string[_length+i]=c[i];
 
 		_length+=length;
 		_string[_length] = '\0';
 
 		delete[] temp;
+	}
+
+	void String::pushBack(const String& c)
+	{
+		uint32 length=c._length;
+		char* temp = new char[_length];
+		for(uint32 i=0;i<_length;i++)
+			temp[i]=_string[i];
+
+		delete[] _string;
+
+		_string = new char[_length+length+1];
+		for (uint32 i = 0; i < _length; i++)
+			_string[i] = temp[i];
+		
+		for(uint32 i = 0; i<length;i++)
+			_string[_length+i]=c._string[i];
+
+		_length+=length;
+		_string[_length]='\0';
+		delete[] temp;
+
 	}
 
 	
@@ -199,6 +258,25 @@ namespace AuxPort
 		std::cout << this << std::endl;
 		setColour(AuxPort::ColourType::White);
 	}
+
+	String String::operator + (const char* c)
+	{
+		String string;
+		string.pushBack(this->getCString());
+		string.pushBack(c);
+		return string;
+
+	}
+
+	String String::operator + (const String& c)
+	{
+		String string;
+		string.pushBack(this->getCString());
+		string.pushBack(c);
+		return string;
+	}
+
+	
 
 	String* String::operator+=(const char& c)
 	{
