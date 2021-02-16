@@ -126,43 +126,13 @@ namespace AuxPort
 *		ColourType : Allows you to choose the colour of your logged message (Support only for Windows 16 bit Colours)
 *		TimeType : Allows you to choose between different date or time stamps for the logged messages.
 */
-		static void Log(const std::string& message, const LogType& logType = LogType::Info, const ColourType& colourType = ColourType::White,const TimeType& timeType = TimeType::Time);
-/*===================================================================================*/
-
-/*
-		Success is a preseted function that allows you to log "Success" messages onto the console.
-		Parameters
-*		std::string : 
-*		TimeType : Pass which type of date or time stamp you want on your logged message
-*/
-		static void Success(const std::string& message,const TimeType& timeType);
-/*===================================================================================*/
-
-/*
-		Warning is a preseted function that allows you to log "Warning" messages onto the console.
-		Parameters
-*		std::string :
-*		TimeType : Pass which type of date or time stamp you want on your logged message
-*/
-		static void Warning(const std::string& message,const TimeType& timeType);
-/*===================================================================================*/
-
-/*
-		Information is a preseted function that allows you to log "Warning" messages onto the console.
-		Parameters
-*		std::string :
-*		TimeType : Pass which type of date or time stamp you want on your logged message
-*/
-		static void Information(const std::string& message,const TimeType& timeType);
-/*===================================================================================*/
-
-/*
-		Error is a preseted function that allows you to log "Warning" messages onto the console.
-		Parameters
-*		std::string :
-*		TimeType : Pass which type of date or time stamp you want on your logged message
-*/
-		static void Error(const std::string& message,const TimeType& timeType);
+		template<class T>
+		static void Log(const T& message, const LogType& logType = LogType::Info, const ColourType& colourType = ColourType::White,const TimeType& timeType = TimeType::Time)
+		{
+			setColour(colourType);
+			logMessage(message, logType,timeType);
+			setColour(ColourType::White);;
+		}
 /*===================================================================================*/
 	
 	private:
@@ -181,7 +151,11 @@ namespace AuxPort
 *		LogType : This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
 *		<parameter type> : <parameter function>
 */
-		static void logMessage(const std::string& message,const LogType& logType,const TimeType& timeType);
+		template<class T>
+		static void logMessage(const T& message,const LogType& logType,const TimeType& timeType)
+		{
+			std::cout << getMessageFormat(logType) <<" | "<<Time::getCurrentTime(timeType) << " | " << message << "\n";
+		}
 /*===================================================================================*/
 /*
 		Gets preformatted messages for the corrossponding log type.

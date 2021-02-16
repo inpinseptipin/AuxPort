@@ -41,40 +41,6 @@
 namespace AuxPort
 {
 
-	void Logger::Success(const std::string& message,const TimeType& timeType)
-	{
-		setColour(ColourType::Green);
-		logMessage(message, LogType::Success,timeType);
-		setColour(ColourType::White);
-	}
-
-	void Logger::Warning(const std::string& message,const TimeType& timeType)
-	{
-		setColour(ColourType::Yellow);
-		logMessage(message, LogType::Warning,timeType);
-		setColour(ColourType::White);
-	}
-
-	void Logger::Information(const std::string& message,const TimeType& timeType)
-	{
-		setColour(ColourType::Cyan);
-		logMessage(message, LogType::Info,timeType);
-		setColour(ColourType::White);
-	}
-
-	void Logger::Error(const std::string& message,const TimeType& timeType)
-	{
-		setColour(ColourType::Red);
-		logMessage(message, LogType::Error,timeType);
-		setColour(ColourType::White);
-	}
-	void Logger::Log(const std::string& message, const LogType& logType, const ColourType& colourType, const TimeType& timeType)
-	{
-		setColour(colourType);
-		logMessage(message, logType,timeType);
-		setColour(ColourType::White);
-	}
-
 	void Logger::setColour(const ColourType& colourType)
 	{
 #ifdef _MSC_VER
@@ -84,11 +50,12 @@ namespace AuxPort
 
 #endif
 	}
-
+	/*
 	void Logger::logMessage(const std::string& message,const LogType& logType,const TimeType& timeType)
 	{
 		std::cout << getMessageFormat(logType) <<" | "<<Time::getCurrentTime(timeType) << " | " << message << "\n";
 	}
+	*/
 
 	std::string Logger::getMessageFormat(const LogType& logType)
 	{
