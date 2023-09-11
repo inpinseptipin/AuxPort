@@ -35,3 +35,35 @@
 */
 
 /*===================================================================================*/
+#pragma once
+/*
+*			Core Headers
+*/
+#include "Core/Env/AuxEnv.h"
+#include "Core/Log/AuxLog.h"
+#include "Core/Time/AuxTime.h"
+#include "Core/String/AuxString.h"
+#include "Core/File/AuxFile.h"
+#include "Core/Utility/AuxCaster.h"
+#include "Core/Utility/AuxUtility.h"
+#include "Core/Utility/AuxSeries.h"
+#include "Core/TestCase/AuxCase.h"
+
+
+/*
+*			Audio Headers
+*/
+#include "Audio/Buffer/AuxBuffer.h"
+#include "Audio/Effects/Distortion/AuxDistortion.h"
+#include "Audio/Effects/Gain/AuxPan.h"
+#include "Audio/Windows/AuxWindow.h"
+#include "Audio/FFT/AuxFFT.h"
+#include "Audio/Filters/AuxIIR.h"
+#include "Audio/Oscillators/AuxOscillator.h"
+
+
+
+
+
+
+/*===================================================================================*/

@@ -1,3 +1,5 @@
+#ifndef AUXPORT_TIME_H
+#define AUXPORT_TIME_H
 /*
 *			AuxPort Library
 			"Modules for Audio Software Development" - inpinseptipin
@@ -35,3 +37,45 @@
 */
 
 /*===================================================================================*/
+
+#include<ctime>
+#include<string>
+#include<sstream>
+#include <chrono>
+#include "../Log/AuxLog.h"
+
+///////////////////////////////////////////////////////////////////////////////////////
+/// This is a wrapper over the C Time Library, It is used to get Date and Time formatted onto std::string
+/// The wrapper provides you with an interface that can be called.
+/// 
+/// Eg: AuxPort::Time::getCurrentTime(TimeType::Time)
+///////////////////////////////////////////////////////////////////////////////////////
+
+namespace AuxPort
+{
+	class Timer
+	{
+	public:
+		enum Type
+		{
+			nano, milli, micro, seconds
+		};
+		Timer();
+		~Timer() = default;
+		Timer(const Timer& timer) = default;
+		void start();
+		void stop();
+		void show(const Type& type = Type::micro);
+		bool stillRunning();
+		double getEllapsedTime(const Type& type = Type::micro);
+	private:
+		std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
+		std::chrono::time_point<std::chrono::high_resolution_clock> endTime;
+		double ellapsedTime;
+		bool isRunning;
+		Type type;
+		std::string displayString;
+	};
+
+}
+#endif

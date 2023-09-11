@@ -1,3 +1,6 @@
+#ifndef AUXPORT_GAIN_H
+#define AUXPORT_GAIN_H
+
 /*
 *			AuxPort Library
 			"Modules for Audio Software Development" - inpinseptipin
@@ -35,3 +38,48 @@
 */
 
 /*===================================================================================*/
+
+
+
+#include "../../../Core/Utility/AuxUtility.h"
+namespace AuxPort
+{
+	namespace Audio
+	{
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Stereo Channel Audio Panner
+		/// 2 channel Panning class with 4 algorithms
+		/// a) Linear Pan
+		/// b) Sqrt Pan
+		/// c) Sinusoidal Pan
+		/// d) Constant Power Pan
+		///////////////////////////////////////////////////////////////////////////////////////
+		class Pan
+		{
+		public:
+			enum Type
+			{
+				Linear, Sqrt, Sinusoidal, Constant
+			};
+			Pan(const Type& type = Type::Linear);
+			~Pan() = default;
+			Pan(const Pan& gain) = default;
+
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// Use the setPan function to update the panning Value, Specify the range of the parameter so that the internal dsp object can remap the value.
+			///////////////////////////////////////////////////////////////////////////////////////
+			void setPan(float pan, float panStart, float panEnd);
+
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// Use the function to apply Pan to a Stereo Frame
+			///////////////////////////////////////////////////////////////////////////////////////
+			void process(float& leftChannel, float& rightChannel);
+		private:
+			Type type;
+			float pan;
+		};
+	}
+}
+
+
+#endif

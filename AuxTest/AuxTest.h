@@ -1,6 +1,10 @@
+#ifndef AUXTEST_H
+#define AUXTEST_H
+
+
 /*
-*			AuxPort Library
-			"Modules for Audio Software Development" - inpinseptipin
+*			AuxTest
+			"Test Test Test" - inpinseptipin
 
 			BSD 3-Clause License
 
@@ -35,3 +39,20 @@
 */
 
 /*===================================================================================*/
+#include "../AuxPort/AuxPort.h"
+#include "String/AuxStringTest.h"
+namespace AuxTest
+{
+	enum class UnitTest
+	{
+		String, Time
+	};
+	std::vector<AuxPort::Case> testcases;
+}
+
+
+/*
+	Core Headers
+*/
+
+#endif

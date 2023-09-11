@@ -1,3 +1,5 @@
+#include "AuxPan.h"
+
 /*
 *			AuxPort Library
 			"Modules for Audio Software Development" - inpinseptipin
@@ -35,3 +37,52 @@
 */
 
 /*===================================================================================*/
+
+
+
+AuxPort::Audio::Pan::Pan(const Type& type)
+{
+	this->type = type;
+}
+
+void AuxPort::Audio::Pan::setPan(float pan, float panStart, float panEnd)
+{
+	if (type == Linear || type == Sqrt || type == Sinusoidal)
+	{
+		this->pan = AuxPort::Utility::remap<float>(pan, 0, 1, panStart, panEnd);
+	}
+	if (type == Constant)
+	{
+		this->pan = AuxPort::Utility::remap<float>(pan, 0, 2, panStart, panEnd);
+	}
+}
+
+
+
+void AuxPort::Audio::Pan::process(float& leftChannel, float& rightChannel)
+{
+	if (type == Type::Linear)
+	{
+		leftChannel *= (1-pan);
+		rightChannel *= pan;
+	}
+	if (type == Type::Sqrt)
+	{
+		leftChannel *= sqrtf(1-pan);
+		rightChannel *= sqrtf(pan);
+	}
+	if (type == Type::Sinusoidal)
+	{
+		leftChannel *= cosf(pan * (AuxPort::pi / 2));
+		rightChannel *= sinf(pan * (AuxPort::pi / 2));
+	}
+	if (type == Type::Constant)
+	{
+		leftChannel *= cosf(pan * (AuxPort::pi / 4));
+		rightChannel *= sinf(pan * (AuxPort::pi / 4));
+	}
+}
+
+
+
+

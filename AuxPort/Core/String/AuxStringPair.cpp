@@ -33,5 +33,68 @@
 			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
+#include "AuxStringPair.h"
 
-/*===================================================================================*/
+namespace AuxPort
+{
+	StringPair::StringPair(const std::string& key, const std::string& value)
+	{
+		key.empty() ? _key = "null_key" : _key = key;
+		value.empty() ? _value = "null_value" : _value = value;
+	}
+
+	StringPair::StringPair(const String& key, const String& value)
+	{
+		_key = key;
+		_value = value;
+
+	}
+
+	StringPair::StringPair(const char* key, const char* value)
+	{
+		if (key == nullptr)
+			_key = "null_key";
+		else
+			_key = key;
+
+		if (value == nullptr)
+			_value = "null_value";
+		else
+			_value = value;
+	}
+
+	AuxPort::String& StringPair::key()
+	{
+		return _key;
+	}
+
+	AuxPort::String& StringPair::value()
+	{
+		return _value;
+	}
+
+	void StringPair::setKey(const String& key)
+	{
+		_key = key;
+	}
+
+	void StringPair::setValue(const String& value)
+	{
+		_value = value;
+	}
+
+	std::ostream& operator << (std::ostream& out, const StringPair& sPair)
+	{
+		out << sPair._key << " : " << sPair._value;
+		return out;
+	}
+
+	void StringPair::Log()
+	{
+		setColour(ColourType::Blue);
+		std::cout << *this << std::endl;
+		setColour(ColourType::White);
+	}
+
+	/*===================================================================================*/
+}

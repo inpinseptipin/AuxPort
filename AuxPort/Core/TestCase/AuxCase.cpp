@@ -1,5 +1,5 @@
 /*
-*			AuxPort Library
+			AuxPort Library
 			"Modules for Audio Software Development" - inpinseptipin
 
 			BSD 3-Clause License
@@ -35,3 +35,32 @@
 */
 
 /*===================================================================================*/
+#include "AuxCase.h"
+
+void AuxPort::Case::setTestID(const std::string& testID)
+{
+	this->testID = testID;
+}
+
+void AuxPort::Case::setTestName(const std::string& testName)
+{
+	this->testName = testName;
+}
+
+std::string& AuxPort::Case::getTestID()
+{
+	return testID;
+}
+
+std::string& AuxPort::Case::getTestName()
+{
+	return testName;
+}
+
+void AuxPort::Case::Log()
+{
+	setColour(AuxPort::ColourType::Light_Purple);
+	std::cout << "Test ID : " << testID << std::endl;
+	std::cout << "Test Name : " << testName << std::endl;
+	setColour(AuxPort::ColourType::White);
+}

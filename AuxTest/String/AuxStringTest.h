@@ -1,10 +1,12 @@
+#ifndef AUXTEST_STRING_H
+#define AUXTEST_STRING_H
 /*
-*			AuxPort Library
-			"Modules for Audio Software Development" - inpinseptipin
+			AuxPort Library
+			"Generic Modules to facilitate C++ Windows Application development" - inpinseptipin
 
 			BSD 3-Clause License
 
-			Copyright (c) 2023, Satyarth Arora
+			Copyright (c) 2020, Satyarth Arora
 			All rights reserved.
 
 			Redistribution and use in source and binary forms, with or without
@@ -33,5 +35,22 @@
 			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
+/*===================================================================================*/
+
+#include "../../AuxPort/AuxPort.h"
 
 /*===================================================================================*/
+
+namespace AuxTest
+{
+	namespace UnitTests
+	{
+		namespace String
+		{
+			void init(std::vector<AuxPort::Case>& testcases,const std::vector<std::string>& commands);
+		}
+	}
+}
+
+
+#endif

@@ -1,5 +1,7 @@
+#ifndef AUXPORT_CASE_H
+#define AUXPORT_CASE_H
 /*
-*			AuxPort Library
+			AuxPort Library
 			"Modules for Audio Software Development" - inpinseptipin
 
 			BSD 3-Clause License
@@ -35,3 +37,29 @@
 */
 
 /*===================================================================================*/
+
+#include <vector>
+#include <functional>
+#include "../Env/AuxEnv.h"
+#include "../Log/AuxLog.h"
+namespace AuxPort
+{
+	class Case : public ILog
+	{
+	public:
+		Case() = default;
+		~Case() = default;
+		Case(const Case& testcase) = default;
+		void setTestID(const std::string& testID);
+		void setTestName(const std::string& testName);
+		std::function<bool(const std::vector<std::string>& commands)> testCase = 0;
+		std::string& getTestID();
+		std::string& getTestName();
+		void Log() override;
+	private:
+		std::string testID;
+		std::string testName;
+	};
+}
+#endif
+

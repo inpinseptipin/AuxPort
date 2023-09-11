@@ -1,5 +1,7 @@
+#ifndef AUXPORT_ENV_H
+#define AUXPORT_ENV_H
 /*
-*			AuxPort Library
+			AuxPort Library
 			"Modules for Audio Software Development" - inpinseptipin
 
 			BSD 3-Clause License
@@ -33,5 +35,61 @@
 			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
+#include <assert.h>
+#include "../Log/AuxLog.h"
 
-/*===================================================================================*/
+///////////////////////////////////////////////////////////////////////////////////////
+///	Preprocessor Defintion to Determine if Compiling on Windows x86 or x64
+///////////////////////////////////////////////////////////////////////////////////////
+#if _WIN32 || _WIN64
+#if _WIN64
+#define AUXPORT_64
+typedef int int32;
+typedef unsigned int uint32;
+typedef long long int int64;
+typedef unsigned long long int uint64;
+typedef unsigned char uint8;
+typedef signed char int8;
+typedef unsigned short uint16;
+typedef signed short int16;
+#else
+#define AUXPORT_32
+typedef int int32;
+typedef unsigned int uint32;
+typedef unsigned char uint8;
+typedef signed char int8;
+typedef unsigned short uint16;
+typedef signed short int16;
+#endif
+#define STR(x) #x
+#define AuxMessage(y) #y
+#define AuxAssert(x,y) if (!(x)) { printf("Error Message :%s \nStatement : %s \nFunction: %s \nfile %s, line %d.\n", AuxMessage(y),STR(x), __FUNCTION__, __FILE__, __LINE__); abort(); }
+
+#endif
+
+#if __APPLE__ || __MACH__
+#if __x86_64__ || _M_X64
+#define AUXPORT_64
+typedef int int32;
+typedef unsigned int uint32;
+typedef long long int int64;
+typedef unsigned long long int uint64;
+typedef unsigned char uint8;
+typedef signed char int8;
+typedef unsigned short uint16;
+typedef signed short int16;
+#elif i386 || __i386__ || __i386 || _M_IX86
+#define AUXPORT_32
+typedef int int32;
+typedef unsigned int uint32;
+typedef unsigned char uint8;
+typedef signed char int8;
+typedef unsigned short uint16;
+typedef signed short int16;
+#endif
+#endif // 
+
+#endif // !ENV_H
+
+
+

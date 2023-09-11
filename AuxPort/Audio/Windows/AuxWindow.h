@@ -1,3 +1,6 @@
+#pragma once
+#ifndef AUXPORT_AUDIO_WINDOW_H
+#define AUXPORT_AUDIO_WINDOW_H
 /*
 *			AuxPort Library
 			"Modules for Audio Software Development" - inpinseptipin
@@ -33,5 +36,72 @@
 			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
-
 /*===================================================================================*/
+
+#include "../../Core/Env/AuxEnv.h"
+#include "../Buffer/AuxBuffer.h"
+#include "../../Core/Log/AuxLog.h"
+
+
+namespace AuxPort
+{
+	namespace Audio
+	{
+		template<class sample>
+		class Window
+		{
+		public:
+			enum Type
+			{
+				HannWin, HammWin
+			};
+			static void generate(AuxPort::Audio::Buffer<sample>& windowBuffer, const size_t& windowSize, const Type& window = Type::Hann)
+			{
+				if (windowSize == 0)
+					return;
+				else
+				{
+					switch (window)
+					{
+					case Type::HannWin:
+						Hann(windowBuffer, windowSize);
+						break;
+					case Type::HammWin:
+						Hamming(windowBuffer, windowSize);
+						break;
+					default:
+						return;
+					}
+				}
+			}
+		private:
+			static void Hann(AuxPort::Audio::Buffer<sample>& windowBuffer, const size_t& windowSize)
+			{
+				windowBuffer.resize(windowSize);
+				sample val;
+				for (size_t i = 0; i < windowSize; i++)
+				{
+					val = static_cast<sample>(0.5 * (1 - cos(2 * pi * i / windowSize)));
+					windowBuffer.set(val, i);
+				}
+			}
+
+			static void Hamming(AuxPort::Audio::Buffer<sample>& windowBuffer, const size_t& windowSize)
+			{
+				windowBuffer.resize(windowSize);
+				sample val;
+				for (size_t i = 0; i < windowSize; i++)
+				{
+					val = static_cast<sample>(0.54 - 0.46 * cos(2 * pi * i / windowSize));
+					windowBuffer.set(val, i);
+				}
+			}
+
+
+		};
+	}
+}
+
+
+
+#endif
