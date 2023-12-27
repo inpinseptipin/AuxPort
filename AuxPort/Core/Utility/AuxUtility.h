@@ -119,13 +119,19 @@ namespace AuxPort
 		}
 
 		template<class sample>
-		static inline sample mean(const std::vector<sample> vector)
+		static inline sample mean(const std::vector<sample>& vector)
 		{
 			sample sum = 0;
 			for (uint32_t i = 0; i < vector.size(); i++)
 				sum += vector[i];
 			sum /= vector.size();
 			return sum;
+		}
+
+		template<class sample>
+		static inline sample median(const std::vector<sample>& vector)
+		{
+			sample sum = 0;
 		}
 		
 	};

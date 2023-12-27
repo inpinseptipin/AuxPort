@@ -91,7 +91,7 @@ float AuxPort::Audio::Triangle::process()
 	}
 }
 
-float AuxPort::Audio::PolyBlepSaw::process()
+float AuxPort::Audio::PBSaw::process()
 {
 	if (isPlaying())
 	{
@@ -108,7 +108,7 @@ float AuxPort::Audio::PolyBlepSaw::process()
 	}
 }
 
-float AuxPort::Audio::PBSSaw::process()
+float AuxPort::Audio::PBWSaw::process()
 {
 	if (isPlaying())
 	{
@@ -120,7 +120,95 @@ float AuxPort::Audio::PBSSaw::process()
 	}
 }
 
-void AuxPort::Audio::PBSSaw::setSaturationLevel(float sat)
+void AuxPort::Audio::PBWSaw::setSaturationLevel(float sat)
 {
 	this->satLevel = sat;
+}
+
+AuxPort::Audio::WhiteNoise::WhiteNoise()
+{
+}
+
+float AuxPort::Audio::WhiteNoise::process()
+{
+	if (isPlaying())
+	{
+		
+	}
+	return 0;
+}
+
+AuxPort::Audio::ADSR::ADSR()
+{
+	this->parameters.resize(8);
+	this->mods.resize(4);
+}
+
+void AuxPort::Audio::ADSR::setParameters(const std::vector<float>& parameters)
+{
+	this->parameters = parameters;
+	this->mods[Attack] = this->parameters[Attack] / (this->parameters[AttackTime] * this->sampleRate);
+	this->mods[Decay] = this->parameters[Decay] / (this->parameters[DecayTime] * this->sampleRate);
+	this->mods[Sustain] = this->parameters[Sustain] / (this->parameters[SustainTime] * this->sampleRate);
+	this->mods[Release] = this->parameters[Release] / (this->parameters[ReleaseTime] * this->sampleRate);
+
+}
+
+void AuxPort::Audio::ADSR::setSampleRate(uint32_t sampleRate)
+{
+	this->sampleRate = sampleRate;
+}
+
+bool AuxPort::Audio::ADSR::isPlaying()
+{
+	return this->state != State::OFF;
+}
+
+void AuxPort::Audio::ADSR::start()
+{
+	this->state = State::Attack;
+	envelope = 0;
+}
+
+void AuxPort::Audio::ADSR::stop()
+{
+	this->state = State::OFF;
+}
+
+float AuxPort::Audio::ADSR::process()
+{
+	if (this->state == State::Attack)
+	{
+		envelope += mods[Attack];
+		if (envelope >= parameters[Attack]);
+			this->state = State::Decay;
+	}
+	if (this->state == State::Decay)
+	{
+		envelope -= mods[Decay];
+		if (envelope <= parameters[Decay])
+			this->state = State::Sustain;
+	}
+	if (this->state == State::Sustain)
+	{
+		envelope -= mods[Sustain];
+		count++;
+		if (envelope < parameters[Sustain])
+			envelope = parameters[Sustain];
+		if (count >= parameters[SustainTime] * sampleRate);
+		{
+			count = 0;
+			this->state = State::Release;
+		}	
+	}
+	if (this->state == State::Release)
+	{
+		envelope -= mods[Release];
+		if (envelope <= 0)
+		{
+			this->state = Attack;
+		}
+
+	}
+	return envelope;
 }
