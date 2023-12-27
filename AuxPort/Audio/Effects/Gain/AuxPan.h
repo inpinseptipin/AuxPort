@@ -47,7 +47,7 @@ namespace AuxPort
 	namespace Audio
 	{
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Stereo Channel Audio Panner
+		/// Stereo Audio Panner
 		/// 2 channel Panning class with 4 algorithms
 		/// a) Linear Pan
 		/// b) Sqrt Pan
