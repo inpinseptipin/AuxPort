@@ -81,6 +81,7 @@ void AuxPort::Audio::Pan::process(float& leftChannel, float& rightChannel)
 		leftChannel *= cosf(pan * (AuxPort::pi / 4));
 		rightChannel *= sinf(pan * (AuxPort::pi / 4));
 	}
+
 }
 
 

@@ -77,7 +77,7 @@ namespace AuxPort
 			srand(0);
 			std::vector<float> vals(size);
 			for (uint32_t i = 0; i < vals.size(); i++)
-				vals[i] = rand() / RAND_MAX;
+				vals[i] = static_cast<float>(rand() / RAND_MAX);
 			return vals;
 		}
 
@@ -111,7 +111,7 @@ namespace AuxPort
 		template<class sample>
 		static inline sample signum(const sample& audio)
 		{
-			return  audio < 0 ? -1 : audio > 0;
+			return  audio < 0 ? -1.0f : audio > 0;
 		}
 
 		template<class sample>
@@ -124,7 +124,7 @@ namespace AuxPort
 		static inline range remap(range input, range outputStart, range outputEnd, range inputStart, range inputEnd)
 		{
 			double slope = 1.0f * (outputEnd - outputStart) / (inputEnd - inputStart);
-			return outputStart + slope * (input - inputStart);
+			return outputStart + static_cast<range>(slope) * (input - inputStart);
 		}
 
 		template<class sample>

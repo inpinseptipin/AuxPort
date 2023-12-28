@@ -205,6 +205,7 @@ std::string& AuxPort::TextFile::readFileAsString()
 	{
 		AuxPort::Logger::Log("Unable to open File and Read Data");
 	}
+	return std::string();
 }
 
 void AuxPort::TextFile::writeLineToFile(const std::string& data,bool log)

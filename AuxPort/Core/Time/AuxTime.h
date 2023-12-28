@@ -67,11 +67,11 @@ namespace AuxPort
 		void stop();
 		void show(const Type& type = Type::micro);
 		bool stillRunning();
-		double getEllapsedTime(const Type& type = Type::micro);
+		long long getEllapsedTime(const Type& type = Type::micro);
 	private:
 		std::chrono::time_point<std::chrono::high_resolution_clock> startTime;
 		std::chrono::time_point<std::chrono::high_resolution_clock> endTime;
-		double ellapsedTime;
+		long long ellapsedTime;
 		bool isRunning;
 		Type type;
 		std::string displayString;

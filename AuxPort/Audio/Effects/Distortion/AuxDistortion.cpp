@@ -101,19 +101,24 @@ float AuxPort::Audio::Distortion::schetzenOverdrive(float& audio, const bool& pr
 	auto x = abs(audio);
 	if (preserve)
 	{
-		if (x >= 0 && x < 0.34)
+		if (x >= 0.0f && x < 0.34f)
 			return 2 * audio;
-		else if (x >= 0.34 && x < 0.66)
+		else if (x >= 0.34f && x < 0.66f)
 			return audio < 0 ? -(3 - powf(2 - 3 * audio, 2)) / 3 : (3 - powf(2 - 3 * audio, 2)) / 3;
-		else if (x >= 0.66 && x <= 1)
-			return audio < 0 ? -1 : 1;
+		else if (x >= 0.66f && x <= 1.0f)
+			return audio < 0 ? -1.0f : 1.0f;
 	}
-	if (x >= 0 && x < 0.34)
-		audio = 2 * audio;
-	else if (x >= 0.34 && x < 0.66)
-		audio = audio < 0 ? -(3 - powf(2 - 3 * audio, 2)) / 3 : (3 - powf(2 - 3 * audio, 2)) / 3;
-	else if (x >= 0.66 && x <= 1)
-		audio = audio < 0 ? -1 : 1;
+	else
+	{
+		if (x >= 0.0f && x < 0.34f)
+			audio = 2 * audio;
+		else if (x >= 0.34f && x < 0.66f)
+			audio = audio < 0 ? -(3 - powf(2 - 3 * audio, 2)) / 3 : (3 - powf(2 - 3 * audio, 2)) / 3;
+		else if (x >= 0.66f && x <= 1.0f)
+			audio = audio < 0 ? -1.0f : 1.0f;
+	}
+	return 0.0f;
+	
 }
 
 float AuxPort::Audio::Distortion::exponential(float& audio, const bool& preserve)
@@ -123,7 +128,7 @@ float AuxPort::Audio::Distortion::exponential(float& audio, const bool& preserve
 
 float AuxPort::Audio::Distortion::softClipper(float& audio, const bool& preserve)
 {
-	return preserve == false ? audio = audio - 0.34 * powf(audio, 3) : audio - 0.34 * powf(audio, 3);
+	return preserve == false ? audio = audio - 0.34f * powf(audio, 3) : audio - 0.34f * powf(audio, 3);
 
 }
 
@@ -141,7 +146,7 @@ float AuxPort::Audio::Distortion::sinusoidalFold(float& audio, const bool& prese
 
 float AuxPort::Audio::Distortion::squareFold(float& audio, const bool& preserve)
 {
-	return preserve == true ? audio = (audio > 0.0f ? 1 : -1) : audio > 0.0f ? 1 : -1;
+	return preserve == true ? audio = (audio > 0.0f ? 1.0f : -1.0f) : audio > 0.0f ? 1.0f : -1.0f;
 }
 
 float AuxPort::Audio::Distortion::levianTanh(float& audio, const bool& preserve)

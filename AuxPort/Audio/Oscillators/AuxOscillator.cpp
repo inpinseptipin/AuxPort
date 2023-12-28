@@ -36,6 +36,8 @@ float AuxPort::Audio::Sine::process()
 		mod += inc;
 		return sample;
 	}
+	else
+		return 0.0f;
 }
 
 float AuxPort::Audio::UnipolarSawtooth::process()
@@ -48,6 +50,8 @@ float AuxPort::Audio::UnipolarSawtooth::process()
 		mod += inc;
 		return sample;
 	}
+	else
+		return 0.0f;
 }
 
 void AuxPort::Audio::Square::setPulseWidth(float pulseWidth)
@@ -61,10 +65,12 @@ float AuxPort::Audio::Square::process()
 	{
 		if (mod >= 1.0)
 			mod = 0;
-		sample = mod > pulseWidth ? -1.0 : 1.0;
+		sample = mod > pulseWidth ? -1.0f : 1.0f;
 		mod += inc;
 		return sample;
-	}	
+	}
+	else
+		return 0.0f;
 }
 
 float AuxPort::Audio::BipolarSawtooth::process()
@@ -73,22 +79,26 @@ float AuxPort::Audio::BipolarSawtooth::process()
 	{
 		if (mod >= 1.0)
 			mod = 0;
-		sample = 2.0 * mod - 1.0;
+		sample = 2.0f * mod - 1.0f;
 		mod += inc;
 		return sample;
 	}
+	else
+		return 0.0f;
 }
 
 float AuxPort::Audio::Triangle::process()
 {
 	if (isPlaying())
 	{
-		if (mod >= 1.0)
-			mod = 0.0;
-		sample = 2.0 * fabs(2.0 * mod - 1.0) - 1.0;
+		if (mod >= 1.0f)
+			mod = 0.0f;
+		sample = 2.0f * fabs(2.0f * mod - 1.0f) - 1.0f;
 		mod += inc;
 		return sample;
 	}
+	else
+		return 0.0f;
 }
 
 float AuxPort::Audio::PBSaw::process()
@@ -106,6 +116,8 @@ float AuxPort::Audio::PBSaw::process()
 
 		return sample;
 	}
+	else
+		return 0.0f;
 }
 
 float AuxPort::Audio::PBWSaw::process()
@@ -118,6 +130,8 @@ float AuxPort::Audio::PBWSaw::process()
 		mod += inc;
 		return sample;
 	}
+	else
+		return 0.0f;
 }
 
 void AuxPort::Audio::PBWSaw::setSaturationLevel(float sat)
@@ -180,7 +194,7 @@ float AuxPort::Audio::ADSR::process()
 	if (this->state == State::Attack)
 	{
 		envelope += mods[Attack];
-		if (envelope >= parameters[Attack]);
+		if (envelope >= parameters[Attack])
 			this->state = State::Decay;
 	}
 	if (this->state == State::Decay)
@@ -195,7 +209,7 @@ float AuxPort::Audio::ADSR::process()
 		count++;
 		if (envelope < parameters[Sustain])
 			envelope = parameters[Sustain];
-		if (count >= parameters[SustainTime] * sampleRate);
+		if (count >= parameters[SustainTime] * sampleRate)
 		{
 			count = 0;
 			this->state = State::Release;

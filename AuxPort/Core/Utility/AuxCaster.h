@@ -170,6 +170,11 @@ namespace AuxPort
 			return std::to_string(number);
 		}
 
+		static std::string toStdString(long long number)
+		{
+			return std::to_string(number);
+		}
+
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// This casts a numerical char to int32.
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -194,6 +199,7 @@ namespace AuxPort
 			{
 				AuxAssert(invalidArgumentException.what() < 0, "String passed does not contain a valid rational number!");
 			}
+			return 0.0;
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////

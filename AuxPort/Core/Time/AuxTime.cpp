@@ -42,7 +42,8 @@ namespace AuxPort
 {
 	Timer::Timer()
 	{
-		ellapsedTime = 0.0;
+		type = nano;
+		ellapsedTime = 0LL;
 		isRunning = false;
 	}
 
@@ -80,7 +81,7 @@ namespace AuxPort
 		return isRunning != 0;
 	}
 
-	double Timer::getEllapsedTime(const Type& type)
+	long long  Timer::getEllapsedTime(const Type& type)
 	{
 		this->type = type;
 		switch (type)

@@ -47,6 +47,7 @@
 #include <math.h>
 #include <vector>
 #include "../../Core/Utility/AuxUtility.h"
+
 namespace AuxPort
 {
     namespace Audio
@@ -182,6 +183,8 @@ namespace AuxPort
                 Filter filter;
             };
         }
+
+        
     }
 }
 

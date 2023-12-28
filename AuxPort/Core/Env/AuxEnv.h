@@ -37,6 +37,7 @@
 */
 #include <assert.h>
 #include "../Log/AuxLog.h"
+#include <intrin.h>
 
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -61,10 +62,13 @@ typedef unsigned char uint8;
 typedef signed char int8;
 typedef unsigned short uint16;
 typedef signed short int16;
+
 #endif
 #define STR(x) #x
+#define XSTR(x) STR(x)
 #define AuxMessage(y) #y
 #define AuxAssert(x,y) if (!(x)) { printf("Error Message :%s \nStatement : %s \nFunction: %s \nfile %s, line %d.\n", AuxMessage(y),STR(x), __FUNCTION__, __FILE__, __LINE__); abort(); }
+
 
 #endif
 
@@ -89,6 +93,8 @@ typedef unsigned short uint16;
 typedef signed short int16;
 #endif
 #endif // 
+
+
 
 #endif // !ENV_H
 
