@@ -48,6 +48,7 @@
 #include "Core/Utility/AuxUtility.h"
 #include "Core/Utility/AuxSeries.h"
 #include "Core/TestCase/AuxCase.h"
+#include "Core/SIMD/AuxSimd.h"
 
 
 /*

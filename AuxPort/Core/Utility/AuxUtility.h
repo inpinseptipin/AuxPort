@@ -72,6 +72,15 @@ namespace AuxPort
 		}
 #endif 
 
+		static inline std::vector<float> generateRandomVals(uint32_t size)
+		{
+			srand(0);
+			std::vector<float> vals(size);
+			for (uint32_t i = 0; i < vals.size(); i++)
+				vals[i] = rand() / RAND_MAX;
+			return vals;
+		}
+
 		static inline float dBToLinear(float val)
 		{
 			return powf(10.0f, (val / 20.0f));

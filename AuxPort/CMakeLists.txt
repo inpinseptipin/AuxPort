@@ -51,6 +51,8 @@ add_library(
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxCaster.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxUtility.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxCircularBuffer.h
+    ${AuxTest_SOURCE_DIR}/AuxPort/Core/SIMD/AuxSimd.h
+    ${AuxTest_SOURCE_DIR}/AuxPort/Core/SIMD/AuxSimd.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Buffer/AuxBuffer.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Effects/Distortion/AuxDistortion.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Effects/Distortion/AuxDistortion.cpp
