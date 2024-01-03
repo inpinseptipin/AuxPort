@@ -39,6 +39,7 @@
 /*===================================================================================*/
 #include "../Env/AuxEnv.h"
 #include <complex>
+#include <random>
 namespace AuxPort
 {
 	const std::complex<double> iota(0, 1);
@@ -72,14 +73,7 @@ namespace AuxPort
 		}
 #endif 
 
-		static inline std::vector<float> generateRandomVals(uint32_t size)
-		{
-			srand(0);
-			std::vector<float> vals(size);
-			for (uint32_t i = 0; i < vals.size(); i++)
-				vals[i] = static_cast<float>(rand() / RAND_MAX);
-			return vals;
-		}
+		
 
 		static inline float dBToLinear(float val)
 		{
@@ -141,6 +135,25 @@ namespace AuxPort
 		static inline sample median(const std::vector<sample>& vector)
 		{
 			sample sum = 0;
+		}
+		template<class sample>
+		static inline void norm(std::vector<sample>& vec, float norm)
+		{
+			for (uint32_t i = 0; i < vec.size(); i++)
+				vec[i] /= norm;
+		}
+
+		template<class sample>
+		static inline std::vector<sample> generateRandomValues(size_t size, float rangeStart = -1.0, float rangeEnd = 1.0)
+		{
+			std::random_device rd;
+			std::mt19937 gen(rd());
+			std::uniform_real_distribution<> distr(rangeStart, rangeEnd);
+			std::vector<sample> vec;
+			vec.resize(size);
+			for (uint32_t i = 0; i < vec.size(); i++)
+				vec[i] = distr(gen);
+			return vec;
 		}
 		
 	};
