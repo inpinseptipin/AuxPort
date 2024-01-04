@@ -141,13 +141,15 @@ void AuxPort::Audio::PBWSaw::setSaturationLevel(float sat)
 
 AuxPort::Audio::WhiteNoise::WhiteNoise()
 {
+	gen.reset(new std::mt19937(randomDevice()));
+	distribution.reset(new std::uniform_real_distribution<>(-1, 1));
 }
 
 float AuxPort::Audio::WhiteNoise::process()
 {
 	if (isPlaying())
 	{
-		
+		return distribution->operator()(*gen);
 	}
 	return 0;
 }

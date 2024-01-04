@@ -145,6 +145,10 @@ namespace AuxPort
 			WhiteNoise(const WhiteNoise& wn) = default;
 			float process() override;
 		private:
+			std::random_device randomDevice;
+			std::unique_ptr<std::mt19937> gen;
+			std::unique_ptr<std::uniform_real_distribution<>> distribution;
+			
 		};
 ///////////////////////////////////////////////////////////////////////////////////////
 /// [Class] ADSR Oscillator
