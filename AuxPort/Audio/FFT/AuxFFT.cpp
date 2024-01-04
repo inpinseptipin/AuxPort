@@ -8,7 +8,7 @@ AuxPort::Audio::FourierTransform::FourierTransform(size_t fftSize)
 	_log2N = uint32(log2(fftSize));
 }
 
-void AuxPort::Audio::FourierTransform::computeTransform(const std::vector<float> inputBuffer, std::vector<float>& outputBuffer)
+void AuxPort::Audio::FourierTransform::computeTransform(const std::vector<float>& inputBuffer, std::vector<float>& outputBuffer)
 {
 	AuxAssert(inputBuffer.size() == _fftValues.size(), "Size of input buffer not same as the FFT Engine's expectation");
 	AuxAssert(outputBuffer.size() == inputBuffer.size(), "FFT output buffer's size should be the same as the input audio buffer");
@@ -33,6 +33,11 @@ void AuxPort::Audio::FourierTransform::computeInverseTransform(std::vector<float
 std::complex<float> AuxPort::Audio::FourierTransform::get(size_t index) const
 {
 	return _fftValues[index];
+}
+
+std::vector<std::complex<float>>* AuxPort::Audio::FourierTransform::getFourierTransformFrame()
+{
+	return &_fftValues;
 }
 
 size_t AuxPort::Audio::FourierTransform::size() const

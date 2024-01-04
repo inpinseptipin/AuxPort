@@ -132,10 +132,12 @@ namespace AuxPort
 		}
 
 		template<class sample>
-		static inline sample median(const std::vector<sample>& vector)
+		static inline sample median(std::vector<sample> vector)
 		{
-			sample sum = 0;
+			std::sort(vector.begin(), vector.end());
+			return vector.size() % 2 == 0 ? vector[vector.size() / 2] : mean<sample>({ vector[vector.size() / 2],vector[vector.size() / 2 + 1] });
 		}
+		
 		template<class sample>
 		static inline void norm(std::vector<sample>& vec, float norm)
 		{
