@@ -47,7 +47,7 @@ namespace AuxPort
 {
 	namespace Audio
 	{
-		template<class sample>
+		
 		class Window
 		{
 		public:
@@ -55,45 +55,63 @@ namespace AuxPort
 			{
 				HannWin, HammWin
 			};
-			static void generate(AuxPort::Audio::Buffer<sample>& windowBuffer, const size_t& windowSize, const Type& window = Type::Hann)
+			template<class sample>
+			static void generate(std::vector<sample>& windowBuffer, const Type& windowType = Type::HannWin)
 			{
-				if (windowSize == 0)
+				AuxAssert(windowBuffer.size() > 0, "Cannot generate a Window of Size <= 0");
+				switch (windowType)
+				{
+				case Type::HannWin:
+					Hann<sample>(windowBuffer);
+					break;
+				case Type::HammWin:
+					Hamming<sample>(windowBuffer);
+					break;
+				default:
 					return;
-				else
-				{
-					switch (window)
-					{
-					case Type::HannWin:
-						Hann(windowBuffer, windowSize);
-						break;
-					case Type::HammWin:
-						Hamming(windowBuffer, windowSize);
-						break;
-					default:
-						return;
-					}
 				}
+				
 			}
-		private:
-			static void Hann(AuxPort::Audio::Buffer<sample>& windowBuffer, const size_t& windowSize)
+			template<class sample>
+			static std::vector<sample> generate(size_t windowSize, Type windowType = Type::HannWin)
 			{
+				AuxAssert(windowSize > 0,"Cannot generate a Window of Size <= 0");
+				std::vector<sample> windowBuffer;
 				windowBuffer.resize(windowSize);
-				sample val;
-				for (size_t i = 0; i < windowSize; i++)
+				switch (windowType)
 				{
-					val = static_cast<sample>(0.5 * (1 - cos(2 * pi * i / windowSize)));
-					windowBuffer.set(val, i);
+				case Type::HannWin:
+					Hann<sample>(windowBuffer);
+					return windowBuffer;
+					break;
+				case Type::HammWin:
+					Hamming<sample>(windowBuffer);
+					return windowBuffer;
+					break;
+				default:
+					return windowBuffer;
 				}
 			}
 
-			static void Hamming(AuxPort::Audio::Buffer<sample>& windowBuffer, const size_t& windowSize)
+		private:
+			template<class sample>
+			static void Hann(std::vector<sample>& windowBuffer)
 			{
-				windowBuffer.resize(windowSize);
 				sample val;
-				for (size_t i = 0; i < windowSize; i++)
+				for (size_t i = 0; i < windowBuffer.size(); i++)
 				{
-					val = static_cast<sample>(0.54 - 0.46 * cos(2 * pi * i / windowSize));
-					windowBuffer.set(val, i);
+					val = static_cast<sample>(0.5 * (1 - cos(2 * pi * i / windowBuffer.size())));
+					windowBuffer[i] = val;
+				}
+			}
+			template<class sample>
+			static void Hamming(std::vector<sample>& windowBuffer)
+			{
+				sample val;
+				for (size_t i = 0; i < windowBuffer.size(); i++)
+				{
+					val = static_cast<sample>(0.54 - 0.46 * cos(2 * pi * i / windowBuffer.size()));
+					windowBuffer[i] = val;
 				}
 			}
 
