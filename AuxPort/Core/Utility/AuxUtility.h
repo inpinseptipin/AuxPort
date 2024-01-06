@@ -73,28 +73,44 @@ namespace AuxPort
 		}
 #endif 
 
-		
 
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Converts decibels (dB) to single-precision float		
+		///////////////////////////////////////////////////////////////////////////////////////
 		static inline float dBToLinear(float val)
 		{
 			return powf(10.0f, (val / 20.0f));
 		}
 
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Converts decibels (dB) to double-precision float	
+		///////////////////////////////////////////////////////////////////////////////////////
 		static inline double dBToLinear(double val)
 		{
 			return pow(10.0, (val / 20.0));
 		}
 
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Converts single-precision float to decibels (dB)	
+		///////////////////////////////////////////////////////////////////////////////////////
 		static inline float linearTodB(float val)
 		{
 			return 20.0f * log10f(val);
 		}
 
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Converts double-precision float to decibels (dB)		
+		///////////////////////////////////////////////////////////////////////////////////////
 		static inline double linearTodB(double val)
 		{
 			return 20.0 * log10(val);
 		}
 
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Fill a standard vector with zeros		
+		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline void zeroThis(std::vector<sample>& audio)
 		{
@@ -102,18 +118,27 @@ namespace AuxPort
 				audio[i] = 0;
 		}
 
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Evaluates the Signum function
+		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline sample signum(const sample& audio)
 		{
 			return  audio < 0 ? -1.0f : audio > 0;
 		}
 
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Rounds a number to the nearest integer	
+		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline sample round(const sample& audio)
 		{
 			return audio > 0.0 ? static_cast<sample>(floor(audio + 0.5)) : static_cast<float>(ceil(audio - 0.5));
 		}
 
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Remaps a input in a particular range to another range.
+		///////////////////////////////////////////////////////////////////////////////////////
 		template<class range>
 		static inline range remap(range input, range outputStart, range outputEnd, range inputStart, range inputEnd)
 		{
@@ -121,6 +146,9 @@ namespace AuxPort
 			return outputStart + static_cast<range>(slope) * (input - inputStart);
 		}
 
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Computes the mean for a vector		
+		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline sample mean(const std::vector<sample>& vector)
 		{
@@ -131,6 +159,9 @@ namespace AuxPort
 			return sum;
 		}
 
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Computes the median for a vector [Time Complexity : O(Nlog2(n)), Memory Complexity : O(N)]	
+		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline sample median(std::vector<sample> vector)
 		{
@@ -138,13 +169,20 @@ namespace AuxPort
 			return vector.size() % 2 == 0 ? vector[vector.size() / 2] : mean<sample>({ vector[vector.size() / 2],vector[vector.size() / 2 + 1] });
 		}
 		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Normalizes a vector with a val.		
+		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline void norm(std::vector<sample>& vec, float norm)
 		{
+			AuxAssert(norm != 0, "Cannot Divide by Zero");
 			for (uint32_t i = 0; i < vec.size(); i++)
 				vec[i] /= norm;
 		}
 
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Returns a std::vector with Random Values between a range	
+		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline std::vector<sample> generateRandomValues(size_t size, float rangeStart = -1.0, float rangeEnd = 1.0)
 		{
@@ -156,6 +194,20 @@ namespace AuxPort
 			for (uint32_t i = 0; i < vec.size(); i++)
 				vec[i] = distr(gen);
 			return vec;
+		}
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Fills a memory allocated std::vector with random values.	
+		///////////////////////////////////////////////////////////////////////////////////////
+		template<class sample>
+		static inline void generateRandomValues(std::vector<sample>& vector,float rangeStart = -1.0, float rangeEnd = 1.0)
+		{
+			AuxAssert(vector.size() > 0,"Vector size should be greater than 0")
+			std::random_device rd;
+			std::mt19937 gen(rd());
+			std::uniform_real_distribution<> distr(rangeStart, rangeEnd);
+			for (uint32_t i = 0; i < vector.size(); i++)
+				vector[i] = distr(gen);
 		}
 		
 	};

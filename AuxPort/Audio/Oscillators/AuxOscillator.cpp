@@ -5,7 +5,7 @@ void AuxPort::Audio::Oscillator::setSampleRate(uint32_t sampleRate)
 	this->sampleRate = sampleRate;
 }
 
-void AuxPort::Audio::Oscillator::setFrequency(uint32_t frequency)
+void AuxPort::Audio::Oscillator::setFrequency(float frequency)
 {
 	this->frequency = frequency;
 	this->inc = static_cast<float>(this->frequency) / static_cast<float>(this->sampleRate);
@@ -227,4 +227,41 @@ float AuxPort::Audio::ADSR::process()
 
 	}
 	return envelope;
+}
+
+AuxPort::Audio::KPString::KPString()
+{
+	seedBuffer.resize(sampleRate);
+}
+
+float AuxPort::Audio::KPString::process()
+{
+	if (isPlaying())
+	{
+		r2 = r1 + 1;
+		r2 = r2 > seedSize ? r2 = 0 : r2;
+		seedBuffer[r1] = 0.95 * (seedBuffer[r1] + seedBuffer[r2]) / 2;
+		r1++;
+		r1 = r1 > seedSize ? r1 = 0 : r1;
+		return seedBuffer[r1];
+	}
+	return 0.0f;
+}
+
+void AuxPort::Audio::KPString::setSampleRate(uint32_t sampleRate)
+{
+	if (this->sampleRate != sampleRate)
+	{
+		this->sampleRate = sampleRate;
+		seedBuffer.resize(sampleRate);
+		std::fill(seedBuffer.begin(), seedBuffer.end(), 0.0);
+	}
+}
+
+void AuxPort::Audio::KPString::setFrequency(float frequency)
+{
+	seedSize = static_cast<uint32_t>(this->sampleRate / frequency);
+	inc = frequency / sampleRate;
+	
+	AuxPort::Utility::generateRandomValues<float>(seedBuffer);
 }

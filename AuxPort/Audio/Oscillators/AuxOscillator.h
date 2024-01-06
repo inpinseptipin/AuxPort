@@ -17,29 +17,29 @@ namespace AuxPort
 			~Oscillator() = default;
 			Oscillator(const Oscillator& osc) = default;
 ///////////////////////////////////////////////////////////////////////////////////////
-/// Use this function to set the sample rate of the oscillator
+/// Use this function to set the sample rate of the oscillator [Overridable]
 ///////////////////////////////////////////////////////////////////////////////////////
 			virtual void setSampleRate(uint32_t sampleRate);
 ///////////////////////////////////////////////////////////////////////////////////////
-/// Use this function to set the frequency of the oscillator
+/// Use this function to set the frequency of the oscillator [Overridable]
 ///////////////////////////////////////////////////////////////////////////////////////
-			virtual void setFrequency(uint32_t frequency);
+			virtual void setFrequency(float frequency);
 ///////////////////////////////////////////////////////////////////////////////////////
-/// This function generates the sample from the Oscillator..... or you can implement it for your own Oscillator class
+/// This function generates the sample from the Oscillator [Overridable]
 ///////////////////////////////////////////////////////////////////////////////////////
 			virtual float process();
 ///////////////////////////////////////////////////////////////////////////////////////
-/// Use this function to stop the Oscillator from generating samples
+/// Use this function to stop the Oscillator from generating samples [Overridable]
 ///////////////////////////////////////////////////////////////////////////////////////
 			virtual void stop();
 ///////////////////////////////////////////////////////////////////////////////////////
-/// Checks whether the Oscillator is still generating samples
+/// Checks whether the Oscillator is still generating samples [Overridable]
 ///////////////////////////////////////////////////////////////////////////////////////
 			virtual bool isPlaying();
 		protected:
-			uint32_t sampleRate;
-			uint32_t frequency;
-			float sample;
+			uint32_t sampleRate = 44100;
+			float frequency = 100;
+			float sample = 0;
 			float mod = 0;
 			float inc = 0;
 		};
@@ -150,6 +150,23 @@ namespace AuxPort
 			std::unique_ptr<std::uniform_real_distribution<>> distribution;
 			
 		};
+
+		class KPString : public Oscillator
+		{
+		public:
+			KPString();
+			~KPString() = default;
+			KPString(const KPString& kpstring) = default;
+			float process() override;
+			void setSampleRate(uint32_t sampleRate) override;
+			void setFrequency(float frequency) override;
+		private:
+			std::vector<float> seedBuffer;
+			uint32_t r1 = 0;
+			uint32_t r2 = 0;
+			uint32_t seedSize = 0;
+		};
+
 ///////////////////////////////////////////////////////////////////////////////////////
 /// [Class] ADSR Oscillator
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -177,6 +194,8 @@ namespace AuxPort
 			State state = State::OFF;
 			uint32_t count = 0;
 		};
+
+		
 
 	}
 }
