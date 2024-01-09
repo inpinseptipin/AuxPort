@@ -209,6 +209,12 @@ namespace AuxPort
 			for (uint32_t i = 0; i < vector.size(); i++)
 				vector[i] = distr(gen);
 		}
+
+		template<class sample>
+		static inline sample sinc(sample val)
+		{
+			return val == 0 ? 1 : sinf(val) / (val);
+		}
 		
 	};
 

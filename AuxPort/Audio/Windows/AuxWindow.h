@@ -55,7 +55,7 @@ namespace AuxPort
 		public:
 			enum Type
 			{
-				HannWin, HammWin
+				HannWin, HammWin, BlackmanWin,BarlettWin
 			};
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// [Function] Samples a Window function and fills it in a memory allocated std::vector
@@ -71,6 +71,12 @@ namespace AuxPort
 					break;
 				case Type::HammWin:
 					Hamming<sample>(windowBuffer);
+					break;
+				case Type::BlackmanWin:
+					Blackman<sample>(windowBuffer);
+					break;
+				case Type::BarlettWin:
+					Bartlett<sample>(windowBuffer);
 					break;
 				default:
 					return;
@@ -96,6 +102,14 @@ namespace AuxPort
 					Hamming<sample>(windowBuffer);
 					return windowBuffer;
 					break;
+				case Type::BlackmanWin:
+					Blackman<sample>(windowBuffer);
+					return windowBuffer;
+					break;
+				case Type::BarlettWin:
+					Bartlett<sample>(windowBuffer);
+					return windowBuffer;
+					break;
 				default:
 					return windowBuffer;
 				}
@@ -106,9 +120,10 @@ namespace AuxPort
 			static void Hann(std::vector<sample>& windowBuffer)
 			{
 				sample val;
+				auto N = windowBuffer.size() - 1;
 				for (size_t i = 0; i < windowBuffer.size(); i++)
 				{
-					val = static_cast<sample>(0.5 * (1 - cos(2 * pi * i / windowBuffer.size())));
+					val = static_cast<sample>(0.5 * (1 - cos(2 * pi * i / N)));
 					windowBuffer[i] = val;
 				}
 			}
@@ -116,9 +131,39 @@ namespace AuxPort
 			static void Hamming(std::vector<sample>& windowBuffer)
 			{
 				sample val;
+				auto N = windowBuffer.size() - 1;
+
 				for (size_t i = 0; i < windowBuffer.size(); i++)
 				{
-					val = static_cast<sample>(0.54 - 0.46 * cos(2 * pi * i / windowBuffer.size()));
+					val = static_cast<sample>(0.54 - 0.46 * cos(2 * pi * i / N));
+					windowBuffer[i] = val;
+				}
+			}
+
+			template<class sample>
+			static void Blackman(std::vector<sample>& windowBuffer)
+			{
+				sample val;
+				auto N = windowBuffer.size() - 1;
+
+				for (uint32_t i = 0; i < windowBuffer.size(); i++)
+				{
+					val = static_cast<sample>(0.42 - 0.5 * (cos(2 * pi * i / N)) + 0.08 * cos(4 * pi * i / N));
+					windowBuffer[i] = val;
+				}
+			}
+
+			template<class sample>
+			static void Bartlett(std::vector<sample>& windowBuffer)
+			{
+				sample val;
+				float N = windowBuffer.size() - 1;
+				for (uint32_t i = 0; i < windowBuffer.size(); i++)
+				{
+					if (i >= 0 && i <= windowBuffer.size() / 2)
+						val = static_cast<sample>(2 * i / N);
+					if (i >= windowBuffer.size() / 2 && i < windowBuffer.size())
+						val = static_cast<sample>(2 - 2 * i / N);
 					windowBuffer[i] = val;
 				}
 			}
