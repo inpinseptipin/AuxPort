@@ -180,6 +180,16 @@ namespace AuxPort
 				vec[i] /= norm;
 		}
 
+		template<class sample>
+		static inline sample abssum(const std::vector<sample>& vec)
+		{
+			AuxAssert(vec.size() > 0, "Cannot take the absolute sum of an empty vector");
+			sample sum = 0;
+			for (uint32_t i = 0; i < vec.size(); i++)
+				sum += abs(vec[i]);
+			return sum;
+		}
+
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Static] Returns a std::vector with Random Values between a range	
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -211,9 +221,29 @@ namespace AuxPort
 		}
 
 		template<class sample>
+		static inline sample getMax(const std::vector<sample>& vector)
+		{
+			AuxAssert(vector.size() > 0, "Vector size should be greater than 0");
+			if (vector.size() == 1)
+				return vector[0];
+			sample max = vector[0];
+			for (uint32_t i = 1; i < vector.size(); i++)
+				max = max < vector[i] ? vector[i] : max;
+			return max;
+		}
+
+		template<class sample>
+		static inline void divide(std::vector<sample>& vector, sample value)
+		{
+			AuxAssert(value != 0, "Divide by Zero encountered");
+			for (uint32_t i = 0; i < vector.size(); i++)
+				vector[i] /= value;
+		}
+
+		template<class sample>
 		static inline sample sinc(sample val)
 		{
-			return val == 0 ? 1 : sinf(val) / (val);
+			return val == 0 ? 1 : sinf(val*pi) / (val*pi);
 		}
 		
 	};

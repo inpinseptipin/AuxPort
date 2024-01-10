@@ -93,6 +93,8 @@ namespace AuxPort
 			std::vector<std::complex<float>> _fftValues;
 			uint32 _log2N = 0;
 		};
+
+
 	}
 }
 #endif

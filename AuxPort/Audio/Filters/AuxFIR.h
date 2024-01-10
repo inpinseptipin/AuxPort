@@ -22,6 +22,7 @@ namespace AuxPort
 			void compute(float cutoffFrequency, uint32_t order);
 			void replace(const std::vector<float>& impulseResponse);
 			void replace(float* impulseResponse, uint32_t size);
+			void normalize();
 			void Log() override;
 			std::vector<float>* getImpulseResponse();
 		protected:
@@ -29,6 +30,7 @@ namespace AuxPort
 			float passband = 0;
 			float stopband = 0;
 			float cutoff = 0;
+			float normFreq = 0;
 			uint32_t order = 0;
 			uint32_t sampleRate = 0;
 		};

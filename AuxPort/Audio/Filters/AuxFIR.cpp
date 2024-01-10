@@ -19,6 +19,13 @@ void AuxPort::Audio::FIR::replace(float* impulseResponse, uint32_t size)
 		this->impulseResponse[i] = impulseResponse[i];
 }
 
+void AuxPort::Audio::FIR::normalize()
+{
+	AuxAssert(this->impulseResponse.size() > 0, "Impulse Response Vector Size can't be zero");
+	auto gain = AuxPort::Utility::abssum(impulseResponse);
+	AuxPort::Utility::norm(impulseResponse, gain);
+}
+
 void AuxPort::Audio::FIR::Log()
 {
 	setColour(AuxPort::ColourType::Green);
@@ -45,6 +52,7 @@ void AuxPort::Audio::FIR::compute(float passband, float stopband, uint32_t order
 	this->passband = (2 * AuxPort::pi * passband) / this->sampleRate;
 	this->stopband = (2 * AuxPort::pi * stopband) / this->sampleRate;
 	this->cutoff = (this->passband + this->stopband) / 2;
+	this->normFreq = this->cutoff;
 	order = order % 2 == 1 ? order : order+1;
 	this->order = order;
 	impulseResponse.resize(order);
@@ -58,6 +66,7 @@ void AuxPort::Audio::FIR::compute(float cutoffFrequency, uint32_t order)
 	AuxAssert(order < 1000, "Why are you creating a 1000 tap FIR?... What's wrong with you");
 	AuxAssert(cutoffFrequency < (this->sampleRate / 2) && cutoffFrequency > 0, "Cutoff can't be greater than Nyquist or less than 0");
 	this->cutoff = (2 * AuxPort::pi * cutoffFrequency) / this->sampleRate;
+	this->normFreq = this->cutoff / 2;
 	order = order % 2 == 1 ? order : order+1;
 	this->order = order;
 	impulseResponse.resize(order);
@@ -71,8 +80,9 @@ void AuxPort::Audio::RectangleFIR::filterAlgo()
 	for (uint32_t i = 0; i < impulseResponse.size(); i++)
 	{
 		int32_t v = i - (N/2);
-		impulseResponse[i] = (cutoff/pi)*AuxPort::Utility::sinc<float>(cutoff * v/pi);
+		impulseResponse[i] = (cutoff/pi)*AuxPort::Utility::sinc<float>((cutoff/pi) * v);
 	}
+
 }
 
 void AuxPort::Audio::HammingFIR::filterAlgo()
@@ -85,6 +95,7 @@ void AuxPort::Audio::HammingFIR::filterAlgo()
 		int32_t v = i - (N/2);
 		impulseResponse[i] = hamming[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v)/pi);
 	}
+
 }
 
 void AuxPort::Audio::HannFIR::filterAlgo()
