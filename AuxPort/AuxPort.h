@@ -59,8 +59,10 @@
 #include "Audio/Effects/Gain/AuxPan.h"
 #include "Audio/Windows/AuxWindow.h"
 #include "Audio/FFT/AuxFFT.h"
+#include "Audio/Filters/AuxFIR.h"
 #include "Audio/Filters/AuxIIR.h"
 #include "Audio/Oscillators/AuxOscillator.h"
+
 
 
 

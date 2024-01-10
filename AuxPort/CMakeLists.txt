@@ -59,6 +59,8 @@ add_library(
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Windows/AuxWindow.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/FFT/AuxFFT.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/FFT/AuxFFT.cpp
+    ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Filters/AuxFIR.h
+    ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Filters/AuxFIR.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Filters/AuxIIR.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Filters/AuxIIR.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxPan.h
