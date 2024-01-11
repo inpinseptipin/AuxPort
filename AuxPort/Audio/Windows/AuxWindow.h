@@ -55,7 +55,7 @@ namespace AuxPort
 		public:
 			enum Type
 			{
-				HannWin, HammWin, BlackmanWin,BarlettWin
+				HannWin, HammWin, BlackmanWin, BartlettWin, BartlettHannWin, NuttallWin, FlatWin, BlackmanHarrisWin
 			};
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// [Function] Samples a Window function and fills it in a memory allocated std::vector
@@ -75,8 +75,20 @@ namespace AuxPort
 				case Type::BlackmanWin:
 					Blackman<sample>(windowBuffer);
 					break;
-				case Type::BarlettWin:
+				case Type::BartlettWin:
 					Bartlett<sample>(windowBuffer);
+					break;
+				case Type::BartlettHannWin:
+					BartlettHanning<sample>(windowBuffer);
+					break;
+				case Type::NuttallWin:
+					Nuttall<sample>(windowBuffer);
+					break;
+				case Type::BlackmanHarrisWin:
+					BlackmanHarris<sample>(windowBuffer);
+					break;
+				case Type::FlatWin:
+					Flat<sample>(windowBuffer);
 					break;
 				default:
 					return;
@@ -106,8 +118,24 @@ namespace AuxPort
 					Blackman<sample>(windowBuffer);
 					return windowBuffer;
 					break;
-				case Type::BarlettWin:
+				case Type::BartlettWin:
 					Bartlett<sample>(windowBuffer);
+					return windowBuffer;
+					break;
+				case Type::BartlettHannWin:
+					BartlettHanning<sample>(windowBuffer);
+					return windowBuffer;
+					break;
+				case Type::NuttallWin:
+					Nuttall<sample>(windowBuffer);
+					return windowBuffer;
+					break;
+				case Type::FlatWin:
+					Flat<sample>(windowBuffer);
+					return windowBuffer;
+					break;
+				case Type::BlackmanHarrisWin:
+					BlackmanHarris<sample>(windowBuffer);
 					return windowBuffer;
 					break;
 				default:
@@ -168,7 +196,67 @@ namespace AuxPort
 				}
 			}
 
+			template<class sample>
+			static void BartlettHanning(std::vector<sample>& windowBuffer)
+			{
+				sample val;
+				float N = windowBuffer.size() - 1;
+				for (uint32_t i = 0; i < windowBuffer.size(); i++)
+				{
+					val = static_cast<sample>(0.62 - 0.48 * abs((i / N) - 0.5) + 0.38 * cos(2 * pi * ((i / N) - 0.5)));
+					windowBuffer[i] = val;
+				}	
+			}
 
+			template<class sample>
+			static void Nuttall(std::vector<sample>& windowBuffer)
+			{
+				sample val;
+				sample a0 = 0.3635819;
+				sample a1 = 0.4891775;
+				sample a2 = 0.1365995;
+				sample a3 = 0.0106411;
+				float N = windowBuffer.size() - 1;
+				for (uint32_t i = 0; i < windowBuffer.size(); i++)
+				{
+					val = a0 - a1 * cos(2 * pi * i / N) + a2 * cos(4 * pi * i / N) - a3 * cos(6 * pi * i / N);
+					windowBuffer[i] = val;
+				}
+					
+			}
+
+			template<class sample>
+			static void Flat(std::vector<sample>& windowBuffer)
+			{
+				sample val;
+				sample a0 = 0.21557895;
+				sample a1 = 0.41663158;
+				sample a2 = 0.277263158;
+				sample a3 = 0.083578947;
+				sample a4 = 0.006947368;
+				float N = windowBuffer.size() - 1;
+				for (uint32_t i = 0; i < windowBuffer.size(); i++)
+				{
+					val = a0 - a1 * cos(2 * pi * i / N) + a2 * cos(4 * pi * i / N) - a3 * cos(6 * pi * i / N) + a4 * cos(8 * pi * i / N);
+					windowBuffer[i] = val;
+				}
+			}
+
+			template<class sample>
+			static void BlackmanHarris(std::vector<sample>& windowBuffer)
+			{
+				sample val;
+				sample a0 = 0.35875;
+				sample a1 = 0.48829;
+				sample a2 = 0.14128;
+				sample a3 = 0.01168;
+				float N = windowBuffer.size() - 1;
+				for (uint32_t i = 0; i < windowBuffer.size(); i++)
+				{
+					val = a0 - a1 * cos(2 * pi * i / N) + a2 * cos(4 * pi * i / N) - a3 * cos(6 * pi * i / N);
+					windowBuffer[i] = val;
+				}
+			}
 		};
 	}
 }
