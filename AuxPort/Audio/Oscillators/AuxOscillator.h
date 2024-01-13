@@ -3,6 +3,7 @@
 
 #include "../../Core/Env/AuxEnv.h"
 #include "../../Core/Utility/AuxUtility.h"
+#include "../Filters/AuxIIR.h"
 namespace AuxPort
 {
 	namespace Audio
@@ -154,6 +155,10 @@ namespace AuxPort
 		class KPString : public Oscillator
 		{
 		public:
+			enum Parameters
+			{
+				Pick
+			};
 			KPString();
 			~KPString() = default;
 			KPString(const KPString& kpstring) = default;

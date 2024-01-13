@@ -153,6 +153,8 @@ namespace AuxPort
                 float output;
             };
 
+           
+
             ///////////////////////////////////////////////////////////////////////////////////////
             /// Engine implements all the IIR filters and can be used to process audio right away. It is also compatible with Juce::AudioBuffer<float>
             ///////////////////////////////////////////////////////////////////////////////////////

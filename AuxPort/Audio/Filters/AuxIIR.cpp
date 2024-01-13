@@ -465,3 +465,4 @@ float AuxPort::Audio::IIR::FirstOrder::processSample(float sample)
     else
         return 0;
 }
+
