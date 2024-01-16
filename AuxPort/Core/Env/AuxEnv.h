@@ -95,6 +95,42 @@ typedef signed short int16;
 #endif // 
 
 
+namespace AuxPort {
+	class Env {
+	public:
+		static bool supportsSSE()
+		{
+#if _WIN32 || _WIN64
+			int cpuInfo[4];
+			__cpuid(cpuInfo, 1);
+			return (cpuInfo[3] & (1 << 25));
+#endif	
+			return false;
+		}
+
+		static bool supportsSSE2()
+		{
+#if _WIN32 || _WIN64
+			int cpuInfo[4];
+			__cpuid(cpuInfo, 1);
+			return (cpuInfo[3] & (1 << 26));
+#endif
+			return false;
+		}
+
+		static bool supportsAVX() 
+		{
+#if _WIN32 || _WIN64
+			int cpuInfo[4];
+			__cpuid(cpuInfo, 1);
+			return (cpuInfo[2] & (1 << 28));
+#endif
+			return false;
+		}
+	};
+
+}
+
 
 #endif // !ENV_H
 
