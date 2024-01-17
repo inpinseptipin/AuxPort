@@ -37,12 +37,16 @@
 */
 #include <assert.h>
 #include "../Log/AuxLog.h"
+
+#if defined(_MSC_VER)
 #include <intrin.h>
-
-
+#define AUXSIMD 1
+#endif
 ///////////////////////////////////////////////////////////////////////////////////////
 ///	Preprocessor Defintion to Determine if Compiling on Windows x86 or x64
 ///////////////////////////////////////////////////////////////////////////////////////
+
+
 #if _WIN32 || _WIN64
 #if _WIN64
 #define AUXPORT_64
@@ -100,30 +104,36 @@ namespace AuxPort {
 	public:
 		static bool supportsSSE()
 		{
+#if AUXSIMD
 #if _WIN32 || _WIN64
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[3] & (1 << 25));
+#endif
 #endif	
 			return false;
 		}
 
 		static bool supportsSSE2()
 		{
+#if AUXSIMD
 #if _WIN32 || _WIN64
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[3] & (1 << 26));
+#endif
 #endif
 			return false;
 		}
 
 		static bool supportsAVX() 
 		{
+#if AUXSIMD
 #if _WIN32 || _WIN64
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[2] & (1 << 28));
+#endif
 #endif
 			return false;
 		}
