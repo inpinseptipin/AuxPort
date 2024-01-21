@@ -220,7 +220,7 @@ namespace AuxPort
 			std::mt19937 gen(rd());
 			std::uniform_real_distribution<> distr(rangeStart, rangeEnd);
 			for (uint32_t i = 0; i < vector.size(); i++)
-				vector[i] = distr(gen);
+				vector[i] = static_cast<sample>(distr(gen));
 		}
 
 

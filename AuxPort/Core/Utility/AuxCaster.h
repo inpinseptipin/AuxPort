@@ -133,7 +133,7 @@ namespace AuxPort
 			std::string stringNumber;
 			stringNumber.resize(AuxPort::Utility::numberOfDigits(number));
 			uint64 digit;
-			int i = stringNumber.size() - 1;
+			size_t i = stringNumber.size() - 1;
 			while (number)
 			{
 				digit = number % 10;

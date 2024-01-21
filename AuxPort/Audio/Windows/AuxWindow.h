@@ -185,7 +185,7 @@ namespace AuxPort
 			static void Bartlett(std::vector<sample>& windowBuffer)
 			{
 				sample val;
-				float N = windowBuffer.size() - 1;
+				float N = static_cast<float>(windowBuffer.size() - 1);
 				for (uint32_t i = 0; i < windowBuffer.size(); i++)
 				{
 					if (i >= 0 && i <= windowBuffer.size() / 2)
@@ -200,7 +200,7 @@ namespace AuxPort
 			static void BartlettHanning(std::vector<sample>& windowBuffer)
 			{
 				sample val;
-				float N = windowBuffer.size() - 1;
+				float N = static_cast<float>(windowBuffer.size() - 1);
 				for (uint32_t i = 0; i < windowBuffer.size(); i++)
 				{
 					val = static_cast<sample>(0.62 - 0.48 * abs((i / N) - 0.5) + 0.38 * cos(2 * pi * ((i / N) - 0.5)));
@@ -212,11 +212,11 @@ namespace AuxPort
 			static void Nuttall(std::vector<sample>& windowBuffer)
 			{
 				sample val;
-				sample a0 = 0.3635819;
-				sample a1 = 0.4891775;
-				sample a2 = 0.1365995;
-				sample a3 = 0.0106411;
-				float N = windowBuffer.size() - 1;
+				sample a0 = static_cast<sample>(0.3635819);
+				sample a1 = static_cast<sample>(0.4891775);
+				sample a2 = static_cast<sample>(0.1365995);
+				sample a3 = static_cast<sample>(0.0106411);
+				sample N = static_cast<sample>(windowBuffer.size() - 1);
 				for (uint32_t i = 0; i < windowBuffer.size(); i++)
 				{
 					val = a0 - a1 * cos(2 * pi * i / N) + a2 * cos(4 * pi * i / N) - a3 * cos(6 * pi * i / N);
@@ -229,12 +229,12 @@ namespace AuxPort
 			static void Flat(std::vector<sample>& windowBuffer)
 			{
 				sample val;
-				sample a0 = 0.21557895;
-				sample a1 = 0.41663158;
-				sample a2 = 0.277263158;
-				sample a3 = 0.083578947;
-				sample a4 = 0.006947368;
-				float N = windowBuffer.size() - 1;
+				sample a0 = static_cast<sample>(0.21557895);
+				sample a1 = static_cast<sample>(0.41663158);
+				sample a2 = static_cast<sample>(0.277263158);
+				sample a3 = static_cast<sample>(0.083578947);
+				sample a4 = static_cast<sample>(0.006947368);
+				float N = static_cast<float>(windowBuffer.size() - 1);
 				for (uint32_t i = 0; i < windowBuffer.size(); i++)
 				{
 					val = a0 - a1 * cos(2 * pi * i / N) + a2 * cos(4 * pi * i / N) - a3 * cos(6 * pi * i / N) + a4 * cos(8 * pi * i / N);
@@ -246,11 +246,11 @@ namespace AuxPort
 			static void BlackmanHarris(std::vector<sample>& windowBuffer)
 			{
 				sample val;
-				sample a0 = 0.35875;
-				sample a1 = 0.48829;
-				sample a2 = 0.14128;
-				sample a3 = 0.01168;
-				float N = windowBuffer.size() - 1;
+				sample a0 = static_cast<sample>(0.35875);
+				sample a1 = static_cast<sample>(0.48829);
+				sample a2 = static_cast<sample>(0.14128);
+				sample a3 = static_cast<sample>(0.01168);
+				float N = static_cast<float>(windowBuffer.size() - 1);
 				for (uint32_t i = 0; i < windowBuffer.size(); i++)
 				{
 					val = a0 - a1 * cos(2 * pi * i / N) + a2 * cos(4 * pi * i / N) - a3 * cos(6 * pi * i / N);

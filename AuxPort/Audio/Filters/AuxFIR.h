@@ -102,6 +102,18 @@ namespace AuxPort
 			void filterAlgo() override;
 		};
 
+		class BartlettFIR : public FIR
+		{
+		public:
+			BartlettFIR() = default;
+			~BartlettFIR() = default;
+			BartlettFIR(const BartlettFIR& blackmanFIR) = default;
+			void filterAlgo() override;
+		private:
+
+		};
+
+		
 		
 	}
 }

@@ -149,7 +149,7 @@ float AuxPort::Audio::WhiteNoise::process()
 {
 	if (isPlaying())
 	{
-		return distribution->operator()(*gen);
+		return static_cast<float>(distribution->operator()(*gen));
 	}
 	return 0;
 }
@@ -240,7 +240,7 @@ float AuxPort::Audio::KPString::process()
 	{
 		r2 = r1 + 1;
 		r2 = r2 > seedSize ? r2 = 0 : r2;
-		seedBuffer[r1] = 0.95 * (seedBuffer[r1] + seedBuffer[r2]) / 2;
+		seedBuffer[r1] = 0.95f * (seedBuffer[r1] + seedBuffer[r2]) / 2.0f;
 		r1++;
 		r1 = r1 > seedSize ? r1 = 0 : r1;
 		return seedBuffer[r1];

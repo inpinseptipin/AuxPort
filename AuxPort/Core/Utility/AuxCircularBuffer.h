@@ -145,7 +145,7 @@ namespace AuxPort
 		}
 		uint32_t getSize()
 		{
-			return buffer.size();
+			return static_cast<uint32_t>(buffer.size());
 		}
 
 		// Resizes the buffer capacity but also resets the current buffer

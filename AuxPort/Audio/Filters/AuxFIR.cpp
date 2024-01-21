@@ -23,7 +23,8 @@ void AuxPort::Audio::FIR::normalize()
 {
 	AuxAssert(this->impulseResponse.size() > 0, "Impulse Response Vector Size can't be zero");
 	auto gain = AuxPort::Utility::abssum(impulseResponse);
-	AuxPort::Utility::norm(impulseResponse, gain);
+	gain = 1.0f / gain;
+	AuxPort::Utility::multiply(impulseResponse, gain);
 }
 
 void AuxPort::Audio::FIR::Log()
@@ -58,6 +59,7 @@ void AuxPort::Audio::FIR::compute(float passband, float stopband, uint32_t order
 	impulseResponse.resize(order);
 
 	filterAlgo();
+	normalize();
 }
 
 void AuxPort::Audio::FIR::compute(float cutoffFrequency, uint32_t order)
@@ -72,11 +74,12 @@ void AuxPort::Audio::FIR::compute(float cutoffFrequency, uint32_t order)
 	impulseResponse.resize(order);
 
 	filterAlgo();	
+	normalize();
 }
 
 void AuxPort::Audio::RectangleFIR::filterAlgo()
 {
-	int32_t N = impulseResponse.size()-1;
+	int32_t N = static_cast<int32_t>(impulseResponse.size()-1);
 	for (uint32_t i = 0; i < impulseResponse.size(); i++)
 	{
 		int32_t v = i - (N/2);
@@ -89,7 +92,7 @@ void AuxPort::Audio::HammingFIR::filterAlgo()
 {
 
 	auto hamming = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::HammWin);
-	int32_t N = impulseResponse.size() - 1;
+	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
 	for (uint32_t i = 0; i < impulseResponse.size(); i++)
 	{
 		int32_t v = i - (N/2);
@@ -100,7 +103,7 @@ void AuxPort::Audio::HammingFIR::filterAlgo()
 
 void AuxPort::Audio::HannFIR::filterAlgo()
 {
-	int32_t N = impulseResponse.size() - 1;
+	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
 	auto hann = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::HannWin);
 	for (uint32_t i = 0; i < impulseResponse.size(); i++)
 	{
@@ -111,11 +114,22 @@ void AuxPort::Audio::HannFIR::filterAlgo()
 
 void AuxPort::Audio::BlackmanFIR::filterAlgo()
 {
-	int32_t N = impulseResponse.size() - 1;
+	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
 	auto blackman = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::BlackmanWin);
 	for (uint32_t i = 0; i < impulseResponse.size(); i++)
 	{
 		int32_t v = i - (N / 2);
 		impulseResponse[i] = blackman[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v)/pi);
+	}
+}
+
+void AuxPort::Audio::BartlettFIR::filterAlgo()
+{
+	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
+	auto bartlett = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::BartlettWin);
+	for (uint32_t i = 0; i < impulseResponse.size(); i++)
+	{
+		int32_t v = i - (N / 2);
+		impulseResponse[i] = bartlett[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
 	}
 }
