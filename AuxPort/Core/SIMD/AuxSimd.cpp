@@ -83,6 +83,7 @@ void AuxPort::Simd::Float256::fma(std::vector<float>& result, const std::vector<
 void AuxPort::Simd::Float128::add(std::vector<float>& result, const std::vector<float>& vec1, const std::vector<float>& vec2)
 {
 #if AUXSIMD
+	AuxAssert(result.size() == vec1.size(), "Result Vector should be the same size as the Addends");
 	AuxAssert(vec1.size() == vec2.size(), "The sizes of the Addends have to be the same");
 	AuxAssert(vec1.size() % 4 == 0, "Vectors should be sizes of 4");
 
