@@ -163,10 +163,11 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// Return the element at the given shifted index. (Read Head has index 0, and so on...).
 		/// Make Sure that index is less than the number of elements actively in buffer. Otherwise, old elements might be returned from the buffer.
+		/// Negative Indexing is also supported.
 		///////////////////////////////////////////////////////////////////////////////////////
 		sample getShiftedElement(int index)
 		{
-			return buffer[(readIndex + index) % capacity];
+			return buffer[(readIndex + index + capacity) % capacity];
 		}
 
 	protected:
