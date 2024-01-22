@@ -134,6 +134,50 @@ void AuxPort::Audio::BartlettFIR::filterAlgo()
 	}
 }
 
+void AuxPort::Audio::BartlettHannFIR::filterAlgo()
+{
+	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
+	auto bartlettHann = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::BartlettHannWin);
+	for (uint32_t i = 0; i < impulseResponse.size(); i++)
+	{
+		int32_t v = i - (N / 2);
+		impulseResponse[i] = bartlettHann[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+	}
+}
+
+void AuxPort::Audio::NuttallFIR::filterAlgo()
+{
+	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
+	auto nuttall = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::NuttallWin);
+	for (uint32_t i = 0; i < impulseResponse.size(); i++)
+	{
+		int32_t v = i - (N / 2);
+		impulseResponse[i] = nuttall[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+	}
+}
+
+void AuxPort::Audio::FlatFIR::filterAlgo()
+{
+	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
+	auto flat = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::FlatWin);
+	for (uint32_t i = 0; i < impulseResponse.size(); i++)
+	{
+		int32_t v = i - (N / 2);
+		impulseResponse[i] = flat[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+	}
+}
+
+void AuxPort::Audio::BlackmanHarrisFIR::filterAlgo()
+{
+	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
+	auto blackmanHarris = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::BlackmanHarrisWin);
+	for (uint32_t i = 0; i < impulseResponse.size(); i++)
+	{
+		int32_t v = i - (N / 2);
+		impulseResponse[i] = blackmanHarris[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+	}
+}
+
 void AuxPort::Audio::Convolution::setImpulseResponse(const std::vector<float>& impulseResponse)
 {
 	AuxAssert(impulseResponse.size() > 0, "Impulse Response cannot be empty!");

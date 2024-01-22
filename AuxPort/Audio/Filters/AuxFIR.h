@@ -110,8 +110,42 @@ namespace AuxPort
 			~BartlettFIR() = default;
 			BartlettFIR(const BartlettFIR& bartlettFIR) = default;
 			void filterAlgo() override;
-		private:
+		};
+		
+		class BartlettHannFIR : public FIR
+		{
+		public:
+			BartlettHannFIR() = default;
+			~BartlettHannFIR() = default;
+			BartlettHannFIR(const BartlettHannFIR& bartlettHannFIR) = default;
+			void filterAlgo() override;
+		};
 
+		class NuttallFIR : public FIR
+		{
+		public:
+			NuttallFIR() = default;
+			~NuttallFIR() = default;
+			NuttallFIR(const NuttallFIR& nuttallFIR) = default;
+			void filterAlgo() override;
+		};
+
+		class FlatFIR : public FIR
+		{
+		public:
+			FlatFIR() = default;
+			~FlatFIR() = default;
+			FlatFIR(const FlatFIR& flatFIR) = default;
+			void filterAlgo() override;
+		};
+
+		class BlackmanHarrisFIR : public FIR
+		{
+		public:
+			BlackmanHarrisFIR() = default;
+			~BlackmanHarrisFIR() = default;
+			BlackmanHarrisFIR(const BlackmanHarrisFIR& blackmanHarrisFIR) = default;
+			void filterAlgo() override;
 		};
 
 		class Convolution
