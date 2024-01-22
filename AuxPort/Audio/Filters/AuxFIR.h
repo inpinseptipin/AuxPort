@@ -6,6 +6,7 @@
 #include "../../Core/Utility/AuxUtility.h"
 #include <functional>
 #include "../Windows/AuxWindow.h"
+#include "../../Core/Utility/AuxCircularBuffer.h"
 namespace AuxPort
 {
 	namespace Audio
@@ -107,14 +108,26 @@ namespace AuxPort
 		public:
 			BartlettFIR() = default;
 			~BartlettFIR() = default;
-			BartlettFIR(const BartlettFIR& blackmanFIR) = default;
+			BartlettFIR(const BartlettFIR& bartlettFIR) = default;
 			void filterAlgo() override;
 		private:
 
 		};
 
-		
-		
+		class Convolution
+		{
+			std::vector<float> impulseResponse;
+			AuxPort::CircularBuffer<float> inputBuffer;
+			size_t irSize;
+		public:
+			Convolution() = default;
+			~Convolution() = default;
+			Convolution(const Convolution& convolution) = default;
+			void setImpulseResponse(const std::vector<float>& impulseResponse);
+			void setImpulseResponse(float* impulseResponse, uint32_t size);
+			void setImpulseResponse(std::vector<float>* impulseResponse, uint32_t size);
+			float process(float sample);
+		};		
 	}
 }
 

@@ -133,3 +133,45 @@ void AuxPort::Audio::BartlettFIR::filterAlgo()
 		impulseResponse[i] = bartlett[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
 	}
 }
+
+void AuxPort::Audio::Convolution::setImpulseResponse(const std::vector<float>& impulseResponse)
+{
+	AuxAssert(impulseResponse.size() > 0, "Impulse Response cannot be empty!");
+	irSize = impulseResponse.size();
+	this->impulseResponse = impulseResponse;
+	inputBuffer.resize(irSize);
+}
+
+void AuxPort::Audio::Convolution::setImpulseResponse(float* impulseResponse, uint32_t size)
+{
+	AuxAssert(impulseResponse != nullptr, "Impulse Response can't be a nullptr");
+	AuxAssert(size > 0, "IR size should be greater than 0");
+	irSize = size;
+	this->impulseResponse.resize(size);
+	for (uint32_t i = 0; i < size; i++)
+		this->impulseResponse[i] = impulseResponse[i];
+	inputBuffer.resize(size);
+}
+
+void AuxPort::Audio::Convolution::setImpulseResponse(std::vector<float>* impulseResponse, uint32_t size)
+{
+	AuxAssert(impulseResponse != nullptr, "Impulse Response can't be a nullptr");
+	AuxAssert(size > 0, "IR size should be greater than 0");
+	irSize = size;
+	this->impulseResponse.resize(size);
+	for (uint32_t i = 0; i < size; i++)
+		this->impulseResponse[i] = (*impulseResponse)[i];
+	inputBuffer.resize(size);
+}
+
+float AuxPort::Audio::Convolution::process(float sample)
+{
+	float outputSample = 0;
+	inputBuffer.push(sample);
+	for (uint32_t i = 0; i < irSize; i++)
+	{
+		outputSample += impulseResponse[i] * inputBuffer.getShiftedElement(-i);
+	}
+	inputBuffer.pop();
+	return outputSample;
+}
