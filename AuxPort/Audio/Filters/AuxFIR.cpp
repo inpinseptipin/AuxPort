@@ -19,6 +19,14 @@ void AuxPort::Audio::FIR::replace(float* impulseResponse, uint32_t size)
 		this->impulseResponse[i] = impulseResponse[i];
 }
 
+void AuxPort::Audio::FIR::normalize()
+{
+	AuxAssert(this->impulseResponse.size() > 0, "Impulse Response Vector Size can't be zero");
+	auto gain = AuxPort::Utility::abssum(impulseResponse);
+	gain = 1.0f / gain;
+	AuxPort::Utility::multiply(impulseResponse, gain);
+}
+
 void AuxPort::Audio::FIR::Log()
 {
 	setColour(AuxPort::ColourType::Green);
@@ -34,6 +42,8 @@ std::vector<float>* AuxPort::Audio::FIR::getImpulseResponse()
 	return &impulseResponse;
 }
 
+
+
 void AuxPort::Audio::FIR::compute(float passband, float stopband, uint32_t order)
 {
 	AuxAssert(this->sampleRate > 0, "Call setSampleRate() before calling compute");
@@ -43,11 +53,13 @@ void AuxPort::Audio::FIR::compute(float passband, float stopband, uint32_t order
 	this->passband = (2 * AuxPort::pi * passband) / this->sampleRate;
 	this->stopband = (2 * AuxPort::pi * stopband) / this->sampleRate;
 	this->cutoff = (this->passband + this->stopband) / 2;
-	order = order % 2 == 1 ? order : order + 1;
+	this->normFreq = this->cutoff;
+	order = order % 2 == 1 ? order : order+1;
 	this->order = order;
 	impulseResponse.resize(order);
 
 	filterAlgo();
+	normalize();
 }
 
 void AuxPort::Audio::FIR::compute(float cutoffFrequency, uint32_t order)
@@ -56,106 +68,68 @@ void AuxPort::Audio::FIR::compute(float cutoffFrequency, uint32_t order)
 	AuxAssert(order < 1000, "Why are you creating a 1000 tap FIR?... What's wrong with you");
 	AuxAssert(cutoffFrequency < (this->sampleRate / 2) && cutoffFrequency > 0, "Cutoff can't be greater than Nyquist or less than 0");
 	this->cutoff = (2 * AuxPort::pi * cutoffFrequency) / this->sampleRate;
-	order = order % 2 == 1 ? order : order + 1;
+	this->normFreq = this->cutoff / 2;
+	order = order % 2 == 1 ? order : order+1;
 	this->order = order;
 	impulseResponse.resize(order);
 
-	filterAlgo();
+	filterAlgo();	
+	normalize();
 }
 
 void AuxPort::Audio::RectangleFIR::filterAlgo()
 {
-	int32_t N = impulseResponse.size() - 1;
+	int32_t N = static_cast<int32_t>(impulseResponse.size()-1);
 	for (uint32_t i = 0; i < impulseResponse.size(); i++)
 	{
-		int32_t v = i - (N / 2);
-		impulseResponse[i] = (cutoff / pi) * AuxPort::Utility::sinc<float>(cutoff * v / pi);
+		int32_t v = i - (N/2);
+		impulseResponse[i] = (cutoff/pi)*AuxPort::Utility::sinc<float>((cutoff/pi) * v);
 	}
+
 }
 
 void AuxPort::Audio::HammingFIR::filterAlgo()
 {
 
 	auto hamming = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::HammWin);
-	int32_t N = impulseResponse.size() - 1;
+	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
 	for (uint32_t i = 0; i < impulseResponse.size(); i++)
 	{
-		int32_t v = i - (N / 2);
-		impulseResponse[i] = hamming[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		int32_t v = i - (N/2);
+		impulseResponse[i] = hamming[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v)/pi);
 	}
+
 }
 
 void AuxPort::Audio::HannFIR::filterAlgo()
 {
-	int32_t N = impulseResponse.size() - 1;
+	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
 	auto hann = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::HannWin);
 	for (uint32_t i = 0; i < impulseResponse.size(); i++)
 	{
 		int32_t v = i - (N / 2);
-		impulseResponse[i] = hann[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		impulseResponse[i] = hann[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v)/pi);
 	}
 }
 
 void AuxPort::Audio::BlackmanFIR::filterAlgo()
 {
-	int32_t N = impulseResponse.size() - 1;
+	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
 	auto blackman = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::BlackmanWin);
 	for (uint32_t i = 0; i < impulseResponse.size(); i++)
 	{
 		int32_t v = i - (N / 2);
-		impulseResponse[i] = blackman[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		impulseResponse[i] = blackman[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v)/pi);
 	}
 }
 
 void AuxPort::Audio::BartlettFIR::filterAlgo()
 {
-	int32_t N = impulseResponse.size() - 1;
-	auto barlett = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::BartlettWin);
+	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
+	auto bartlett = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::BartlettWin);
 	for (uint32_t i = 0; i < impulseResponse.size(); i++)
 	{
 		int32_t v = i - (N / 2);
-		impulseResponse[i] = barlett[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		impulseResponse[i] = bartlett[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
 	}
-}
-
-void AuxPort::Audio::Convolution::setImpulseResponse(const std::vector<float>& impulseResponse)
-{
-	AuxAssert(impulseResponse.size() > 0, "Impulse Response cannot be empty!");
-	irSize = impulseResponse.size();
-	this->impulseResponse = impulseResponse;
-	inputBuffer.resize(irSize);
-}
-
-void AuxPort::Audio::Convolution::setImpulseResponse(float* impulseResponse, uint32_t size)
-{
-	AuxAssert(impulseResponse != nullptr, "Impulse Response can't be a nullptr");
-	AuxAssert(size > 0, "IR size should be greater than 0");
-	irSize = size;
-	this->impulseResponse.resize(size);
-	for (uint32_t i = 0; i < size; i++)
-		this->impulseResponse[i] = impulseResponse[i];
-	inputBuffer.resize(size);
-}
-
-void AuxPort::Audio::Convolution::setImpulseResponse(std::vector<float>* impulseResponse, uint32_t size)
-{
-	AuxAssert(impulseResponse != nullptr, "Impulse Response can't be a nullptr");
-	AuxAssert(size > 0, "IR size should be greater than 0");
-	irSize = size;
-	this->impulseResponse.resize(size);
-	for (uint32_t i = 0; i < size; i++)
-		this->impulseResponse[i] = (*impulseResponse)[i];
-	inputBuffer.resize(size);
-}
-
-float AuxPort::Audio::Convolution::process(float sample)
-{
-	float outputSample = 0;
-	inputBuffer.push(sample);
-	for (uint32_t i = 0; i < irSize; i++)
-	{
-		outputSample += impulseResponse[i] * inputBuffer.getShiftedElement(-i);
-	}
-	inputBuffer.pop();
-	return outputSample;
 }
