@@ -1,4 +1,5 @@
 #include "AuxFIR.h"
+#include "AuxFIR.h"
 
 void AuxPort::Audio::FIR::setSampleRate(uint32_t sampleRate)
 {
@@ -42,9 +43,7 @@ std::vector<float>* AuxPort::Audio::FIR::getImpulseResponse()
 	return &impulseResponse;
 }
 
-
-
-void AuxPort::Audio::FIR::compute(float passband, float stopband, uint32_t order)
+void AuxPort::Audio::FIR::compute(float passband, float stopband, uint32_t order, Type filterType)
 {
 	AuxAssert(this->sampleRate > 0, "Call setSampleRate() before calling compute");
 	AuxAssert(stopband > 0 && passband > 0, "Passband and Stopband should be greater than 0");
@@ -57,12 +56,21 @@ void AuxPort::Audio::FIR::compute(float passband, float stopband, uint32_t order
 	order = order % 2 == 1 ? order : order+1;
 	this->order = order;
 	impulseResponse.resize(order);
+	this->filterType = filterType;
 
 	filterAlgo();
 	normalize();
+
+	if (filterType == HighPass)
+	{
+		for (size_t i = 1; i < order; i += 2)
+		{
+			impulseResponse[i] = -impulseResponse[i];
+		}
+	}
 }
 
-void AuxPort::Audio::FIR::compute(float cutoffFrequency, uint32_t order)
+void AuxPort::Audio::FIR::compute(float cutoffFrequency, uint32_t order, Type filterType)
 {
 	AuxAssert(this->sampleRate > 0, "Call setSampleRate() before calling compute");
 	AuxAssert(order < 1000, "Why are you creating a 1000 tap FIR?... What's wrong with you");
@@ -72,9 +80,18 @@ void AuxPort::Audio::FIR::compute(float cutoffFrequency, uint32_t order)
 	order = order % 2 == 1 ? order : order+1;
 	this->order = order;
 	impulseResponse.resize(order);
+	this->filterType = filterType;
 
 	filterAlgo();	
 	normalize();
+
+	if (filterType == HighPass)
+	{
+		for (size_t i = 1; i < order; i += 2)
+		{
+			impulseResponse[i] = -impulseResponse[i];
+		}
+	}
 }
 
 void AuxPort::Audio::RectangleFIR::filterAlgo()

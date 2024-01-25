@@ -18,6 +18,11 @@ namespace AuxPort
 		class FIR : public ILog
 		{
 		public:
+			enum Type
+			{
+				LowPass, HighPass
+			};
+
 			FIR() = default;
 			~FIR() = default;
 			FIR(const FIR& response) = default;
@@ -32,11 +37,11 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Function] Function designs an FIR by taking in Passband and stopband frequencies for a particular provided Order
 		///////////////////////////////////////////////////////////////////////////////////////
-			void compute(float passband, float stopband, uint32_t order);
+			void compute(float passband, float stopband, uint32_t order, Type filterType);
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Function] Function designs an FIR by taking a cutoff frequency for a particular provided Order
 		///////////////////////////////////////////////////////////////////////////////////////
-			void compute(float cutoffFrequency, uint32_t order);
+			void compute(float cutoffFrequency, uint32_t order, Type filterType);
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Function] Method to load an impulse response into an FIR object...can be used with the FIR Engine
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -58,6 +63,7 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 			std::vector<float>* getImpulseResponse();
 		protected:
+			Type filterType;
 			std::vector<float> impulseResponse;
 			float passband = 0;
 			float stopband = 0;
