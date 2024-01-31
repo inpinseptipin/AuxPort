@@ -37,11 +37,11 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Function] Function designs an FIR by taking in Passband and stopband frequencies for a particular provided Order
 		///////////////////////////////////////////////////////////////////////////////////////
-			void compute(float passband, float stopband, uint32_t order, Type filterType);
+			void compute(float passband, float stopband, uint32_t order, Type filterType = Type::LowPass);
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Function] Function designs an FIR by taking a cutoff frequency for a particular provided Order
 		///////////////////////////////////////////////////////////////////////////////////////
-			void compute(float cutoffFrequency, uint32_t order, Type filterType);
+			void compute(float cutoffFrequency, uint32_t order, Type filterType = Type::LowPass);
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Function] Method to load an impulse response into an FIR object...can be used with the FIR Engine
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -51,14 +51,6 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 			void replace(float* impulseResponse, uint32_t size);
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Normalize the Impulse Response (In Development)
-		///////////////////////////////////////////////////////////////////////////////////////
-			void normalize();
-		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Performs spectral reversal of Impulse Response
-		///////////////////////////////////////////////////////////////////////////////////////
-			void spectralReversal();
-		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Function] Logs the Impulse Response onto the Console
 		///////////////////////////////////////////////////////////////////////////////////////
 			void Log() override;
@@ -67,6 +59,19 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 			std::vector<float>* getImpulseResponse();
 		protected:
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Normalize the Impulse Response (In Development)
+		///////////////////////////////////////////////////////////////////////////////////////
+			void normalize();
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Performs spectral reversal of Impulse Response
+		///////////////////////////////////////////////////////////////////////////////////////
+			void spectralReversal();
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Applys a window on the Impulse Response.
+		///////////////////////////////////////////////////////////////////////////////////////
+			virtual void applyWindow();
+
 			Type filterType;
 			std::vector<float> impulseResponse;
 			float passband = 0;
@@ -83,79 +88,83 @@ namespace AuxPort
 			RectangleFIR() = default;
 			~RectangleFIR() = default;
 			RectangleFIR(const RectangleFIR& rectangleFIR) = default;
+		protected:
+			void genIR(float band);
+			void genIR(float passband, float stopband);
 			void filterAlgo() override;
+
 		};
 
-		class HammingFIR : public FIR
+		class HammingFIR : public RectangleFIR
 		{
 		public:
 			HammingFIR() = default;
 			~HammingFIR() = default;
 			HammingFIR(const HammingFIR& hammingFIR) = default;
-			void filterAlgo() override;
+			void applyWindow() override;
 		};
 
-		class HannFIR : public FIR
+		class HannFIR : public RectangleFIR
 		{
 		public:
 			HannFIR() = default;
 			~HannFIR() = default;
 			HannFIR(const HannFIR& hannFIR) = default;
-			void filterAlgo() override;
+			void applyWindow() override;
 		};
 
-		class BlackmanFIR : public FIR
+		class BlackmanFIR : public RectangleFIR
 		{
 		public:
 			BlackmanFIR() = default;
 			~BlackmanFIR() = default;
 			BlackmanFIR(const BlackmanFIR& blackmanFIR) = default;
-			void filterAlgo() override;
+			void applyWindow() override;
 		};
 
-		class BartlettFIR : public FIR
+		class BartlettFIR : public RectangleFIR
 		{
 		public:
 			BartlettFIR() = default;
 			~BartlettFIR() = default;
 			BartlettFIR(const BartlettFIR& bartlettFIR) = default;
-			void filterAlgo() override;
+			void applyWindow() override;
 		};
 		
-		class BartlettHannFIR : public FIR
+		class BartlettHannFIR : public RectangleFIR
 		{
 		public:
 			BartlettHannFIR() = default;
 			~BartlettHannFIR() = default;
 			BartlettHannFIR(const BartlettHannFIR& bartlettHannFIR) = default;
-			void filterAlgo() override;
+			void applyWindow() override;
 		};
 
-		class NuttallFIR : public FIR
+		class NuttallFIR : public RectangleFIR
 		{
 		public:
 			NuttallFIR() = default;
 			~NuttallFIR() = default;
 			NuttallFIR(const NuttallFIR& nuttallFIR) = default;
-			void filterAlgo() override;
+			void applyWindow() override;
 		};
 
-		class FlatFIR : public FIR
+		class FlatFIR : public RectangleFIR
 		{
 		public:
 			FlatFIR() = default;
 			~FlatFIR() = default;
 			FlatFIR(const FlatFIR& flatFIR) = default;
-			void filterAlgo() override;
+			void applyWindow() override;
 		};
 
-		class BlackmanHarrisFIR : public FIR
+		class BlackmanHarrisFIR : public RectangleFIR
 		{
 		public:
 			BlackmanHarrisFIR() = default;
 			~BlackmanHarrisFIR() = default;
 			BlackmanHarrisFIR(const BlackmanHarrisFIR& blackmanHarrisFIR) = default;
-			void filterAlgo() override;
+			void applyWindow() override;
 		};
 
 		class Convolution

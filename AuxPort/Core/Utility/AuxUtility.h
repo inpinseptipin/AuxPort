@@ -261,6 +261,17 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Dot-Divide operation over a std::vector
+		///////////////////////////////////////////////////////////////////////////////////////
+		template<class sample>
+		static inline void multiply(std::vector<sample>& vector1, const std::vector<sample>& vector2)
+		{
+			for (uint32_t i = 0; i < vector1.size(); i++)
+				vector1[i] *= vector2[i];
+		}
+	
+
+		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Static] Sinc(x) = sin(pi*x)/pi*x (Normalized Sinc Function)
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
@@ -268,7 +279,13 @@ namespace AuxPort
 		{
 			return val == 0 ? 1 : sinf(val*pi) / (val*pi);
 		}
-		
+
+		template<class sample>
+		static inline void constantThis(std::vector<sample>& vec, sample val)
+		{
+			for (uint32_t i = 0; i < vec.size(); i++)
+				vec[i] = val;
+		}
 	};
 
 	class Expansions
