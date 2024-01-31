@@ -28,6 +28,14 @@ void AuxPort::Audio::FIR::normalize()
 	AuxPort::Utility::multiply(impulseResponse, gain);
 }
 
+void AuxPort::Audio::FIR::spectralReversal()
+{
+	for (size_t i = 1; i < order; i += 2)
+	{
+		impulseResponse[i] = -impulseResponse[i];
+	}
+}
+
 void AuxPort::Audio::FIR::Log()
 {
 	setColour(AuxPort::ColourType::Green);
@@ -60,14 +68,6 @@ void AuxPort::Audio::FIR::compute(float passband, float stopband, uint32_t order
 
 	filterAlgo();
 	normalize();
-
-	if (filterType == HighPass)
-	{
-		for (size_t i = 1; i < order; i += 2)
-		{
-			impulseResponse[i] = -impulseResponse[i];
-		}
-	}
 }
 
 void AuxPort::Audio::FIR::compute(float cutoffFrequency, uint32_t order, Type filterType)
@@ -75,6 +75,7 @@ void AuxPort::Audio::FIR::compute(float cutoffFrequency, uint32_t order, Type fi
 	AuxAssert(this->sampleRate > 0, "Call setSampleRate() before calling compute");
 	AuxAssert(order < 1000, "Why are you creating a 1000 tap FIR?... What's wrong with you");
 	AuxAssert(cutoffFrequency < (this->sampleRate / 2) && cutoffFrequency > 0, "Cutoff can't be greater than Nyquist or less than 0");
+	AuxAssert(filterType == LowPass || filterType == HighPass, "Use the other overloaded function to compute BandPass or BandReject FIR Filter");
 	this->cutoff = (2 * AuxPort::pi * cutoffFrequency) / this->sampleRate;
 	this->normFreq = this->cutoff / 2;
 	order = order % 2 == 1 ? order : order+1;
@@ -82,50 +83,90 @@ void AuxPort::Audio::FIR::compute(float cutoffFrequency, uint32_t order, Type fi
 	impulseResponse.resize(order);
 	this->filterType = filterType;
 
-	filterAlgo();	
+	filterAlgo();
 	normalize();
-
-	if (filterType == HighPass)
-	{
-		for (size_t i = 1; i < order; i += 2)
-		{
-			impulseResponse[i] = -impulseResponse[i];
-		}
-	}
 }
 
 void AuxPort::Audio::RectangleFIR::filterAlgo()
 {
 	int32_t N = static_cast<int32_t>(impulseResponse.size()-1);
-	for (uint32_t i = 0; i < impulseResponse.size(); i++)
+
+	if (filterType == LowPass || filterType == HighPass)
 	{
-		int32_t v = i - (N/2);
-		impulseResponse[i] = (cutoff/pi)*AuxPort::Utility::sinc<float>((cutoff/pi) * v);
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = (cutoff / pi) * AuxPort::Utility::sinc<float>((cutoff / pi) * v);
+		}
+	}
+	else
+	{
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = (stopband / pi) * AuxPort::Utility::sinc<float>((stopband / pi) * v) - (passband / pi) * AuxPort::Utility::sinc<float>((passband / pi)* v);
+		}
 	}
 
+	if (filterType == HighPass || filterType == BandReject)
+	{
+		spectralReversal();
+	}
 }
 
 void AuxPort::Audio::HammingFIR::filterAlgo()
 {
-
 	auto hamming = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::HammWin);
 	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
-	for (uint32_t i = 0; i < impulseResponse.size(); i++)
+
+	if (filterType == LowPass || filterType == HighPass)
 	{
-		int32_t v = i - (N/2);
-		impulseResponse[i] = hamming[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v)/pi);
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N/2);
+			impulseResponse[i] = hamming[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v)/pi);
+		}
+	}
+	else
+	{
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = hamming[i] * ((stopband / pi) * AuxPort::Utility::sinc<float>((stopband / pi) * v) - (passband / pi) * AuxPort::Utility::sinc<float>((passband * v) / pi));
+		}
 	}
 
+	if (filterType == HighPass || filterType == BandReject)
+	{
+		spectralReversal();
+	}
 }
 
 void AuxPort::Audio::HannFIR::filterAlgo()
 {
 	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
 	auto hann = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::HannWin);
-	for (uint32_t i = 0; i < impulseResponse.size(); i++)
+
+	if (filterType == LowPass || filterType == HighPass)
 	{
-		int32_t v = i - (N / 2);
-		impulseResponse[i] = hann[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v)/pi);
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = hann[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v)/pi);
+		}
+	}
+	else
+	{
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = hann[i] * ((stopband / pi) * AuxPort::Utility::sinc<float>((stopband / pi) * v) - (passband / pi) * AuxPort::Utility::sinc<float>((passband * v) / pi));
+		}
+	}
+
+	if (filterType == HighPass || filterType == BandReject)
+	{
+		spectralReversal();
 	}
 }
 
@@ -133,10 +174,27 @@ void AuxPort::Audio::BlackmanFIR::filterAlgo()
 {
 	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
 	auto blackman = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::BlackmanWin);
-	for (uint32_t i = 0; i < impulseResponse.size(); i++)
+	
+	if (filterType == LowPass || filterType == HighPass)
 	{
-		int32_t v = i - (N / 2);
-		impulseResponse[i] = blackman[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v)/pi);
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = blackman[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		}
+	}
+	else
+	{
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = blackman[i] * ((stopband / pi) * AuxPort::Utility::sinc<float>((stopband / pi) * v) - (passband / pi) * AuxPort::Utility::sinc<float>((passband * v) / pi));
+		}
+	}
+
+	if (filterType == HighPass || filterType == BandReject)
+	{
+		spectralReversal();
 	}
 }
 
@@ -144,10 +202,27 @@ void AuxPort::Audio::BartlettFIR::filterAlgo()
 {
 	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
 	auto bartlett = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::BartlettWin);
-	for (uint32_t i = 0; i < impulseResponse.size(); i++)
+	
+	if (filterType == LowPass || filterType == HighPass)
 	{
-		int32_t v = i - (N / 2);
-		impulseResponse[i] = bartlett[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = bartlett[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		}
+	}
+	else
+	{
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = bartlett[i] * ((stopband / pi) * AuxPort::Utility::sinc<float>((stopband / pi) * v) - (passband / pi) * AuxPort::Utility::sinc<float>((passband * v) / pi));
+		}
+	}
+
+	if (filterType == HighPass || filterType == BandReject)
+	{
+		spectralReversal();
 	}
 }
 
@@ -155,10 +230,27 @@ void AuxPort::Audio::BartlettHannFIR::filterAlgo()
 {
 	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
 	auto bartlettHann = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::BartlettHannWin);
-	for (uint32_t i = 0; i < impulseResponse.size(); i++)
+	
+	if (filterType == LowPass || filterType == HighPass)
 	{
-		int32_t v = i - (N / 2);
-		impulseResponse[i] = bartlettHann[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = bartlettHann[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		}
+	}
+	else
+	{
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = bartlettHann[i] * ((stopband / pi) * AuxPort::Utility::sinc<float>((stopband / pi) * v) - (passband / pi) * AuxPort::Utility::sinc<float>((passband * v) / pi));
+		}
+	}
+
+	if (filterType == HighPass || filterType == BandReject)
+	{
+		spectralReversal();
 	}
 }
 
@@ -166,10 +258,27 @@ void AuxPort::Audio::NuttallFIR::filterAlgo()
 {
 	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
 	auto nuttall = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::NuttallWin);
-	for (uint32_t i = 0; i < impulseResponse.size(); i++)
+	
+	if (filterType == LowPass || filterType == HighPass)
 	{
-		int32_t v = i - (N / 2);
-		impulseResponse[i] = nuttall[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = nuttall[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		}
+	}
+	else
+	{
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = nuttall[i] * ((stopband / pi) * AuxPort::Utility::sinc<float>((stopband / pi) * v) - (passband / pi) * AuxPort::Utility::sinc<float>((passband * v) / pi));
+		}
+	}
+
+	if (filterType == HighPass || filterType == BandReject)
+	{
+		spectralReversal();
 	}
 }
 
@@ -177,10 +286,27 @@ void AuxPort::Audio::FlatFIR::filterAlgo()
 {
 	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
 	auto flat = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::FlatWin);
-	for (uint32_t i = 0; i < impulseResponse.size(); i++)
+	
+	if (filterType == LowPass || filterType == HighPass)
 	{
-		int32_t v = i - (N / 2);
-		impulseResponse[i] = flat[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = flat[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		}
+	}
+	else
+	{
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = flat[i] * ((stopband / pi) * AuxPort::Utility::sinc<float>((stopband / pi) * v) - (passband / pi) * AuxPort::Utility::sinc<float>((passband * v) / pi));
+		}
+	}
+
+	if (filterType == HighPass || filterType == BandReject)
+	{
+		spectralReversal();
 	}
 }
 
@@ -188,10 +314,27 @@ void AuxPort::Audio::BlackmanHarrisFIR::filterAlgo()
 {
 	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);
 	auto blackmanHarris = AuxPort::Audio::Window::generate<float>(impulseResponse.size(), AuxPort::Audio::Window::BlackmanHarrisWin);
-	for (uint32_t i = 0; i < impulseResponse.size(); i++)
+	
+	if (filterType == LowPass || filterType == HighPass)
 	{
-		int32_t v = i - (N / 2);
-		impulseResponse[i] = blackmanHarris[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = blackmanHarris[i] * (cutoff / AuxPort::pi) * AuxPort::Utility::sinc((cutoff * v) / pi);
+		}
+	}
+	else
+	{
+		for (uint32_t i = 0; i < impulseResponse.size(); i++)
+		{
+			int32_t v = i - (N / 2);
+			impulseResponse[i] = blackmanHarris[i] * ((stopband / pi) * AuxPort::Utility::sinc<float>((stopband / pi) * v) - (passband / pi) * AuxPort::Utility::sinc<float>((passband * v) / pi));
+		}
+	}
+
+	if (filterType == HighPass || filterType == BandReject)
+	{
+		spectralReversal();
 	}
 }
 
