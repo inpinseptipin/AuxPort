@@ -96,7 +96,6 @@ void AuxPort::Audio::FIR::compute(float cutoffFrequency, uint32_t order, Type fi
 	normalize();
 }
 
-
 void AuxPort::Audio::RectangleFIR::genIR(float band)
 {
 	int32_t N = static_cast<int32_t>(impulseResponse.size() - 1);

@@ -50,8 +50,6 @@
 #define GetCurrentDir _getcwd
 #endif
 
-
-
 namespace AuxPort
 {
 	class File : virtual public ILog
@@ -77,7 +75,7 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Virtual Function] Implement this function to specify the closing behavior of the File
 		///////////////////////////////////////////////////////////////////////////////////////
-		virtual void close(bool log = false) = 0;
+		virtual bool close(bool log = false) = 0;
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Function] Returns the current directory, the program is running in
@@ -104,15 +102,13 @@ namespace AuxPort
 		std::string errorMessage;
 		Mode mode;
 	};
-
-
 }
 
 namespace AuxPort
 {
 	///////////////////////////////////////////////////////////////////////////////////////
 	/// TextFile Class, Abstraction over C++ Standard File Handling to read ASCII based Text Files.
-	/// For Example : AuxPort::TextFile textFile("sample.txt")
+	/// For Example : AuxPort::TextFile textFile()
 	///////////////////////////////////////////////////////////////////////////////////////
 	class TextFile : public File
 	{
@@ -140,13 +136,13 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Function] Reads a line to the Text File
 		///////////////////////////////////////////////////////////////////////////////////////
-		std::string readLineFromFile(bool log = false);
+		bool readLineFromFile(std::string& line, bool log = false);
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Function] Opens a stream to a text file
 		///////////////////////////////////////////////////////////////////////////////////////
 		bool open(const std::string& fileName, const Mode& mode = Mode::Read, bool log = false) override;
-		void close(bool log = false) override;
+		bool close(bool log = false) override;
 	private:
 		std::string rawData;
 		std::string line;
@@ -162,13 +158,10 @@ namespace AuxPort
 		~BinaryFile() = default;
 		BinaryFile(const BinaryFile& binaryFile) = default;
 		bool open(const std::string& fileName, const Mode& mode = Mode::Read, bool log = false) override;
-		void close(bool log = false) override;
+		bool close(bool log = false) override;
 	private:
 	};
-
 }
-
-
 
 namespace AuxPort
 {
@@ -197,24 +190,30 @@ namespace AuxPort
 
 namespace AuxPort
 {
-	class CSV : public TextFormat, public TextFile
+	class CSV : protected TextFile, public TextFormat
 	{
 	public:
 		CSV();
 		~CSV() = default;
 		CSV(const CSV& csv) = default;
+		bool open(const std::string& fileName, const Mode& mode = Mode::Read, bool containsHeader = false, const char& delimiter = ',', bool log = false);
+		bool close(bool log = false);	
+		void read(std::vector<std::vector<std::string>>& data, std::vector<std::string>& headers = std::vector<std::string>());
+		bool getDataRow(std::vector<std::string>& dataRow, size_t rowNum);
+		void write();
+		void setHeader(const std::vector<std::string>& header);
+		void addDataRow(const std::vector<std::string>& dataRow);
+		void write(const std::vector<std::vector<std::string>>& data, const std::vector<std::string>& header = std::vector<std::string>());
 		void Log() override;
-		void setHeaders(const std::vector<std::string>& headers);
-		void addData(const std::vector<std::string>& data);
 	private:
-		void read(std::string& line, int props) override;
-		void write(const std::string& line, int props) override;
+		char delimiter;
+		bool containsHeader;
+		std::vector<std::string> header;
+		std::vector<std::vector<std::string>> data;
 
-	private:
-		std::vector<std::string> headers;
-		std::vector <std::vector<std::string>> data;
+		void read(std::string& line, int props = 0) {};
+		void write(const std::string& line, int props = 0) {};
 	};
 }
-
 
 #endif
