@@ -6,6 +6,7 @@
 #include "../../Core/Utility/AuxUtility.h"
 #include <functional>
 #include "../Windows/AuxWindow.h"
+#include "../../Core/Utility/AuxCircularBuffer.h"
 namespace AuxPort
 {
 	namespace Audio
@@ -17,6 +18,11 @@ namespace AuxPort
 		class FIR : public ILog
 		{
 		public:
+			enum Type
+			{
+				LowPass, HighPass, BandPass, BandReject
+			};
+
 			FIR() = default;
 			~FIR() = default;
 			FIR(const FIR& response) = default;
@@ -31,11 +37,11 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Function] Function designs an FIR by taking in Passband and stopband frequencies for a particular provided Order
 		///////////////////////////////////////////////////////////////////////////////////////
-			void compute(float passband, float stopband, uint32_t order);
+			void compute(float passband, float stopband, uint32_t order, Type filterType = Type::LowPass);
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Function] Function designs an FIR by taking a cutoff frequency for a particular provided Order
 		///////////////////////////////////////////////////////////////////////////////////////
-			void compute(float cutoffFrequency, uint32_t order);
+			void compute(float cutoffFrequency, uint32_t order, Type filterType = Type::LowPass);
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Function] Method to load an impulse response into an FIR object...can be used with the FIR Engine
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -45,10 +51,6 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 			void replace(float* impulseResponse, uint32_t size);
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Normalize the Impulse Response (In Development)
-		///////////////////////////////////////////////////////////////////////////////////////
-			void normalize();
-		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Function] Logs the Impulse Response onto the Console
 		///////////////////////////////////////////////////////////////////////////////////////
 			void Log() override;
@@ -57,6 +59,20 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 			std::vector<float>* getImpulseResponse();
 		protected:
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Normalize the Impulse Response (In Development)
+		///////////////////////////////////////////////////////////////////////////////////////
+			void normalize();
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Performs spectral reversal of Impulse Response
+		///////////////////////////////////////////////////////////////////////////////////////
+			void spectralReversal();
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Applys a window on the Impulse Response.
+		///////////////////////////////////////////////////////////////////////////////////////
+			virtual void applyWindow();
+
+			Type filterType;
 			std::vector<float> impulseResponse;
 			float passband = 0;
 			float stopband = 0;
@@ -72,49 +88,99 @@ namespace AuxPort
 			RectangleFIR() = default;
 			~RectangleFIR() = default;
 			RectangleFIR(const RectangleFIR& rectangleFIR) = default;
+		protected:
+			void genIR(float band);
+			void genIR(float passband, float stopband);
 			void filterAlgo() override;
+
 		};
 
-		class HammingFIR : public FIR
+		class HammingFIR : public RectangleFIR
 		{
 		public:
 			HammingFIR() = default;
 			~HammingFIR() = default;
 			HammingFIR(const HammingFIR& hammingFIR) = default;
-			void filterAlgo() override;
+			void applyWindow() override;
 		};
 
-		class HannFIR : public FIR
+		class HannFIR : public RectangleFIR
 		{
 		public:
 			HannFIR() = default;
 			~HannFIR() = default;
 			HannFIR(const HannFIR& hannFIR) = default;
-			void filterAlgo() override;
+			void applyWindow() override;
 		};
 
-		class BlackmanFIR : public FIR
+		class BlackmanFIR : public RectangleFIR
 		{
 		public:
 			BlackmanFIR() = default;
 			~BlackmanFIR() = default;
 			BlackmanFIR(const BlackmanFIR& blackmanFIR) = default;
-			void filterAlgo() override;
+			void applyWindow() override;
 		};
 
-		class BartlettFIR : public FIR
+		class BartlettFIR : public RectangleFIR
 		{
 		public:
 			BartlettFIR() = default;
 			~BartlettFIR() = default;
-			BartlettFIR(const BartlettFIR& blackmanFIR) = default;
-			void filterAlgo() override;
-		private:
-
+			BartlettFIR(const BartlettFIR& bartlettFIR) = default;
+			void applyWindow() override;
+		};
+		
+		class BartlettHannFIR : public RectangleFIR
+		{
+		public:
+			BartlettHannFIR() = default;
+			~BartlettHannFIR() = default;
+			BartlettHannFIR(const BartlettHannFIR& bartlettHannFIR) = default;
+			void applyWindow() override;
 		};
 
-		
-		
+		class NuttallFIR : public RectangleFIR
+		{
+		public:
+			NuttallFIR() = default;
+			~NuttallFIR() = default;
+			NuttallFIR(const NuttallFIR& nuttallFIR) = default;
+			void applyWindow() override;
+		};
+
+		class FlatFIR : public RectangleFIR
+		{
+		public:
+			FlatFIR() = default;
+			~FlatFIR() = default;
+			FlatFIR(const FlatFIR& flatFIR) = default;
+			void applyWindow() override;
+		};
+
+		class BlackmanHarrisFIR : public RectangleFIR
+		{
+		public:
+			BlackmanHarrisFIR() = default;
+			~BlackmanHarrisFIR() = default;
+			BlackmanHarrisFIR(const BlackmanHarrisFIR& blackmanHarrisFIR) = default;
+			void applyWindow() override;
+		};
+
+		class Convolution
+		{
+			std::vector<float> impulseResponse;
+			AuxPort::CircularBuffer<float> inputBuffer;
+			size_t irSize;
+		public:
+			Convolution() = default;
+			~Convolution() = default;
+			Convolution(const Convolution& convolution) = default;
+			void setImpulseResponse(const std::vector<float>& impulseResponse);
+			void setImpulseResponse(float* impulseResponse, uint32_t size);
+			void setImpulseResponse(std::vector<float>* impulseResponse, uint32_t size);
+			float process(float sample);
+		};		
 	}
 }
 

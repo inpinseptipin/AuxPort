@@ -52,7 +52,6 @@ AuxPort::File::File()
 	this->mode = Idle;
 }
 
-
 std::vector<std::string>& AuxPort::File::getListOfFiles(const std::string& extension)
 {
 #if _WIN32 || _WIN64
@@ -95,15 +94,12 @@ void AuxPort::File::Log()
 	setColour(AuxPort::ColourType::White);
 }
 
-
 std::string AuxPort::File::getCurrentDirectory()
 {
 	return defaultDirectory;
 }
 
-
-
-bool AuxPort::TextFile::open(const std::string& fileName,const Mode& mode, bool log)
+bool AuxPort::TextFile::open(const std::string& fileName, const Mode& mode, bool log)
 {
 	if (mode == Mode::Read)
 	{
@@ -159,7 +155,7 @@ bool AuxPort::TextFile::open(const std::string& fileName,const Mode& mode, bool 
 	}
 }
 
-void AuxPort::TextFile::close(bool log)
+bool AuxPort::TextFile::close(bool log)
 {
 	if (log)
 		AuxPort::Logger::Log("Trying to close the file");
@@ -172,6 +168,7 @@ void AuxPort::TextFile::close(bool log)
 		catch(std::ifstream::failure fail)
 		{
 			AuxPort::Logger::Log("Exception closing file", AuxPort::LogType::Error, AuxPort::ColourType::Red);
+			return false;
 		}	
 	}
 	if (mode == Mode::Write && fileWriter->is_open())
@@ -183,49 +180,50 @@ void AuxPort::TextFile::close(bool log)
 		catch (std::ifstream::failure fail)
 		{
 			AuxPort::Logger::Log("Exception closing file", AuxPort::LogType::Error, AuxPort::ColourType::Red);
-		}
-		
+			return false;
+		}	
 	}
 	if (log)
 		AuxPort::Logger::Log("File Closed Successfully", AuxPort::LogType::Success, AuxPort::ColourType::Green);
+	return true;
 }
 
 std::string& AuxPort::TextFile::readFileAsString()
 {
-	if (fileReader->is_open())
+	AuxAssert(fileReader != nullptr, "No File is selected for parsing");
+	AuxAssert(fileReader->is_open() == true, "Please open a stream to the file, before reading from it");
+	std::string line;
+	while (getline(*fileReader, line))
 	{
-		std::string line;
-		while (getline(*fileReader, line))
-		{
-			rawData += line;
-		}
-		return rawData;
-	}
-	else
-	{
-		AuxPort::Logger::Log("Unable to open File and Read Data");
+		rawData += line;
 	}
 	return rawData;
 }
 
-void AuxPort::TextFile::writeLineToFile(const std::string& data,bool log)
+void AuxPort::TextFile::writeLineToFile(const std::string& data, bool log)
 {
 	AuxAssert(fileWriter != nullptr, "No File is selected for parsing");
-	AuxAssert(fileWriter->is_open() == true && fileWriter != nullptr, "Please open a stream to the file, before reading from it");
+	AuxAssert(fileWriter->is_open() == true, "Please open a stream to the file, before reading from it");
 	*fileWriter.get() << data << "\n";
 	if (log)
 		AuxPort::Logger::Log("Line written successfully to the file",AuxPort::LogType::Success,AuxPort::ColourType::Green);
 }
 
-std::string AuxPort::TextFile::readLineFromFile(bool log)
+bool AuxPort::TextFile::readLineFromFile(std::string& line, bool log)
 {
 	AuxAssert(fileReader != nullptr, "No File is selected for parsing");
-	AuxAssert(fileReader->is_open() == true && fileReader != nullptr, "Please open a stream to the file, before reading from it");
-	getline(*fileReader, line);
+	AuxAssert(fileReader->is_open() == true, "Please open a stream to the file, before reading from it");
+	if(getline(*fileReader, line)) 
+	{
+		if (log)
+			AuxPort::Logger::Log(line, AuxPort::LogType::Success, AuxPort::ColourType::Yellow);
+		return true;
+	}
+
 	if (log)
-		AuxPort::Logger::Log(line, AuxPort::LogType::Success, AuxPort::ColourType::Yellow);
-	return line;
-	
+		AuxPort::Logger::Log("End of File Reached", AuxPort::LogType::Error, AuxPort::ColourType::Red);
+	line = "";
+	return false;
 }
 
 bool AuxPort::BinaryFile::open(const std::string& fileName, const Mode& mode, bool log)
@@ -233,12 +231,10 @@ bool AuxPort::BinaryFile::open(const std::string& fileName, const Mode& mode, bo
 	return false;
 }
 
-void AuxPort::BinaryFile::close(bool log)
+bool AuxPort::BinaryFile::close(bool log)
 {
-
+	return false;
 }
-
-
 
 void AuxPort::TextFormat::Log()
 {
@@ -286,36 +282,85 @@ AuxPort::CSV::CSV()
 	this->uniqueIdentifier = "CSV v1.0";
 }
 
-void AuxPort::CSV::read(std::string& line,int props)
-{	
-	AuxAssert(this->fileExtension == this->extensionName, "Can only read .csv files");
-	if (props == 0)
-	{
-		AuxAssert(this->fileReader->is_open() == true, "Please load up a .csv file before trying to read anything from it");
-		fileReader->clear();
-		fileReader->seekg(0, std::ios_base::beg);
-		line = readLineFromFile();
-	}
-	if (props == 1)
-	{
-		AuxAssert(this->fileReader->is_open() == true, "Please load up a .csv file before trying to read anything from it");
-		fileReader->clear();
-		fileReader->seekg(0, std::ios_base::beg);
-		getline(*fileReader, line);
-		line = readLineFromFile();
-	}
-		
+bool AuxPort::CSV::open(const std::string& fileName, const Mode& mode, bool containsHeader, const char& delimiter, bool log)
+{
+	this->containsHeader = containsHeader;
+	this->delimiter = delimiter;
+	return TextFile::open(fileName, mode, log);
 }
 
-void AuxPort::CSV::write(const std::string& line,int props)
+bool AuxPort::CSV::close(bool log)
 {
-	AuxAssert(this->fileExtension == this->extensionName, "Can only write to .csv files, please update extension");
-	if (props == 0)
+	return TextFile::close(log);
+}
+
+void AuxPort::CSV::read(std::vector<std::vector<std::string>>& data, std::vector<std::string>& header)
+{
+	std::string currLine;
+	if (containsHeader)
 	{
-		AuxAssert(this->fileWriter->is_open() == true, "Please open a .csv file in write mode");
-		fileWriter->seekp(0, std::ios_base::beg);
-		writeLineToFile(line);
+		if (readLineFromFile(currLine))
+		{
+			AuxPort::Utility::split(header, currLine, delimiter);
+		}
 	}
+	while (readLineFromFile(currLine))
+	{
+		std::vector<std::string> dataRow;
+		AuxPort::Utility::split(dataRow, currLine, delimiter);
+		data.push_back(dataRow);
+	}
+}
+
+bool AuxPort::CSV::getDataRow(std::vector<std::string>& dataRow, size_t rowNum)
+{
+	AuxAssert(fileReader != nullptr, "No File is selected for parsing");
+	AuxAssert(fileReader->is_open() == true, "Please open a stream to the file, before reading from it");
+	AuxAssert(rowNum > 0, "Please provide a Row Number greater than zero");
+	dataRow.clear();
+	fileReader->clear();
+	fileReader->seekg(0, std::ios::beg);
+	std::string currLine;
+	if (containsHeader)
+		if (!readLineFromFile(currLine))
+			return false;
+	while (rowNum--)
+		if (!readLineFromFile(currLine))
+			return false;
+	AuxPort::Utility::split(dataRow, currLine, delimiter);
+	return true;
+}
+
+void AuxPort::CSV::write()
+{
+	std::string currLine;
+	if (containsHeader)
+	{
+		AuxPort::Utility::join(currLine, header, delimiter);
+		writeLineToFile(currLine);
+	}
+	for (const std::vector<std::string>& dataRow : data)
+	{
+		AuxPort::Utility::join(currLine, dataRow, delimiter);
+		writeLineToFile(currLine);
+	}
+}
+
+void AuxPort::CSV::setHeader(const std::vector<std::string>& header)
+{
+	this->header = header;
+}
+
+void AuxPort::CSV::addDataRow(const std::vector<std::string>& dataRow)
+{
+	this->data.push_back(dataRow);
+}
+
+void AuxPort::CSV::write(const std::vector<std::vector<std::string>>& data, const std::vector<std::string>& header)
+{
+	this->data = data;
+	this->header = header;
+	write();
 }
 
 void AuxPort::CSV::Log()
@@ -326,19 +371,4 @@ void AuxPort::CSV::Log()
 	std::cout << "UID : " << this->uniqueIdentifier << std::endl;
 	std::cout << "Current Directory : " << this->getCurrentDirectory();
 	setColour(AuxPort::ColourType::White);
-}
-
-void AuxPort::CSV::setHeaders(const std::vector<std::string>& headers)
-{
-	this->headers = headers;
-}
-
-void AuxPort::CSV::addData(const std::vector<std::string>& data)
-{
-	if (this->headers.size() > 0)
-	{
-		this->data.reserve(10);
-		this->data.resize(10);
-	}
-		
 }

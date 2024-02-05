@@ -3,7 +3,7 @@
 AuxPort::Audio::FourierTransform::FourierTransform(size_t fftSize)
 {
 	uint32 isPowerOfTwo = (uint32)(fftSize & (fftSize - 1));
-	AuxAssert(isPowerOfTwo==0, "Library is compatible for FFT sizes that are multiples of 2");
+	AuxAssert(isPowerOfTwo == 0, "Library is compatible for FFT sizes that are multiples of 2");
 	_fftValues.resize(fftSize);
 	_log2N = uint32(log2(fftSize));
 }
@@ -164,7 +164,7 @@ void AuxPort::Audio::DiscreteCosineTransform::computeTransform(const std::vector
 	AuxAssert(inputBuffer.size() == _dctValues.size(), "Size of input buffer not same as the DCT Engine's expectation");
 	AuxAssert(outputBuffer.size() == inputBuffer.size(), "DCT output buffer's size should be the same as the input audio buffer");
 
-	size_t N = inputBuffer.size();
+	uint32_t N = inputBuffer.size();
 	float theta;
 	float scalingFactor = sqrt(2.0f / N);
 	for (uint32_t i = 0; i < N; i++)
@@ -177,6 +177,7 @@ void AuxPort::Audio::DiscreteCosineTransform::computeTransform(const std::vector
 		}
 		_dctValues[i] *= scalingFactor;
 	}
+	_dctValues[0] *= 0.707106781186f;
 
 	for (uint32_t i = 0; i < N; i++)
 		outputBuffer[i] = _dctValues[i];
@@ -184,16 +185,16 @@ void AuxPort::Audio::DiscreteCosineTransform::computeTransform(const std::vector
 
 void AuxPort::Audio::DiscreteCosineTransform::computeInverseTransform(std::vector<float>& outputBuffer)
 {
-	size_t N = _dctValues.size();
+	uint32_t N = _dctValues.size();
 	float theta;
 	float scalingFactor = sqrt(2.0f / N);
 	for (uint32_t i = 0; i < N; i++)
 	{
-		outputBuffer[i] = 0.5f * _dctValues[0];
-		for (uint32_t j = 1; j < N; j++)
+		outputBuffer[i] = 0;
+		for (uint32_t j = 0; j < N; j++)
 		{
 			theta = AuxPort::pi * j * (2 * i + 1) / (2 * N);
-			outputBuffer[i] += _dctValues[j] * cos(theta);
+			outputBuffer[i] += _dctValues[j] * cos(theta) * (j == 0 ? 0.707106781186f : 1);
 		}
 		outputBuffer[i] *= scalingFactor;
 	}

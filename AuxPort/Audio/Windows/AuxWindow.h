@@ -55,7 +55,7 @@ namespace AuxPort
 		public:
 			enum Type
 			{
-				HannWin, HammWin, BlackmanWin, BartlettWin, BartlettHannWin, NuttallWin, FlatWin, BlackmanHarrisWin
+				HannWin, HammWin, BlackmanWin, BartlettWin, BartlettHannWin, NuttallWin, FlatWin, BlackmanHarrisWin,RectangleWin
 			};
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// [Function] Samples a Window function and fills it in a memory allocated std::vector
@@ -89,6 +89,9 @@ namespace AuxPort
 					break;
 				case Type::FlatWin:
 					Flat<sample>(windowBuffer);
+					break;
+				case Type::RectangleWin:
+					Rectangle<sample>(windowBuffer);
 					break;
 				default:
 					return;
@@ -138,12 +141,22 @@ namespace AuxPort
 					BlackmanHarris<sample>(windowBuffer);
 					return windowBuffer;
 					break;
+				case Type::RectangleWin:
+					Rectangle<sample>(windowBuffer);
+					return windowBuffer;
+					break;
 				default:
 					return windowBuffer;
 				}
 			}
 
 		private:
+			template<class sample>
+			static void Rectangle(std::vector<sample>& windowBuffer)
+			{
+				Utility::constantThis(windowBuffer, 1.0f);
+			}
+
 			template<class sample>
 			static void Hann(std::vector<sample>& windowBuffer)
 			{

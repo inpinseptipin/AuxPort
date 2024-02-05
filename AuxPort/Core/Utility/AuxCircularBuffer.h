@@ -54,6 +54,7 @@ namespace AuxPort
 			, readIndex(0)
 			, writeIndex(0)
 		{}
+
 		CircularBuffer(const size_t& capacity)
 			: buffer(capacity)
 			, capacity(capacity)
@@ -143,16 +144,30 @@ namespace AuxPort
 			for (uint32_t i = 0; i < buffer.size(); i++)
 				buffer[i] -= mean;
 		}
+
 		uint32_t getSize()
 		{
 			return static_cast<uint32_t>(buffer.size());
 		}
 
-		// Resizes the buffer capacity but also resets the current buffer
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Resizes the buffer capacity but also resets the current buffer
+		///////////////////////////////////////////////////////////////////////////////////////
 		void resize(size_t newCapacity)
 		{
 			reset();
+			capacity = newCapacity;
 			buffer.resize(newCapacity);
+		}
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Return the element at the given shifted index. (Read Head has index 0, and so on...).
+		/// Make Sure that index is less than the number of elements actively in buffer. Otherwise, old elements might be returned from the buffer.
+		/// Negative Indexing is also supported.
+		///////////////////////////////////////////////////////////////////////////////////////
+		sample getShiftedElement(int index)
+		{
+			return buffer[(readIndex + index + capacity) % capacity];
 		}
 
 	protected:
@@ -162,7 +177,9 @@ namespace AuxPort
 		size_t readIndex;
 		size_t writeIndex;
 
-		// Increments the given index in a circular manner
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Increments the given index in a circular manner
+		///////////////////////////////////////////////////////////////////////////////////////
 		void incrementIndex(size_t &index)
 		{
 			index++;
