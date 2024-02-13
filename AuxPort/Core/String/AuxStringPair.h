@@ -96,12 +96,12 @@ namespace AuxPort
 /*
 		Returns reference to the internal key.
 */
-		AuxPort::String& key();
+		AuxPort::String key() const;
 /*===================================================================================*/	
 /*
 		Returns reference to the internal value.
 */
-		AuxPort::String& value();
+		AuxPort::String value() const;
 /*===================================================================================*/
 /*
 		Updates the Key
