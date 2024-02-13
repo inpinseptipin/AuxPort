@@ -41,6 +41,7 @@ add_library(
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Log/AuxLog.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/String/AuxString.h    
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/String/AuxString.cpp
+    ${AuxTest_SOURCE_DIR}/AuxPort/Core/String/AuxStringPair.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/String/AuxStringPair.cpp 
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Time/AuxTime.h 
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Time/AuxTime.cpp

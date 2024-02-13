@@ -63,12 +63,12 @@ namespace AuxPort
 			_value = value;
 	}
 
-	AuxPort::String& StringPair::key()
+	AuxPort::String StringPair::key() const 
 	{
 		return _key;
 	}
 
-	AuxPort::String& StringPair::value()
+	AuxPort::String StringPair::value() const
 	{
 		return _value;
 	}
