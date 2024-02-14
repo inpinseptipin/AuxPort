@@ -13,16 +13,18 @@ Extensions::AuxCurl::~AuxCurl()
 
 bool Extensions::AuxCurl::GET(const std::string& URL, std::string& response)
 {
+	curl_easy_reset(curlHandle);
 	curl_easy_setopt(curlHandle, CURLOPT_URL, URL.data());
 	curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, writeCallback);
 	curl_easy_setopt(curlHandle, CURLOPT_WRITEDATA, (void*)&response);
 
-	CURLcode res = curl_easy_perform(curlHandle);
+	response.clear();
+	CURLcode responseCode = curl_easy_perform(curlHandle);
 
-	if (res != CURLE_OK)
+	if (responseCode != CURLE_OK)
 	{
 		response = "Error in curl_easy_perform(): ";
-		response += curl_easy_strerror(res);
+		response += curl_easy_strerror(responseCode);
 		return false;
 	}
 	return true;
@@ -30,17 +32,19 @@ bool Extensions::AuxCurl::GET(const std::string& URL, std::string& response)
 
 bool Extensions::AuxCurl::POST(const std::string& URL, const std::string& postFields, std::string& response)
 {
+	curl_easy_reset(curlHandle);
 	curl_easy_setopt(curlHandle, CURLOPT_URL, URL.data());
 	curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, postFields.data());
 	curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, writeCallback);
 	curl_easy_setopt(curlHandle, CURLOPT_WRITEDATA, (void*)&response);
 
-	CURLcode res = curl_easy_perform(curlHandle);
+	response.clear();
+	CURLcode responseCode = curl_easy_perform(curlHandle);
 
-	if (res != CURLE_OK)
+	if (responseCode != CURLE_OK)
 	{
 		response = "Error in curl_easy_perform(): ";
-		response += curl_easy_strerror(res);
+		response += curl_easy_strerror(responseCode);
 		return false;
 	}
 	return true;
