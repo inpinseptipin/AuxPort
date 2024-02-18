@@ -98,7 +98,8 @@ void AuxPort::AuxPascal::readFromFile(const std::string& fileName)
 
 	try
 	{
-		std::string currLine = readLineFromFile();
+		std::string currLine;
+		readLineFromFile(currLine);
 		if (currLine.empty()) { throw std::exception("Invalid File: No type given in first line!"); }
 		if (currLine.back() == '\r') currLine.pop_back();
 		std::string type = currLine;
@@ -117,7 +118,7 @@ void AuxPort::AuxPascal::readFromFile(const std::string& fileName)
 		}
 
 		if (fileReader->eof()) { throw std::exception("Invalid File: Number of Rows not specified!"); }
-		currLine = readLineFromFile();
+		readLineFromFile(currLine);
 		std::istringstream lineStream(currLine);
 		uint32 N;
 		lineStream >> N;
@@ -131,7 +132,7 @@ void AuxPort::AuxPascal::readFromFile(const std::string& fileName)
 				throw std::exception("Invalid File: Less than specified number of rows present in the File!");
 			}
 
-			currLine = readLineFromFile();
+			readLineFromFile(currLine);
 			lineStream.clear();
 			lineStream.str(currLine);
 

@@ -237,7 +237,8 @@ void AuxPort::AuxSeries::readSeriesFromFile(const std::string& fileName)
 
 	try
 	{
-		std::string currLine = readLineFromFile();
+		std::string currLine;
+		readLineFromFile(currLine);
 		if (currLine.empty()) { throw std::exception("Invalid File: No type given in first line!"); }
 		//While opening File created on Windows on Linux Systems, '\r' character from EOL-Specifier("\r\n") will be left as it is
 		if (currLine.back() == '\r') currLine.pop_back();
@@ -282,7 +283,7 @@ void AuxPort::AuxSeries::readSeriesFromFile(const std::string& fileName)
 		}
 
 		if (fileReader->eof()) { throw std::exception("Invalid File: Number of terms Not specified!"); }
-		currLine = readLineFromFile();
+		readLineFromFile(currLine);
 		std::istringstream lineStream(currLine);
 		uint32 N;
 		lineStream >> N;
@@ -297,7 +298,7 @@ void AuxPort::AuxSeries::readSeriesFromFile(const std::string& fileName)
 				throw std::exception("Invalid File: Less than specified number of terms present in the File!");
 			}
 
-			currLine = readLineFromFile();
+			readLineFromFile(currLine);
 			lineStream.clear();
 			lineStream.str(currLine);
 
