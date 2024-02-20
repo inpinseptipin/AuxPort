@@ -1,4 +1,3 @@
-
 #ifndef AUXPORT_CURL_H
 #define AUXPORT_CURL_H
 /*
@@ -38,7 +37,7 @@
 */
 #define CURL_STATICLIB
 #include "curl/curl.h"
-#include "../../AuxPort/AuxPort.h"
+#include "AuxPort.h"
 #include <string>
 
 namespace Extensions
@@ -49,9 +48,10 @@ namespace Extensions
 		AuxCurl();
 		~AuxCurl();
 		bool GET(const std::string& URL, std::string& response);
-		bool POST(const std::string& URL, const std::string& postFields, std::string& response);
+		bool POST(const std::string& URL, const std::vector<AuxPort::StringPair>& postFields, std::string& response);
 	private:
 		static size_t writeCallback(void* data, size_t size, size_t nmemb, void* clientp);
+		static AuxPort::String generatePostFieldString(const std::vector<AuxPort::StringPair>& postFields);
 		CURL* curlHandle;
 	};
 }
