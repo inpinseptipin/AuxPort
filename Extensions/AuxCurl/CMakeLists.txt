@@ -36,6 +36,7 @@ cmake_minimum_required(VERSION 3.10)
 set(AUXPORT_VERSION 0.1)
 include(FetchContent)
 
+# Fetching AuxPort
 FetchContent_Declare(
 	auxport
 	GIT_REPOSITORY https://github.com/inpinseptipin/AuxPort
@@ -43,6 +44,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(auxport)
 
+# Fetching CURL
 FetchContent_Declare(
 	curl
 	GIT_REPOSITORY https://github.com/curl/curl
@@ -58,12 +60,27 @@ add_executable(
 	AuxCurl.h 
 )
 
+# Adding AuxPort include directories
+target_include_directories(${PROJECT_NAME} PUBLIC "${AuxTest_SOURCE_DIR}/AuxPort")
+# Linking AuxPort Libraries
 target_link_libraries(${PROJECT_NAME} PUBLIC AuxPort)
-target_include_directories(${PROJECT_NAME} PUBLIC ${AuxTest_SOURCE_DIR}/AuxPort)
 
+# Adding CURL as a dependency to build it before building the extension
+add_dependencies(${PROJECT_NAME} CURL::libcurl)
+# Adding CURL include directories
+target_include_directories(${PROJECT_NAME} PUBLIC "${CURL_SOURCE_DIR}/include")
+# Linking CURL import Libraries and other required Librarires
+target_link_libraries(${PROJECT_NAME} PUBLIC debug "${CURL_BINARY_DIR}/lib/Debug/libcurl-d_imp.lib" optimized "${CURL_BINARY_DIR}/lib/Release/libcurl_imp.lib")
 target_link_libraries(${PROJECT_NAME} PUBLIC Ws2_32.lib)
 target_link_libraries(${PROJECT_NAME} PUBLIC Crypt32.lib)
 target_link_libraries(${PROJECT_NAME} PUBLIC Wldap32.lib)
 target_link_libraries(${PROJECT_NAME} PUBLIC Normaliz.lib)
-target_link_libraries(${PROJECT_NAME} PUBLIC <Curl Static Build Path>)
-target_include_directories(${PROJECT_NAME} PUBLIC ${CURL_SOURCE_DIR}/include)
+
+# Copying the libcurl dll to the executable's directory
+add_custom_command(
+	TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different 
+	"${CURL_BINARY_DIR}/lib/$<IF:$<CONFIG:Debug>,Debug/libcurl-d.dll,Release/libcurl.dll>"
+	"${CMAKE_CURRENT_BINARY_DIR}/$<IF:$<CONFIG:Debug>,Debug,Release>"
+)
