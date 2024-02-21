@@ -47,11 +47,12 @@ namespace Extensions
 	public:
 		AuxCurl();
 		~AuxCurl();
-		bool GET(const std::string& URL, std::string& response);
-		bool POST(const std::string& URL, const std::vector<AuxPort::StringPair>& postFields, std::string& response);
+		bool GET(const std::string& URL, std::string& response, const std::vector<AuxPort::StringPair>& headers = {});
+		bool POST(const std::string& URL, const std::vector<AuxPort::StringPair>& postFields, std::string& response, const std::vector<AuxPort::StringPair>& headers = {});
 	private:
 		static size_t writeCallback(void* data, size_t size, size_t nmemb, void* clientp);
 		static AuxPort::String generatePostFieldString(const std::vector<AuxPort::StringPair>& postFields);
+		static curl_slist* generateHeadersList(const std::vector<AuxPort::StringPair>& headers);
 		CURL* curlHandle;
 	};
 }
