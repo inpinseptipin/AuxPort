@@ -36,6 +36,7 @@
 
 add_library(
     AuxPort
+    STATIC
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Env/AuxEnv.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Log/AuxLog.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Log/AuxLog.cpp
