@@ -45,15 +45,66 @@ namespace Extensions
 	class AuxCurl
 	{
 	public:
+		///////////////////////////////////////////////////////////////////////////////////////	
+		/// Specifies the Type of Request to perform
+		///////////////////////////////////////////////////////////////////////////////////////
+		enum RequestType {GET, POST};
+		
+		///////////////////////////////////////////////////////////////////////////////////////	
+		/// Initializes the AuxCurl Object
+		///////////////////////////////////////////////////////////////////////////////////////
 		AuxCurl();
+
+		///////////////////////////////////////////////////////////////////////////////////////	
+		/// Destructs and cleans up the AuxCurl Object
+		///////////////////////////////////////////////////////////////////////////////////////
 		~AuxCurl();
-		bool GET(const std::string& URL, std::string& response, const std::vector<AuxPort::StringPair>& headers = {});
-		bool POST(const std::string& URL, const std::vector<AuxPort::StringPair>& postFields, std::string& response, const std::vector<AuxPort::StringPair>& headers = {});
+		
+		///////////////////////////////////////////////////////////////////////////////////////	
+		/// Sets the target URL for the Request
+		///////////////////////////////////////////////////////////////////////////////////////
+		void setURL(const std::string& URL);
+		
+		///////////////////////////////////////////////////////////////////////////////////////	
+		/// Sets the Request Headers
+		/// To unset a header, provide the header name with an empty value.
+		///////////////////////////////////////////////////////////////////////////////////////
+		void setHeaders(const std::vector<AuxPort::StringPair>& headers);
+		
+		///////////////////////////////////////////////////////////////////////////////////////	
+		/// Sets the HTTP POST Fields. The POST fields are sent in JSON format.
+		///////////////////////////////////////////////////////////////////////////////////////
+		void setPostFields(const std::vector<AuxPort::StringPair>& postFieldValuePairs);
+		
+		///////////////////////////////////////////////////////////////////////////////////////	
+		/// Sets a custom handler to handle the Response Data. The passed function/lambda will be called after completion of an request and will receive the Response Data as a string argument.
+		/// You can provide access to local variables using lambda captues.
+		/// 
+		/// Example Usage:
+		///	Extensions::AuxCurl obj;
+		///	...
+		///	std::string res;
+		///	obj.setResponseHandler( [&res] (const std::string& responseData) { res = responseData; } );
+		///////////////////////////////////////////////////////////////////////////////////////
+		void setResponseHandler(const std::function<void(const std::string& responseData)>& responseHandler);
+		
+		///////////////////////////////////////////////////////////////////////////////////////	
+		/// Sends the request to the target URL and executes the response Handler upon completion
+		/// Returns true if there was no error in the transfer, oherwise false.
+		///////////////////////////////////////////////////////////////////////////////////////
+		bool sendRequest(const RequestType& type);
+		
+		///////////////////////////////////////////////////////////////////////////////////////	
+		/// Returns the Response Data of the last sent Request as a String Object
+		///////////////////////////////////////////////////////////////////////////////////////
+		std::string getResponseAsString();
 	private:
-		static size_t writeCallback(void* data, size_t size, size_t nmemb, void* clientp);
-		static AuxPort::String generatePostFieldString(const std::vector<AuxPort::StringPair>& postFields);
-		static curl_slist* generateHeadersList(const std::vector<AuxPort::StringPair>& headers);
 		CURL* curlHandle;
+		curl_slist* headersList;
+		AuxPort::String postData;
+		std::string responseData;
+		std::function<void(const std::string& responseData)> responseHandler;
+		static size_t writeCallback(void* data, size_t size, size_t nmemb, void* clientp);
 	};
 }
 

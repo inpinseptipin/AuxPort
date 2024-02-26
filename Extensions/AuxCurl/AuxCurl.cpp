@@ -4,83 +4,85 @@ Extensions::AuxCurl::AuxCurl()
 {
 	curlHandle = curl_easy_init();
 	AuxAssert(curlHandle, "Error creating CURL Handle!");
+
+	headersList = nullptr;
+	curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, writeCallback);
+	curl_easy_setopt(curlHandle, CURLOPT_WRITEDATA, (void*)&responseData);
 }
 
 Extensions::AuxCurl::~AuxCurl()
 {
+	curl_slist_free_all(headersList);
 	curl_easy_cleanup(curlHandle);
 }
 
-bool Extensions::AuxCurl::GET(const std::string& URL, std::string& response, const std::vector<AuxPort::StringPair>& headers)
+void Extensions::AuxCurl::setURL(const std::string& URL)
 {
-	response.clear();
-	curl_easy_reset(curlHandle);
 	curl_easy_setopt(curlHandle, CURLOPT_URL, URL.data());
-	curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, writeCallback);
-	curl_easy_setopt(curlHandle, CURLOPT_WRITEDATA, (void*)&response);
-	curl_slist* headersList = generateHeadersList(headers);
+}
+
+void Extensions::AuxCurl::setHeaders(const std::vector<AuxPort::StringPair>& headers)
+{
+	curl_slist_free_all(headersList);
+	for (int i = 0; i < headers.size(); i++)
+	{
+		headersList = curl_slist_append(headersList, (headers[i].key() + ":" + headers[i].value()).getCString());
+	}
 	curl_easy_setopt(curlHandle, CURLOPT_HTTPHEADER, headersList);
+}
+
+void Extensions::AuxCurl::setPostFields(const std::vector<AuxPort::StringPair>& postFieldValuePairs)
+{
+	postData = "{";
+	if (!postFieldValuePairs.empty())
+	{
+		postData = postData + "\'" + postFieldValuePairs[0].key() + "\': \'" + postFieldValuePairs[0].value() + "\'";
+		for (int i = 1; i < postFieldValuePairs.size(); i++)
+		{
+			postData = postData + ",\'" + postFieldValuePairs[i].key() + "\': \'" + postFieldValuePairs[i].value() + "\'";
+		}
+	}
+	postData.pushBack("}");
+	curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, postData.getCString());
+}
+
+void Extensions::AuxCurl::setResponseHandler(const std::function<void(const std::string& responseData)>& responseHandler)
+{
+	this->responseHandler = responseHandler;
+}
+
+bool Extensions::AuxCurl::sendRequest(const RequestType& type)
+{
+	switch (type)
+	{
+	case GET:
+		curl_easy_setopt(curlHandle, CURLOPT_HTTPGET, 1L);
+		break;
+	case POST:
+		curl_easy_setopt(curlHandle, CURLOPT_POST, 1L);
+		break; 
+	}
 
 	CURLcode responseCode = curl_easy_perform(curlHandle);
-	curl_slist_free_all(headersList);
-
 	if (responseCode != CURLE_OK)
 	{
-		response = "Error in curl_easy_perform(): ";
-		response += curl_easy_strerror(responseCode);
+		responseData = "Error: ";
+		responseData += curl_easy_strerror(responseCode);
+		responseHandler(responseData);
 		return false;
 	}
+	responseHandler(responseData);
 	return true;
 }
 
-bool Extensions::AuxCurl::POST(const std::string& URL, const std::vector<AuxPort::StringPair>& postFields, std::string& response, const std::vector<AuxPort::StringPair>& headers)
+std::string Extensions::AuxCurl::getResponseAsString()
 {
-	response.clear();
-	curl_easy_reset(curlHandle);
-	curl_easy_setopt(curlHandle, CURLOPT_URL, URL.data());
-	AuxPort::String postFieldString = generatePostFieldString(postFields);
-	curl_easy_setopt(curlHandle, CURLOPT_POSTFIELDS, postFieldString.getCString());
-	curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, writeCallback);
-	curl_easy_setopt(curlHandle, CURLOPT_WRITEDATA, (void*)&response);
-	curl_slist* headersList = generateHeadersList(headers);
-	curl_easy_setopt(curlHandle, CURLOPT_HTTPHEADER, headersList);
-
-	CURLcode responseCode = curl_easy_perform(curlHandle);
-	curl_slist_free_all(headersList);
-
-	if (responseCode != CURLE_OK)
-	{
-		response = "Error in curl_easy_perform(): ";
-		response += curl_easy_strerror(responseCode);
-		return false;
-	}
-	return true;
+	return responseData;
 }
 
 size_t Extensions::AuxCurl::writeCallback(void* data, size_t size, size_t nmemb, void* clientp)
 {
-	std::string* responseStringPtr = (std::string*)clientp;
-	responseStringPtr->append((const char*)data, size * nmemb);
+	std::string* responseDataPtr = (std::string*)clientp;
+	responseDataPtr->append((const char*)data, size * nmemb);
 	return size * nmemb;
-}
-
-AuxPort::String Extensions::AuxCurl::generatePostFieldString(const std::vector<AuxPort::StringPair>& postFields)
-{
-	if (postFields.empty()) return "";
-	AuxPort::String postFieldString = postFields[0].key() + "=" + postFields[0].value();
-	for (int i = 1; i < postFields.size(); i++)
-	{
-		postFieldString = postFieldString + "&" + postFields[i].key() + "=" + postFields[i].value();
-	}
-	return postFieldString;
-}
-
-curl_slist* Extensions::AuxCurl::generateHeadersList(const std::vector<AuxPort::StringPair>& headers)
-{
-	curl_slist* headersList = nullptr;
-	for (int i = 0; i < headers.size(); i++)
-	{
-		headersList = curl_slist_append(headersList, (headers[i].key() + ": " + headers[i].value()).getCString());
-	}
-	return headersList;
 }
