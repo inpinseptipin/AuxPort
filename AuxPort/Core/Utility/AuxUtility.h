@@ -308,6 +308,23 @@ namespace AuxPort
 			}
 			str += tokens[tokensCount - 1];
 		}
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Evaluates a polynomial  of the following form using Horner's Method:
+		/// a(n) * x^n + a(n-1) * x^(n-1) + .......... + a(1) * x + a(0) 
+		/// Coefficients Vector contains the coefficients [a(0), a(1), ...... , a(n-1), a(n)]
+		///////////////////////////////////////////////////////////////////////////////////////
+		template<class sample>
+		static sample horner(const std::vector<sample>& coefficients, sample x)
+		{
+			AuxAssert(!coefficients.empty(), "Coefficients Vector cannot be empty!");
+			sample result = coefficients.back();
+			for (int i = coefficients.size() - 2; i > -1; i--)
+			{
+				result = (result * x) + coefficients[i];
+			}
+			return result;
+		}
 	};
 
 	class Expansions
