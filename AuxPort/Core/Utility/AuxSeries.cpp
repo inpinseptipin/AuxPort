@@ -52,7 +52,7 @@ AuxPort::AuxSeries::AuxSeries()
 	this->uniqueIdentifier = "AXS v1.0";
 }
 
-std::vector<AuxPort::AuxSeries::TaylorTerms>& AuxPort::AuxSeries::getTerms(uint32 N, const Type& type)
+std::vector<AuxPort::PolynomialTerm>& AuxPort::AuxSeries::getTerms(uint32 N, const Type& type)
 {
 	computeTerms(N, type);
 	return terms;
@@ -65,7 +65,7 @@ void AuxPort::AuxSeries::computeTerms(uint32 N, const Type& type)
 
 	terms.resize(N);
 	this->type = type;
-	AuxPort::AuxSeries::TaylorTerms currTerm;
+	AuxPort::PolynomialTerm currTerm;
 
 	switch (type)
 	{
@@ -222,7 +222,7 @@ void AuxPort::AuxSeries::writeSeriesToFile(const std::string& fileName)
 	open(fileName, AuxPort::File::Mode::Write);
 	writeLineToFile(getTypeAsString());
 	writeLineToFile(AuxPort::Casters::toStdString(terms.size()));
-	for (const TaylorTerms& term : terms)
+	for (const PolynomialTerm& term : terms)
 	{
 		writeLineToFile(AuxPort::Casters::toStdString(term.coefficient) + " " + AuxPort::Casters::toStdString(term.exponent));
 	}
@@ -290,7 +290,7 @@ void AuxPort::AuxSeries::readSeriesFromFile(const std::string& fileName)
 
 		terms.clear();
 		terms.resize(N);
-		TaylorTerms currTerm;
+		PolynomialTerm currTerm;
 		for (uint32 i = 0; i < N; i++)
 		{
 			if (fileReader->eof())
@@ -359,11 +359,13 @@ float AuxPort::AuxSeriesEngine::computeFunction(float x)
 	int powerAdjust = 0;
 	if (this->type == NaturalLog)
 	{
-		while (x > 1.5) {
+		while (x > 1.5)
+		{
 			x /= AuxPort::e;
 			powerAdjust++;
 		}
-		while (x < .5) {
+		while (x < .5)
+		{
 			x *= AuxPort::e;
 			powerAdjust--;
 		}
@@ -372,14 +374,39 @@ float AuxPort::AuxSeriesEngine::computeFunction(float x)
 		x = x - 1;
 	}
 
-	float currXPowN = powf(x, terms[0].exponent);
-	float exponentDiff;
-	float result = currXPowN * terms[0].coefficient;
-	for (uint32 i = 1; i < terms.size(); i++)
+#if AUXSIMD
+	if (AuxPort::Env::supportsAVX())
 	{
-		exponentDiff = terms[i].exponent - terms[i - 1].exponent;
-		for (int i = 0; i < exponentDiff; i++) currXPowN *= x;
-		result += (currXPowN * terms[i].coefficient);
+		std::vector<float> evenIndexCoefficients, oddIndexCoefficients;
+		getEvenOddCoefficients(evenIndexCoefficients, oddIndexCoefficients);
+		return AuxPort::Utility::estrin(evenIndexCoefficients, oddIndexCoefficients, x) + powerAdjust;
 	}
-	return result + powerAdjust;
+	return AuxPort::Utility::horner<float>(extractConsecutiveCoefficients(), x) + powerAdjust;
+#else
+	return AuxPort::Utility::horner<float>(extractConsecutiveCoefficients(), x) + powerAdjust;
+#endif
+}
+
+std::vector<float> AuxPort::AuxSeriesEngine::extractConsecutiveCoefficients()
+{
+	std::vector<float> coefficients;
+	coefficients.resize(size_t(terms.back().exponent) + 1);
+	for (uint32 i = 0; i < terms.size(); i++)
+	{
+		coefficients[terms[i].exponent] = terms[i].coefficient;
+	}
+	return coefficients;
+}
+
+void AuxPort::AuxSeriesEngine::getEvenOddCoefficients(std::vector<float>& evenIndexCoefficients, std::vector<float>& oddIndexCoefficients)
+{
+	auto totalCoefficients = terms.back().exponent + 1;
+	evenIndexCoefficients.resize((totalCoefficients + 1) / 2);
+	oddIndexCoefficients.resize(totalCoefficients / 2);
+
+	for (uint32 i = 0; i < terms.size(); i++)
+	{
+		if (int(terms[i].exponent) % 2) oddIndexCoefficients[terms[i].exponent / 2] = terms[i].coefficient;
+		else evenIndexCoefficients[terms[i].exponent / 2] = terms[i].coefficient;
+	}
 }

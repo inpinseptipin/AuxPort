@@ -41,9 +41,23 @@
 #include <vector>
 #include "../Env/AuxEnv.h"
 #include "../File/AuxFile.h"
+#include "../SIMD/AuxSimd.h"
 
 namespace AuxPort
 {
+	///////////////////////////////////////////////////////////////////////////////////////
+	/// PolynomialTerm is a struct that represents a polynomial's exponent and its coefficient.
+	/// For Example :
+	///
+	/// PolynomialTerm term = {3,2}
+	/// then this represent a polynomial
+	///	y = 2x^3
+	///////////////////////////////////////////////////////////////////////////////////////
+	struct PolynomialTerm
+	{
+		float exponent, coefficient;
+	};
+
 	///////////////////////////////////////////////////////////////////////////////////////
 	/// Class : AuxSeries
 	/// This class can be used to express continuous mathematical functions as an infinite series of polynomial terms.
@@ -51,18 +65,6 @@ namespace AuxPort
 	class AuxSeries : virtual protected AuxPort::TextFile, protected AuxPort::TextFormat
 	{
 	public:
-		///////////////////////////////////////////////////////////////////////////////////////
-		/// TaylorTerms is a struct that represents a polynomial's exponent and its coefficient.
-		/// For Example :
-		///
-		/// TaylorTerms term = {3,2}
-		/// then this represent a polynomial
-		///	y = 2x^3
-		///////////////////////////////////////////////////////////////////////////////////////
-		struct TaylorTerms
-		{
-			float exponent, coefficient;
-		};
 
 		AuxSeries();
 		~AuxSeries() = default;
@@ -79,7 +81,7 @@ namespace AuxPort
 		/// N - Number of terms to compute
 		/// type - Type of function for which we need to compute Taylor Teries terms
 		///////////////////////////////////////////////////////////////////////////////////////
-		std::vector<TaylorTerms>& getTerms(uint32 N, const Type& type = Type::Sin);
+		std::vector<PolynomialTerm>& getTerms(uint32 N, const Type& type = Type::Sin);
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// Computes Taylor Series terms and stores them in a vector internally
@@ -120,7 +122,7 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// A vector which is used to store the computed terms
 		///////////////////////////////////////////////////////////////////////////////////////
-		std::vector<AuxPort::AuxSeries::TaylorTerms> terms;
+		std::vector<AuxPort::PolynomialTerm> terms;
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// It specifies the type of function whose Taylor Series terms are currently stored in internal terms vector
@@ -159,9 +161,24 @@ namespace AuxPort
 		AuxSeriesEngine(const AuxSeriesEngine& obj) = default;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Evaluates a taylor series approxination of the chosen function at a given x-value.
+		/// Evaluates a taylor series approximation of the chosen function at a given x-value.
 		///////////////////////////////////////////////////////////////////////////////////////
 		float computeFunction(float x);
+
+	private:
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Returns a vector containing the coefficients(including zeros) of the terms
+		/// For Example: 
+		/// For the following polynomial -> 5x^6 + 2x^2 + 3
+		/// The returned vector will contain {3, 0, 2, 0, 0, 0, 5}
+		///////////////////////////////////////////////////////////////////////////////////////
+		std::vector<float> extractConsecutiveCoefficients();
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Fills up first given vector with even-index coefficients and other given vector with
+		/// odd-indexed ones. Used for employing Estrin's algorithm
+		///////////////////////////////////////////////////////////////////////////////////////
+		void getEvenOddCoefficients(std::vector<float>& evenIndexCoefficients, std::vector<float>& oddIndexCoefficients);
 	};
 }
 #endif

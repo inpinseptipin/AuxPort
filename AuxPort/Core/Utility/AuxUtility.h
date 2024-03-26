@@ -168,7 +168,7 @@ namespace AuxPort
 			std::sort(vector.begin(), vector.end());
 			return vector.size() % 2 == 0 ? vector[vector.size() / 2] : mean<sample>({ vector[vector.size() / 2],vector[vector.size() / 2 + 1] });
 		}
-		
+
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Static] Normalizes a vector with a val.		
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -178,6 +178,19 @@ namespace AuxPort
 			AuxAssert(norm != 0, "Cannot Divide by Zero");
 			for (uint32_t i = 0; i < vec.size(); i++)
 				vec[i] /= norm;
+		}
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Computes sum of a std::vector
+		///////////////////////////////////////////////////////////////////////////////////////
+		template<class sample>
+		static inline sample sum(const std::vector<sample>& vec)
+		{
+			AuxAssert(vec.size() > 0, "Cannot take the absolute sum of an empty vector");
+			sample sum = 0;
+			for (uint32_t i = 0; i < vec.size(); i++)
+				sum += vec[i];
+			return sum;
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -213,10 +226,10 @@ namespace AuxPort
 		/// [Static] Fills a memory allocated std::vector with random values.	
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
-		static inline void generateRandomValues(std::vector<sample>& vector,float rangeStart = -1.0, float rangeEnd = 1.0)
+		static inline void generateRandomValues(std::vector<sample>& vector, float rangeStart = -1.0, float rangeEnd = 1.0)
 		{
-			AuxAssert(vector.size() > 0,"Vector size should be greater than 0")
-			std::random_device rd;
+			AuxAssert(vector.size() > 0, "Vector size should be greater than 0")
+				std::random_device rd;
 			std::mt19937 gen(rd());
 			std::uniform_real_distribution<> distr(rangeStart, rangeEnd);
 			for (uint32_t i = 0; i < vector.size(); i++)
@@ -269,7 +282,7 @@ namespace AuxPort
 			for (uint32_t i = 0; i < vector1.size(); i++)
 				vector1[i] *= vector2[i];
 		}
-	
+
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// [Static] Sinc(x) = sin(pi*x)/pi*x (Normalized Sinc Function)
@@ -277,7 +290,7 @@ namespace AuxPort
 		template<class sample>
 		static inline sample sinc(sample val)
 		{
-			return val == 0 ? 1 : sinf(val*pi) / (val*pi);
+			return val == 0 ? 1 : sinf(val * pi) / (val * pi);
 		}
 
 		template<class sample>
@@ -325,6 +338,61 @@ namespace AuxPort
 			}
 			return result;
 		}
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Static] Evaluates a polynomial  of the following form using Estrin's Algorithm:
+		/// a(n) * x^n + a(n-1) * x^(n-1) + .......... + a(1) * x + a(0) 
+		/// EvenIndexCoefficients contains the coefficients [a(0), a(2), ...]
+		/// OddIndexCoefficients contains the coefficients [a(1), a(3), ...]
+		/// SIMD Instruction Set must be available for this function to work!!
+		///////////////////////////////////////////////////////////////////////////////////////
+		static float estrin(std::vector<float>& evenIndexCoefficients, std::vector<float>& oddIndexCoefficients, float x)
+		{
+#if AUXSIMD
+			AuxAssert(AuxPort::Env::supportsAVX(), "The current processor does not support AVX and hence 256-bit SIMD instructions cannot be performed.");
+
+			// Determining the maximum Power of x we need to compute explicitly (or how many times the outer loop will run)
+			uint32 outerIterationCount = log2(evenIndexCoefficients.size() + oddIndexCoefficients.size());
+
+			// Making sure both vectors are of equal sizes and have size as a multiple of 8. 
+			// OddIndexCoefficients vector might have one less element in some cases but it will be dealt with here
+			uint32 paddedSize = evenIndexCoefficients.size() + (8 - evenIndexCoefficients.size() % 8) % 8;
+			evenIndexCoefficients.resize(paddedSize);
+			oddIndexCoefficients.resize(paddedSize);
+
+			uint32 writeIndex;
+			auto xRegister = _mm256_set1_ps(x);
+			auto evenIdx = _mm256_setr_epi32(0, 2, 4, 6, 0, 0, 0, 0);
+			auto oddIdx = _mm256_setr_epi32(1, 3, 5, 7, 0, 0, 0, 0);
+			while (outerIterationCount--)
+			{
+				writeIndex = 0;
+				for (uint32_t i = 0; i < evenIndexCoefficients.size(); i += 8)
+				{
+					auto OddRegister = _mm256_loadu_ps(oddIndexCoefficients.data() + i);
+					auto EvenRegister = _mm256_loadu_ps(evenIndexCoefficients.data() + i);
+					auto ansRegister = _mm256_fmadd_ps(xRegister, OddRegister, EvenRegister);
+
+					_mm256_storeu_ps(evenIndexCoefficients.data() + writeIndex, _mm256_permutevar8x32_ps(ansRegister, evenIdx));
+					_mm256_storeu_ps(oddIndexCoefficients.data() + writeIndex, _mm256_permutevar8x32_ps(ansRegister, oddIdx));
+
+					writeIndex += 4;
+				}
+
+				evenIndexCoefficients.resize(writeIndex + 1);
+				oddIndexCoefficients.resize(writeIndex + 1);
+
+				x = x * x;
+				if (isinf(x)) x = 0;	// To avoid infinity overflow (and hence, wrong result) in case of Large N
+				xRegister = _mm256_set1_ps(x);
+			}
+
+			return evenIndexCoefficients[0] + oddIndexCoefficients[1] * x;
+#else
+			AuxPort::Logger::Log("SIMD Instruction set not available");
+			return 0.0f;
+#endif
+		}
 	};
 
 	class Expansions
@@ -365,4 +433,3 @@ namespace AuxPort
 
 }
 #endif
-
