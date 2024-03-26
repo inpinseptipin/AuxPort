@@ -38,6 +38,7 @@
 /*===================================================================================*/
 
 #include "../../AuxPort/AuxPort.h"
+#include "../AuxTest.h"
 
 /*===================================================================================*/
 
@@ -47,7 +48,18 @@ namespace AuxTest
 	{
 		namespace String
 		{
-			void init(std::vector<AuxPort::Case>& testcases,const std::vector<std::string>& commands);
+			void init(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& commands);
+			void addConstructorTests(std::vector<AuxPort::Case>& testcases);
+			void addLengthTests(std::vector<AuxPort::Case>& testcases);
+			void addFirstCharTestCases(std::vector<AuxPort::Case>& testcases);
+			void addAssignmentTests(std::vector<AuxPort::Case>& testcases);
+			void addAdditionTests(std::vector<AuxPort::Case>& testcases);
+			void addLeftShiftOperatorTests(std::vector<AuxPort::Case>& testcases);
+			void addReplaceCharacterTests(std::vector<AuxPort::Case>& testcases);
+			void addPushBackTests(std::vector<AuxPort::Case>& testcases);
+			void addSubstringTests(std::vector<AuxPort::Case>& testcases);
+			void addSubtractTests(std::vector<AuxPort::Case>& testcases);
+			void addStringCastTests(std::vector<AuxPort::Case>& testcases);
 		}
 	}
 }

@@ -47,7 +47,8 @@ namespace AuxTest
 	{
 		String, Time
 	};
-	std::vector<AuxPort::Case> testcases;
+	void addTestCase(std::vector<AuxPort::Case>& testcases, const std::string& testName, std::function<bool(const std::vector<std::string>&)> testCase);
+	void runTestCases(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& commands);
 }
 
 
