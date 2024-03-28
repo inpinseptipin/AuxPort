@@ -41,6 +41,8 @@ add_executable(
 	main.cpp
 	AuxTest/String/AuxStringTest.h
 	AuxTest/String/AuxStringTest.cpp
+	AuxTest/FFT/AuxFFTTest.h
+	AuxTest/FFT/AuxFFTTest.cpp
 	AuxTest/AuxTest.h
 	AuxTest/AuxTest.cpp	
 	AuxPort/AuxPort.h

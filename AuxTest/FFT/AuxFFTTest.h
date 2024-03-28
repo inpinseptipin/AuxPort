@@ -1,14 +1,12 @@
-#ifndef AUXTEST_H
-#define AUXTEST_H
-
-
+#ifndef AUXTEST_FFT_H
+#define AUXTEST_FFT_H
 /*
-*			AuxTest
-			"Test Test Test" - inpinseptipin
+			AuxPort Library
+			"Generic Modules to facilitate C++ Windows Application development" - inpinseptipin
 
 			BSD 3-Clause License
 
-			Copyright (c) 2023, Satyarth Arora
+			Copyright (c) 2020, Satyarth Arora
 			All rights reserved.
 
 			Redistribution and use in source and binary forms, with or without
@@ -37,24 +35,40 @@
 			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
+/*===================================================================================*/
+
+#include "../../AuxPort/AuxPort.h"
+#include "../AuxTest.h"
 
 /*===================================================================================*/
-#include "../AuxPort/AuxPort.h"
-#include "String/AuxStringTest.h"
-#include "FFT/AuxFFTTest.h"
+
 namespace AuxTest
 {
-	enum class UnitTest
+	namespace UnitTests
 	{
-		String, Time
-	};
-	void addTestCase(std::vector<AuxPort::Case>& testcases, const std::string& testName, std::function<bool(const std::vector<std::string>&)> testCase);
-	void runTestCases(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& commands);
+		namespace FourierTransform
+		{
+			void init(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& commands);
+			void addConstructorTests(std::vector<AuxPort::Case>& testcases);
+			void addAccuracyTests(std::vector<AuxPort::Case>& testcases);
+			void addInverseTests(std::vector<AuxPort::Case>& testcases);
+		}
+
+		namespace DFT
+		{
+			void init(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& commands);
+			void addAccuracyTests(std::vector<AuxPort::Case>& testcases);
+			void addInverseTests(std::vector<AuxPort::Case>& testcases);
+		}
+
+		namespace DCT
+		{
+			void init(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& commands);
+			void addAccuracyTests(std::vector<AuxPort::Case>& testcases);
+			void addInverseTests(std::vector<AuxPort::Case>& testcases);
+		}
+	}
 }
 
-
-/*
-	Core Headers
-*/
 
 #endif
