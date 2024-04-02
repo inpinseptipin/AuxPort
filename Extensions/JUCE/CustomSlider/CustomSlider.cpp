@@ -20,15 +20,17 @@ CustomSlider::CustomSlider()
 
 CustomSlider::~CustomSlider()
 {
+    setLookAndFeel(nullptr);
 }
 
-void CustomSlider::setCustomDrawFunction(std::function<void(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle)> customDrawFunction)
+void CustomSlider::setSliderDrawFunction(std::function<void(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle)> sliderDrawFunction)
 {
-    sliderLookAndFeel.customDrawFunction = customDrawFunction;
+    sliderLookAndFeel.sliderDrawFunction = sliderDrawFunction;
     setLookAndFeel(&sliderLookAndFeel);
 }
 
 void CustomSlider::CustomLookAndFeel::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider)
 {
-    customDrawFunction(g, x, y, width, height, sliderPos, rotaryStartAngle, rotaryEndAngle);
+    if(sliderDrawFunction)
+        sliderDrawFunction(g, x, y, width, height, sliderPos, rotaryStartAngle, rotaryEndAngle);
 }

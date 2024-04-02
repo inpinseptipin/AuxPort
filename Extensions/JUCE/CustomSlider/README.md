@@ -9,21 +9,22 @@ To use ``CustomSlider`` in your project, follow the following steps:
 ## Documentation
 The ``CustomSlider`` class allows the user to specify how the slider will be drawn. This allows to create sliders customized to suit one's need. Apart from this, ``CustomSlider`` class is used just like JUCE Slider class.
 
-### ``setCustomDrawFunction()``
-To specify the drawing logic for customized slider, one needs to use setCustomDrawFunction() to specify a lambda (or function) which will be used to draw the slide on screen. The custom draw function passed should have the following signature:
+### ``setSliderDrawFunction()``
+To specify the drawing logic for customized slider, one needs to use setSliderDrawFunction() to specify a lambda (or function) which will be used to draw the slider on screen. The slider draw function passed should have the following signature:
 
-```void customDrawFunction(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle)```
-
+```cpp
+void sliderDrawFunction(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle)
+```
+The following parameters are passed to the provided function while drawing the button:
 - ``g``: The graphics context that will be used for drawing the slider.
 - ``x, y``: The top-left corner coordinates of the slider.
 - ``width, height``: The width and height of the slider.
 - ``sliderPos``: The current position of the slider (normalized from 0.0 to 1.0).
 - ``rotaryStartAngle, rotaryEndAngle``: The start and end angles for rotary sliders (in radians).
 
-**Note**: If not custom draw function is set, then the default look and feel of juce::Slider will be used.
+The slider draw function will be called internally to draw the slider.  It works similar to drawRotarySlider() function of juce::LookAndFeel_V4. The graphics context and other parameters will be passed to the function. One can use this function to implement custom drawing logic for the slider.
 
-The custom draw function will be called internally to draw the slider.  It works similar to drawRotarySlider() function of juce::LookAndFeel_V4. The graphics context and other parameters will be passed to the function. One can use this function to implement 
-custom drawing logic for the slider.
+**Note**: If not slider draw function is set, then the default look and feel of `juce::Slider` will be used.
 
 ## Example Usage
 ``` C++
@@ -38,7 +39,7 @@ CustomSlider customSlider;
 .
 .
 // Specify the drawing logic for the custom slider
-customSlider.setCustomDrawFunction(
+customSlider.setSliderDrawFunction(
     [](juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle)
     {
         float diameter = juce::jmin(width, height);

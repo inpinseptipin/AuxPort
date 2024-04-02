@@ -40,13 +40,13 @@ public:
      * The graphics context and other parameters will be passed to the function. One can use this function to implement 
      * custom drawing logic for the slider.
      */
-    void setCustomDrawFunction(std::function<void(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle)> customDrawFunction);
+    void setSliderDrawFunction(std::function<void(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle)> sliderDrawFunction);
 private:
     class CustomLookAndFeel : public juce::LookAndFeel_V4
     {
     public:
         void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider) override;
-        std::function<void(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle)> customDrawFunction;
+        std::function<void(juce::Graphics& g, int x, int y, int width, int height, float sliderPos, float rotaryStartAngle, float rotaryEndAngle)> sliderDrawFunction;
     };
     CustomLookAndFeel sliderLookAndFeel;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (CustomSlider)
