@@ -51,6 +51,7 @@ add_library(
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/TestCase/AuxCase.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/TestCase/AuxCase.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxCaster.h
+    ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxCaster.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxUtility.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxUtility.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxCircularBuffer.h
