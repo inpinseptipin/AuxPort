@@ -42,19 +42,16 @@
 #include "../AuxPort/AuxPort.h"
 #include "String/AuxStringTest.h"
 #include "FFT/AuxFFTTest.h"
+#include "FIR/AuxFIRTest.h"
+#include "IIR/AuxIIRTest.h"
 namespace AuxTest
 {
 	enum class UnitTest
 	{
 		String, Time
 	};
-	void addTestCase(std::vector<AuxPort::Case>& testcases, const std::string& testName, std::function<bool(const std::vector<std::string>&)> testCase);
+	extern std::vector<AuxPort::Case> testcases;
+	void addTestCase(std::vector<AuxPort::Case>& testcases, const std::string& testId, const std::string& testName, std::function<bool(const std::vector<std::string>&)> testCase);
 	void runTestCases(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& commands);
 }
-
-
-/*
-	Core Headers
-*/
-
 #endif

@@ -48,7 +48,7 @@ namespace AuxTest
 	{
 		namespace FourierTransform
 		{
-			void init(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& commands);
+			void init(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& initCommands);
 			void addConstructorTests(std::vector<AuxPort::Case>& testcases);
 			void addAccuracyTests(std::vector<AuxPort::Case>& testcases);
 			void addInverseTests(std::vector<AuxPort::Case>& testcases);
@@ -56,14 +56,14 @@ namespace AuxTest
 
 		namespace DFT
 		{
-			void init(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& commands);
+			void init(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& initCommands);
 			void addAccuracyTests(std::vector<AuxPort::Case>& testcases);
 			void addInverseTests(std::vector<AuxPort::Case>& testcases);
 		}
 
 		namespace DCT
 		{
-			void init(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& commands);
+			void init(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& initCommands);
 			void addAccuracyTests(std::vector<AuxPort::Case>& testcases);
 			void addInverseTests(std::vector<AuxPort::Case>& testcases);
 		}

@@ -48,10 +48,10 @@ namespace AuxTest
 	{
 		namespace String
 		{
-			void init(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& commands);
+			void init(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& initCommands);
 			void addConstructorTests(std::vector<AuxPort::Case>& testcases);
 			void addLengthTests(std::vector<AuxPort::Case>& testcases);
-			void addFirstCharTestCases(std::vector<AuxPort::Case>& testcases);
+			void addFirstCharTests(std::vector<AuxPort::Case>& testcases);
 			void addAssignmentTests(std::vector<AuxPort::Case>& testcases);
 			void addAdditionTests(std::vector<AuxPort::Case>& testcases);
 			void addLeftShiftOperatorTests(std::vector<AuxPort::Case>& testcases);
