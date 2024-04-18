@@ -326,13 +326,15 @@ namespace AuxPort
 		/// [Static] Evaluates a polynomial  of the following form using Horner's Method:
 		/// a(n) * x^n + a(n-1) * x^(n-1) + .......... + a(1) * x + a(0) 
 		/// Coefficients Vector contains the coefficients [a(0), a(1), ...... , a(n-1), a(n)]
+		/// Make sure to consider the maximum value of float while evaluating polynomial. Trying to evaluate
+		/// polynomials with large number of coefficients (or large power of x) may result in infinity.
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static sample horner(const std::vector<sample>& coefficients, sample x)
 		{
 			AuxAssert(!coefficients.empty(), "Coefficients Vector cannot be empty!");
-			sample result = coefficients.back();
-			for (int i = coefficients.size() - 2; i > -1; i--)
+			sample result = 0;
+			for (int i = coefficients.size() - 1; i > -1; i--)
 			{
 				result = (result * x) + coefficients[i];
 			}
@@ -345,6 +347,8 @@ namespace AuxPort
 		/// EvenIndexCoefficients contains the coefficients [a(0), a(2), ...]
 		/// OddIndexCoefficients contains the coefficients [a(1), a(3), ...]
 		/// SIMD Instruction Set must be available for this function to work!!
+		/// Make sure to consider the maximum value of float while evaluating polynomial. Trying to evaluate
+		/// polynomials with large number of coefficients (or large power of x) may result in infinity.
 		///////////////////////////////////////////////////////////////////////////////////////
 		static float estrin(std::vector<float>& evenIndexCoefficients, std::vector<float>& oddIndexCoefficients, float x)
 		{
@@ -356,7 +360,7 @@ namespace AuxPort
 
 			// Making sure both vectors are of equal sizes and have size as a multiple of 8. 
 			// OddIndexCoefficients vector might have one less element in some cases but it will be dealt with here
-			uint32 paddedSize = evenIndexCoefficients.size() + (8 - evenIndexCoefficients.size() % 8) % 8;
+			size_t paddedSize = evenIndexCoefficients.size() + (8 - evenIndexCoefficients.size() % 8) % 8;
 			evenIndexCoefficients.resize(paddedSize);
 			oddIndexCoefficients.resize(paddedSize);
 
@@ -383,13 +387,12 @@ namespace AuxPort
 				oddIndexCoefficients.resize(writeIndex + 1);
 
 				x = x * x;
-				if (isinf(x)) x = 0;	// To avoid infinity overflow (and hence, wrong result) in case of Large N
 				xRegister = _mm256_set1_ps(x);
 			}
 
-			return evenIndexCoefficients[0] + oddIndexCoefficients[1] * x;
+			return evenIndexCoefficients[0] + oddIndexCoefficients[0] * x;
 #else
-			AuxPort::Logger::Log("SIMD Instruction set not available");
+			AuxPort::Logger::Log("SIMD Instruction set not available! Please use Horner's Algorithm for polynomial evaluation.");
 			return 0.0f;
 #endif
 		}
