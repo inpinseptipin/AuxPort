@@ -51,7 +51,6 @@ add_library(
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/TestCase/AuxCase.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/TestCase/AuxCase.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxCaster.h
-    ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxCaster.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxUtility.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxUtility.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxCircularBuffer.h
@@ -75,5 +74,6 @@ add_library(
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxPan.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Oscillators/AuxOscillator.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Oscillators/AuxOscillator.cpp
-   
+    ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Compressor/AuxCompressor.h
+    ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Spectral/AuxSpectral.h
 )
