@@ -46,22 +46,21 @@ namespace Audio
 {
 namespace Spectral
 {
-
 	template <class sampleType>
-	class OverlapSaveDriver
+	class OverlapSaveProcessor
 	{
 	public:
-		OverlapSaveDriver(size_t saveSize)
+		OverlapSaveProcessor(size_t overlapSize)
 		{
-			reset(saveSize);
+			reset(overlapSize);
 		}
 
-		void reset(size_t saveSize)
+		void reset(size_t overlapSize)
 		{
-			_prevInputs.resize(saveSize);
+			_prevInputs.resize(overlapSize);
 		}
 
-		void processOverlap(const std::vector<sampleType>& inputBuffer)
+		std::vector<sampleType> getOverlappedBuffer(const std::vector<sampleType>& inputBuffer)
 		{
 			AuxAssert(inputBuffer.size() >= _prevInputs.size(), "Input size is less than save size. Please adjust save size!");
 
@@ -77,43 +76,88 @@ namespace Spectral
 				_prevInputs[i] = inputBuffer[j];
 			}
 
-			// Processing the overlapped Buffer
-			processorAlgorithm(overlappedBuffer);
+			return overlappedBuffer;
 		}
 
-		virtual void processorAlgorithm(std::vector<sampleType>& overlappedBuffer) = 0;
 	private:
 		std::vector<sampleType> _prevInputs;
 	};
 
 	template <class sampleType>
-	class Spectrogram : protected OverlapSaveDriver<sampleType>
+	class Spectrogram : protected OverlapSaveProcessor<sampleType>
 	{
 	public:
-		Spectrogram(size_t windowSize, size_t saveSize) : fft(windowSize), OverlapSaveDriver<sampleType>(saveSize), fftOutput(windowSize)
+		Spectrogram(size_t windowSize, AuxPort::Audio::Window::Type windowType, size_t overlapSize, size_t bufferSize) : _fft(windowSize), OverlapSaveProcessor<sampleType>(overlapSize)
 		{
-			window = AuxPort::Audio::Window::generate<sampleType>(windowSize, AuxPort::Audio::Window::HammWin);
+			AuxAssert(bufferSize + overlapSize == windowSize, "(Overlap Size + Buffer Size) should be equal to window size!");
+			_window = AuxPort::Audio::Window::generate<sampleType>(windowSize, windowType);
+			_overlapSize = overlapSize;
+			_bufferSize = bufferSize;
 		}
 
-		void processorAlgorithm(std::vector<sampleType>& overlappedBuffer) override
+		std::vector<std::complex<float>> processBuffer(const std::vector<sampleType>& inputBuffer)
 		{
-			AuxAssert(window.size() == overlappedBuffer.size(), "Incoming overlapped buffer's size should be equal to window size. Please adjust either accordingly!");
+			AuxAssert(inputBuffer.size() == _bufferSize, "Input Buffer should have specified Size!");
+			std::vector<sampleType> overlappedBuffer = getOverlappedBuffer(inputBuffer);
 
 			//Applying window
-			AuxPort::Utility::multiply(overlappedBuffer, window);
+			AuxPort::Utility::multiply(overlappedBuffer, _window);
 
 			// Computing FFT
-			std::vector<float> temp(window.size());
-			fft.computeTransform(overlappedBuffer, temp);
+			std::vector<sampleType> temp(overlappedBuffer.size());
+			_fft.computeTransform(overlappedBuffer, temp);
+			return *_fft.getFourierTransformFrame();
+		}
+
+		std::vector<std::vector<std::complex<float>>> process(const std::vector<sampleType>& audioSamples)
+		{
+			uint32 bufferCount = ceil((float)audioSamples.size() / _bufferSize);
+			std::vector<std::vector<std::complex<float>>> stftResults;
+			stftResults.reserve(bufferCount);
+
+			std::vector<sampleType> currBuffer(_bufferSize);
+			for (int i = 0; i < bufferCount - 1; i++)
+			{
+				// Extracting Current Buffer
+				for (int j = 0; j < _bufferSize; j++)
+				{
+					currBuffer[j] = audioSamples[i * _bufferSize + j];
+				}
+
+				// Processing Buffer and storing STFT Complex Values
+				stftResults.push_back(processBuffer(currBuffer));
+			}
+
+			// Extracting and padding last buffer with zeroes (if required)
+			{
+				int j = 0;
+				size_t currReadIndex = (bufferCount - 1) * _bufferSize;
+				while (currReadIndex < audioSamples.size())
+				{
+					currBuffer[j] = audioSamples[currReadIndex];
+					currReadIndex++;
+					j++;
+				}
+
+				// Padding with zeroes (if required)
+				while (j < _bufferSize)
+				{
+					currBuffer[j] = 0;
+					j++;
+				}
+
+				// Processing Buffer and storing STFT Complex Values
+				stftResults.push_back(processBuffer(currBuffer));
+			}
 			
-			// Use FFT output
+			return stftResults;
 		}
 
 	private:
-		AuxPort::Audio::FourierTransform fft;
-		std::vector<sampleType> window;
-		// Complex Values stored in this
-		std::vector<std::complex<float>> fftOutput;
+		AuxPort::Audio::FourierTransform _fft;
+		std::vector<sampleType> _window;
+		size_t _overlapSize;
+		size_t _bufferSize;
 	};
 }
 }
