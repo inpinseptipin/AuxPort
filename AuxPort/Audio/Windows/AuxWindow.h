@@ -154,7 +154,7 @@ namespace AuxPort
 			template<class sample>
 			static void Rectangle(std::vector<sample>& windowBuffer)
 			{
-				Utility::constantThis(windowBuffer, 1.0f);
+				Utility::constantThis(windowBuffer, static_cast<sample>(1));
 			}
 
 			template<class sample>

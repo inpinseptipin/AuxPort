@@ -52,45 +52,44 @@ namespace Spectral
 	public:
 		OverlapSaveProcessor(size_t overlapSize)
 		{
-			reset(overlapSize);
-		}
-
-		void reset(size_t overlapSize)
-		{
 			_prevInputs.resize(overlapSize);
 		}
 
-		std::vector<sampleType> getOverlappedBuffer(const std::vector<sampleType>& inputBuffer)
+		void getOverlappedBuffer(const std::vector<sampleType>& inputBuffer, std::vector<sampleType>& overlappedBuffer)
 		{
-			AuxAssert(inputBuffer.size() >= _prevInputs.size(), "Input size is less than save size. Please adjust save size!");
+			AuxAssert(inputBuffer.size() >= _prevInputs.size(), "Input size is less than save size!");
+			AuxAssert(overlappedBuffer.size() == inputBuffer.size() + _prevInputs.size(), "Size of overlappedBuffer should be equal to (inputBuffer's Size + overlapSize)!");
 
-			// Creating Overlapped Buffer
-			std::vector<sampleType> overlappedBuffer;
-			overlappedBuffer.reserve(_prevInputs.size() + inputBuffer.size());
-			overlappedBuffer.insert(overlappedBuffer.end(), _prevInputs.begin(), _prevInputs.end());
-			overlappedBuffer.insert(overlappedBuffer.end(), inputBuffer.begin(), inputBuffer.end());
+			// Filling Overlapped Buffer
+			size_t writeIndex = 0;
+			for (const sampleType& val : _prevInputs)
+				overlappedBuffer[writeIndex++] = val;
+			for (const sampleType& val : inputBuffer)
+				overlappedBuffer[writeIndex++] = val;
 
 			// Saving the current inputs into _prevInputs
 			for (int i = _prevInputs.size() - 1, j = inputBuffer.size() - 1; i > -1; i--, j--)
 			{
 				_prevInputs[i] = inputBuffer[j];
 			}
-
-			return overlappedBuffer;
 		}
 
-	private:
+	protected:
 		std::vector<sampleType> _prevInputs;
 	};
 
-	template <class sampleType>
-	class Spectrogram : protected OverlapSaveProcessor<sampleType>
+	template <class sampleType> 
+	class Spectrogram : public OverlapSaveProcessor<sampleType>
 	{
 	public:
-		Spectrogram(size_t windowSize, AuxPort::Audio::Window::Type windowType, size_t overlapSize, size_t bufferSize) : _fft(windowSize), OverlapSaveProcessor<sampleType>(overlapSize)
+		Spectrogram(const size_t bufferSize, size_t windowSize = 0, size_t overlapSize = 0, const AuxPort::Audio::Window::Type windowType = AuxPort::Audio::Window::HannWin) 
+			: OverlapSaveProcessor<sampleType>( (validateWindowAndOverlapSizes(bufferSize, windowSize, overlapSize), overlapSize) )
+			, _fft(windowSize)
 		{
 			AuxAssert(bufferSize + overlapSize == windowSize, "(Overlap Size + Buffer Size) should be equal to window size!");
+			
 			_window = AuxPort::Audio::Window::generate<sampleType>(windowSize, windowType);
+			_currOverlappedBuffer.resize(windowSize);
 			_overlapSize = overlapSize;
 			_bufferSize = bufferSize;
 		}
@@ -98,14 +97,14 @@ namespace Spectral
 		std::vector<std::complex<float>> processBuffer(const std::vector<sampleType>& inputBuffer)
 		{
 			AuxAssert(inputBuffer.size() == _bufferSize, "Input Buffer should have specified Size!");
-			std::vector<sampleType> overlappedBuffer = getOverlappedBuffer(inputBuffer);
+			getOverlappedBuffer(inputBuffer, _currOverlappedBuffer);
 
 			//Applying window
-			AuxPort::Utility::multiply(overlappedBuffer, _window);
+			AuxPort::Utility::multiply(_currOverlappedBuffer, _window);
 
 			// Computing FFT
-			std::vector<sampleType> temp(overlappedBuffer.size());
-			_fft.computeTransform(overlappedBuffer, temp);
+			std::vector<sampleType> temp(_currOverlappedBuffer.size());
+			_fft.computeTransform(_currOverlappedBuffer, temp);
 			return *_fft.getFourierTransformFrame();
 		}
 
@@ -154,10 +153,20 @@ namespace Spectral
 		}
 
 	private:
+		static void validateWindowAndOverlapSizes(const size_t bufferSize, size_t& windowSize, size_t& overlapSize)
+		{
+			if (windowSize == 0)
+				windowSize = AuxPort::Utility::nextPowerOfTwo(bufferSize);
+
+			if (overlapSize == 0)
+				overlapSize = windowSize - bufferSize;
+		}
+
+		size_t _bufferSize;
+		size_t _overlapSize;
 		AuxPort::Audio::FourierTransform _fft;
 		std::vector<sampleType> _window;
-		size_t _overlapSize;
-		size_t _bufferSize;
+		std::vector<sampleType> _currOverlappedBuffer;
 	};
 }
 }

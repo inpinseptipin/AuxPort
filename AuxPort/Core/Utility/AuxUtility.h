@@ -396,6 +396,12 @@ namespace AuxPort
 			return 0.0f;
 #endif
 		}
+
+		template<class sample>
+		static sample nextPowerOfTwo(sample num)
+		{
+			return pow(2, ceil(log2(num)));
+		}
 	};
 
 	class Expansions
