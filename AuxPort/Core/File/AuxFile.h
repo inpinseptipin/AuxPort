@@ -68,11 +68,12 @@ namespace AuxPort
 		Directory(const Directory& directory) = default;
 		void setDirectory(const std::string& absolutePath);
 		uint32_t count(const std::string& fileExtension);
+		std::unordered_map<std::string, uint32_t> count();
 		std::vector<std::string> getList(Type type = Type::File,PathFormat pathFormat = PathFormat::Absolute);
 		std::vector<std::string> getListOfFiles(const std::string& fileExtension);
 		void Log() override;
 	private:
-		void count();
+		void Count();
 		std::filesystem::path path;
 		uint32_t numberOfFiles = 0;
 		uint32_t numberOfDirectories = 0;

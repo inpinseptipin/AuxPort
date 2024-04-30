@@ -377,13 +377,15 @@ void AuxPort::CSV::Log()
 AuxPort::Directory::Directory()
 {
 	path = std::filesystem::current_path();
-	count();
+	Count();
 }
 void AuxPort::Directory::setDirectory(const std::string& absolutePath)
 {
-	AuxAssert(absolutePath.length() > 0, "Not a valid Path");
-	path = std::filesystem::u8path(absolutePath);
-	count();
+	AuxAssert(absolutePath.length() > 0, "Path Length should be greater than 0");
+	auto newPath = std::filesystem::u8path(absolutePath);
+	AuxAssert(std::filesystem::exists(newPath), "Not a valid Path");
+	path = newPath;
+	Count();
 
 }
 uint32_t AuxPort::Directory::count(const std::string& fileExtension)
@@ -399,6 +401,24 @@ uint32_t AuxPort::Directory::count(const std::string& fileExtension)
 		}
 	return noOfFiles;
 			
+}
+std::unordered_map<std::string, uint32_t> AuxPort::Directory::count()
+{
+	std::unordered_map<std::string, uint32_t> map;
+	for (const auto& entry : std::filesystem::directory_iterator(path))
+	{
+		if (entry.is_regular_file())
+		{
+			std::filesystem::path currentPath(entry);
+			auto extensionName = currentPath.extension().string();
+			auto key = map.find(extensionName);
+			if (key == map.end())
+				map.emplace(extensionName, 0);
+			map.at(extensionName) += 1;
+
+		}
+	}
+	return map;
 }
 std::vector<std::string> AuxPort::Directory::getList(Type type,PathFormat pathFormat)
 {
@@ -446,7 +466,7 @@ void AuxPort::Directory::Log()
 	setColour(AuxPort::ColourType::White);
 }
 
-void AuxPort::Directory::count()
+void AuxPort::Directory::Count()
 {
 	numberOfFiles = 0;
 	numberOfDirectories = 0;
