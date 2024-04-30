@@ -377,13 +377,13 @@ void AuxPort::CSV::Log()
 AuxPort::Directory::Directory()
 {
 	path = std::filesystem::current_path();
-	countNumberOfFiles();
+	count();
 }
 void AuxPort::Directory::setDirectory(const std::string& absolutePath)
 {
 	AuxAssert(absolutePath.length() > 0, "Not a valid Path");
 	path = std::filesystem::u8path(absolutePath);
-	countNumberOfFiles();
+	count();
 
 }
 uint32_t AuxPort::Directory::count(const std::string& fileExtension)
@@ -399,6 +399,27 @@ uint32_t AuxPort::Directory::count(const std::string& fileExtension)
 		}
 	return noOfFiles;
 			
+}
+std::vector<std::string> AuxPort::Directory::getList(Type type,PathFormat pathFormat)
+{
+	std::vector<std::string> data;
+	for (const auto& entry : std::filesystem::directory_iterator(path))
+	{
+		switch (type)
+		{
+			case Type::Dir:
+				if (entry.is_directory())
+					pathFormat == PathFormat::Absolute ? data.push_back(std::filesystem::path(entry).string()) : data.push_back(std::filesystem::path(entry).filename().string());
+				break;
+			case Type::File:
+				if (entry.is_regular_file())
+					pathFormat == PathFormat::Absolute ? data.push_back(std::filesystem::path(entry).string()) : data.push_back(std::filesystem::path(entry).filename().string());
+				break;
+			default:
+				pathFormat == PathFormat::Absolute ? data.push_back(std::filesystem::path(entry).string()) : data.push_back(std::filesystem::path(entry).filename().string());
+		}
+	}
+	return data;
 }
 std::vector<std::string> AuxPort::Directory::getListOfFiles(const std::string& fileExtension)
 {
@@ -420,16 +441,20 @@ void AuxPort::Directory::Log()
 	std::cout << "|===================================================|" << std::endl;
 	std::cout << "Current Directory : " << path << std::endl;
 	std::cout << "Number of Files in the Directory : "<< numberOfFiles << std::endl;
+	std::cout << "Number of Folders in the Directory : " << numberOfDirectories << std::endl;
 	std::cout << "|===================================================|" << std::endl;
 	setColour(AuxPort::ColourType::White);
 }
 
-void AuxPort::Directory::countNumberOfFiles()
+void AuxPort::Directory::count()
 {
 	numberOfFiles = 0;
+	numberOfDirectories = 0;
 	for (const auto& entry : std::filesystem::directory_iterator(path))
 		if (!entry.is_directory())
 			numberOfFiles++;
+		else
+			numberOfDirectories++;
 }
 
 

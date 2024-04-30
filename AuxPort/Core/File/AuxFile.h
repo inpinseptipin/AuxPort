@@ -56,17 +56,26 @@ namespace AuxPort
 	class Directory : public ILog
 	{
 	public:
+		enum Type{
+			Dir,File,All
+		};
+		enum PathFormat
+		{
+			Relative,Absolute
+		};
 		Directory();
 		~Directory() = default;
 		Directory(const Directory& directory) = default;
 		void setDirectory(const std::string& absolutePath);
 		uint32_t count(const std::string& fileExtension);
+		std::vector<std::string> getList(Type type = Type::File,PathFormat pathFormat = PathFormat::Absolute);
 		std::vector<std::string> getListOfFiles(const std::string& fileExtension);
 		void Log() override;
 	private:
-		void countNumberOfFiles();
+		void count();
 		std::filesystem::path path;
 		uint32_t numberOfFiles = 0;
+		uint32_t numberOfDirectories = 0;
 	};
 #endif
 	
