@@ -52,6 +52,26 @@
 
 namespace AuxPort
 {
+#ifdef AUXPORT_CXX_17
+	class Directory : public ILog
+	{
+	public:
+		Directory();
+		~Directory() = default;
+		Directory(const Directory& directory) = default;
+		void setDirectory(const std::string& absolutePath);
+		uint32_t count(const std::string& fileExtension);
+		std::vector<std::string> getListOfFiles(const std::string& fileExtension);
+		void Log() override;
+	private:
+		void countNumberOfFiles();
+		std::filesystem::path path;
+		uint32_t numberOfFiles = 0;
+	};
+#endif
+	
+
+
 	class File : virtual public ILog
 	{
 	public:

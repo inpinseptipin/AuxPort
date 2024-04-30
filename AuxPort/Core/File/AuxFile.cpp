@@ -372,3 +372,65 @@ void AuxPort::CSV::Log()
 	std::cout << "Current Directory : " << this->getCurrentDirectory();
 	setColour(AuxPort::ColourType::White);
 }
+
+#ifdef AUXPORT_CXX_17
+AuxPort::Directory::Directory()
+{
+	path = std::filesystem::current_path();
+	countNumberOfFiles();
+}
+void AuxPort::Directory::setDirectory(const std::string& absolutePath)
+{
+	AuxAssert(absolutePath.length() > 0, "Not a valid Path");
+	path = std::filesystem::u8path(absolutePath);
+	countNumberOfFiles();
+
+}
+uint32_t AuxPort::Directory::count(const std::string& fileExtension)
+{
+	uint32_t noOfFiles = 0;
+	for (const auto& entry : std::filesystem::directory_iterator(path))
+		if (entry.is_regular_file())
+		{
+			std::filesystem::path currentPath(entry);
+			auto extensionName = currentPath.extension().string();
+			if (extensionName == fileExtension)
+				noOfFiles++;
+		}
+	return noOfFiles;
+			
+}
+std::vector<std::string> AuxPort::Directory::getListOfFiles(const std::string& fileExtension)
+{
+	std::vector<std::string> files;
+	for (const auto& entry : std::filesystem::directory_iterator(path))
+		if (entry.is_regular_file())
+		{
+			std::filesystem::path currentPath(entry);
+			auto extensionName = currentPath.extension().string();
+			if (extensionName == fileExtension)
+				files.push_back(currentPath.string());
+		}
+	return files;
+}
+void AuxPort::Directory::Log()
+{
+	setColour(AuxPort::ColourType::Blue);
+	std::cout << "\nLogging Directory" << std::endl;
+	std::cout << "|===================================================|" << std::endl;
+	std::cout << "Current Directory : " << path << std::endl;
+	std::cout << "Number of Files in the Directory : "<< numberOfFiles << std::endl;
+	std::cout << "|===================================================|" << std::endl;
+	setColour(AuxPort::ColourType::White);
+}
+
+void AuxPort::Directory::countNumberOfFiles()
+{
+	numberOfFiles = 0;
+	for (const auto& entry : std::filesystem::directory_iterator(path))
+		if (!entry.is_directory())
+			numberOfFiles++;
+}
+
+
+#endif

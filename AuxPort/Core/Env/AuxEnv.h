@@ -46,7 +46,9 @@
 ///	Preprocessor Defintion to Determine if Compiling on Windows x86 or x64
 ///////////////////////////////////////////////////////////////////////////////////////
 
-
+#if _HAS_CXX17
+	#define AUXPORT_CXX_17
+#endif
 
 #if _WIN32 || _WIN64
 #if _WIN64
