@@ -38,17 +38,47 @@
 #include <assert.h>
 #include "../Log/AuxLog.h"
 
-#if defined(_MSC_VER)
+#ifdef _MSC_VER
 #include <intrin.h>
 #define AUXSIMD 1
 #endif
+
+///////////////////////////////////////////////////////////////////////////////////////
+///	Preprocessor Defintion to Determine the current C++ Standard Version
+///////////////////////////////////////////////////////////////////////////////////////
+#ifdef _MSC_VER
+
+#if _MSVC_LANG == 201402L
+#define AUXPORT_CXX14
+#define AUXPORT_CXX_VER 14
+#elif _MSVC_LANG == 201703L
+#define AUXPORT_CXX17
+#define AUXPORT_CXX_VER 17
+#elif __MSVC_LANG == 202002L
+#define AUXPORT_CXX20
+#define AUXPORT_CXX_VER 20
+#endif
+
+#elif __GNUC__ || __clang__
+
+#if __cplusplus == 201402L
+#define AUXPORT_CXX14
+#define AUXPORT_CXX_VER 14
+#elif __cplusplus == 201703L
+#define AUXPORT_CXX17
+#define AUXPORT_CXX_VER 17
+#elif __cplusplus == 202002L
+#define AUXPORT_CXX20
+#define AUXPORT_CXX_VER 20
+#endif
+
+#endif
+
 ///////////////////////////////////////////////////////////////////////////////////////
 ///	Preprocessor Defintion to Determine if Compiling on Windows x86 or x64
 ///////////////////////////////////////////////////////////////////////////////////////
-
-
-
 #if _WIN32 || _WIN64
+
 #if _WIN64
 #define AUXPORT_64
 typedef int int32;
@@ -67,17 +97,20 @@ typedef unsigned char uint8;
 typedef signed char int8;
 typedef unsigned short uint16;
 typedef signed short int16;
-
 #endif
+
 #define STR(x) #x
 #define XSTR(x) STR(x)
 #define AuxMessage(y) #y
 #define AuxAssert(x,y) if (!(x)) { printf("Error Message :%s \nStatement : %s \nFunction: %s \nfile %s, line %d.\n", AuxMessage(y),STR(x), __FUNCTION__, __FILE__, __LINE__); abort(); }
 
-
 #endif
 
+///////////////////////////////////////////////////////////////////////////////////////
+///	Preprocessor Defintion to Determine if Compiling on APPLE x86 or x64
+///////////////////////////////////////////////////////////////////////////////////////
 #if __APPLE__ || __MACH__
+
 #if __x86_64__ || _M_X64
 #define AUXPORT_64
 typedef int int32;
@@ -97,7 +130,8 @@ typedef signed char int8;
 typedef unsigned short uint16;
 typedef signed short int16;
 #endif
-#endif // 
+
+#endif
 
 
 namespace AuxPort {
@@ -142,8 +176,4 @@ namespace AuxPort {
 
 }
 
-
 #endif // !ENV_H
-
-
-

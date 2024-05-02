@@ -42,8 +42,6 @@
 #include "../AuxPort/AuxPort.h"
 #include "String/AuxStringTest.h"
 #include "FFT/AuxFFTTest.h"
-#include "FIR/AuxFIRTest.h"
-#include "IIR/AuxIIRTest.h"
 namespace AuxTest
 {
 	enum class UnitTest
