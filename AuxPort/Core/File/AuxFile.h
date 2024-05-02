@@ -44,6 +44,7 @@
 #include <filesystem>
 #include <fstream>
 #include <functional>
+#include <unordered_map>
 
 #ifdef WIN32
 #include <direct.h>
@@ -52,6 +53,86 @@
 
 namespace AuxPort
 {
+#if AUXPORT_CXX_VER >= 17
+	///////////////////////////////////////////////////////////////////////////////////////
+	/// The Directory class provides an interface for interacting with directories and files.
+	/// It offers functionalities to retrieve information about files and directories.
+	/// Example Usage:
+	/// Directory dir;
+	/// dir.setDirectory("/path/to/directory");
+	/// uint32_t textFileCount = dir.count("txt");
+	///////////////////////////////////////////////////////////////////////////////////////
+	class Directory : public ILog
+	{
+	public:
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Specifies whether to list Files or Directories or Both
+		///////////////////////////////////////////////////////////////////////////////////////
+		enum Type
+		{
+			Dir, File, All
+		};
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Specifies the format of the path (Relative or Absolute).
+		///////////////////////////////////////////////////////////////////////////////////////
+		enum PathFormat
+		{
+			Relative, Absolute
+		};
+		
+		Directory();
+		~Directory() = default;
+		Directory(const Directory& directory) = default;
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Sets the current working directory. This function accepts the absolute path of the directory.
+		///////////////////////////////////////////////////////////////////////////////////////
+		void setDirectory(const std::string& absolutePath);
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Counts the number of files with the specified extension in the current working directory.
+		/// The extension parameter needs to be passed along with dot(.)
+		/// Example: ".mp3"
+		///////////////////////////////////////////////////////////////////////////////////////
+		uint32_t count(const std::string& fileExtension);
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Counts the number of files of different extensions in the current working directory. 
+		/// Returns a hashmap with file extensions as keys and the number of files as the value.
+		///////////////////////////////////////////////////////////////////////////////////////
+		std::unordered_map<std::string, uint32_t> count();
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Returns a list of entries (Files, Directories or Both) present in the current working
+		/// directory. 
+		///////////////////////////////////////////////////////////////////////////////////////
+		std::vector<std::string> getList(Type type = Type::File, PathFormat pathFormat = PathFormat::Absolute);
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Returns a list of files with the specified extension present in the current working
+		/// directory. It returns the absolute paths of the files.
+		/// The extension parameter needs to be passed along with dot(.)
+		/// Example: ".mp3"
+		///////////////////////////////////////////////////////////////////////////////////////
+		std::vector<std::string> getListOfFiles(const std::string& fileExtension);
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Logs the details about current working directory
+		///////////////////////////////////////////////////////////////////////////////////////
+		void Log() override;
+	private:
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Helper Function which counts the number of files and number of directories in the 
+		/// current working directory
+		///////////////////////////////////////////////////////////////////////////////////////
+		void Count();
+		std::filesystem::path path;
+		uint32_t numberOfFiles = 0;
+		uint32_t numberOfDirectories = 0;
+	};
+#endif
+
 	class File : virtual public ILog
 	{
 	public:
@@ -102,10 +183,7 @@ namespace AuxPort
 		std::string errorMessage;
 		Mode mode;
 	};
-}
 
-namespace AuxPort
-{
 	///////////////////////////////////////////////////////////////////////////////////////
 	/// TextFile Class, Abstraction over C++ Standard File Handling to read ASCII based Text Files.
 	/// For Example : AuxPort::TextFile textFile()
@@ -147,10 +225,7 @@ namespace AuxPort
 		std::string rawData;
 		std::string line;
 	};
-}
 
-namespace AuxPort
-{
 	class BinaryFile : public File
 	{
 	public:
@@ -161,10 +236,7 @@ namespace AuxPort
 		bool close(bool log = false) override;
 	private:
 	};
-}
 
-namespace AuxPort
-{
 	class TextFormat : virtual public ILog
 	{
 	public:
@@ -186,10 +258,7 @@ namespace AuxPort
 		virtual void read(std::string& line, int props = 0) = 0;
 		virtual void write(const std::string& line, int props = 0) = 0;
 	};
-}
 
-namespace AuxPort
-{
 	class CSV : protected TextFile, public TextFormat
 	{
 	public:
