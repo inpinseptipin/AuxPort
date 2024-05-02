@@ -377,7 +377,7 @@ void AuxPort::CSV::Log()
 AuxPort::Directory::Directory()
 {
 	path = std::filesystem::current_path();
-	Count();
+	_count();
 }
 
 void AuxPort::Directory::setDirectory(const std::string& absolutePath)
@@ -386,7 +386,7 @@ void AuxPort::Directory::setDirectory(const std::string& absolutePath)
 	auto newPath = std::filesystem::u8path(absolutePath);
 	AuxAssert(std::filesystem::exists(newPath), "Not a valid Path");
 	path = newPath;
-	Count();
+	_count();
 }
 
 uint32_t AuxPort::Directory::count(const std::string& fileExtension)
@@ -469,7 +469,7 @@ void AuxPort::Directory::Log()
 	setColour(AuxPort::ColourType::White);
 }
 
-void AuxPort::Directory::Count()
+void AuxPort::Directory::_count()
 {
 	numberOfFiles = 0;
 	numberOfDirectories = 0;
@@ -478,5 +478,59 @@ void AuxPort::Directory::Count()
 			numberOfFiles++;
 		else
 			numberOfDirectories++;
+}
+
+unsigned long long AuxPort::Directory::getSize()
+{
+	return _getDirectorySize(path);
+}
+
+unsigned long long AuxPort::Directory::getSize(const std::string& relativePath)
+{
+	std::filesystem::path targetPath = path / "/"; // Because if path is root path (like C:) then result is unexpected. // TO - DO: Test on Linux
+	targetPath = targetPath / relativePath;
+	
+	if (std::filesystem::is_regular_file(targetPath))
+		return std::filesystem::file_size(targetPath);
+	else if (std::filesystem::is_directory(targetPath))
+		return _getDirectorySize(targetPath);
+	
+	AuxAssert(false, "The path should be valid. In case of a file, it should correspond to a regular file.") // Throw assertion in all other cases
+}
+
+std::time_t AuxPort::Directory::getLastWriteTime()
+{
+	return _getLastWriteTime(path);
+}
+
+std::time_t AuxPort::Directory::getLastWriteTime(const std::string& relativePath)
+{
+	std::filesystem::path targetPath = path / "/"; // Because if path is root path (like C:) then result is unexpected. // TO - DO: Test on Linux
+	targetPath = targetPath / relativePath;
+
+	return _getLastWriteTime(targetPath);
+}
+
+std::time_t AuxPort::Directory::_getLastWriteTime(const std::filesystem::path& path)
+{
+	AuxAssert(std::filesystem::exists(path), "Given path should be valid!");
+	auto fileSystemTime = std::filesystem::last_write_time(path);
+
+	// Approximate Method to convert File System Time to System Time
+	// Direct conversion might be possible in newer implementations of C++20 (But currently very few compiler support it).
+	auto systemClockTimePoint = std::chrono::time_point_cast<std::chrono::system_clock::duration>(fileSystemTime - std::filesystem::file_time_type::clock::now() + std::chrono::system_clock::now());
+	auto time = std::chrono::system_clock::to_time_t(systemClockTimePoint);
+
+	return time;
+}
+
+unsigned long long AuxPort::Directory::_getDirectorySize(const std::filesystem::path& directoryPath)
+{
+	AuxAssert(std::filesystem::is_directory(directoryPath), "Given path should correspond to a directory!");
+	unsigned long long size = 0;
+	for (const auto& entry : std::filesystem::recursive_directory_iterator(directoryPath))
+		if (!entry.is_directory())
+			size += entry.file_size();
+	return size;
 }
 #endif
