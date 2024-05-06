@@ -100,7 +100,7 @@ void AuxPort::AuxPascal::readFromFile(const std::string& fileName)
 	{
 		std::string currLine;
 		readLineFromFile(currLine);
-		if (currLine.empty()) { throw std::exception("Invalid File: No type given in first line!"); }
+		if (currLine.empty()) { throw std::runtime_error("Invalid File: No type given in first line!"); }
 		if (currLine.back() == '\r') currLine.pop_back();
 		std::string type = currLine;
 		std::transform(type.begin(), type.end(), type.begin(), ::tolower);
@@ -114,10 +114,10 @@ void AuxPort::AuxPascal::readFromFile(const std::string& fileName)
 		}
 		else
 		{
-			throw std::exception("Invalid File: Invalid Type given!");
+			throw std::runtime_error("Invalid File: Invalid Type given!");
 		}
 
-		if (fileReader->eof()) { throw std::exception("Invalid File: Number of Rows not specified!"); }
+		if (fileReader->eof()) { throw std::runtime_error("Invalid File: Number of Rows not specified!"); }
 		readLineFromFile(currLine);
 		std::istringstream lineStream(currLine);
 		uint32 N;
@@ -129,7 +129,7 @@ void AuxPort::AuxPascal::readFromFile(const std::string& fileName)
 		{
 			if (fileReader->eof())
 			{
-				throw std::exception("Invalid File: Less than specified number of rows present in the File!");
+				throw std::runtime_error("Invalid File: Less than specified number of rows present in the File!");
 			}
 
 			readLineFromFile(currLine);
@@ -141,7 +141,7 @@ void AuxPort::AuxPascal::readFromFile(const std::string& fileName)
 			{
 				if (!(lineStream >> pascalTriangle[i][j]))
 				{
-					throw std::exception("Invalid File: Error reading coefficient!");
+					throw std::runtime_error("Invalid File: Error reading coefficient!");
 				}
 			}
 		}

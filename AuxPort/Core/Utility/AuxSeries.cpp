@@ -239,7 +239,7 @@ void AuxPort::AuxSeries::readSeriesFromFile(const std::string& fileName)
 	{
 		std::string currLine;
 		readLineFromFile(currLine);
-		if (currLine.empty()) { throw std::exception("Invalid File: No type given in first line!"); }
+		if (currLine.empty()) { throw std::runtime_error("Invalid File: No type given in first line!"); }
 		//While opening File created on Windows on Linux Systems, '\r' character from EOL-Specifier("\r\n") will be left as it is
 		if (currLine.back() == '\r') currLine.pop_back();
 		std::string type = currLine;
@@ -282,7 +282,7 @@ void AuxPort::AuxSeries::readSeriesFromFile(const std::string& fileName)
 			this->undefinedType = type;
 		}
 
-		if (fileReader->eof()) { throw std::exception("Invalid File: Number of terms Not specified!"); }
+		if (fileReader->eof()) { throw std::runtime_error("Invalid File: Number of terms Not specified!"); }
 		readLineFromFile(currLine);
 		std::istringstream lineStream(currLine);
 		uint32 N;
@@ -295,7 +295,7 @@ void AuxPort::AuxSeries::readSeriesFromFile(const std::string& fileName)
 		{
 			if (fileReader->eof())
 			{
-				throw std::exception("Invalid File: Less than specified number of terms present in the File!");
+				throw std::runtime_error("Invalid File: Less than specified number of terms present in the File!");
 			}
 
 			readLineFromFile(currLine);
@@ -304,13 +304,13 @@ void AuxPort::AuxSeries::readSeriesFromFile(const std::string& fileName)
 
 			if (!(lineStream >> currTerm.coefficient >> currTerm.exponent))
 			{
-				throw std::exception("Invalid File: Error reading coefficient/exponent!");
+				throw std::runtime_error("Invalid File: Error reading coefficient/exponent!");
 			}
 			terms[i] = currTerm;
 		}
 		AuxPort::Logger::Log("File read successfully!", AuxPort::LogType::Success);
 	}
-	catch (const std::exception& E)
+	catch (const std::runtime_error& E)
 	{
 		terms.clear();
 		AuxPort::Logger::Log(E.what(), AuxPort::LogType::Error);
