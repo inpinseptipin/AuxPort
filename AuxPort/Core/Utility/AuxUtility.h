@@ -38,8 +38,10 @@
 
 /*===================================================================================*/
 #include "../Env/AuxEnv.h"
+#include "../Log/AuxLog.h"
 #include <complex>
 #include <random>
+#include <algorithm>
 namespace AuxPort
 {
 	const std::complex<double> iota(0, 1);

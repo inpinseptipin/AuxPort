@@ -4,7 +4,7 @@
 
 #include <vector>
 #include "../Env/AuxEnv.h"
-
+#include "../Log/AuxLog.h"
 
 
 namespace AuxPort
