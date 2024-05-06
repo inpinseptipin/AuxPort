@@ -36,70 +36,145 @@
 
 */
 #include <assert.h>
-#include "../Log/AuxLog.h"
 
-#if defined(_MSC_VER)
-#include <intrin.h>
-#define AUXSIMD 1
-#endif
 ///////////////////////////////////////////////////////////////////////////////////////
-///	Preprocessor Defintion to Determine if Compiling on Windows x86 or x64
+///	Preprocessor Defintion for SIMD and SIMD Headers Inculsion
 ///////////////////////////////////////////////////////////////////////////////////////
-
-#if _HAS_CXX17
-	#define AUXPORT_CXX_17
+#ifdef _MSC_VER
+	#include <intrin.h>
+	#define AUXSIMD 1
 #endif
 
+///////////////////////////////////////////////////////////////////////////////////////
+///	Preprocessor Defintion to determine the current Compiler
+///////////////////////////////////////////////////////////////////////////////////////
+#ifdef _MSC_VER
+	#define AUXPORT_COMPILER_MSVC
+#elif __GNUC__
+	#define AUXPORT_COMPILER_GCC
+#elif __clang__
+	#define AUXPORT_COMPILER_CLANG
+#endif
+
+///////////////////////////////////////////////////////////////////////////////////////
+///	Preprocessor Defintion to determine the current C++ Standard Version
+///////////////////////////////////////////////////////////////////////////////////////
+#ifdef AUXPORT_COMPILER_MSVC
+	#if _MSVC_LANG == 201402L
+		#define AUXPORT_CXX14
+		#define AUXPORT_CXX_VER 14
+	#elif _MSVC_LANG == 201703L
+		#define AUXPORT_CXX17
+		#define AUXPORT_CXX_VER 17
+	#elif __MSVC_LANG == 202002L
+		#define AUXPORT_CXX20
+		#define AUXPORT_CXX_VER 20
+	#endif
+#elif defined(AUXPORT_COMPILER_GCC) || defined(AUXPORT_COMPILER_CLANG)
+	#if __cplusplus == 201402L
+		#define AUXPORT_CXX14
+		#define AUXPORT_CXX_VER 14
+	#elif __cplusplus == 201703L
+		#define AUXPORT_CXX17
+		#define AUXPORT_CXX_VER 17
+	#elif __cplusplus == 202002L
+		#define AUXPORT_CXX20
+		#define AUXPORT_CXX_VER 20
+	#endif
+#endif
+
+///////////////////////////////////////////////////////////////////////////////////////
+///	Preprocessor Defintion to determine if Compiling on WINDOWS x86 or x64
+///////////////////////////////////////////////////////////////////////////////////////
 #if _WIN32 || _WIN64
-#if _WIN64
-#define AUXPORT_64
-typedef int int32;
-typedef unsigned int uint32;
-typedef long long int int64;
-typedef unsigned long long int uint64;
-typedef unsigned char uint8;
-typedef signed char int8;
-typedef unsigned short uint16;
-typedef signed short int16;
-#else
-#define AUXPORT_32
-typedef int int32;
-typedef unsigned int uint32;
-typedef unsigned char uint8;
-typedef signed char int8;
-typedef unsigned short uint16;
-typedef signed short int16;
+	#if _WIN64
+		#define AUXPORT_64
+		typedef int int32;
+		typedef unsigned int uint32;
+		typedef long long int int64;
+		typedef unsigned long long int uint64;
+		typedef unsigned char uint8;
+		typedef signed char int8;
+		typedef unsigned short uint16;
+		typedef signed short int16;
+	#else
+		#define AUXPORT_32
+		typedef int int32;
+		typedef unsigned int uint32;
+		typedef unsigned char uint8;
+		typedef signed char int8;
+		typedef unsigned short uint16;
+		typedef signed short int16;
+	#endif
 
+	#define AUXPORT_WINDOWS
+	#define STR(x) #x
+	#define XSTR(x) STR(x)
+	#define AuxMessage(y) #y
+	#define AuxAssert(x,y) if (!(x)) { printf("Error Message :%s \nStatement : %s \nFunction: %s \nfile %s, line %d.\n", AuxMessage(y),STR(x), __FUNCTION__, __FILE__, __LINE__); abort(); }
 #endif
-#define STR(x) #x
-#define XSTR(x) STR(x)
-#define AuxMessage(y) #y
-#define AuxAssert(x,y) if (!(x)) { printf("Error Message :%s \nStatement : %s \nFunction: %s \nfile %s, line %d.\n", AuxMessage(y),STR(x), __FUNCTION__, __FILE__, __LINE__); abort(); }
 
+///////////////////////////////////////////////////////////////////////////////////////
+///	Preprocessor Defintion to determine if Compiling on LINUX x86 or x64
+///////////////////////////////////////////////////////////////////////////////////////
+#if __linux__
+	#if __x86_64__
+		#define AUXPORT_64
+		typedef int int32;
+		typedef unsigned int uint32;
+		typedef long long int int64;
+		typedef unsigned long long int uint64;
+		typedef unsigned char uint8;
+		typedef signed char int8;
+		typedef unsigned short uint16;
+		typedef signed short int16;
+	#else
+		#define AUXPORT_32
+		typedef int int32;
+		typedef unsigned int uint32;
+		typedef unsigned char uint8;
+		typedef signed char int8;
+		typedef unsigned short uint16;
+		typedef signed short int16;
+	#endif
 
+	#define AUXPORT_LINUX
+	#define STR(x) #x
+	#define XSTR(x) STR(x)
+	#define AuxMessage(y) #y
+	#define AuxAssert(x,y) if (!(x)) { printf("Error Message :%s \nStatement : %s \nFunction: %s \nfile %s, line %d.\n", AuxMessage(y),STR(x), __FUNCTION__, __FILE__, __LINE__); abort(); }
 #endif
 
+///////////////////////////////////////////////////////////////////////////////////////
+///	Preprocessor Defintion to determine if Compiling on APPLE x86 or x64
+///////////////////////////////////////////////////////////////////////////////////////
 #if __APPLE__ || __MACH__
-#if __x86_64__ || _M_X64
-#define AUXPORT_64
-typedef int int32;
-typedef unsigned int uint32;
-typedef long long int int64;
-typedef unsigned long long int uint64;
-typedef unsigned char uint8;
-typedef signed char int8;
-typedef unsigned short uint16;
-typedef signed short int16;
-#elif i386 || __i386__ || __i386 || _M_IX86
-#define AUXPORT_32
-typedef int int32;
-typedef unsigned int uint32;
-typedef unsigned char uint8;
-typedef signed char int8;
-typedef unsigned short uint16;
-typedef signed short int16;
+	#if __x86_64__ || _M_X64
+		#define AUXPORT_64
+		typedef int int32;
+		typedef unsigned int uint32;
+		typedef long long int int64;
+		typedef unsigned long long int uint64;
+		typedef unsigned char uint8;
+		typedef signed char int8;
+		typedef unsigned short uint16;
+		typedef signed short int16;
+	#elif i386 || __i386__ || __i386 || _M_IX86
+		#define AUXPORT_32
+		typedef int int32;
+		typedef unsigned int uint32;
+		typedef unsigned char uint8;
+		typedef signed char int8;
+		typedef unsigned short uint16;
+		typedef signed short int16;
+	#endif
+
+	#define AUXPORT_MAC
+	#define STR(x) #x
+	#define XSTR(x) STR(x)
+	#define AuxMessage(y) #y
+	#define AuxAssert(x,y) if (!(x)) { printf("Error Message :%s \nStatement : %s \nFunction: %s \nfile %s, line %d.\n", AuxMessage(y),STR(x), __FUNCTION__, __FILE__, __LINE__); abort(); }
 #endif
-#endif // 
 
 
 namespace AuxPort {
@@ -144,8 +219,4 @@ namespace AuxPort {
 
 }
 
-
 #endif // !ENV_H
-
-
-
