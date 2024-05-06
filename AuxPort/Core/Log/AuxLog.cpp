@@ -34,19 +34,17 @@
 			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
-#pragma once
-
 #include "AuxLog.h"
+#include <iomanip>
 
 namespace AuxPort
 {
-
 	std::string Time::getCurrentTime(const TimeType& timeType)
 	{
 		time_t currentTime = std::time(0);
-		char timeBuffer[26];
-		ctime_s(timeBuffer, sizeof(timeBuffer), &currentTime);
-		std::string returnTime(timeBuffer);
+		std::stringstream ss;
+		ss << std::put_time(std::localtime(&currentTime), "%c");
+		std::string returnTime = ss.str();
 		switch (timeType)
 		{
 		case TimeType::Day:
@@ -58,7 +56,7 @@ namespace AuxPort
 			break;
 
 		case TimeType::time:
-			return "Time : " + returnTime.substr(10, 9);
+			return "Time : " + returnTime.substr(11, 8);
 			break;
 
 		case TimeType::Year:
@@ -74,19 +72,13 @@ namespace AuxPort
 
 	void Logger::setColour(const ColourType& colourType)
 	{
-#ifdef _MSC_VER
+#ifdef AUXPORT_WINDOWS
 		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hStdOut, (unsigned int)colourType);
-#else
-
+#elif defined(AUXPORT_LINUX) || defined(AUXPORT_MAC)
+		std::cout << "\033[" << (unsigned int) colourType << "m";
 #endif
 	}
-	/*
-	void Logger::logMessage(const std::string& message,const LogType& logType,const TimeType& timeType)
-	{
-		std::cout << getMessageFormat(logType) <<" | "<<Time::getCurrentTime(timeType) << " | " << message << "\n";
-	}
-	*/
 
 	std::string Logger::getMessageFormat(const LogType& logType)
 	{
@@ -107,11 +99,11 @@ namespace AuxPort
 
 	void ILog::setColour(const ColourType& colourType)
 	{
-#ifdef _MSC_VER
+#ifdef AUXPORT_WINDOWS
 		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hStdOut, (unsigned int)colourType);
-#else
-
+#elif defined(AUXPORT_LINUX) || defined(AUXPORT_MAC)
+		std::cout << "\033[" << (unsigned int) colourType << "m";
 #endif
 	}
 
