@@ -8,6 +8,9 @@ AuxPort::Extensions::AuxCurl::AuxCurl()
 	headersList = nullptr;
 	curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, writeCallback);
 	curl_easy_setopt(curlHandle, CURLOPT_WRITEDATA, (void*)&responseData);
+
+	//Default Response Handler
+	responseHandler = [](const std::string& responseData) {};
 }
 
 AuxPort::Extensions::AuxCurl::~AuxCurl()
