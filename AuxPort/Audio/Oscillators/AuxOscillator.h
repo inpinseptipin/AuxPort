@@ -5,6 +5,7 @@
 #include "../../Core/Utility/AuxUtility.h"
 #include "../Filters/AuxIIR.h"
 #include <random>
+#include <memory>
 namespace AuxPort
 {
 	namespace Audio

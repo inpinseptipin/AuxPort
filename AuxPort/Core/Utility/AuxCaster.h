@@ -197,7 +197,7 @@ namespace AuxPort
 			}
 			catch (std::invalid_argument invalidArgumentException)
 			{
-				AuxAssert(invalidArgumentException.what() < 0, "String passed does not contain a valid rational number!");
+				AuxAssert(false, "String passed does not contain a valid rational number!");
 			}
 			return 0.0;
 		}
@@ -213,7 +213,7 @@ namespace AuxPort
 			}
 			catch (std::invalid_argument invalidArgumentException)
 			{
-				AuxAssert(invalidArgumentException.what() < 0, "String passed does not contain a valid rational number!");
+				AuxAssert(false, "String passed does not contain a valid rational number!");
 			}
 		}
 
@@ -228,7 +228,7 @@ namespace AuxPort
 			}
 			catch (std::invalid_argument invalidArgumentException)
 			{
-				AuxAssert(invalidArgumentException.what() < 0, "String passed does not contain a valid rational number!");
+				AuxAssert(false, "String passed does not contain a valid rational number!");
 			}
 		}
 	};

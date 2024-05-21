@@ -294,6 +294,13 @@ bool AuxPort::CSV::close(bool log)
 	return TextFile::close(log);
 }
 
+void AuxPort::CSV::read(std::vector<std::vector<std::string>> &data)
+{
+	// Temporary Vector to use the overloaded read() function
+	std::vector<std::string> headers(0);
+	read(data, headers);
+}
+
 void AuxPort::CSV::read(std::vector<std::vector<std::string>>& data, std::vector<std::string>& header)
 {
 	std::string currLine;
@@ -373,21 +380,22 @@ void AuxPort::CSV::Log()
 	setColour(AuxPort::ColourType::White);
 }
 
-#ifdef AUXPORT_CXX_17
+#if AUXPORT_CXX_VER >= 17
 AuxPort::Directory::Directory()
 {
 	path = std::filesystem::current_path();
-	Count();
+	_count();
 }
+
 void AuxPort::Directory::setDirectory(const std::string& absolutePath)
 {
 	AuxAssert(absolutePath.length() > 0, "Path Length should be greater than 0");
 	auto newPath = std::filesystem::u8path(absolutePath);
 	AuxAssert(std::filesystem::exists(newPath), "Not a valid Path");
 	path = newPath;
-	Count();
-
+	_count();
 }
+
 uint32_t AuxPort::Directory::count(const std::string& fileExtension)
 {
 	uint32_t noOfFiles = 0;
@@ -400,8 +408,8 @@ uint32_t AuxPort::Directory::count(const std::string& fileExtension)
 				noOfFiles++;
 		}
 	return noOfFiles;
-			
 }
+
 std::unordered_map<std::string, uint32_t> AuxPort::Directory::count()
 {
 	std::unordered_map<std::string, uint32_t> map;
@@ -415,32 +423,33 @@ std::unordered_map<std::string, uint32_t> AuxPort::Directory::count()
 			if (key == map.end())
 				map.emplace(extensionName, 0);
 			map.at(extensionName) += 1;
-
 		}
 	}
 	return map;
 }
-std::vector<std::string> AuxPort::Directory::getList(Type type,PathFormat pathFormat)
+
+std::vector<std::string> AuxPort::Directory::getList(Type type, PathFormat pathFormat)
 {
 	std::vector<std::string> data;
 	for (const auto& entry : std::filesystem::directory_iterator(path))
 	{
 		switch (type)
 		{
-			case Type::Dir:
-				if (entry.is_directory())
-					pathFormat == PathFormat::Absolute ? data.push_back(std::filesystem::path(entry).string()) : data.push_back(std::filesystem::path(entry).filename().string());
-				break;
-			case Type::File:
-				if (entry.is_regular_file())
-					pathFormat == PathFormat::Absolute ? data.push_back(std::filesystem::path(entry).string()) : data.push_back(std::filesystem::path(entry).filename().string());
-				break;
-			default:
+		case Type::Dir:
+			if (entry.is_directory())
 				pathFormat == PathFormat::Absolute ? data.push_back(std::filesystem::path(entry).string()) : data.push_back(std::filesystem::path(entry).filename().string());
+			break;
+		case Type::File:
+			if (entry.is_regular_file())
+				pathFormat == PathFormat::Absolute ? data.push_back(std::filesystem::path(entry).string()) : data.push_back(std::filesystem::path(entry).filename().string());
+			break;
+		default:
+			pathFormat == PathFormat::Absolute ? data.push_back(std::filesystem::path(entry).string()) : data.push_back(std::filesystem::path(entry).filename().string());
 		}
 	}
 	return data;
 }
+
 std::vector<std::string> AuxPort::Directory::getListOfFiles(const std::string& fileExtension)
 {
 	std::vector<std::string> files;
@@ -454,19 +463,20 @@ std::vector<std::string> AuxPort::Directory::getListOfFiles(const std::string& f
 		}
 	return files;
 }
+
 void AuxPort::Directory::Log()
 {
 	setColour(AuxPort::ColourType::Blue);
 	std::cout << "\nLogging Directory" << std::endl;
 	std::cout << "|===================================================|" << std::endl;
 	std::cout << "Current Directory : " << path << std::endl;
-	std::cout << "Number of Files in the Directory : "<< numberOfFiles << std::endl;
+	std::cout << "Number of Files in the Directory : " << numberOfFiles << std::endl;
 	std::cout << "Number of Folders in the Directory : " << numberOfDirectories << std::endl;
 	std::cout << "|===================================================|" << std::endl;
 	setColour(AuxPort::ColourType::White);
 }
 
-void AuxPort::Directory::Count()
+void AuxPort::Directory::_count()
 {
 	numberOfFiles = 0;
 	numberOfDirectories = 0;
@@ -477,5 +487,57 @@ void AuxPort::Directory::Count()
 			numberOfDirectories++;
 }
 
+unsigned long long AuxPort::Directory::getSize()
+{
+	return _getDirectorySize(path);
+}
 
+unsigned long long AuxPort::Directory::getSize(const std::string& relativePath)
+{
+	std::filesystem::path targetPath = path / "/"; // Because if path is root path (like C:) then result is unexpected. // TO - DO: Test on Linux
+	targetPath = targetPath / relativePath;
+	
+	if (std::filesystem::is_regular_file(targetPath))
+		return std::filesystem::file_size(targetPath);
+	else if (std::filesystem::is_directory(targetPath))
+		return _getDirectorySize(targetPath);
+	
+	AuxAssert(false, "The path should be valid. In case of a file, it should correspond to a regular file.") // Throw assertion in all other cases
+}
+
+std::time_t AuxPort::Directory::getLastWriteTime()
+{
+	return _getLastWriteTime(path);
+}
+
+std::time_t AuxPort::Directory::getLastWriteTime(const std::string& relativePath)
+{
+	std::filesystem::path targetPath = path / "/"; // Because if path is root path (like C:) then result is unexpected. // TO - DO: Test on Linux
+	targetPath = targetPath / relativePath;
+
+	return _getLastWriteTime(targetPath);
+}
+
+std::time_t AuxPort::Directory::_getLastWriteTime(const std::filesystem::path& path)
+{
+	AuxAssert(std::filesystem::exists(path), "Given path should be valid!");
+	auto fileSystemTime = std::filesystem::last_write_time(path);
+
+	// Approximate Method to convert File System Time to System Time
+	// Direct conversion might be possible in newer implementations of C++20 (But currently very few compiler support it).
+	auto systemClockTimePoint = std::chrono::time_point_cast<std::chrono::system_clock::duration>(fileSystemTime - std::filesystem::file_time_type::clock::now() + std::chrono::system_clock::now());
+	auto time = std::chrono::system_clock::to_time_t(systemClockTimePoint);
+
+	return time;
+}
+
+unsigned long long AuxPort::Directory::_getDirectorySize(const std::filesystem::path& directoryPath)
+{
+	AuxAssert(std::filesystem::is_directory(directoryPath), "Given path should correspond to a directory!");
+	unsigned long long size = 0;
+	for (const auto& entry : std::filesystem::recursive_directory_iterator(directoryPath))
+		if (!entry.is_directory())
+			size += entry.file_size();
+	return size;
+}
 #endif

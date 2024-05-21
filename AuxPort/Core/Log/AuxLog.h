@@ -38,16 +38,15 @@
 
 /*===================================================================================*/
 
-#ifdef _MSC_VER
-#include<Windows.h>
-#else
-
-#endif
 #include<string>
 #include<iostream>
 #include<cstdlib>
 #include<vector>
 #include "../Time/AuxTime.h"
+#include "../Env/AuxEnv.h"
+#ifdef AUXPORT_WINDOWS
+#include<Windows.h>
+#endif
 namespace AuxPort
 {
 /*
@@ -128,6 +127,7 @@ namespace AuxPort
 */
 	enum class ColourType  
 	{
+#ifdef AUXPORT_WINDOWS
 		Black = 0x0000,
 		Blue = 0x0001,
 		Green = 0x002,
@@ -144,6 +144,24 @@ namespace AuxPort
 		Light_Purple = 0x00D,
 		Light_Yellow = 0x00E,
 		Bright_White = 0x00F
+#elif defined(AUXPORT_LINUX) || defined(AUXPORT_MAC)
+		Black = 0x01E,
+		Red = 0x01F,
+		Green = 0x020,
+		Yellow = 0x021,
+		Blue = 0x022,
+		Purple = 0x023,
+		Cyan = 0x024,
+		Bright_White = 0x025,
+		Gray = 0x05A,
+		Light_Red = 0x05B,
+		Light_Green = 0x05C,
+		Light_Yellow = 0x05D,
+		Light_Blue = 0x05E,
+		Light_Purple = 0x05F,
+		Light_Aqua = 0x060,
+		White = 0x061
+#endif
 	};
 
 /*===================================================================================*/
