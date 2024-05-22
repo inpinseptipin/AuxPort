@@ -5,7 +5,7 @@ C++ Library that facilitates Audio Software Development in any OS Environment.
  
 # Progress
 
-The library currently is tested and compatible for Visual C++ based projects. (Windows Support only)
+The library is compatible with Windows and Linux
  
 # Documentation
 
