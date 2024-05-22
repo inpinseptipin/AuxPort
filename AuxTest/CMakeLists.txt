@@ -1,6 +1,6 @@
 #
 #			AuxPort Library
-#			"Generic Modules to facilitate C++ Windows Application development" - inpinseptipin
+#			"Modules for Audio Software Development" - inpinseptipin
 #
 #			BSD 3-Clause License
 #
@@ -31,28 +31,13 @@
 #			CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 #			OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 #			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#
 
-cmake_minimum_required(VERSION 3.10)
-
-option(BUILD_TESTS "Build test library" OFF)
-
-
-project(Driver)
-
-
-
-add_executable(
-	${PROJECT_NAME}
-	main.cpp	
+add_library(
+    AuxTest
+    ${PROJECT_SOURCE_DIR}/AuxPort/AuxPort.h
+    ${PROJECT_SOURCE_DIR}/AuxTest/String/AuxStringTest.h
+    ${PROJECT_SOURCE_DIR}/AuxTest/String/AuxStringTest.cpp
+    ${PROJECT_SOURCE_DIR}/AuxTest/AuxTest.h
 )
-
-
-
-add_subdirectory(AuxPort)
-
-target_link_libraries(${PROJECT_NAME} AuxPort)
-
-if(BUILD_TESTS)
-	add_subdirectory(AuxTest)
-	target_link_libraries(${PROJECT_NAME} AuxTest)
-endif(BUILD_TESTS)

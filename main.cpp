@@ -1,9 +1,4 @@
-#include "AuxTest/AuxTest.h"
-
-
-
-
-
+#include "AuxPort/AuxPort.h"
 
 
 int main(int argc, char* argv[])
@@ -15,19 +10,6 @@ int main(int argc, char* argv[])
 #ifdef AUXPORT_32
 	AuxPort::Logger::Log("AuxPort Alpha Build, x32", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
 #endif
-
-
-
-	
-	
-	AuxTest::UnitTests::String::init(AuxTest::testcases, { "Test" });
-	AuxTest::testcases[0].Log();
-	AuxTest::testcases[0].testCase({ "Test" });
-
-
-	
-
-	return 0;
 
 }
 
