@@ -88,7 +88,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 #if _WIN32 || _WIN64
 	#if _WIN64
-		#define AUXPORT_64
+		#define AUXPORT_64 64
 		typedef int int32;
 		typedef unsigned int uint32;
 		typedef long long int int64;
@@ -98,7 +98,7 @@
 		typedef unsigned short uint16;
 		typedef signed short int16;
 	#else
-		#define AUXPORT_32
+		#define AUXPORT_32 32
 		typedef int int32;
 		typedef unsigned int uint32;
 		typedef unsigned char uint8;
@@ -107,7 +107,7 @@
 		typedef signed short int16;
 	#endif
 
-	#define AUXPORT_WINDOWS
+	#define AUXPORT_WINDOWS 9999
 	#define STR(x) #x
 	#define XSTR(x) STR(x)
 	#define AuxMessage(y) #y
@@ -177,8 +177,10 @@
 #endif
 
 
-namespace AuxPort {
-	class Env {
+namespace AuxPort
+{
+	class Env
+	{
 	public:
 		static bool supportsSSE()
 		{
@@ -204,7 +206,7 @@ namespace AuxPort {
 			return false;
 		}
 
-		static bool supportsAVX() 
+		static bool supportsAVX()
 		{
 #if AUXSIMD
 #if _WIN32 || _WIN64
@@ -215,8 +217,47 @@ namespace AuxPort {
 #endif
 			return false;
 		}
+
+		static bool isWindowsOS()
+		{
+#if AUXPORT_WINDOWS
+			return true;
+#endif
+			return false;
+		}
+
+		static bool isLinuxOS()
+		{
+#if AUXPORT_LINUX
+			return true;
+#endif
+			return false;
+		};
+
+		static bool isMacOS()
+		{
+#if AUXPORT_MAC
+			return true;
+#endif
+			return false;
+		};
+
+		static bool is32Bit() 
+		{
+#if AUXPORT_32
+			return true;
+#endif
+			return false;
+		}
+
+		static bool is64Bit()
+		{
+#if AUXPORT_64
+			return true;
+#endif
+			return false;
+		}
+
 	};
-
 }
-
 #endif // !ENV_H
