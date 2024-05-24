@@ -34,25 +34,35 @@
 
 cmake_minimum_required(VERSION 3.10)
 
-option(BUILD_TESTS "Build test library" OFF)
+option(AUXPORT_BUILD_TESTS "Build AuxPort Test Library" OFF)
+option(AUXPORT_BUILD_SANDBOX "Build Sandbox Environment" OFF)
 
-
-project(Driver)
-
-
-
-add_executable(
-	${PROJECT_NAME}
-	main.cpp	
-)
+set(SANDBOX_NAME "SandBox")
 
 
 
+project(AuxPort)
 add_subdirectory(AuxPort)
 
-target_link_libraries(${PROJECT_NAME} AuxPort)
 
-if(BUILD_TESTS)
+if(AUXPORT_BUILD_SANDBOX)
+
+	add_executable(
+		${SANDBOX_NAME}
+		main.cpp	
+	)
+	target_link_libraries(${SANDBOX_NAME} AuxPort)
+	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${SANDBOX_NAME})
+	set(SANDBOX_BUILT on)
+endif(AUXPORT_BUILD_SANDBOX)
+
+
+
+
+
+if(AUXPORT_BUILD_TESTS)
 	add_subdirectory(AuxTest)
-	target_link_libraries(${PROJECT_NAME} AuxTest)
-endif(BUILD_TESTS)
+	if(SANDBOX_BUILT)
+		target_link_libraries(${SANDBOX_NAME} AuxTest)
+	endif(SANDBOX_BUILT)
+endif(AUXPORT_BUILD_TESTS)
