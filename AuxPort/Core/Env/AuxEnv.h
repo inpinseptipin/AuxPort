@@ -38,14 +38,6 @@
 #include <assert.h>
 
 ///////////////////////////////////////////////////////////////////////////////////////
-///	Preprocessor Defintion for SIMD and SIMD Headers Inculsion
-///////////////////////////////////////////////////////////////////////////////////////
-#ifdef _MSC_VER
-	#include <intrin.h>
-	#define AUXSIMD 1
-#endif
-
-///////////////////////////////////////////////////////////////////////////////////////
 ///	Preprocessor Defintion to determine the current Compiler
 ///////////////////////////////////////////////////////////////////////////////////////
 #ifdef _MSC_VER
@@ -54,6 +46,17 @@
 	#define AUXPORT_COMPILER_GCC
 #elif __clang__
 	#define AUXPORT_COMPILER_CLANG
+#endif
+
+///////////////////////////////////////////////////////////////////////////////////////
+///	Preprocessor Defintion for SIMD and SIMD Headers Inculsion
+///////////////////////////////////////////////////////////////////////////////////////
+#ifdef AUXPORT_COMPILER_MSVC
+	#include <intrin.h>
+	#define AUXSIMD 1
+#elif defined(AUXPORT_COMPILER_GCC) || defined(AUXPORT_COMPILER_CLANG)
+	#include <immintrin.h>
+	#define AUXSIMD 1
 #endif
 
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -88,7 +91,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 #if _WIN32 || _WIN64
 	#if _WIN64
-		#define AUXPORT_64
+		#define AUXPORT_64 64
 		typedef int int32;
 		typedef unsigned int uint32;
 		typedef long long int int64;
@@ -98,7 +101,7 @@
 		typedef unsigned short uint16;
 		typedef signed short int16;
 	#else
-		#define AUXPORT_32
+		#define AUXPORT_32 32
 		typedef int int32;
 		typedef unsigned int uint32;
 		typedef unsigned char uint8;
@@ -107,7 +110,7 @@
 		typedef signed short int16;
 	#endif
 
-	#define AUXPORT_WINDOWS
+	#define AUXPORT_WINDOWS 9999
 	#define STR(x) #x
 	#define XSTR(x) STR(x)
 	#define AuxMessage(y) #y
@@ -119,7 +122,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 #if __linux__
 	#if __x86_64__
-		#define AUXPORT_64
+		#define AUXPORT_64 64
 		typedef int int32;
 		typedef unsigned int uint32;
 		typedef long long int int64;
@@ -129,7 +132,7 @@
 		typedef unsigned short uint16;
 		typedef signed short int16;
 	#else
-		#define AUXPORT_32
+		#define AUXPORT_32 32
 		typedef int int32;
 		typedef unsigned int uint32;
 		typedef unsigned char uint8;
@@ -138,7 +141,7 @@
 		typedef signed short int16;
 	#endif
 
-	#define AUXPORT_LINUX
+	#define AUXPORT_LINUX 9999
 	#define STR(x) #x
 	#define XSTR(x) STR(x)
 	#define AuxMessage(y) #y
@@ -150,7 +153,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 #if __APPLE__ || __MACH__
 	#if __x86_64__ || _M_X64
-		#define AUXPORT_64
+		#define AUXPORT_64 64
 		typedef int int32;
 		typedef unsigned int uint32;
 		typedef long long int int64;
@@ -160,7 +163,7 @@
 		typedef unsigned short uint16;
 		typedef signed short int16;
 	#elif i386 || __i386__ || __i386 || _M_IX86
-		#define AUXPORT_32
+		#define AUXPORT_32 32
 		typedef int int32;
 		typedef unsigned int uint32;
 		typedef unsigned char uint8;
@@ -169,7 +172,7 @@
 		typedef signed short int16;
 	#endif
 
-	#define AUXPORT_MAC
+	#define AUXPORT_MAC 9999
 	#define STR(x) #x
 	#define XSTR(x) STR(x)
 	#define AuxMessage(y) #y
@@ -177,16 +180,20 @@
 #endif
 
 
-namespace AuxPort {
-	class Env {
+namespace AuxPort
+{
+	class Env
+	{
 	public:
 		static bool supportsSSE()
 		{
 #if AUXSIMD
-#if _WIN32 || _WIN64
+#ifdef AUXPORT_COMPILER_MSVC
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[3] & (1 << 25));
+#elif defined(AUXPORT_COMPILER_GCC) || defined(AUXPORT_COMPILER_CLANG)
+			return __builtin_cpu_supports("sse");
 #endif
 #endif	
 			return false;
@@ -195,28 +202,71 @@ namespace AuxPort {
 		static bool supportsSSE2()
 		{
 #if AUXSIMD
-#if _WIN32 || _WIN64
+#ifdef AUXPORT_COMPILER_MSVC
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[3] & (1 << 26));
+#elif defined(AUXPORT_COMPILER_GCC) || defined(AUXPORT_COMPILER_CLANG)
+			return __builtin_cpu_supports("sse2");
 #endif
 #endif
 			return false;
 		}
 
-		static bool supportsAVX() 
+		static bool supportsAVX()
 		{
 #if AUXSIMD
-#if _WIN32 || _WIN64
+#ifdef AUXPORT_COMPILER_MSVC
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[2] & (1 << 28));
+#elif defined(AUXPORT_COMPILER_GCC) || defined(AUXPORT_COMPILER_CLANG)
+			return __builtin_cpu_supports("avx");
 #endif
 #endif
 			return false;
 		}
+
+		static bool isWindowsOS()
+		{
+#if AUXPORT_WINDOWS
+			return true;
+#endif
+			return false;
+		}
+
+		static bool isLinuxOS()
+		{
+#if AUXPORT_LINUX
+			return true;
+#endif
+			return false;
+		};
+
+		static bool isMacOS()
+		{
+#if AUXPORT_MAC
+			return true;
+#endif
+			return false;
+		};
+
+		static bool is32Bit() 
+		{
+#if AUXPORT_32
+			return true;
+#endif
+			return false;
+		}
+
+		static bool is64Bit()
+		{
+#if AUXPORT_64
+			return true;
+#endif
+			return false;
+		}
+
 	};
-
 }
-
 #endif // !ENV_H
