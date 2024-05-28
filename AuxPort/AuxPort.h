@@ -46,6 +46,7 @@
 #include "Core/File/AuxFile.h"
 #include "Core/Utility/AuxCaster.h"
 #include "Core/Utility/AuxUtility.h"
+#include "Core/Utility/AuxMath.h"
 #include "Core/Utility/AuxSeries.h"
 #include "Core/TestCase/AuxCase.h"
 #include "Core/SIMD/AuxSimd.h"

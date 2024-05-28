@@ -58,6 +58,8 @@ add_library(
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxPascal.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxSeries.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxSeries.cpp
+    ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxMath.h
+    ${AuxTest_SOURCE_DIR}/AuxPort/Core/Utility/AuxMath.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/SIMD/AuxSimd.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/SIMD/AuxSimd.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Buffer/AuxBuffer.h
