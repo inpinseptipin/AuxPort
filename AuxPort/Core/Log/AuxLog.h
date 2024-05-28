@@ -49,32 +49,25 @@
 #endif
 namespace AuxPort
 {
-/*
-*		This is a Console Logging module, it can be used to log any debug messages that you may encounter
-*		in your application. It consists of an interface that allows you to log onto the console.
-*		
-*		Eg: AuxPort::Logger::Log("message")
-* 
-*		It also consists of Logging directives such as Info, Warning, Error, Success which are implemented in
-*		the form of interfaces.
-*/
+	///////////////////////////////////////////////////////////////////////////////////////            
+	/// This is a Console Logging module, it can be used to log any debug messages that you may encounter
+	/// in your application. It consists of an interface that allows you to log onto the console.
+	/// 
+	/// Eg: AuxPort::Logger::Log("message")
+	/// 
+	/// It also consists of Logging directives such as Info, Warning, Error, Success which are implemented in
+	/// the form of interfaces.
+	///////////////////////////////////////////////////////////////////////////////////////            
 
-/*===================================================================================*/
-
-
-
-
-
-
-
-
-/*===================================================================================*/
+	///////////////////////////////////////////////////////////////////////////////////////            
+	/// [Class] Provides functionality to get current system time
+	///////////////////////////////////////////////////////////////////////////////////////            
 	class Time
 	{
 	public:
-		/*
-				TimeType is a type that can be used to set Formatting rules for the values returned by getCurrentTime() function
-		*/
+		///////////////////////////////////////////////////////////////////////////////////////            
+		/// TimeType is a type that can be used to set Formatting rules for the values returned by getCurrentTime() function
+		///////////////////////////////////////////////////////////////////////////////////////            
 		enum TimeType
 		{
 			Day = 0x31,
@@ -83,24 +76,25 @@ namespace AuxPort
 			Year = 0x34,
 			Raw = 0x35
 		};
-		/*
-				[Static]
-				This function is used to get current system time and returns the time typecasted into std::string.
-				Parameters
-		*		TimeType : TimeType is a type that can be used to set Formatting rules for the values returned by getCurrentTime() function
-		*/
+
+		///////////////////////////////////////////////////////////////////////////////////////  
+		///	[Static]
+		/// This function is used to get current system time and returns the time typecasted into std::string.
+		/// Parameters
+		///	TimeType : TimeType is a type that can be used to set Formatting rules for the values returned by getCurrentTime() function
+		///////////////////////////////////////////////////////////////////////////////////////  
 		static std::string getCurrentTime(const TimeType& timeType);
 	};
 
 
 
-/*
-		LogType is an enumerator that allows you to choose between 4 different Logging Directives.
-*		Success
-*		Warning
-*		Info
-*		Error
-*/
+	///////////////////////////////////////////////////////////////////////////////////////  
+	///	LogType is an enumerator that allows you to choose between 4 different Logging Directives.
+	///	Success
+	///	Warning
+	///	Info
+	///	Error
+	///////////////////////////////////////////////////////////////////////////////////////  
 	enum class LogType
 	{
 		Success = 0x31,
@@ -109,22 +103,21 @@ namespace AuxPort
 		Error = 0x34
 	};
 
-/*===================================================================================*/
-	/*				Colour Codes
-*		1	0x0001	Blue	|	9	0x0009	Light Blue
-		2	0x0002	Green	|	0	0x0000	Black
-		3	0x0003	Cyan	|	A	0x000A	Light Green
-		4	0x0004	Red		|	B	0x000B	Light Aqua
-		5	0x0005	Purple	|	C	0x000C	Light Red
-		6	0x0006	Yellow	|	D	0x000D	Light Purple
-		7	0x0007	White	|	E	0x000E	Light Yellow
-		8	0x0008	Gray	|	F	0x000F	Bright White
+	///////////////////////////////////////////////////////////////////////////////////////  
+	///				Colour Codes for Windows
+	///		1	0x0001	Blue	|	9	0x0009	Light Blue
+	/// 	2	0x0002	Green	|	0	0x0000	Black
+	/// 	3	0x0003	Cyan	|	A	0x000A	Light Green
+	/// 	4	0x0004	Red		|	B	0x000B	Light Aqua
+	/// 	5	0x0005	Purple	|	C	0x000C	Light Red
+	/// 	6	0x0006	Yellow	|	D	0x000D	Light Purple
+	/// 	7	0x0007	White	|	E	0x000E	Light Yellow
+	/// 	8	0x0008	Gray	|	F	0x000F	Bright White
+	///////////////////////////////////////////////////////////////////////////////////////  
 
-*/
-
-/*
-*		ColorType, Use this type to select text colour for Logging.
-*/
+	///////////////////////////////////////////////////////////////////////////////////////  
+	///	ColorType, Use this type to select text colour for Logging.
+	///////////////////////////////////////////////////////////////////////////////////////  
 	enum class ColourType  
 	{
 #ifdef AUXPORT_WINDOWS
@@ -164,21 +157,20 @@ namespace AuxPort
 #endif
 	};
 
-/*===================================================================================*/
-/*
-*		The Logger class provides static interfaces to allow the end user to log their messages on the console.
-*/
+	///////////////////////////////////////////////////////////////////////////////////////  
+	/// The Logger class provides static interfaces to allow the end user to log their messages on the console.
+	///////////////////////////////////////////////////////////////////////////////////////  
 	class Logger
 	{
 	public:
-/*
-		Log is a function that allows you to log "string" messages on the console.
-		Parameters
-*		std::string
-*		LogType : This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
-*		ColourType : Allows you to choose the colour of your logged message (Support only for Windows 16 bit Colours)
-*		TimeType : Allows you to choose between different date or time stamps for the logged messages.
-*/
+		///////////////////////////////////////////////////////////////////////////////////////  
+		/// Log is a function that allows you to log "string" messages on the console.
+		/// Parameters
+		/// std::string
+		/// LogType : This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
+		/// ColourType : Allows you to choose the colour of your logged message (Support only for Windows 16 bit Colours)
+		/// TimeType : Allows you to choose between different date or time stamps for the logged messages.
+		///////////////////////////////////////////////////////////////////////////////////////  
 		template<class T>
 		static void Log(const T& message, const LogType& logType = LogType::Info, const ColourType& colourType = ColourType::White,const AuxPort::Time::TimeType& timeType = AuxPort::Time::TimeType::time)
 		{
@@ -186,7 +178,15 @@ namespace AuxPort
 			logMessage(message, logType,timeType);
 			setColour(ColourType::White);
 		}
-
+		
+		///////////////////////////////////////////////////////////////////////////////////////  
+		/// Log is a function that allows you to log "string" messages on the console.
+		/// Parameters
+		/// Vector of std::string
+		/// LogType : This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
+		/// ColourType : Allows you to choose the colour of your logged message (Support only for Windows 16 bit Colours)
+		/// TimeType : Allows you to choose between different date or time stamps for the logged messages.
+		///////////////////////////////////////////////////////////////////////////////////////
 		template<class T>
 		static void Log(const std::vector<T>& messages, const LogType& logType = LogType::Info, const ColourType& colourType = ColourType::White, const AuxPort::Time::TimeType& timeType = AuxPort::Time::TimeType::time)
 		{
@@ -197,24 +197,23 @@ namespace AuxPort
 			}
 			setColour(ColourType::White);
 		}
-/*===================================================================================*/
 	
 	private:
 
-/*
-		This function allows you to set text colour for the text to be printed onto the console.
-		Parameters
-*		ColourType : Allows you to choose the colour of your logged message (Support only for Windows 16 bit Colours)
-*/
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// This function allows you to set text colour for the text to be printed onto the console.
+		/// Parameters
+		///	ColourType : Allows you to choose the colour of your logged message (Support only for Windows 16 bit Colours)
+		///////////////////////////////////////////////////////////////////////////////////////
 		static void setColour(const ColourType& colourType);
-/*===================================================================================*/
-/*
-		This Function logs the messages onto the console, can only be called through public interfaces provided by the Class.
-		Parameters
-*		std::string : 
-*		LogType : This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
-*		<parameter type> : <parameter function>
-*/
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// This Function logs the messages onto the console, can only be called through public interfaces provided by the Class.
+		/// Parameters
+		/// std::string : 
+		/// LogType : This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
+		/// <parameter type> : <parameter function>
+		///////////////////////////////////////////////////////////////////////////////////////
 		template<class T>
 		static void logMessage(const T& message,const LogType& logType,const AuxPort::Time::TimeType& timeType)
 		{
@@ -224,18 +223,18 @@ namespace AuxPort
 		
 		
 
-/*===================================================================================*/
-/*
-		Gets preformatted messages for the corrossponding log type.
-		Parameters
-*		LogType : This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
-*		ColourType : Allows you to choose the colour of your logged message (Support only for Windows 16 bit Colours)
-*/
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Gets preformatted messages for the corrossponding log type.
+		/// Parameters
+		/// LogType : This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
+		/// ColourType : Allows you to choose the colour of your logged message (Support only for Windows 16 bit Colours)
+		///////////////////////////////////////////////////////////////////////////////////////
 		static std::string getMessageFormat(const LogType& logType);
-/*===================================================================================*/
 	};
 
-
+	///////////////////////////////////////////////////////////////////////////////////////
+	/// [Absract Class] This class provides an inheritable interface to implement logging functionality in the derived classes
+	///////////////////////////////////////////////////////////////////////////////////////
 	class ILog
 	{
 	protected:

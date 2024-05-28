@@ -67,7 +67,15 @@ namespace AuxPort
                 Butterworth();
                 ~Butterworth() = default;
                 Butterworth(const Butterworth& butterworth) = default;
+
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// Prepares the IIR Filter for playback
+                ///////////////////////////////////////////////////////////////////////////////////////
                 void prepareToPlay(float fc, float q, float sampleRate, Type type = Type::Lowpass);
+
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// Returns the sample after applying IIR Filter to it
+                /////////////////////////////////////////////////////////////////////////////////////// 
                 float processSample(float sample);
             private:
                 std::vector<float> coefficients;
@@ -90,7 +98,15 @@ namespace AuxPort
                 ParametricEQ();
                 ~ParametricEQ() = default;
                 ParametricEQ(const ParametricEQ& peq) = default;
+
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// Prepares the Filter for playback
+                ///////////////////////////////////////////////////////////////////////////////////////
                 void prepareToPlay(float fc, float q, float boost, float sampleRate);
+
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// Returns the sample after applying Filter to it
+                ///////////////////////////////////////////////////////////////////////////////////////
                 float processSample(float sample);
             private:
                 std::vector<float> coefficients;
@@ -116,7 +132,15 @@ namespace AuxPort
                 FirstOrder();
                 ~FirstOrder() = default;
                 FirstOrder(const FirstOrder& firstOrder) = default;
+
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// Prepares the IIR Filter for playback
+                ///////////////////////////////////////////////////////////////////////////////////////
                 void prepareToPlay(float fc, float sampleRate, const Type& type);
+
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// Returns the sample after applying IIR Filter to it
+                ///////////////////////////////////////////////////////////////////////////////////////
                 float processSample(float sample);
             private:
                 std::vector<float> coefficients;
@@ -140,7 +164,15 @@ namespace AuxPort
                 General();
                 ~General() = default;
                 General(const General& general) = default;
+
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// Prepares the IIR Filter for playback
+                ///////////////////////////////////////////////////////////////////////////////////////
                 void prepareToPlay(float fc, float q, float boost, float sampleRate, Type type = Type::HighShelf);
+
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// Returns the sample after applying IIR Filter to it
+                ///////////////////////////////////////////////////////////////////////////////////////
                 float processSample(float sample);
             private:
                 std::vector<float> coefficients;
@@ -169,10 +201,20 @@ namespace AuxPort
                 Engine(Filter filter);
                 ~Engine() = default;
                 Engine(const Engine& engine) = default;
+
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// Prepares the IIR Filter for playback
+                ///////////////////////////////////////////////////////////////////////////////////////
                 void prepareToPlay(float fc, float q, float sampleRate, float boost = 0, uint32_t channels = 2);
-#ifdef JUCE           
+#ifdef JUCE
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// Applies IIR Filter to the given juce::AudioBuffer
+                ///////////////////////////////////////////////////////////////////////////////////////
                 void process(juce::AudioBuffer<float>& buffer);
 #endif
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// Returns the sample after applying IIR Filter to it
+                ///////////////////////////////////////////////////////////////////////////////////////
                 float process(const float& sample, uint32_t channelNumber);
             private:
                 std::vector<Butterworth> butter1;

@@ -173,6 +173,9 @@ namespace AuxPort
 	};
 #endif
 
+	///////////////////////////////////////////////////////////////////////////////////////
+	/// [Abstract Class] This class provides an interface for working with files
+	///////////////////////////////////////////////////////////////////////////////////////
 	class File : virtual public ILog
 	{
 	public:
@@ -225,7 +228,7 @@ namespace AuxPort
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	/// TextFile Class, Abstraction over C++ Standard File Handling to read ASCII based Text Files.
+	/// [Class] Abstraction over C++ Standard File Handling to read ASCII based Text Files.
 	/// For Example : AuxPort::TextFile textFile()
 	///////////////////////////////////////////////////////////////////////////////////////
 	class TextFile : public File
@@ -260,6 +263,10 @@ namespace AuxPort
 		/// [Function] Opens a stream to a text file
 		///////////////////////////////////////////////////////////////////////////////////////
 		bool open(const std::string& fileName, const Mode& mode = Mode::Read, bool log = false) override;
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Closes current text file stream
+		///////////////////////////////////////////////////////////////////////////////////////
 		bool close(bool log = false) override;
 	private:
 		std::string rawData;
@@ -277,6 +284,9 @@ namespace AuxPort
 	private:
 	};
 
+	///////////////////////////////////////////////////////////////////////////////////////
+	/// [Abstract Class] This class provides an interface to manage File Format Details
+	///////////////////////////////////////////////////////////////////////////////////////
 	class TextFormat : virtual public ILog
 	{
 	public:
@@ -299,21 +309,77 @@ namespace AuxPort
 		virtual void write(const std::string& line, int props = 0) = 0;
 	};
 
+	///////////////////////////////////////////////////////////////////////////////////////
+	/// [Class] This class provides functionality to read and write CSV Files.
+	///////////////////////////////////////////////////////////////////////////////////////
 	class CSV : protected TextFile, public TextFormat
 	{
 	public:
 		CSV();
 		~CSV() = default;
 		CSV(const CSV& csv) = default;
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Opens a CSV File
+		///////////////////////////////////////////////////////////////////////////////////////
 		bool open(const std::string& fileName, const Mode& mode = Mode::Read, bool containsHeader = false, const char& delimiter = ',', bool log = false);
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Closes the stream to currently opened CSV File
+		///////////////////////////////////////////////////////////////////////////////////////
 		bool close(bool log = false);
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Reads data from a CSV file and stores it in the 2-d Vector.
+		/// If the containsHeader Flag has been set to false, all rows in the file will be considered as data rows.
+		/// Otherwise, the first row will not be considered a data row and will not be populated in the given vector.
+		///////////////////////////////////////////////////////////////////////////////////////
 		void read(std::vector<std::vector<std::string>>& data);
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Reads data from a CSV file.
+		/// If the containsHeader Flag has been set to false, all rows in the file will be considered as data rows and there will be no header rows.
+		/// Otherwise, the first row will be considered a header row and all successive rows will be considered data rows.
+		///////////////////////////////////////////////////////////////////////////////////////
 		void read(std::vector<std::vector<std::string>>& data, std::vector<std::string>& headers);
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Reads a specific data row from the file.
+		/// Returns true if the read was sucessful. Otherwise, it returns false in case the given rowNum is greater than number of data rows in the file.
+		/// If the containsHeader Flag has been set to false, all rows in the file will be considered as data rows and there will be no header rows.
+		/// Otherwise, the first row will be considered a header row and all successive rows will be considered data rows.
+		///////////////////////////////////////////////////////////////////////////////////////
 		bool getDataRow(std::vector<std::string>& dataRow, size_t rowNum);
-		void write();
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Sets the header row to be written to the CSV File.
+		/// This function does not write the headers to CSV File, instead, it sets the headers which will be written to file later using write().
+		///////////////////////////////////////////////////////////////////////////////////////
 		void setHeader(const std::vector<std::string>& header);
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Adds a data row to be written to the CSV File.
+		/// This function does not write the data row to CSV File. Added data rows are written to file when write() is called.
+		///////////////////////////////////////////////////////////////////////////////////////
 		void addDataRow(const std::vector<std::string>& dataRow);
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Writes a CSV file using information set through addDataRow(), setHeader() functions.
+		/// File must be opened in Write mode.
+		/// If containsHeader flag is set to false, then headers will not be written (even if they have been set using setHaeders()).
+		///////////////////////////////////////////////////////////////////////////////////////		
+		void write();
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Writes a CSV file with the given data and header rows.
+		/// File must be opened in Write mode.
+		/// If containsHeader flag is set to false, then headers will not be written (even if they have been set using setHaeders()).
+		///////////////////////////////////////////////////////////////////////////////////////	
 		void write(const std::vector<std::vector<std::string>>& data, const std::vector<std::string>& header = std::vector<std::string>());
+	
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// [Function] Logs the file info
+		///////////////////////////////////////////////////////////////////////////////////////
 		void Log() override;
 	private:
 		char delimiter;

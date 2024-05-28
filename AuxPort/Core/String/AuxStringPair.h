@@ -45,75 +45,76 @@
 
 namespace AuxPort
 {
-/*
-		StringPair Class, This class allows you to create string pair objects. 
-		For Example : AuxPort::StringPair pair("key","value"); 
-*/	
+	///////////////////////////////////////////////////////////////////////////////////////
+	///	StringPair Class, This class allows you to create string pair objects. 
+	///	For Example : AuxPort::StringPair pair("key","value"); 
+	///////////////////////////////////////////////////////////////////////////////////////
 	class StringPair : public ILog
 	{
 	public:
-/*
-		StringPair() = default Constructor
-		Creates an empty StringPair object
-*/		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// StringPair() = default Constructor
+		/// Creates an empty StringPair object
+		///////////////////////////////////////////////////////////////////////////////////////
 		StringPair() = default;
-/*===================================================================================*/
-/*
-		StringPair(const StringPair& stringPair) = default Copy constructor
-		Creates a StringPair object initialized with the Passed StringPair Object
-*/
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// StringPair(const StringPair& stringPair) = default Copy constructor
+		/// Creates a StringPair object initialized with the Passed StringPair Object
+		///////////////////////////////////////////////////////////////////////////////////////
 		StringPair(const StringPair& stringPair) = default;
-/*===================================================================================*/
-/*
-		StringPair(const std::string& key, const std::string& value)
-		Creates a StringPair object initialized with a std::string key-value pair.
-*/
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// StringPair(const std::string& key, const std::string& value)
+		/// Creates a StringPair object initialized with a std::string key-value pair.
+		///////////////////////////////////////////////////////////////////////////////////////
 		StringPair(const std::string& key, const std::string& value);
 
-/*===================================================================================*/
-/*
-		StringPair(const String& key, const String& value)
-		Creates a StringPair object initialized with a std::string key-value pair.
-*/
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// StringPair(const String& key, const String& value)
+		/// Creates a StringPair object initialized with a std::string key-value pair.
+		///////////////////////////////////////////////////////////////////////////////////////
 		StringPair(const String& key, const String& value);
-/*===================================================================================*/	
-/*
-		StringPair(const std::string& key, const std::string& value)
-		Creates a StringPair object initialized with a char* key-value pair.
-*/
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// StringPair(const std::string& key, const std::string& value)
+		/// Creates a StringPair object initialized with a char* key-value pair.
+		///////////////////////////////////////////////////////////////////////////////////////
 		StringPair(const char* key, const char* value);
-/*===================================================================================*/	
-/*
-		Safely Deallocates data members when object goes out of scope.
-*/
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Safely Deallocates data members when object goes out of scope.
+		///////////////////////////////////////////////////////////////////////////////////////
 		~StringPair() = default;
-/*===================================================================================*/	
-/*
-		Overloads ostream << operator to allow printing of StringPair object directly.
-*/
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Overloads ostream << operator to allow printing of StringPair object directly.
+		///////////////////////////////////////////////////////////////////////////////////////
 		friend std::ostream& operator << (std::ostream& out, const StringPair& sPair);
-/*===================================================================================*/	
-/*
-		Returns reference to the internal key.
-*/
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Returns reference to the internal key.
+		///////////////////////////////////////////////////////////////////////////////////////
 		AuxPort::String key() const;
-/*===================================================================================*/	
-/*
-		Returns reference to the internal value.
-*/
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Returns reference to the internal value.
+		///////////////////////////////////////////////////////////////////////////////////////
 		AuxPort::String value() const;
-/*===================================================================================*/
-/*
-		Updates the Key
-*/
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Updates the Key
+		///////////////////////////////////////////////////////////////////////////////////////
 		void setKey(const AuxPort::String& key);
 
-/*===================================================================================*/
-/*
-		Updates the Value
-*/		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Updates the Value
+		///////////////////////////////////////////////////////////////////////////////////////
 		void setValue(const AuxPort::String& value);
-/*===================================================================================*/	
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// Logs the StringPair object
+		///////////////////////////////////////////////////////////////////////////////////////
 		void Log() override;
 	private:
 		AuxPort::String _key;

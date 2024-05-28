@@ -216,6 +216,7 @@ void AuxPort::Audio::Convolution::setImpulseResponse(std::vector<float>* impulse
 
 float AuxPort::Audio::Convolution::process(float sample)
 {
+	AuxAssert(impulseResponse.size() > 0, "Impluse Response is not provided. Please set Impulse Response first using setImpulseResponse().");
 	float outputSample = 0;
 	inputBuffer.push(sample);
 	for (uint32_t i = 0; i < irSize; i++)
