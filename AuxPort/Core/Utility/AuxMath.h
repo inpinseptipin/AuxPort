@@ -48,7 +48,7 @@ namespace AuxPort
 	class Error
 	{
 	public:
-		enum class Type { MEAN, Absolute, RMSE };
+		enum class Type { Mean, Absolute, Relative, RMSE };
 		
 		Error()
 		{
@@ -64,34 +64,43 @@ namespace AuxPort
 			this->type = type;
 		}
 
-		float compute(const std::vector<errorVal>& vec1, const std::vector<errorVal>& vec2)
+		float compute(const std::vector<errorVal>& calculatedValues, const std::vector<errorVal>& expectedValues)
 		{
-			AuxAssert(vec1.size() != vec2.size(), "Vectors must be of same size!");
+			AuxAssert(calculatedValues.size() == expectedValues.size(), "Vectors must be of same size!");
 
 			float result = 0.0f;
-			size_t n = vec1.size();
+			size_t n = calculatedValues.size();
 
 			switch (type) 
 			{
-			case Mean:
+			case Type::Mean:
 				for (size_t i = 0; i < n; i++) 
 				{
-					result += (vec1[i] - vec2[i]);
-				}
-				result /= n;
-				break;
-			case Absolute:
-				for (size_t i = 0; i < n; i++)
-				{
-					result += std::abs(vec1[i] - vec2[i]);
+					result += (calculatedValues[i] - expectedValues[i]);
 				}
 				result /= n;
 				break;
 
-			case RMSE:
+			case Type::Absolute:
+				for (size_t i = 0; i < n; i++)
+				{
+					result += std::abs(calculatedValues[i] - expectedValues[i]);
+				}
+				result /= n;
+				break;
+
+			case Type::Relative:
+				for (size_t i = 0; i < n; i++)
+				{
+					result += std::abs(calculatedValues[i] - expectedValues[i]) / std::abs(expectedValues[i]);
+				}
+				result /= n;
+				break;
+
+			case Type::RMSE:
 				for (size_t i = 0; i < n; i++) 
 				{
-					result += std::norm((vec1[i] - vec2[i]));
+					result += std::norm((calculatedValues[i] - expectedValues[i]));
 				}
 				result = std::sqrt((float)result / n);
 				break;

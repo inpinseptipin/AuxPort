@@ -86,8 +86,7 @@ float AuxPort::Interpolation::cubicInterpolate(float val)
 
 float AuxPort::Interpolation::lagrangeInterpolate(float val)
 {
-	size_t index = findIndex(val);
-	AuxAssert(index < yValues.size() - 1, "Given val should lie between two defined xValues!");
+	AuxAssert(val >= startX && val <= endX, "Given val should lie in the range [start, end]!");
 
 	float res = 0.0f;
 	float currTerm;
