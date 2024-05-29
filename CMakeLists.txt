@@ -43,6 +43,8 @@ add_executable(
 	AuxTest/String/AuxStringTest.cpp
 	AuxTest/FFT/AuxFFTTest.h
 	AuxTest/FFT/AuxFFTTest.cpp
+        AuxTest/Interpolation/AuxInterpolationTest.h
+	AuxTest/Interpolation/AuxInterpolationTest.cpp
 	AuxTest/AuxTest.h
 	AuxTest/AuxTest.cpp	
 	AuxPort/AuxPort.h
