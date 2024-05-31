@@ -52,29 +52,36 @@ namespace AuxPort
 {
     namespace Audio
     {
+        ///////////////////////////////////////////////////////////////////////////////////////           
+        /// @brief This namespace contains IIR Filter Classes
+        ///////////////////////////////////////////////////////////////////////////////////////
         namespace IIR
         {
-            ///////////////////////////////////////////////////////////////////////////////////////            
-            /// Consist of Lowpass, Highpass and Bandpass 2nd order IIR filters based on the Butterworth Formula
-            ///////////////////////////////////////////////////////////////////////////////////////            
+            ///////////////////////////////////////////////////////////////////////////////////////           
+            /// @brief Consist of Lowpass, Highpass and Bandpass 2nd order IIR filters based on the Butterworth Formula
+            ///////////////////////////////////////////////////////////////////////////////////////           
             class Butterworth
             {
             public:
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// @brief Specifies the type of Filter
+                ///////////////////////////////////////////////////////////////////////////////////////
                 enum class Type
                 {
                     Lowpass, Highpass, Bandpass
                 };
+
                 Butterworth();
                 ~Butterworth() = default;
                 Butterworth(const Butterworth& butterworth) = default;
 
                 ///////////////////////////////////////////////////////////////////////////////////////            
-                /// Prepares the IIR Filter for playback
+                /// @brief Prepares the IIR Filter for playback
                 ///////////////////////////////////////////////////////////////////////////////////////
                 void prepareToPlay(float fc, float q, float sampleRate, Type type = Type::Lowpass);
 
                 ///////////////////////////////////////////////////////////////////////////////////////            
-                /// Returns the sample after applying IIR Filter to it
+                /// @brief Returns the sample after applying IIR Filter to it
                 /////////////////////////////////////////////////////////////////////////////////////// 
                 float processSample(float sample);
             private:
@@ -90,7 +97,7 @@ namespace AuxPort
             };
 
             ///////////////////////////////////////////////////////////////////////////////////////
-            /// A 2nd Order Parameteric EQ to generate bandpeak and bandreject filters
+            /// @brief A 2nd Order Parameteric EQ to generate bandpeak and bandreject filters
             ///////////////////////////////////////////////////////////////////////////////////////
             class ParametricEQ
             {
@@ -100,12 +107,12 @@ namespace AuxPort
                 ParametricEQ(const ParametricEQ& peq) = default;
 
                 ///////////////////////////////////////////////////////////////////////////////////////            
-                /// Prepares the Filter for playback
+                /// @brief Prepares the Filter for playback
                 ///////////////////////////////////////////////////////////////////////////////////////
                 void prepareToPlay(float fc, float q, float boost, float sampleRate);
 
                 ///////////////////////////////////////////////////////////////////////////////////////            
-                /// Returns the sample after applying Filter to it
+                /// @brief Returns the sample after applying Filter to it
                 ///////////////////////////////////////////////////////////////////////////////////////
                 float processSample(float sample);
             private:
@@ -120,26 +127,33 @@ namespace AuxPort
             };
 
             ///////////////////////////////////////////////////////////////////////////////////////
-            /// A set of First Order IIR filters
+            /// @brief A set of First Order IIR filters
             ///////////////////////////////////////////////////////////////////////////////////////
             class FirstOrder
             {
             public:
+                ///////////////////////////////////////////////////////////////////////////////////////
+                /// @brief Specifies the type of Filter
+                ///////////////////////////////////////////////////////////////////////////////////////
                 enum Type
                 {
                     Allpass, Lowpass, Highpass
                 };
+
+                ///////////////////////////////////////////////////////////////////////////////////////
+                /// @brief Default Constructor. Initializes an Allpass filter, by default.
+                ///////////////////////////////////////////////////////////////////////////////////////
                 FirstOrder();
                 ~FirstOrder() = default;
                 FirstOrder(const FirstOrder& firstOrder) = default;
 
                 ///////////////////////////////////////////////////////////////////////////////////////            
-                /// Prepares the IIR Filter for playback
+                /// @brief Prepares the IIR Filter for playback
                 ///////////////////////////////////////////////////////////////////////////////////////
                 void prepareToPlay(float fc, float sampleRate, const Type& type);
 
                 ///////////////////////////////////////////////////////////////////////////////////////            
-                /// Returns the sample after applying IIR Filter to it
+                /// @brief Returns the sample after applying IIR Filter to it
                 ///////////////////////////////////////////////////////////////////////////////////////
                 float processSample(float sample);
             private:
@@ -152,26 +166,30 @@ namespace AuxPort
             };
 
             ///////////////////////////////////////////////////////////////////////////////////////
-            /// IIR Filter Algorithms that are not part of a filterbank
+            /// @brief IIR Filter Algorithms that are not part of a filterbank
             ///////////////////////////////////////////////////////////////////////////////////////
             class General
             {
             public:
+                ///////////////////////////////////////////////////////////////////////////////////////
+                /// @brief Specifies the type of Filter
+                ///////////////////////////////////////////////////////////////////////////////////////
                 enum Type
                 {
                     HighShelf
                 };
+
                 General();
                 ~General() = default;
                 General(const General& general) = default;
 
                 ///////////////////////////////////////////////////////////////////////////////////////            
-                /// Prepares the IIR Filter for playback
+                /// @brief Prepares the IIR Filter for playback
                 ///////////////////////////////////////////////////////////////////////////////////////
                 void prepareToPlay(float fc, float q, float boost, float sampleRate, Type type = Type::HighShelf);
 
                 ///////////////////////////////////////////////////////////////////////////////////////            
-                /// Returns the sample after applying IIR Filter to it
+                /// @brief Returns the sample after applying IIR Filter to it
                 ///////////////////////////////////////////////////////////////////////////////////////
                 float processSample(float sample);
             private:
@@ -185,35 +203,58 @@ namespace AuxPort
                 float output;
             };
 
-           
-
             ///////////////////////////////////////////////////////////////////////////////////////
-            /// Engine implements all the IIR filters and can be used to process audio right away. It is also compatible with Juce::AudioBuffer<float>
+            /// @brief Engine implements all the IIR filters and can be used to process audio right away. It is also compatible with Juce::AudioBuffer<float>
             ///////////////////////////////////////////////////////////////////////////////////////
             class Engine
             {
             public:
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// @brief Specifies the Filter Type 
+                ///////////////////////////////////////////////////////////////////////////////////////
                 enum Filter
                 {
-                    ButterLPF6dB, ButterHPF6dB, ButterLPF12dB, ButterHPF12dB, ButterBPF6dB, ButterBPF12dB, ParametericEQ, Shelf, Shelfx2, APF1, LPF1, HPF1, APF2, LPF2, HPF2
+                    ButterLPF6dB,    ///< Butterworth Low-Pass Filter with a 6 dB/octave roll-off
+                    ButterHPF6dB,    ///< Butterworth High-Pass Filter with a 6 dB/octave roll-off
+                    ButterLPF12dB,   ///< Butterworth Low-Pass Filter with a 12 dB/octave roll-off
+                    ButterHPF12dB,   ///< Butterworth High-Pass Filter with a 12 dB/octave roll-off
+                    ButterBPF6dB,    ///< Butterworth Band-Pass Filter with a 6 dB/octave roll-off
+                    ButterBPF12dB,   ///< Butterworth Band-Pass Filter with a 12 dB/octave roll-off
+                    ParametericEQ,   ///< A Parameteric EQ to generate bandpeak and bandreject filters
+                    Shelf,           ///< Shelving Filter, either low or high shelf, for broad frequency adjustments
+                    Shelfx2,         ///< Variant of the Shelving Filter
+                    APF1,            ///< First-order All-Pass Filter
+                    LPF1,            ///< First-order Low-Pass Filter
+                    HPF1,            ///< First-order High-Pass Filter
+                    APF2,            ///< Second-order All-Pass Filter
+                    LPF2,            ///< Second-order Low-Pass Filter
+                    HPF2             ///< Second-order High-Pass Filter
                 };
+
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// @brief Default Constructor. Initializes the engine with Butterworth Low Pass Filter with 6 dB roll-off
+                ///////////////////////////////////////////////////////////////////////////////////////
                 Engine() = default;
                 Engine(Filter filter);
                 ~Engine() = default;
+
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// @brief Default Copy Constructor
+                ///////////////////////////////////////////////////////////////////////////////////////
                 Engine(const Engine& engine) = default;
 
                 ///////////////////////////////////////////////////////////////////////////////////////            
-                /// Prepares the IIR Filter for playback
+                /// @brief Prepares the IIR Filter for playback
                 ///////////////////////////////////////////////////////////////////////////////////////
                 void prepareToPlay(float fc, float q, float sampleRate, float boost = 0, uint32_t channels = 2);
 #ifdef JUCE
                 ///////////////////////////////////////////////////////////////////////////////////////            
-                /// Applies IIR Filter to the given juce::AudioBuffer
+                /// @brief Applies IIR Filter to the given juce::AudioBuffer
                 ///////////////////////////////////////////////////////////////////////////////////////
                 void process(juce::AudioBuffer<float>& buffer);
 #endif
                 ///////////////////////////////////////////////////////////////////////////////////////            
-                /// Returns the sample after applying IIR Filter to it
+                /// @brief Returns the sample after applying IIR Filter to it
                 ///////////////////////////////////////////////////////////////////////////////////////
                 float process(const float& sample, uint32_t channelNumber);
             private:

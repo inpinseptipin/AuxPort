@@ -1,7 +1,5 @@
 #ifndef AUXTEST_H
 #define AUXTEST_H
-
-
 /*
 *			AuxTest
 			"Test Test Test" - inpinseptipin
@@ -37,10 +35,14 @@
 			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
-
 /*===================================================================================*/
+
 #include "../AuxPort/AuxPort.h"
 #include "String/AuxStringTest.h"
+
+///////////////////////////////////////////////////////////////////////////////////////
+/// @brief This namespace contains testing modules for the AuxPort Library
+///////////////////////////////////////////////////////////////////////////////////////
 namespace AuxTest
 {
 	enum class UnitTest
@@ -49,10 +51,5 @@ namespace AuxTest
 	};
 	std::vector<AuxPort::Case> testcases;
 }
-
-
-/*
-	Core Headers
-*/
 
 #endif

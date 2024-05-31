@@ -44,14 +44,14 @@
 namespace AuxPort
 {
 	///////////////////////////////////////////////////////////////////////////////////////
-	///	[Class] Represents a circular buffer data structure
+	///	@brief Represents a circular buffer data structure
 	///////////////////////////////////////////////////////////////////////////////////////
 	template<class sample>
 	class CircularBuffer : public AuxPort::ILog
 	{
 	public:
 		///////////////////////////////////////////////////////////////////////////////////////
-		///	Default Constructor
+		///	@brief Default Constructor
 		///////////////////////////////////////////////////////////////////////////////////////
 		CircularBuffer()
 			: buffer(64)
@@ -62,7 +62,7 @@ namespace AuxPort
 		{}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		///	Initializes a CircularBuffer Object with the given capacity
+		///	@brief Initializes a CircularBuffer Object with the given capacity
 		///////////////////////////////////////////////////////////////////////////////////////
 		CircularBuffer(const size_t& capacity)
 			: buffer(capacity)
@@ -73,9 +73,9 @@ namespace AuxPort
 		{}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		///	Initializes a CircularBuffer Object using contents of a given vector.
-		/// The CircularBuffer will have same size and capacity as the vector. 
-		/// First element of the given vector will be the first element of the buffer.
+		///	@brief Initializes a CircularBuffer Object using contents of a given vector.
+		/// @note The CircularBuffer will have same size and capacity as the vector. 
+		/// @note First element of the given vector will be the first element of the buffer.
 		///////////////////////////////////////////////////////////////////////////////////////
 		CircularBuffer(const std::vector<sample>& buffer)
 			: buffer(buffer)
@@ -86,9 +86,9 @@ namespace AuxPort
 		{}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		///	Initializes a CircularBuffer Object using pointer to an array of elements.
-		/// The CircularBuffer will have same size and capacity as the number of elements.
-		/// Initial element of the array will be the first element of the buffer.
+		///	@brief Initializes a CircularBuffer Object using pointer to an array of elements.
+		/// @note The CircularBuffer will have same size and capacity as the number of elements.
+		/// @note Initial element of the array will be the first element of the buffer.
 		///////////////////////////////////////////////////////////////////////////////////////
 		CircularBuffer(const sample* data, const size_t dataSize) 
 			: buffer(dataSize)
@@ -104,18 +104,18 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		///	Default copy constructor
+		///	@brief Default copy constructor
 		///////////////////////////////////////////////////////////////////////////////////////
 		CircularBuffer(const CircularBuffer<sample>& obj) = default;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		///	Default destructor
+		///	@brief Default destructor
 		///////////////////////////////////////////////////////////////////////////////////////
 		virtual ~CircularBuffer() = default;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		///	Pushes an element onto the circular buffer.
-		/// If the buffer is already full, then the oldest element is removed and the new element is inserted.
+		///	@brief Pushes an element onto the circular buffer.
+		/// @note If the buffer is already full, then the oldest element is removed and the new element is inserted.
 		///////////////////////////////////////////////////////////////////////////////////////
 		void push(const sample& val)
 		{
@@ -132,7 +132,7 @@ namespace AuxPort
 		}
 	
 		///////////////////////////////////////////////////////////////////////////////////////
-		///	Pops an element from the circular buffer. The buffer should not be empty.
+		///	@brief Pops an element from the circular buffer. The buffer should not be empty.
 		///////////////////////////////////////////////////////////////////////////////////////
 		sample pop()
 		{
@@ -144,7 +144,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		///	Logs the details of the circular buffer.
+		///	@brief Logs the details of the circular buffer.
 		///////////////////////////////////////////////////////////////////////////////////////
 		void Log() override
 		{
@@ -168,7 +168,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		///	Resets the circular buffer. This reduces size to zero.
+		///	@brief Resets the circular buffer. This reduces size to zero.
 		///////////////////////////////////////////////////////////////////////////////////////
 		void reset()
 		{
@@ -176,7 +176,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		///	Subtracts the mean of the buffer from each element in the buffer.
+		///	@brief Subtracts the mean of the buffer from each element in the buffer.
 		///////////////////////////////////////////////////////////////////////////////////////
 		void meanRemoval()
 		{
@@ -186,7 +186,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		///	Returns the size of the buffer
+		///	@brief Returns the size of the buffer
 		///////////////////////////////////////////////////////////////////////////////////////
 		uint32_t getSize()
 		{
@@ -194,7 +194,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Resizes the buffer capacity but also resets the current buffer
+		/// @brief Resizes the buffer capacity but also resets the current buffer
 		///////////////////////////////////////////////////////////////////////////////////////
 		void resize(size_t newCapacity)
 		{
@@ -204,9 +204,9 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Return the element at the given shifted index. (Read Head has index 0, and so on...).
-		/// Make Sure that index is less than the number of elements actively in buffer. Otherwise, old elements might be returned from the buffer.
-		/// Negative Indexing is also supported.
+		/// @brief Return the element at the given shifted index. (Read Head has index 0, and so on...).
+		/// @note Make Sure that index is less than the number of elements actively in buffer. Otherwise, old elements might be returned from the buffer.
+		/// @note Negative Indexing is also supported.
 		///////////////////////////////////////////////////////////////////////////////////////
 		sample getShiftedElement(int index)
 		{
@@ -221,7 +221,7 @@ namespace AuxPort
 		size_t writeIndex;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Increments the given index in a circular manner
+		/// @brief Increments the given index in a circular manner
 		///////////////////////////////////////////////////////////////////////////////////////
 		void incrementIndex(size_t &index)
 		{

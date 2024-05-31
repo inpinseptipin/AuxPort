@@ -56,18 +56,21 @@ namespace AuxPort
 {
 #if AUXPORT_CXX_VER >= 17
 	///////////////////////////////////////////////////////////////////////////////////////
-	/// The Directory class provides an interface for interacting with directories and files.
+	/// @brief The Directory class provides an interface for interacting with directories and files.
 	/// It offers functionalities to retrieve information about files and directories.
+	/// @details
 	/// Example Usage:
+	/// @code
 	/// Directory dir;
 	/// dir.setDirectory("/path/to/directory");
 	/// uint32_t textFileCount = dir.count("txt");
+	/// @endcode
 	///////////////////////////////////////////////////////////////////////////////////////
 	class Directory : public ILog
 	{
 	public:
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Specifies whether to list Files or Directories or Both
+		/// @brief Specifies whether to list Files or Directories or Both
 		///////////////////////////////////////////////////////////////////////////////////////
 		enum Type
 		{
@@ -75,7 +78,7 @@ namespace AuxPort
 		};
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Specifies the format of the path (Relative or Absolute).
+		/// @brief Specifies the format of the path (Relative or Absolute).
 		///////////////////////////////////////////////////////////////////////////////////////
 		enum PathFormat
 		{
@@ -87,82 +90,82 @@ namespace AuxPort
 		Directory(const Directory& directory) = default;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Sets the current working directory. This function accepts the absolute path of the directory.
-		/// Use any separator for paths (Both '/' and '\\' work).
+		/// @brief Sets the current working directory. This function accepts the absolute path of the directory.
+		/// @note Use any separator for paths (Both '/' and '\' will work).
 		///////////////////////////////////////////////////////////////////////////////////////
 		void setDirectory(const std::string& absolutePath);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Counts the number of files with the specified extension in the current working directory.
-		/// The extension parameter needs to be passed along with dot(.)
+		/// @brief Counts the number of files with the specified extension in the current working directory.
+		/// @note The extension parameter needs to be passed along with dot(.)
 		/// Example: ".mp3"
 		///////////////////////////////////////////////////////////////////////////////////////
 		uint32_t count(const std::string& fileExtension);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Counts the number of files of different extensions in the current working directory. 
-		/// Returns a hashmap with file extensions as keys and the number of files as the value.
+		/// @brief Counts the number of files of different extensions in the current working directory. 
+		/// @returns Returns a hashmap with file extensions as keys and the number of files as the value.
 		///////////////////////////////////////////////////////////////////////////////////////
 		std::unordered_map<std::string, uint32_t> count();
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Returns a list of entries (Files, Directories or Both) present in the current working
-		/// directory. 
+		/// @brief Returns a list of entries (Files, Directories or Both) present in the current working
+		/// directory.
 		///////////////////////////////////////////////////////////////////////////////////////
 		std::vector<std::string> getList(Type type = Type::File, PathFormat pathFormat = PathFormat::Absolute);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Returns a list of files with the specified extension present in the current working
+		/// @brief Returns a list of files with the specified extension present in the current working
 		/// directory. It returns the absolute paths of the files.
-		/// The extension parameter needs to be passed along with dot(.)
+		/// @note The extension parameter needs to be passed along with dot(.)
 		/// Example: ".mp3"
 		///////////////////////////////////////////////////////////////////////////////////////
 		std::vector<std::string> getListOfFiles(const std::string& fileExtension);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Logs the details about current working directory
+		/// @brief Logs the details about current working directory
 		///////////////////////////////////////////////////////////////////////////////////////
 		void Log() override;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Returns the size (in bytes) of the current working directory
+		/// @brief Returns the size (in bytes) of the current working directory
 		///////////////////////////////////////////////////////////////////////////////////////
 		unsigned long long getSize();
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Returns the size (in bytes) of a regular file or directory in current working directory.
-		/// The path should be valid. In case of a file, it should correspond to a regular file.
-		/// Use any separator for paths (Both '/' and '\\' work).
+		/// @brief Returns the size (in bytes) of a regular file or directory in current working directory.
+		/// @note Use any separator for paths (Both '/' and '\\' work).
+		/// @note The path should be valid. In case of a file, it should correspond to a regular file.
 		///////////////////////////////////////////////////////////////////////////////////////
 		unsigned long long getSize(const std::string& relativePath);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Returns the last write time of the current working directory
+		/// @brief Returns the last write time of the current working directory
 		///////////////////////////////////////////////////////////////////////////////////////
 		std::time_t getLastWriteTime();
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Returns the last write time of a file/directory in current working directory
-		/// The path should be valid.
-		/// Use any separator for paths (Both '/' and '\\' work).
+		/// @brief Returns the last write time of a file/directory in current working directory
+		/// @note Use any separator for paths (Both '/' and '\\' work).
+		/// @note The path should be valid.
 		///////////////////////////////////////////////////////////////////////////////////////
 		std::time_t getLastWriteTime(const std::string& relativePath);
 	
 	private:
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Helper Function to get the last write time for a path.
-		/// The given path should be valid.
+		/// @brief Helper Function to get the last write time for a path.
+		/// @note The given path should be valid.
 		///////////////////////////////////////////////////////////////////////////////////////
 		static std::time_t _getLastWriteTime(const std::filesystem::path& path);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Helper Function to calculate the size of a directory.
-		/// The given path should be valid and should correspond to a directory.
+		/// @brief Helper Function to calculate the size of a directory.
+		/// @note The given path should be valid and should correspond to a directory.
 		///////////////////////////////////////////////////////////////////////////////////////
 		static unsigned long long _getDirectorySize(const std::filesystem::path& directoryPath);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Helper Function which counts the number of files and number of directories in the 
+		/// @brief Helper Function which counts the number of files and number of directories in the 
 		/// current working directory.
 		///////////////////////////////////////////////////////////////////////////////////////
 		void _count();
@@ -174,13 +177,13 @@ namespace AuxPort
 #endif
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	/// [Abstract Class] This class provides an interface for working with files
+	/// @brief This class provides an interface for working with files
 	///////////////////////////////////////////////////////////////////////////////////////
 	class File : virtual public ILog
 	{
 	public:
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Enum] Easy way to specify the Read/Write behavior of the File Stream
+		/// @brief Easy way to specify the Read/Write behavior of the File Stream
 		///////////////////////////////////////////////////////////////////////////////////////
 		enum Mode
 		{
@@ -192,27 +195,27 @@ namespace AuxPort
 		File(const File& file) = default;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Virtual Function] Implement this function to specify the opening behavior of the File
+		/// @brief Implement this function to specify the opening behavior of the File
 		///////////////////////////////////////////////////////////////////////////////////////
 		virtual bool open(const std::string& fileName, const Mode& mode = Mode::Read, bool log = false) = 0;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Virtual Function] Implement this function to specify the closing behavior of the File
+		/// @brief Implement this function to specify the closing behavior of the File
 		///////////////////////////////////////////////////////////////////////////////////////
 		virtual bool close(bool log = false) = 0;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Returns the current directory, the program is running in
+		/// @brief Returns the current directory, the program is running in
 		///////////////////////////////////////////////////////////////////////////////////////
 		std::string getCurrentDirectory();
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Returns list of files present in the current directory
+		/// @brief Returns list of files present in the current directory
 		///////////////////////////////////////////////////////////////////////////////////////
 		std::vector<std::string>& getListOfFiles(const std::string& extension = "");
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Virtual Function] Override this function to specify logging behavior
+		/// @brief Override this function to specify logging behavior
 		///////////////////////////////////////////////////////////////////////////////////////
 		void Log() override;
 	private:
@@ -228,44 +231,46 @@ namespace AuxPort
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	/// [Class] Abstraction over C++ Standard File Handling to read ASCII based Text Files.
-	/// For Example : AuxPort::TextFile textFile()
+	/// @brief Abstraction over C++ Standard File Handling for ASCII based Text Files.
+	/// 
+	/// For Example :
+	/// @code AuxPort::TextFile textFile(); @endcode
 	///////////////////////////////////////////////////////////////////////////////////////
 	class TextFile : public File
 	{
 	public:
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Default Constructor, Initializes the TextFile API.
+		/// @brief Default Constructor, Initializes the TextFile API.
 		///////////////////////////////////////////////////////////////////////////////////////
 		TextFile() = default;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Default Destructor
+		/// @brief Default Destructor
 		///////////////////////////////////////////////////////////////////////////////////////
 		~TextFile() = default;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Reads the entire text file and saves it in a String
+		/// @brief Reads the entire text file and saves it in a String
 		///////////////////////////////////////////////////////////////////////////////////////
 		std::string& readFileAsString();
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Writes a line to the Text File
+		/// @brief Writes a line to the Text File
 		///////////////////////////////////////////////////////////////////////////////////////
 		void writeLineToFile(const std::string& data, bool log = false);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Reads a line to the Text File
+		/// @brief Reads a line to the Text File
 		///////////////////////////////////////////////////////////////////////////////////////
 		bool readLineFromFile(std::string& line, bool log = false);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Opens a stream to a text file
+		/// @brief Opens the given file as a text file
 		///////////////////////////////////////////////////////////////////////////////////////
 		bool open(const std::string& fileName, const Mode& mode = Mode::Read, bool log = false) override;
 		
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Closes current text file stream
+		/// @brief Closes current text file stream
 		///////////////////////////////////////////////////////////////////////////////////////
 		bool close(bool log = false) override;
 	private:
@@ -273,19 +278,30 @@ namespace AuxPort
 		std::string line;
 	};
 
+	///////////////////////////////////////////////////////////////////////////////////////
+	/// @brief This class provides an interface for working with binary files
+	///////////////////////////////////////////////////////////////////////////////////////
 	class BinaryFile : public File
 	{
 	public:
 		BinaryFile() = default;
 		~BinaryFile() = default;
 		BinaryFile(const BinaryFile& binaryFile) = default;
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Opens the given file as a binary file
+		///////////////////////////////////////////////////////////////////////////////////////
 		bool open(const std::string& fileName, const Mode& mode = Mode::Read, bool log = false) override;
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Closes current binary file stream
+		///////////////////////////////////////////////////////////////////////////////////////
 		bool close(bool log = false) override;
 	private:
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	/// [Abstract Class] This class provides an interface to manage File Format Details
+	/// @brief This class provides an interface to manage File Format Details
 	///////////////////////////////////////////////////////////////////////////////////////
 	class TextFormat : virtual public ILog
 	{
@@ -299,18 +315,49 @@ namespace AuxPort
 		std::string uniqueIdentifier;
 		std::string extensionName;
 	public:
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Return the format name
+		///////////////////////////////////////////////////////////////////////////////////////	
 		std::string& getFormatName();
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Return the unique identifier for the text format
+		///////////////////////////////////////////////////////////////////////////////////////	
 		std::string& getUniqueIdentifier();
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Returns the extension name
+		///////////////////////////////////////////////////////////////////////////////////////	
 		std::string& getExtensionName();
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Sets the extension name
+		///////////////////////////////////////////////////////////////////////////////////////	
 		void setExtensionName(const std::string& extensionName);
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Sets the unique identifier for the text format
+		///////////////////////////////////////////////////////////////////////////////////////	
 		void setUniqueIdentifier(const std::string& uniqueIdentifier);
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Sets the format name
+		///////////////////////////////////////////////////////////////////////////////////////	
 		void setFormatName(const std::string& formatName);
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Implement this function to specify the read operation for the file
+		///////////////////////////////////////////////////////////////////////////////////////	
 		virtual void read(std::string& line, int props = 0) = 0;
+		
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Implement this function to specify the write operation for the file
+		///////////////////////////////////////////////////////////////////////////////////////	
 		virtual void write(const std::string& line, int props = 0) = 0;
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	/// [Class] This class provides functionality to read and write CSV Files.
+	/// @brief This class provides functionality to read and write CSV Files.
 	///////////////////////////////////////////////////////////////////////////////////////
 	class CSV : protected TextFile, public TextFormat
 	{
@@ -320,65 +367,65 @@ namespace AuxPort
 		CSV(const CSV& csv) = default;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Opens a CSV File
+		/// @brief Opens a CSV File
 		///////////////////////////////////////////////////////////////////////////////////////
 		bool open(const std::string& fileName, const Mode& mode = Mode::Read, bool containsHeader = false, const char& delimiter = ',', bool log = false);
 		
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Closes the stream to currently opened CSV File
+		/// @brief Closes the stream to currently opened CSV File
 		///////////////////////////////////////////////////////////////////////////////////////
 		bool close(bool log = false);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Reads data from a CSV file and stores it in the 2-d Vector.
-		/// If the containsHeader Flag has been set to false, all rows in the file will be considered as data rows.
+		/// @brief Reads data from a CSV file and stores it in the 2-d Vector.
+		/// @note If the containsHeader Flag has been set to false, all rows in the file will be considered as data rows.
 		/// Otherwise, the first row will not be considered a data row and will not be populated in the given vector.
 		///////////////////////////////////////////////////////////////////////////////////////
 		void read(std::vector<std::vector<std::string>>& data);
 		
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Reads data from a CSV file.
-		/// If the containsHeader Flag has been set to false, all rows in the file will be considered as data rows and there will be no header rows.
+		/// @brief Reads data from a CSV file.
+		/// @note If the containsHeader Flag has been set to false, all rows in the file will be considered as data rows and there will be no header rows.
 		/// Otherwise, the first row will be considered a header row and all successive rows will be considered data rows.
 		///////////////////////////////////////////////////////////////////////////////////////
 		void read(std::vector<std::vector<std::string>>& data, std::vector<std::string>& headers);
 		
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Reads a specific data row from the file.
-		/// Returns true if the read was sucessful. Otherwise, it returns false in case the given rowNum is greater than number of data rows in the file.
-		/// If the containsHeader Flag has been set to false, all rows in the file will be considered as data rows and there will be no header rows.
+		/// @brief Reads a specific data row from the file.
+		/// @returns true if the read was sucessful. Otherwise, it returns false in case the given rowNum is greater than number of data rows in the file.
+		/// @note If the containsHeader Flag has been set to false, all rows in the file will be considered as data rows and there will be no header rows.
 		/// Otherwise, the first row will be considered a header row and all successive rows will be considered data rows.
 		///////////////////////////////////////////////////////////////////////////////////////
 		bool getDataRow(std::vector<std::string>& dataRow, size_t rowNum);
 		
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Sets the header row to be written to the CSV File.
-		/// This function does not write the headers to CSV File, instead, it sets the headers which will be written to file later using write().
+		/// @brief Sets the header row to be written to the CSV File.
+		/// @note This function does not write the headers to CSV File, instead, it sets the headers which will be written to file later using write().
 		///////////////////////////////////////////////////////////////////////////////////////
 		void setHeader(const std::vector<std::string>& header);
 		
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Adds a data row to be written to the CSV File.
-		/// This function does not write the data row to CSV File. Added data rows are written to file when write() is called.
+		/// @brief Adds a data row to be written to the CSV File.
+		/// @note This function does not write the data row to CSV File. Added data rows are written to file when write() is called.
 		///////////////////////////////////////////////////////////////////////////////////////
 		void addDataRow(const std::vector<std::string>& dataRow);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Writes a CSV file using information set through addDataRow(), setHeader() functions.
-		/// File must be opened in Write mode.
-		/// If containsHeader flag is set to false, then headers will not be written (even if they have been set using setHaeders()).
+		/// @brief Writes a CSV file using information set through addDataRow(), setHeader() functions.
+		/// @note File must be opened in Write mode.
+		/// @note If containsHeader flag is set to false, then headers will not be written (even if they have been set using setHeaders()).
 		///////////////////////////////////////////////////////////////////////////////////////		
 		void write();
 		
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Writes a CSV file with the given data and header rows.
-		/// File must be opened in Write mode.
-		/// If containsHeader flag is set to false, then headers will not be written (even if they have been set using setHaeders()).
+		/// @brief Writes a CSV file with the given data and header rows.
+		/// @note File must be opened in Write mode.
+		/// @note If containsHeader flag is set to false, then headers will not be written (even if they have been set using setHeaders()).
 		///////////////////////////////////////////////////////////////////////////////////////	
 		void write(const std::vector<std::vector<std::string>>& data, const std::vector<std::string>& header = std::vector<std::string>());
 	
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Function] Logs the file info
+		/// @brief Logs the file info
 		///////////////////////////////////////////////////////////////////////////////////////
 		void Log() override;
 	private:

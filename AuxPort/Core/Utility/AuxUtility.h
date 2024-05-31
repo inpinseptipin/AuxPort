@@ -35,13 +35,14 @@
 			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
-
 /*===================================================================================*/
+
 #include "../Env/AuxEnv.h"
 #include "../Log/AuxLog.h"
 #include <complex>
 #include <random>
 #include <algorithm>
+
 namespace AuxPort
 {
 	const std::complex<double> iota(0, 1);
@@ -50,14 +51,14 @@ namespace AuxPort
 	const float e = 2.718281828459F;
 
 	///////////////////////////////////////////////////////////////////////////////////////	
-	/// Utility is a class that provides interfaces (Static Functions) for stuff that are easy to implement but still require you to write code for it.
+	/// @brief This class provides interfaces (Static Functions) for stuff that are easy to implement but still require you to write code for it.
 	///////////////////////////////////////////////////////////////////////////////////////
 	class Utility
 	{
 	public:
 #ifdef AUXPORT_64	
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Calculates the number of digits present in an integer.		
+		/// @brief Calculates the number of digits present in an integer.		
 		///////////////////////////////////////////////////////////////////////////////////////
 		static uint64 numberOfDigits(int64 number)
 		{
@@ -66,7 +67,7 @@ namespace AuxPort
 		}
 #else	
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Calculates the number of digits present in an integer.		
+		/// @brief Calculates the number of digits present in an integer.		
 		///////////////////////////////////////////////////////////////////////////////////////
 		static uint32 numberOfDigits(int32 number)
 		{
@@ -76,7 +77,7 @@ namespace AuxPort
 #endif 
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Converts decibels (dB) to single-precision float		
+		/// @brief Converts decibels (dB) to single-precision float		
 		///////////////////////////////////////////////////////////////////////////////////////
 		static inline float dBToLinear(float val)
 		{
@@ -84,7 +85,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Converts decibels (dB) to double-precision float	
+		/// @brief Converts decibels (dB) to double-precision float	
 		///////////////////////////////////////////////////////////////////////////////////////
 		static inline double dBToLinear(double val)
 		{
@@ -92,7 +93,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Converts single-precision float to decibels (dB)	
+		/// @brief Converts single-precision float to decibels (dB)	
 		///////////////////////////////////////////////////////////////////////////////////////
 		static inline float linearTodB(float val)
 		{
@@ -100,7 +101,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Converts double-precision float to decibels (dB)		
+		/// @brief Converts double-precision float to decibels (dB)		
 		///////////////////////////////////////////////////////////////////////////////////////
 		static inline double linearTodB(double val)
 		{
@@ -108,7 +109,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Fill a standard vector with zeros		
+		/// @brief Fill a standard vector with zeros		
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline void zeroThis(std::vector<sample>& audio)
@@ -118,7 +119,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Evaluates the Signum function
+		/// @brief Evaluates the Signum function
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline sample signum(const sample& audio)
@@ -127,7 +128,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Rounds a number to the nearest integer	
+		/// @brief Rounds a number to the nearest integer	
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline sample round(const sample& audio)
@@ -136,7 +137,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Remaps a input in a particular range to another range.
+		/// @brief Remaps a input in a particular range to another range.
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class range>
 		static inline range remap(range input, range outputStart, range outputEnd, range inputStart, range inputEnd)
@@ -146,7 +147,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Computes the mean for a vector		
+		/// @brief Computes the mean for a vector		
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline sample mean(const std::vector<sample>& vector)
@@ -159,7 +160,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Computes the median for a vector [Time Complexity : O(Nlog2(n)), Memory Complexity : O(N)]	
+		/// @brief Computes the median for a vector [Time Complexity : O(Nlog2(n)), Memory Complexity : O(N)]	
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline sample median(std::vector<sample> vector)
@@ -169,7 +170,7 @@ namespace AuxPort
 		}
 		
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Normalizes a vector with a val.		
+		/// @brief Normalizes a vector with a val.		
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline void norm(std::vector<sample>& vec, float norm)
@@ -180,7 +181,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Computes absolute sum of a std::vector
+		/// @brief Computes absolute sum of a std::vector
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline sample abssum(const std::vector<sample>& vec)
@@ -193,7 +194,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Returns a std::vector with Random Values between a range	
+		/// @brief Returns a std::vector with Random Values between a range	
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline std::vector<sample> generateRandomValues(size_t size, float rangeStart = -1.0, float rangeEnd = 1.0)
@@ -209,7 +210,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Fills a memory allocated std::vector with random values.	
+		/// @brief Fills a memory allocated std::vector with random values.	
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline void generateRandomValues(std::vector<sample>& vector,float rangeStart = -1.0, float rangeEnd = 1.0)
@@ -224,7 +225,7 @@ namespace AuxPort
 
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Computes the max element in an std::vector	
+		/// @brief Computes the max element in an std::vector	
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline sample getMax(const std::vector<sample>& vector)
@@ -239,7 +240,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Dot-Divide operation over a std::vector
+		/// @brief Dot-Divide operation over a std::vector
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline void divide(std::vector<sample>& vector, sample value)
@@ -250,7 +251,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Dot-Divide operation over a std::vector
+		/// @brief Dot-Divide operation over a std::vector
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline void multiply(std::vector<sample>& vector, sample value)
@@ -260,7 +261,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Dot-Divide operation over a std::vector
+		/// @brief Dot-Divide operation over a std::vector
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline void multiply(std::vector<sample>& vector1, const std::vector<sample>& vector2)
@@ -271,7 +272,7 @@ namespace AuxPort
 	
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Sinc(x) = sin(pi*x)/pi*x (Normalized Sinc Function)
+		/// @brief Sinc(x) = sin(pi*x)/pi*x (Normalized Sinc Function)
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline sample sinc(sample val)
@@ -280,7 +281,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Fills up all the elements of the given vector with the given value
+		/// @brief Fills up all the elements of the given vector with the given value
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline void constantThis(std::vector<sample>& vec, sample val)
@@ -290,7 +291,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Splits the given string in a vector of tokens based on the given delimiter
+		/// @brief Splits the given string in a vector of tokens based on the given delimiter
 		///////////////////////////////////////////////////////////////////////////////////////
 		static void split(std::vector<std::string>& tokens, const std::string& str, const char& delimiter)
 		{
@@ -304,7 +305,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Static] Joins the given vector of tokens using the given delimiter to form a string
+		/// @brief Joins the given vector of tokens using the given delimiter to form a string
 		///////////////////////////////////////////////////////////////////////////////////////
 		static void join(std::string& str, const std::vector<std::string>& tokens, const char& delimiter)
 		{
@@ -320,7 +321,7 @@ namespace AuxPort
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	/// [Class] Provides funnctions to get Information about current Enviroment
+	/// @brief Provides funnctions to get Information about current Enviroment
 	///////////////////////////////////////////////////////////////////////////////////////
 	class About
 	{
@@ -343,7 +344,7 @@ namespace AuxPort
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	/// [Class] Provides an interface to compute Expansions
+	/// @brief This class provides an interface to compute Expansions
 	///////////////////////////////////////////////////////////////////////////////////////
 	class Expansions
 	{
@@ -357,17 +358,17 @@ namespace AuxPort
 		Expansions(const Expansions& expansions) = default;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Sets the type of expansion
+		/// @brief Sets the type of expansion
 		///////////////////////////////////////////////////////////////////////////////////////
 		void setType(const Type& type);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Sets the max size of the expansion
+		/// @brief Sets the max size of the expansion
 		///////////////////////////////////////////////////////////////////////////////////////
 		void setMaxSize(uint32_t N);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Computes the expansion using given xPowers and yPowers
+		/// @brief Computes the expansion using given xPowers and yPowers
 		///////////////////////////////////////////////////////////////////////////////////////
 		std::vector<float>& compute(const std::vector<float>& xPowers, const std::vector<float>& yPowers, uint32_t N);
 	private:
@@ -380,7 +381,7 @@ namespace AuxPort
 
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	/// [Class] This class provides functionality to compute and manage powers of a given sample.
+	/// @brief This class provides functionality to compute and manage powers of a given sample.
 	///////////////////////////////////////////////////////////////////////////////////////
 	class Terms
 	{
@@ -390,23 +391,23 @@ namespace AuxPort
 		Terms(const Terms& terms) = default;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Computes the powers of the given sample (from sample^0 to sample^powers).
+		/// @brief Computes the powers of the given sample (from sample^0 to sample^powers).
 		/// The computed powers are stored in the internal vector.
 		///////////////////////////////////////////////////////////////////////////////////////
 		void computePowers(float sample, uint32_t powers);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Computes the additional powers of the given sample.
+		/// @brief Computes the additional powers of the given sample.
 		///////////////////////////////////////////////////////////////////////////////////////
 		void computeAdditionalPowers(uint32_t start, uint32_t end);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Returns a refrence to the internal vector which contains the calculated powers.
+		/// @brief Returns a refrence to the internal vector which contains the calculated powers.
 		///////////////////////////////////////////////////////////////////////////////////////
 		std::vector<float>& getInternalVector();
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Swaps the contents with another Term Object
+		/// @brief Swaps the contents with another Term Object
 		///////////////////////////////////////////////////////////////////////////////////////
 		void swap(Terms& term);
 	private:

@@ -45,19 +45,20 @@
 namespace AuxPort
 {
 	///////////////////////////////////////////////////////////////////////////////////////
-	/// Class : AuxSeries
-	/// This class can be used to express continuous mathematical functions as an infinite series of polynomial terms.
+	/// @brief This class can be used to express continuous mathematical functions as an infinite series of polynomial terms.
 	///////////////////////////////////////////////////////////////////////////////////////
 	class AuxSeries : virtual protected AuxPort::TextFile, protected AuxPort::TextFormat
 	{
 	public:
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// TaylorTerms is a struct that represents a polynomial's exponent and its coefficient.
+		/// @brief TaylorTerms is a struct that represents a polynomial term's exponent and its coefficient.
+		/// ~~~~
 		/// For Example :
-		///
+		/// 	
 		/// TaylorTerms term = {3,2}
-		/// then this represent a polynomial
-		///	y = 2x^3
+		/// 
+		/// Here, term represent a polynomial term: 2x^3
+		/// ~~~~
 		///////////////////////////////////////////////////////////////////////////////////////
 		struct TaylorTerms
 		{
@@ -69,87 +70,89 @@ namespace AuxPort
 		AuxSeries(const AuxSeries& obj) = default;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Type is used to specify the mathematical function, the class should compute the series for.
+		/// @brief Type is used to specify the mathematical function, the class should compute the series for.
 		///////////////////////////////////////////////////////////////////////////////////////
 		enum Type { Sin, Cos, Sinh, Cosh, Tanh, ArcTan, E, NaturalLog, Undefined };
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Computes the Taylor Series terms and returns a vector of those terms
-		/// Parameters:
-		/// N - Number of terms to compute
-		/// type - Type of function for which we need to compute Taylor Teries terms
+		/// @brief Computes the Taylor Series terms and returns a vector of those terms
+		/// @param N Number of terms to compute
+		/// @param type Type of function for which we need to compute Taylor Teries terms
 		///////////////////////////////////////////////////////////////////////////////////////
 		std::vector<TaylorTerms>& getTerms(uint32 N, const Type& type = Type::Sin);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Computes Taylor Series terms and stores them in a vector internally
-		/// Parameters:
-		/// N - Number of terms to compute
-		/// type - Type of function for which we need to compute Taylor Teries terms
+		/// @brief Computes Taylor Series terms and stores them in a vector internally
+		/// @param N Number of terms to compute
+		/// @param type Type of function for which we need to compute Taylor Teries terms
 		///////////////////////////////////////////////////////////////////////////////////////
 		void computeTerms(uint32 N, const Type& type = Type::Sin);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Logs the Taylor Series terms that are present in the internal terms vector.
+		/// @brief Logs the Taylor Series terms that are present in the internal terms vector.
+		/// 
 		/// The terms are logged in the following form :
-		/// f(x) = c1*x^e1 + c2*x^e2 + .........
+		/// ``` f(x) = c1*x^e1 + c2*x^e2 + ......... ```
 		///////////////////////////////////////////////////////////////////////////////////////
 		void Log() override;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Logs information about AuxSeries File which was last opened for read/write operation
+		/// @brief Logs information about AuxSeries File which was last opened for read/write operation
 		///////////////////////////////////////////////////////////////////////////////////////
 		void logFileInfo();
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Writes a computed series into a file.
+		/// @brief Writes a computed series into a file.
 		///////////////////////////////////////////////////////////////////////////////////////
 		void writeSeriesToFile(const std::string& fileName);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Reads the Taylor Series terms from a file and loads them into the internal terms vector
+		/// @brief Reads the Taylor Series terms from a file and loads them into the internal terms vector
 		///////////////////////////////////////////////////////////////////////////////////////
 		void readSeriesFromFile(const std::string& fileName);
 
 	protected:
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Converts the internal enum into a string
+		/// @brief Converts the internal enum into a string
 		///////////////////////////////////////////////////////////////////////////////////////
 		std::string getTypeAsString();
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// A vector which is used to store the computed terms
+		/// @brief A vector which is used to store the computed terms
 		///////////////////////////////////////////////////////////////////////////////////////
 		std::vector<AuxPort::AuxSeries::TaylorTerms> terms;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// It specifies the type of function whose Taylor Series terms are currently stored in internal terms vector
+		/// @brief It specifies the type of function whose Taylor Series terms are currently stored in internal terms vector
 		///////////////////////////////////////////////////////////////////////////////////////
 		Type type;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// This string denoted the type of Taylor Series if it is something other than the defined types
+		/// @brief This string denoted the type of Taylor Series if it is something other than the defined types
 		///////////////////////////////////////////////////////////////////////////////////////
 		std::string undefinedType;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Dummy function for inheriting TextFormat class
+		/// @brief Dummy function for inheriting TextFormat class
 		///////////////////////////////////////////////////////////////////////////////////////
 		void read(std::string& line, int props = 0) override;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Dummy function for inheriting TextFormat class
+		/// @brief Dummy function for inheriting TextFormat class
 		///////////////////////////////////////////////////////////////////////////////////////
 		void write(const std::string& line, int props = 0) override;
 	};
 
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	/// Class that evaluates a function at a given x-value using the taylor series approximation.
-	/// Example usage:
+	/// @brief Class that evaluates a function at a given x-value using the taylor series approximation.
+	/// 
+	/// Example Usage:
+	/// @code
 	/// AuxPort::AuxSeriesEngine series;
 	/// series.computeTerms(5, AuxPort::AuxSeriesEngine::Type::Sin);
 	/// series.computeFunction(0.23f);
+	/// @endcode
 	///////////////////////////////////////////////////////////////////////////////////////
 	class AuxSeriesEngine : public AuxSeries
 	{
@@ -159,7 +162,7 @@ namespace AuxPort
 		AuxSeriesEngine(const AuxSeriesEngine& obj) = default;
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Evaluates a taylor series approxination of the chosen function at a given x-value.
+		/// @brief Evaluates a taylor series approxination of the chosen function at a given x-value.
 		///////////////////////////////////////////////////////////////////////////////////////
 		float computeFunction(float x);
 	};

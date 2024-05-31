@@ -46,22 +46,24 @@ namespace AuxPort
 	namespace Audio
 	{
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Class] Consists of Static Function with various Distortion Algorithms
+		/// @brief Consists of Static Functions with various Distortion Algorithms
 		///////////////////////////////////////////////////////////////////////////////////////
 		class Distortion
 		{
 		public:
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Static Function] This function adds a DC offset to your Audio
+			/// @brief This function adds a DC offset to your Audio
 			///////////////////////////////////////////////////////////////////////////////////////
 			static void DC(AuxPort::Audio::Buffer<float>& buffer, const float& offset);
 
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief This function adds a DC offset to your Audio
+			///////////////////////////////////////////////////////////////////////////////////////
 			static float DC(float& audio, const float& offset, const bool& preserve = true);
 
-
-
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Static Function] This function performs Zero Crossing on the AuxPort::Audio::Buffer
+			/// @brief This function performs Zero Crossing on the AuxPort::Audio::Buffer
+			/// ~~~~
 			///	[Mathematical Formula]
 			///	Let x be the input sample
 			///	Let y be the output sample
@@ -69,50 +71,93 @@ namespace AuxPort
 			///			0 , abs(x) < threshold
 			///			x , else
 			///		}
+			/// ~~~~
 			///////////////////////////////////////////////////////////////////////////////////////
 			static void zeroCrossing(AuxPort::Audio::Buffer<float>& buffer, const float& threshold);
 
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief This function performs Zero Crossing on the given sample
+			/// ~~~~
+			///	[Mathematical Formula]
+			///	Let x be the input sample
+			///	Let y be the output sample
+			///	y = {
+			///			0 , abs(x) < threshold
+			///			x , else
+			///		}
+			/// ~~~~
+			///////////////////////////////////////////////////////////////////////////////////////
 			static float zeroCrossing(float& audio, const float& threshold, const bool& preserve = true);
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Static Function] This function performs ArcTan Distortion on the AuxPort::Audio::Buffer
-			///		[Mathematical Formula]
-			///		Let x be the input sample
-			///		Let y be the output sample
-			///		y = atan(drive*x)
+			/// @brief This function performs ArcTan Distortion on the AuxPort::Audio::Buffer
+			/// ~~~~
+			///	[Mathematical Formula]
+			///	Let x be the input sample
+			///	Let y be the output sample
+			///	y = atan(drive*x)
+			/// ~~~~
 			///////////////////////////////////////////////////////////////////////////////////////
 			static void arcTan(AuxPort::Audio::Buffer<float>& buffer, const float& drive);
 
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief This function performs ArcTan Distortion on the given sample
+			/// ~~~~
+			///	[Mathematical Formula]
+			///	Let x be the input sample
+			///	Let y be the output sample
+			///	y = atan(drive*x)
+			/// ~~~~
+			///////////////////////////////////////////////////////////////////////////////////////
 			static float arcTan(float& audio, const float& drive, const bool& preserve = true);
 
-
-
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Static Function] This function performs ArcTan2 Distortion on the AuxPort::Audio::Buffer
+			/// @brief This function performs ArcTan2 Distortion on the AuxPort::Audio::Buffer
+			/// ~~~~
 			///	[Mathematical Formula]
 			///	Let x be the input sample
 			///	Let y be the output sample
 			///	y = (2/pi) * atan(drive*x)
+			/// ~~~~
 			///////////////////////////////////////////////////////////////////////////////////////
 			static void arcTan2(AuxPort::Audio::Buffer<float>& buffer, const float& drive);
 
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief This function performs ArcTan2 Distortion on the  given sample
+			/// ~~~~
+			///	[Mathematical Formula]
+			///	Let x be the input sample
+			///	Let y be the output sample
+			///	y = (2/pi) * atan(drive*x)
+			/// ~~~~
+			///////////////////////////////////////////////////////////////////////////////////////
 			static float arcTan2(float& audio, const float& drive, const bool& preserve = true);
 
-
-
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Static Function] This function performs Tanh Distortion on the AuxPort::Audio::Buffer
+			/// @brief This function performs Tanh Distortion on the AuxPort::Audio::Buffer
+			/// ~~~~
 			///	[Mathematical Formula]
 			///	Let x be the input sample
 			///	Let y be the output sample
 			///	y = tanh(drive*x)
+			/// ~~~~
 			///////////////////////////////////////////////////////////////////////////////////////
 			static void hyperbolicTan(AuxPort::Audio::Buffer<float>& buffer, const float& drive);
 
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief This function performs Tanh Distortion on the given sample
+			/// ~~~~
+			///	[Mathematical Formula]
+			///	Let x be the input sample
+			///	Let y be the output sample
+			///	y = tanh(drive*x)
+			/// ~~~~
+			///////////////////////////////////////////////////////////////////////////////////////
 			static float hyperbolicTan(float& audio, const float& drive, const bool& preserve);
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Static Function] This function performs Overdrive using Schetzen Soft Clipping Formula
+			/// @brief This function performs Overdrive using Schetzen Soft Clipping Formula
+			/// ~~~~
 			/// [Mathematical Formula]
 			/// Let x be the input sample
 			/// Let y be the output sample
@@ -121,89 +166,105 @@ namespace AuxPort
 			/// 		(3 - (2-3x)^2)/3 , 0.34 < x <= 0.66
 			/// 		1,	0.66 <= x <= 1
 			/// 	}
+			/// ~~~~
 			///////////////////////////////////////////////////////////////////////////////////////
 			static float schetzenOverdrive(float& audio, const bool& preserve = true);
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			///	[Static Function] This functions Distorts the audio signal using an exponential function
+			///	@brief This functions Distorts the audio signal using an exponential function
+			/// ~~~~
 			///	[Mathematical Formula]
 			///	Let x be the input sample
 			///	Let y be the output sample
 			///	y = sgn(x) (1 - exp(-abs(x))
-			///
+			/// ~~~~
 			///	*Great for Generating Odd Harmonics*
 			///////////////////////////////////////////////////////////////////////////////////////
 			static float exponential(float& audio, const bool& preserve = true);
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			///	[Static Function] This functions performs soft clipping distortion on the audio signal
+			///	@brief This functions performs soft clipping distortion on the audio signal
+			/// ~~~~
 			///	[Mathematical Formula]
 			///	Let x be the input sample
 			///	Let y be the output sample
 			///	y = x - 0.34x^3
+			/// ~~~~
 			///////////////////////////////////////////////////////////////////////////////////////
 			static float softClipper(float& audio, const bool& preserve = true);
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			///	[Static Function] This functions distorts the audio signal by altering the bit depth of the signal
+			///	@brief This functions distorts the audio signal by altering the bit depth of the signal
+			/// ~~~~
 			///	[Mathematical Formula]
 			///	Let x = input sample
 			///	Let y = output sample
 			///	quantizationLevel = (2^depth) - 1
+			/// ~~~~
 			///////////////////////////////////////////////////////////////////////////////////////
 			static float crush(float& audio, const float& depth, const bool& preserve = true);
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			///	[Static Function] This functions distorts the audio signal by shaping the signal as a sinusoidal wave
+			///	@brief This functions distorts the audio signal by shaping the signal as a sinusoidal wave
+			/// ~~~~
 			///	[Mathematical Formula]
 			///	Let x = input sample
 			///	Let y = output sample
 			///	y = sin(x);
+			/// ~~~~
 			///////////////////////////////////////////////////////////////////////////////////////
 			static float sinusoidalFold(float& audio, const bool& preserve = true);
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			///	[Static Function] This functions distorts the audio signal by shaping the signal as a square wave
+			///	@brief This functions distorts the audio signal by shaping the signal as a square wave
+			/// ~~~~
 			///	[Mathematical Formula]
 			///	Let x = input sample
 			///	Let y = output sample
 			///	y = {
 			///			x > 0 , 1
 			///			else , -1
-			///	}		
+			///	}	
+			/// ~~~~	
 			///////////////////////////////////////////////////////////////////////////////////////
 			static float squareFold(float& audio, const bool& preserve = true);
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			///	[Static Function] This functions distorts the audio signal by passing the signal through a polynomial approximation of a tanh function
+			///	@brief This functions distorts the audio signal by passing the signal through a polynomial approximation of a tanh function
+			/// ~~~~
 			///	[Mathematical Formula]
 			///	Let x = input sample
 			///	Let y = output sample
 			///	Let z be the intermediate term
 			///	z = x + (0.16489087x^3) + (0.00985468fx^5)
-			///	y = z / sqrt(1 + z^2)
+			///		y = z / sqrt(1 + z^2)
+			/// ~~~~
 			///////////////////////////////////////////////////////////////////////////////////////
 			static float levianTanh(float& audio, const bool& preserve = true);
 
 		};
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		///	[Class] Assymetric Saturator
-		///	Tanh (Positive Phase) and Atan(Negative Phase)
+		///	@brief Assymetric Saturator
+		///	
+		/// Tanh (Positive Phase) and Atan(Negative Phase)
 		///////////////////////////////////////////////////////////////////////////////////////
 		class Assymetric
 		{
 		public:
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief Type of Assymetric Saturator
+			///////////////////////////////////////////////////////////////////////////////////////
 			enum Type
 			{
-				v1,v2
+				v1, v2
 			};
 			Assymetric() = default;
 			~Assymetric() = default;
 			Assymetric(const Assymetric& assym) = default;
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// Processes a single audio sample using the asymmetric saturation algorithm.
+			/// @brief Processes a single audio sample using the asymmetric saturation algorithm.
 			///////////////////////////////////////////////////////////////////////////////////////
 			float process(float sample,float k,float g,Type type);
 		private:

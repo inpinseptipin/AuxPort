@@ -42,74 +42,85 @@
 
 namespace AuxPort
 {
+	///////////////////////////////////////////////////////////////////////////////////////	
+	/// @brief This namespace contains extensions to the AuxPort Library. These extensions are
+	/// wrappers for third-party libraries.
+	///////////////////////////////////////////////////////////////////////////////////////
 	namespace Extensions
 	{
+		///////////////////////////////////////////////////////////////////////////////////////	
+		/// @brief This class provides a C++ wrapper for the curl library
+		///////////////////////////////////////////////////////////////////////////////////////
 		class AuxCurl
 		{
 		public:
 			///////////////////////////////////////////////////////////////////////////////////////	
-			/// [Enum] Specifies the Type of Request to perform
+			/// @brief Specifies the Type of Request to perform
 			///////////////////////////////////////////////////////////////////////////////////////
 			enum RequestType { GET, POST };
 
 			///////////////////////////////////////////////////////////////////////////////////////	
-			/// Initializes the AuxCurl Object
+			/// @brief Initializes the AuxCurl Object
 			///////////////////////////////////////////////////////////////////////////////////////
 			AuxCurl();
 
 			///////////////////////////////////////////////////////////////////////////////////////	
-			/// Destructs and cleans up the AuxCurl Object
+			/// @brief Destructs and cleans up the AuxCurl Object
 			///////////////////////////////////////////////////////////////////////////////////////
 			~AuxCurl();
 
 			///////////////////////////////////////////////////////////////////////////////////////	
-			/// Sets the target URL for the Request
+			/// @brief Sets the target URL for the Request
 			///////////////////////////////////////////////////////////////////////////////////////
 			void setURL(const std::string& URL);
 
 			///////////////////////////////////////////////////////////////////////////////////////	
-			/// Specify the Headers to be passed in the Request.
-			/// A Header added once will be used for all subsequent requests until it is cleared/overwritten.
-			/// When called again, this function simply appends the provided Headers to already specified ones.
-			/// 
-			/// To clear/unset a single header, provide the header name with an empty value.
-			/// To clear all headers at once, consider the clearHeaders() function.
+			/// @brief Specify the Headers to be passed in the Request.
+			/// @note A Header added once will be used for all subsequent requests until it is cleared/overwritten.
+			/// @note To clear/unset a single header, provide the header name with an empty value.
+			/// @note To clear all headers at once, consider the clearHeaders() function.
+			/// @note When called again, this function simply appends the provided Headers to already specified ones.
 			///////////////////////////////////////////////////////////////////////////////////////
 			void addHeaders(const std::vector<AuxPort::StringPair>& headers);
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// Clears all custom provided headers and sets the CURL default Headers
+			/// @brief Clears all custom provided headers and sets the CURL default Headers
 			///////////////////////////////////////////////////////////////////////////////////////
 			void clearHeaders();
 
 			///////////////////////////////////////////////////////////////////////////////////////	
-			/// Sets the HTTP POST Fields. The POST fields are sent exactly as provided 
+			/// @brief Sets the HTTP POST Fields. The POST fields are sent exactly as provided 
 			/// to the function. Also, make sure to set the 'content-type' header 
 			/// corresponding to your postFields.
 			///////////////////////////////////////////////////////////////////////////////////////
 			void setPostFields(const std::string& postFields);
 
 			///////////////////////////////////////////////////////////////////////////////////////	
-			/// Sets a custom handler to handle the Response Data. The passed function/lambda will be called 
-			/// after completion of an request and will receive the Response Data as a string argument.
-			/// You can provide access to local variables using lambda captures.
-			/// 
+			/// @brief Sets a custom handler to handle the Response Data. 
+			///
+			/// @details The passed function/lambda will be called after completion of an request and will 
+			/// receive the Response Data as a string argument. You can provide access to local 
+			/// variables using lambda captures.
 			/// Example Usage:
+			/// @code
 			///	AuxPort::Extensions::AuxCurl obj;
 			///	...
 			///	std::string res;
-			///	obj.setResponseHandler( [&res] (const std::string& responseData) { res = responseData; } );
+			///	obj.setResponseHandler( [&res] (const std::string& responseData) { 
+			///		res = responseData; 
+			///	} );
+			/// @endcode
 			///////////////////////////////////////////////////////////////////////////////////////
 			void setResponseHandler(const std::function<void(const std::string& responseData)>& responseHandler);
 
 			///////////////////////////////////////////////////////////////////////////////////////	
-			/// Sends the request to the target URL and executes the response Handler upon completion
-			/// Returns true if there was no error in the transfer, otherwise false.
+			/// @brief Sends the request to the target URL and executes the response Handler upon completion
+			/// @returns Returns true if there was no error in the transfer, otherwise false.
 			///////////////////////////////////////////////////////////////////////////////////////
 			bool sendRequest(const RequestType& type);
 
 			///////////////////////////////////////////////////////////////////////////////////////	
-			/// Returns the Response Data of the last sent Request as a String Object
+			/// @brief Returns the Response Data of the last sent Request as a String Object
 			///////////////////////////////////////////////////////////////////////////////////////
 			std::string getResponseAsString();
 		private:

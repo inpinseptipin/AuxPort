@@ -48,17 +48,21 @@ namespace AuxPort
 	namespace Audio
 	{
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// [Class] Computes Window functions such as Hann,Hamming,Kaiser.
+		/// @brief Computes Window functions such as Hann,Hamming,Kaiser.
 		///////////////////////////////////////////////////////////////////////////////////////		
 		class Window
 		{
 		public:
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief Specifies the type of window
+			///////////////////////////////////////////////////////////////////////////////////////
 			enum Type
 			{
 				HannWin, HammWin, BlackmanWin, BartlettWin, BartlettHannWin, NuttallWin, FlatWin, BlackmanHarrisWin,RectangleWin
 			};
+
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Samples a Window function and fills it in a memory allocated std::vector
+			/// @brief Samples a Window function and fills it in a memory allocated std::vector
 			///////////////////////////////////////////////////////////////////////////////////////
 			template<class sample>
 			static void generate(std::vector<sample>& windowBuffer, const Type& windowType = Type::HannWin)
@@ -98,8 +102,9 @@ namespace AuxPort
 				}
 				
 			}
+
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Returns a std::vector with a Sampled Window Function
+			/// @brief Returns a std::vector with a Sampled Window Function
 			///////////////////////////////////////////////////////////////////////////////////////
 			template<class sample>
 			static std::vector<sample> generate(size_t windowSize, Type windowType = Type::HannWin)
@@ -168,6 +173,7 @@ namespace AuxPort
 					windowBuffer[i] = val;
 				}
 			}
+			
 			template<class sample>
 			static void Hamming(std::vector<sample>& windowBuffer)
 			{

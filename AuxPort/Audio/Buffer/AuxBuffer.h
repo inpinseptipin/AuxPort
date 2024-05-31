@@ -44,14 +44,14 @@
 namespace AuxPort
 {
 	///////////////////////////////////////////////////////////////////////////////////////
-	///	This namespace consist of classes and functions useful for Audio Programming
+	///	@brief This namespace consist of classes and functions useful for Audio Programming
 	///////////////////////////////////////////////////////////////////////////////////////
 	namespace Audio
 	{
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		///	sample : Template Type used for Generic Audio Buffers
-		///	[Class] Buffer is a Generic Audio Buffer class that is a container for floating or integer type Audio Buffers.
+		///	@brief Buffer is a Generic Audio Buffer class that is a container for floating or integer type Audio Buffers.
+		///	@param sample Template Type used for Generic Audio Buffers
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		class Buffer : public AuxPort::ILog
@@ -59,14 +59,12 @@ namespace AuxPort
 		public:
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Constructor] Initializes the class
-			/// [Version] v1.0 | Alpha
+			/// @brief Initializes the class
 			///////////////////////////////////////////////////////////////////////////////////////
 			Buffer() = default;
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Constructor] Initializes Buffer with an array
-			/// [Version] v1.0 | Alpha
+			/// @brief Initializes Buffer with an array
 			///////////////////////////////////////////////////////////////////////////////////////
 			Buffer(const sample* array, const size_t& size)
 			{
@@ -74,8 +72,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Constructor] Initializes Buffer with an std::vector
-			/// [Version] v1.0 | Alpha
+			/// @brief Initializes Buffer with an std::vector
 			///////////////////////////////////////////////////////////////////////////////////////
 			Buffer(const std::vector<sample>& buffer)
 			{
@@ -83,8 +80,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Constructor] Initializes Buffer with another Buffer
-			/// [Version] v1.0 | Alpha
+			/// @brief Initializes Buffer with another Buffer
 			///////////////////////////////////////////////////////////////////////////////////////
 			Buffer(const Buffer<sample>& newBuffer)
 			{
@@ -92,8 +88,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Destructor] Safely Deallocates memory and destroys the Buffer | v1.0
-			/// [Version] v1.0 | Alpha
+			/// @brief Safely Deallocates memory and destroys the Buffer | v1.0
 			///////////////////////////////////////////////////////////////////////////////////////
 			~Buffer()
 			{
@@ -103,9 +98,8 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Returns a sample value at the provided index on the Buffer.
-			/// [Assertion] Thrown when index provided is greater than size of Buffer
-			/// [Version] v1.0 | Alpha
+			/// @brief Returns a sample value at the provided index on the Buffer.
+			/// @note Assertion: Thrown when index provided is greater than size of Buffer
 			///////////////////////////////////////////////////////////////////////////////////////
 			const sample& get(const size_t& index) const
 			{
@@ -114,9 +108,8 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			///	[Overloaded Operator] Returns a sample value at the provided index on the Buffer.
-			/// [Assertion] Thrown when index provided is greater than size of Buffer
-			/// [Version] v1.0 | Alpha
+			///	@brief Returns a sample value at the provided index on the Buffer.
+			/// @note Assertion: Thrown when index provided is greater than size of Buffer
 			///////////////////////////////////////////////////////////////////////////////////////
 			const sample& operator[](const size_t& index) const
 			{
@@ -124,9 +117,8 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Sets the sample to the specified index
-			/// [Assertion] Exception thrown if index > size of the buffer
-			/// [Version] v1.0 | Alpha
+			/// @brief Sets the sample to the specified index
+			/// @note Assertion: Exception thrown if index > size of the buffer
 			///////////////////////////////////////////////////////////////////////////////////////
 			void set(const sample& value, const size_t& index)
 			{
@@ -135,8 +127,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Replaces the audio buffer with a buffer pointer
-			/// [Version] v1.0 | Alpha
+			/// @brief Replaces the audio buffer with a buffer pointer
 			///////////////////////////////////////////////////////////////////////////////////////
 			void replace(const sample* buffer, const size_t& size)
 			{
@@ -158,8 +149,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			///	[Function] Replaces the audio buffer with a std::vector
-			/// [Version] v1.0 | Alpha
+			///	@brief Replaces the audio buffer with a std::vector
 			///////////////////////////////////////////////////////////////////////////////////////
 			void replace(const std::vector<sample>& buffer)
 			{
@@ -181,8 +171,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Replaces the audio buffer with a std::vector
-			/// [Version] v1.0 | Alpha
+			/// @brief Replaces the audio buffer with a std::vector
 			///////////////////////////////////////////////////////////////////////////////////////
 			void replace(const AuxPort::Audio::Buffer<sample>& buffer)
 			{
@@ -204,8 +193,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Adds a constant to every single value of the Audio Buffer.
-			/// [Version] v1.0 | Alpha
+			/// @brief Adds a constant to every single value of the Audio Buffer.
 			///////////////////////////////////////////////////////////////////////////////////////
 			void add(const sample& value)
 			{
@@ -216,8 +204,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Adds coefficient to the value in the Audio Buffer at the specified "index".
-			/// [Version] v1.0 | Alpha
+			/// @brief Adds coefficient to the value in the Audio Buffer at the specified "index".
 			///////////////////////////////////////////////////////////////////////////////////////
 			void add(const sample& value, size_t index)
 			{
@@ -226,9 +213,8 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Addition of std::vector to the Audio Buffer
-			///[Assertion] size of the std::vector passed should <= size of the audio buffer
-			/// [Version] v1.0 | Alpha
+			/// @brief of std::vector to the Audio Buffer
+			/// @note Assertion: Size of the std::vector passed should <= size of the audio buffer
 			///////////////////////////////////////////////////////////////////////////////////////
 			void add(const std::vector<sample>& buffer)
 			{
@@ -238,9 +224,8 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Addition of values in a C-Style array to the Audio Buffer
-			/// [Assertion] Size of the C-Style buffer passed should <= size of the audio buffer
-			/// [Version] v1.0 | Alpha
+			/// @brief Addition of values in a C-Style array to the Audio Buffer
+			/// @note Assertion: Size of the C-Style buffer passed should <= size of the audio buffer
 			///////////////////////////////////////////////////////////////////////////////////////
 			void add(sample* buffer, const size_t& size)
 			{
@@ -248,10 +233,10 @@ namespace AuxPort
 				for (uint32_t i = 0; i < size; i++)
 					_buffer[i] += buffer[i];
 			}
+
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Addition of Two Audio Buffers
-			/// [Assertion] Size of the Buffer passed should <= Size of the meta buffer 
-			/// [Version] v1.0 | Alpha
+			/// @brief Addition of Two Audio Buffers
+			/// @note Assertion: Size of the Buffer passed should <= Size of the meta buffer 
 			///////////////////////////////////////////////////////////////////////////////////////
 			void add(const AuxPort::Audio::Buffer<sample>& buffer)
 			{
@@ -261,8 +246,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Multiplies coefficient to every single value of the Audio Buffer.
-			/// [Version] v1.0 | Alpha
+			/// @brief Multiplies coefficient to every single value of the Audio Buffer.
 			///////////////////////////////////////////////////////////////////////////////////////
 			void multiply(const sample& value)
 			{
@@ -271,9 +255,9 @@ namespace AuxPort
 					_buffer[i] *= value;
 				}
 			}
+
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Multiplies coefficient to the value in the Audio Buffer at the specified "index".
-			/// [Version] v1.0 | Alpha
+			/// @brief Multiplies coefficient to the value in the Audio Buffer at the specified "index".
 			///////////////////////////////////////////////////////////////////////////////////////
 			void multiply(const sample& value, const size_t& index)
 			{
@@ -282,8 +266,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Divides coefficient from every single value of the Audio Buffer.
-			/// [Version] v1.0 | Alpha
+			/// @brief Divides coefficient from every single value of the Audio Buffer.
 			///////////////////////////////////////////////////////////////////////////////////////
 			void divide(const sample& value)
 			{
@@ -293,8 +276,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Performs division between the value in the Audio Buffer at the specified "index" and the "value" passed.
-			/// [Version] v1.0 | Alpha
+			/// @brief Performs division between the value in the Audio Buffer at the specified "index" and the "value" passed.
 			///////////////////////////////////////////////////////////////////////////////////////
 			void divide(const sample& value, const size_t& index)
 			{
@@ -304,8 +286,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Subtracts coefficient from every single value of the Audio Buffer.
-			/// [Version] v1.0 | Alpha
+			/// @brief Subtracts coefficient from every single value of the Audio Buffer.
 			///////////////////////////////////////////////////////////////////////////////////////
 			void subtract(const sample& value)
 			{
@@ -316,8 +297,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Performs subtraction between the value in the Audio Buffer at the specified "index" and the "value" passed.
-			/// [Version] v1.0 | Alpha
+			/// @brief Performs subtraction between the value in the Audio Buffer at the specified "index" and the "value" passed.
 			///////////////////////////////////////////////////////////////////////////////////////
 			void subtract(const sample& value, size_t index)
 			{
@@ -325,8 +305,7 @@ namespace AuxPort
 				_buffer[index] -= value;
 			}
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Resizes the audio buffer to the size given in the argument
-			/// [Version] v1.0 | Alpha
+			/// @brief Resizes the audio buffer to the size given in the argument
 			///////////////////////////////////////////////////////////////////////////////////////
 			void resize(const size_t& size)
 			{
@@ -339,8 +318,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Calculates the RMS in Linear/dbFS
-			/// [Version] v1.0 | Alpha
+			/// @brief Calculates the RMS in Linear/dbFS
 			///////////////////////////////////////////////////////////////////////////////////////
 			double getRMS(bool dBFS = true) const
 			{
@@ -354,8 +332,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Returns Size of Buffer
-			/// [Version] v1.0 | Alpha
+			/// @brief Returns Size of Buffer
 			///////////////////////////////////////////////////////////////////////////////////////
 			size_t size() const
 			{
@@ -363,8 +340,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Overloaded ostream operator, u can use std::cout to call AuxPort::Logger::Log()
-			/// [Version] v1.0 | Alpha
+			/// @brief Overloaded ostream operator, u can use std::cout to call AuxPort::Logger::Log()
 			///////////////////////////////////////////////////////////////////////////////////////
 			friend std::ostream& operator << (std::ostream& out, const Buffer<sample>& buffer)
 			{
@@ -391,8 +367,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Overloaded AuxPort::ILog::Log
-			/// [Version] v1.0 | Alpha
+			/// @brief Overloaded AuxPort::ILog::Log
 			///////////////////////////////////////////////////////////////////////////////////////
 			void Log() override
 			{
@@ -402,8 +377,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Overloaded Assignment Operator
-			/// [Version] v1.0 | Alpha
+			/// @brief Overloaded Assignment Operator
 			///////////////////////////////////////////////////////////////////////////////////////
 			void operator = (const Buffer<sample>& buffer)
 			{
@@ -411,8 +385,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Overloaded Assignment Operator
-			/// [Version] v1.0 | Alpha
+			/// @brief Overloaded Assignment Operator
 			///////////////////////////////////////////////////////////////////////////////////////
 			void operator = (const std::vector<sample>& buffer)
 			{
@@ -420,7 +393,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Checks if two Audio Buffers have equal values
+			/// @brief Checks if two Audio Buffers have equal values
 			///////////////////////////////////////////////////////////////////////////////////////
 			bool operator == (const Buffer<sample>& buffer) const
 			{
@@ -435,7 +408,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Zero Pad an Audio Buffer
+			/// @brief Zero Pad an Audio Buffer
 			///////////////////////////////////////////////////////////////////////////////////////
 			void zeroPad(size_t startIndex, size_t endIndex)
 			{
@@ -446,7 +419,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Extract a Sub Buffer from an Audio Buffer
+			/// @brief Extract a Sub Buffer from an Audio Buffer
 			///////////////////////////////////////////////////////////////////////////////////////
 			void subBuffer(AuxPort::Audio::Buffer<sample>& subBuffer, const size_t& startIndex, const size_t& endIndex)
 			{
@@ -462,7 +435,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			///	[Function] Averages the Audio buffer
+			///	@brief Averages the Audio buffer
 			///////////////////////////////////////////////////////////////////////////////////////
 			double mean()
 			{
@@ -471,7 +444,7 @@ namespace AuxPort
 		private:
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Accumulator
+			/// @brief Returns the accumulation(sum) of all buffer samples
 			///////////////////////////////////////////////////////////////////////////////////////
 			double accumulate()
 			{
@@ -484,7 +457,7 @@ namespace AuxPort
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// [Function] Adds a value to the end of Buffer.
+			/// @brief Adds a value to the end of Buffer.
 			///////////////////////////////////////////////////////////////////////////////////////
 			void pushBack(const sample& value, const bool& wrapAround = false)
 			{

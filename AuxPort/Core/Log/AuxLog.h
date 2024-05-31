@@ -50,23 +50,13 @@
 namespace AuxPort
 {
 	///////////////////////////////////////////////////////////////////////////////////////            
-	/// This is a Console Logging module, it can be used to log any debug messages that you may encounter
-	/// in your application. It consists of an interface that allows you to log onto the console.
-	/// 
-	/// Eg: AuxPort::Logger::Log("message")
-	/// 
-	/// It also consists of Logging directives such as Info, Warning, Error, Success which are implemented in
-	/// the form of interfaces.
-	///////////////////////////////////////////////////////////////////////////////////////            
-
-	///////////////////////////////////////////////////////////////////////////////////////            
-	/// [Class] Provides functionality to get current system time
+	/// @brief Provides functionality to get current system time
 	///////////////////////////////////////////////////////////////////////////////////////            
 	class Time
 	{
 	public:
 		///////////////////////////////////////////////////////////////////////////////////////            
-		/// TimeType is a type that can be used to set Formatting rules for the values returned by getCurrentTime() function
+		/// @brief TimeType is a type that can be used to set Formatting rules for the values returned by getCurrentTime() function
 		///////////////////////////////////////////////////////////////////////////////////////            
 		enum TimeType
 		{
@@ -78,22 +68,14 @@ namespace AuxPort
 		};
 
 		///////////////////////////////////////////////////////////////////////////////////////  
-		///	[Static]
-		/// This function is used to get current system time and returns the time typecasted into std::string.
-		/// Parameters
-		///	TimeType : TimeType is a type that can be used to set Formatting rules for the values returned by getCurrentTime() function
+		/// @brief This function is used to get current system time and returns the time typecasted into std::string.
+		/// @param timeType TimeType is a type that can be used to set Formatting rules for the values returned by getCurrentTime() function
 		///////////////////////////////////////////////////////////////////////////////////////  
 		static std::string getCurrentTime(const TimeType& timeType);
 	};
 
-
-
 	///////////////////////////////////////////////////////////////////////////////////////  
-	///	LogType is an enumerator that allows you to choose between 4 different Logging Directives.
-	///	Success
-	///	Warning
-	///	Info
-	///	Error
+	///	@brief LogType is an enumerator that allows you to choose between different Logging Directives.
 	///////////////////////////////////////////////////////////////////////////////////////  
 	enum class LogType
 	{
@@ -103,7 +85,8 @@ namespace AuxPort
 		Error = 0x34
 	};
 
-	///////////////////////////////////////////////////////////////////////////////////////  
+	///////////////////////////////////////////////////////////////////////////////////////
+	/// @cond  
 	///				Colour Codes for Windows
 	///		1	0x0001	Blue	|	9	0x0009	Light Blue
 	/// 	2	0x0002	Green	|	0	0x0000	Black
@@ -113,10 +96,11 @@ namespace AuxPort
 	/// 	6	0x0006	Yellow	|	D	0x000D	Light Purple
 	/// 	7	0x0007	White	|	E	0x000E	Light Yellow
 	/// 	8	0x0008	Gray	|	F	0x000F	Bright White
+	/// @endcond
 	///////////////////////////////////////////////////////////////////////////////////////  
 
 	///////////////////////////////////////////////////////////////////////////////////////  
-	///	ColorType, Use this type to select text colour for Logging.
+	///	@brief Use this to select text colour for Logging.
 	///////////////////////////////////////////////////////////////////////////////////////  
 	enum class ColourType  
 	{
@@ -158,18 +142,24 @@ namespace AuxPort
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////  
-	/// The Logger class provides static interfaces to allow the end user to log their messages on the console.
+	/// @brief This class provides static interfaces to allow the end user to log their messages on the console.
+	/// 
+	/// @details It also consists of Logging directives such as Info, Warning, Error, Success which are implemented in
+	/// the form of interfaces.
+	/// 
+	/// Example:
+	/// @code AuxPort::Logger::Log("message"); @endcode
+	///////////////////////////////////////////////////////////////////////////////////////   
 	///////////////////////////////////////////////////////////////////////////////////////  
 	class Logger
 	{
 	public:
 		///////////////////////////////////////////////////////////////////////////////////////  
-		/// Log is a function that allows you to log "string" messages on the console.
-		/// Parameters
-		/// std::string
-		/// LogType : This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
-		/// ColourType : Allows you to choose the colour of your logged message (Support only for Windows 16 bit Colours)
-		/// TimeType : Allows you to choose between different date or time stamps for the logged messages.
+		/// @brief Log is a function that allows you to log "string" messages on the console.
+		/// @param message Message to be logged
+		/// @param logType This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
+		/// @param colourType Allows you to choose the colour of your logged message
+		/// @param timeType Allows you to choose between different date or time stamps for the logged messages.
 		///////////////////////////////////////////////////////////////////////////////////////  
 		template<class T>
 		static void Log(const T& message, const LogType& logType = LogType::Info, const ColourType& colourType = ColourType::White,const AuxPort::Time::TimeType& timeType = AuxPort::Time::TimeType::time)
@@ -180,12 +170,11 @@ namespace AuxPort
 		}
 		
 		///////////////////////////////////////////////////////////////////////////////////////  
-		/// Log is a function that allows you to log "string" messages on the console.
-		/// Parameters
-		/// Vector of std::string
-		/// LogType : This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
-		/// ColourType : Allows you to choose the colour of your logged message (Support only for Windows 16 bit Colours)
-		/// TimeType : Allows you to choose between different date or time stamps for the logged messages.
+		/// @brief Log is a function that allows you to log "string" messages on the console.
+		/// @param messages Messages to be logged
+		/// @param logType This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
+		/// @param colourType Allows you to choose the colour of your logged message
+		/// @param timeType Allows you to choose between different date or time stamps for the logged messages.
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class T>
 		static void Log(const std::vector<T>& messages, const LogType& logType = LogType::Info, const ColourType& colourType = ColourType::White, const AuxPort::Time::TimeType& timeType = AuxPort::Time::TimeType::time)
@@ -201,18 +190,16 @@ namespace AuxPort
 	private:
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// This function allows you to set text colour for the text to be printed onto the console.
-		/// Parameters
-		///	ColourType : Allows you to choose the colour of your logged message (Support only for Windows 16 bit Colours)
+		/// @brief This function allows you to set text colour for the text to be printed onto the console.
+		/// @param colourType Allows you to choose the colour of your logged message
 		///////////////////////////////////////////////////////////////////////////////////////
 		static void setColour(const ColourType& colourType);
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// This Function logs the messages onto the console, can only be called through public interfaces provided by the Class.
-		/// Parameters
-		/// std::string : 
-		/// LogType : This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
-		/// <parameter type> : <parameter function>
+		/// @brief This Function logs the messages onto the console, can only be called through public interfaces provided by the Class.
+		/// @param message Message to be logged
+		/// @param logType This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
+		/// @param timeType Allows you to choose between different date or time stamps for the logged messages.
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class T>
 		static void logMessage(const T& message,const LogType& logType,const AuxPort::Time::TimeType& timeType)
@@ -220,25 +207,28 @@ namespace AuxPort
 			std::cout << getMessageFormat(logType) <<" | "<<Time::getCurrentTime(timeType) << " | " << message << "\n";
 		}
 
-		
-		
-
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// Gets preformatted messages for the corrossponding log type.
-		/// Parameters
-		/// LogType : This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
-		/// ColourType : Allows you to choose the colour of your logged message (Support only for Windows 16 bit Colours)
+		/// @brief Gets preformatted messages for the corrossponding log type.
+		/// @param logType This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
 		///////////////////////////////////////////////////////////////////////////////////////
 		static std::string getMessageFormat(const LogType& logType);
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	/// [Absract Class] This class provides an inheritable interface to implement logging functionality in the derived classes
+	/// @brief This class provides an inheritable interface to implement logging functionality in the derived classes
 	///////////////////////////////////////////////////////////////////////////////////////
 	class ILog
 	{
 	protected:
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief This function allows you to set text colour for the text to be printed onto the console.
+		/// @param colourType Allows you to choose the colour of your logged message
+		///////////////////////////////////////////////////////////////////////////////////////
 		void setColour(const ColourType& colourType);
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Implement this method in the derived class to specify logging behaviour
+		///////////////////////////////////////////////////////////////////////////////////////
 		virtual void Log();
 	};
 }
