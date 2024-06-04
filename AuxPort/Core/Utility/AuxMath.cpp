@@ -42,13 +42,17 @@ float AuxPort::Interpolation::polate(float val)
 		return cubicInterpolate(val);
 	case Type::Lagrange:
 		return lagrangeInterpolate(val);
+	case Type::Cosine:
+		return cosineInterpolate(val);
+	case Type::Newton:
+		return newtonInterpolate(val);
 	}
 }
 
 float AuxPort::Interpolation::linearInterpolate(float val)
 {
+	AuxAssert(val >= startX && val <= endX, "Given val should lie in the range [start, end]!");
 	size_t index = findIndex(val);
-	AuxAssert(index < yValues.size() - 1, "Given val should lie between two defined xValues!");
 	
 	float x0 = startX + index * delta;
 	float x1 = x0 + delta;
@@ -60,8 +64,8 @@ float AuxPort::Interpolation::linearInterpolate(float val)
 
 float AuxPort::Interpolation::cubicInterpolate(float val)
 {
+	AuxAssert(val >= startX && val <= endX, "Given val should lie in the range [start, end]!");
 	size_t index = findIndex(val);
-	AuxAssert(index < yValues.size() - 1, "Given val should lie between two defined xValues!");
 
 	float x1 = startX + index * delta;
 	float x2 = x1 + delta;
@@ -80,8 +84,23 @@ float AuxPort::Interpolation::cubicInterpolate(float val)
 	float d = y1;
 
 	// Normalized val between x1 and x2
-	float nVal = (val - x1) / (x2 - x1);
+	float nVal = (val - x1) / delta;
 	return a * nVal * nVal * nVal + b * nVal * nVal + c * nVal + d;
+}
+
+float AuxPort::Interpolation::cosineInterpolate(float val)
+{
+	AuxAssert(val >= startX && val <= endX, "Given val should lie in the range [start, end]!");
+	size_t index = findIndex(val);
+
+	float x0 = startX + index * delta;
+	float y0 = yValues[index];
+	float y1 = yValues[index + 1];
+
+	// Normalized between x0 and x1
+	float mu = (val - x0) / delta;
+	float mu2 = (1 - cos(mu * AuxPort::pi)) / 2;
+	return y0 * (1 - mu2) + y1 * mu2;
 }
 
 float AuxPort::Interpolation::lagrangeInterpolate(float val)
@@ -103,8 +122,33 @@ float AuxPort::Interpolation::lagrangeInterpolate(float val)
 				currTerm *= (val - currX) / (xi - currX);
 			currX += delta;
 		}
-		
 		res += currTerm;
+		xi += delta;
+	}
+
+	return res;
+}
+
+float AuxPort::Interpolation::newtonInterpolate(float val)
+{
+	AuxAssert(val >= startX && val <= endX, "Given val should lie in the range [start, end]!");
+
+	std::vector<float> dividedDifferences = yValues;
+	for (int i = 1; i < dividedDifferences.size(); i++)
+	{
+		for (int j = dividedDifferences.size() - 1; j >= i; j--)
+		{
+			dividedDifferences[j] = (dividedDifferences[j] - dividedDifferences[j - 1]) / (i * delta);
+		}
+	}
+
+	float res = dividedDifferences[0];
+	float factor = 1.0f;
+	float xi = startX;
+	for (int i = 1; i < dividedDifferences.size(); i++)
+	{
+		factor *= (val - xi);
+		res += dividedDifferences[i] * factor;
 		xi += delta;
 	}
 
@@ -113,5 +157,7 @@ float AuxPort::Interpolation::lagrangeInterpolate(float val)
 
 size_t AuxPort::Interpolation::findIndex(float xVal)
 {
-	return (xVal - startX) / delta;
+	size_t index = (xVal - startX) / delta;
+	AuxAssert(index < yValues.size() - 1 && index >= 0, "Given val should lie between two defined xValues!");
+	return index;
 }

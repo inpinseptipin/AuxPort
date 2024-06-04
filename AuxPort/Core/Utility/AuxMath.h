@@ -41,6 +41,7 @@
 #include <complex>
 #include <cmath>
 #include "../Env/AuxEnv.h"
+#include "AuxUtility.h"
 
 namespace AuxPort
 {
@@ -114,7 +115,7 @@ namespace AuxPort
 	class Interpolation
 	{
 	public:
-		enum class Type { Linear, Cubic, Lagrange };
+		enum class Type { Linear, Cubic, Cosine, Lagrange, Newton };
 		Interpolation();
 		~Interpolation() = default;
 		Interpolation(const Interpolation& interpolation) = default;
@@ -131,7 +132,9 @@ namespace AuxPort
 
 		float linearInterpolate(float val);
 		float cubicInterpolate(float val);
+		float cosineInterpolate(float val);
 		float lagrangeInterpolate(float val);
+		float newtonInterpolate(float val);
 		size_t findIndex(float xVal);
 	};
 }
