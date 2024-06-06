@@ -137,6 +137,18 @@ namespace AuxPort
 		float newtonInterpolate(float val);
 		size_t findIndex(float xVal);
 	};
+
+	class FastRandomFloat
+	{
+	public:
+		FastRandomFloat();
+		FastRandomFloat(const int& randomSeed);
+		FastRandomFloat(const FastRandomFloat& random) = default;
+		float getRandomFloat();
+		float getRandomFloat(float start, float end);
+	private:
+		int randomSeed;
+	};
 }
 
 #endif

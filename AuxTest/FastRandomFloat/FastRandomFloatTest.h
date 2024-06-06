@@ -1,14 +1,12 @@
-#ifndef AUXTEST_H
-#define AUXTEST_H
-
-
+#ifndef AUXTEST_FASTRANDOMFLOAT_H
+#define AUXTEST_FASTRANDOMFLOAT_H
 /*
-*			AuxTest
-			"Test Test Test" - inpinseptipin
+			AuxPort Library
+			"Generic Modules to facilitate C++ Windows Application development" - inpinseptipin
 
 			BSD 3-Clause License
 
-			Copyright (c) 2023, Satyarth Arora
+			Copyright (c) 2020, Satyarth Arora
 			All rights reserved.
 
 			Redistribution and use in source and binary forms, with or without
@@ -37,21 +35,27 @@
 			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
+/*===================================================================================*/
+
+#include "../../AuxPort/AuxPort.h"
+#include "../AuxTest.h"
 
 /*===================================================================================*/
-#include "../AuxPort/AuxPort.h"
-#include "String/AuxStringTest.h"
-#include "FFT/AuxFFTTest.h"
-#include "Interpolation/AuxInterpolationTest.h"
-#include "FastRandomFloat/FastRandomFloatTest.h"
+
 namespace AuxTest
 {
-	enum class UnitTest
+	namespace UnitTests
 	{
-		String, Time
-	};
-	extern std::vector<AuxPort::Case> testcases;
-	void addTestCase(std::vector<AuxPort::Case>& testcases, const std::string& testId, const std::string& testName, std::function<bool(const std::vector<std::string>&)> testCase);
-	void runTestCases(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& commands);
+		namespace FastRandomFloat
+		{
+			void init(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& initCommands);
+			void addRangeTests(std::vector<AuxPort::Case>& testcases);
+			void addRandomnessTests(std::vector<AuxPort::Case>& testcases);
+			bool chiSquareTest(int interationCount, uint32 bucketCount, float chiSquareCriticalValue);
+			bool chiSquareTest(float start, float end, int interationCount, uint32 bucketCount, float chiSquareCriticalValue);
+		}
+	}
 }
+
+
 #endif

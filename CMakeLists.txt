@@ -45,6 +45,8 @@ add_executable(
 	AuxTest/FFT/AuxFFTTest.cpp
         AuxTest/Interpolation/AuxInterpolationTest.h
 	AuxTest/Interpolation/AuxInterpolationTest.cpp
+	AuxTest/FastRandomFloat/FastRandomFloatTest.h
+	AuxTest/FastRandomFloat/FastRandomFloatTest.cpp
 	AuxTest/AuxTest.h
 	AuxTest/AuxTest.cpp	
 	AuxPort/AuxPort.h
