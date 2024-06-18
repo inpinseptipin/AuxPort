@@ -51,6 +51,7 @@
 #include "Core/Utility/AuxPascal.h"
 #include "Core/TestCase/AuxCase.h"
 #include "Core/SIMD/AuxSimd.h"
+#include "Core/Crypto/AuxCrypto.h"
 
 
 /*
