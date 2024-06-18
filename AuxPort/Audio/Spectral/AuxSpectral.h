@@ -39,6 +39,7 @@
 /*===================================================================================*/
 #include "../FFT/AuxFFT.h"
 #include "../../Core/Utility/AuxUtility.h"
+#include "../Windows/AuxWindow.h"
 
 namespace AuxPort
 {
