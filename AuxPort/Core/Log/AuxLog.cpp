@@ -70,6 +70,8 @@ namespace AuxPort
 		return returnTime;
 	}
 
+
+
 	void Logger::setColour(const ColourType& colourType)
 	{
 #ifdef AUXPORT_WINDOWS

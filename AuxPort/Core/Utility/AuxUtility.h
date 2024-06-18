@@ -56,6 +56,7 @@ namespace AuxPort
 	class Utility
 	{
 	public:
+		
 #ifdef AUXPORT_64	
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Calculates the number of digits present in an integer.		
@@ -199,11 +200,12 @@ namespace AuxPort
 		template<class sample>
 		static inline std::vector<sample> generateRandomValues(size_t size, float rangeStart = -1.0, float rangeEnd = 1.0)
 		{
+			std::vector<sample> vec;
+			vec.resize(size);
+			
 			std::random_device rd;
 			std::mt19937 gen(rd());
 			std::uniform_real_distribution<> distr(rangeStart, rangeEnd);
-			std::vector<sample> vec;
-			vec.resize(size);
 			for (uint32_t i = 0; i < vec.size(); i++)
 				vec[i] = distr(gen);
 			return vec;
@@ -413,6 +415,19 @@ namespace AuxPort
 	private:
 		std::vector<float> termPowers;
 	};
+
+	class FastRandomFloat
+	{
+	public:
+		FastRandomFloat();
+		FastRandomFloat(const int& randomSeed);
+		FastRandomFloat(const FastRandomFloat& random) = default;
+		float getRandomFloat();
+		float getRandomFloat(float start, float end);
+	private:
+		int randomSeed;
+	};
+
 }
 #endif
 
