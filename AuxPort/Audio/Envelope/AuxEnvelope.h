@@ -36,8 +36,8 @@
 
 */
 
-#include "../../AuxPort/AuxPort/Audio/FFT/AuxFFT.h"
-#include "../../AuxPort/AuxPort/Audio/Spectral/AuxSpectral.h"
+#include "../FFT/AuxFFT.h"
+#include "../Spectral/AuxSpectral.h"
 
 namespace AuxPort
 {

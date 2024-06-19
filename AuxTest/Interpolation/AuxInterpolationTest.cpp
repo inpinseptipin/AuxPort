@@ -269,7 +269,7 @@ bool AuxTest::UnitTests::Interpolation::testInterpolation(std::function<float(fl
 	expectedValues.reserve(testValuesCount);
 	for (float val = startTestValue; val < end; val += delta)
 	{
-		interpolatedValues.push_back(interpolation.polate(val));
+		interpolatedValues.push_back(interpolation.interpolate(val));
 		expectedValues.push_back(testFunction(val));
 	}
 

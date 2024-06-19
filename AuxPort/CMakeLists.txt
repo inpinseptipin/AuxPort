@@ -78,6 +78,8 @@ add_library(
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Oscillators/AuxOscillator.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Envelope/AuxEnvelope.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Envelope/AuxEnvelope.cpp
+    ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Interpolation/AuxInterpolation.h
+    ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Interpolation/AuxInterpolation.cpp
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Compressor/AuxCompressor.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Audio/Spectral/AuxSpectral.h
     ${AuxTest_SOURCE_DIR}/AuxPort/Core/Crypto/AuxCrypto.h

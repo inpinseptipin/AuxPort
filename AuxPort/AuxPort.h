@@ -66,6 +66,8 @@
 #include "Audio/Oscillators/AuxOscillator.h"
 #include "Audio/Compressor/AuxCompressor.h"
 #include "Audio/Spectral/AuxSpectral.h"
+#include "Audio/Envelope/AuxEnvelope.h"
+#include "Audio/Interpolation/AuxInterpolation.h"
 
 
 

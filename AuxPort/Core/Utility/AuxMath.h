@@ -38,9 +38,7 @@
 
 /*===================================================================================*/
 #include <vector>
-#include <complex>
 #include <cmath>
-#include "../Env/AuxEnv.h"
 #include "AuxUtility.h"
 
 namespace AuxPort
@@ -110,32 +108,6 @@ namespace AuxPort
 		}
 	private:
 		Type type;
-	};
-
-	class Interpolation
-	{
-	public:
-		enum class Type { Linear, Cubic, Cosine, Lagrange, Newton };
-		Interpolation();
-		~Interpolation() = default;
-		Interpolation(const Interpolation& interpolation) = default;
-		void setType(Type type);
-		void setXValues(float start, float end, float delta);
-		void setYValues(const std::vector<float> yValues);
-		float polate(float val);
-	private:
-		Type type;
-		float delta;
-		float startX, endX;
-		size_t valuesCount;
-		std::vector<float> yValues;
-
-		float linearInterpolate(float val);
-		float cubicInterpolate(float val);
-		float cosineInterpolate(float val);
-		float lagrangeInterpolate(float val);
-		float newtonInterpolate(float val);
-		size_t findIndex(float xVal);
 	};
 
 	class FastRandomFloat
