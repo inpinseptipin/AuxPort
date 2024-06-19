@@ -48,12 +48,15 @@ namespace AuxTest
 	{
 		namespace Interpolation
 		{
+			enum class InterpolatorType {Linear, Cubic, Cosine, Lagrange, Newton};
+			enum class TestFunctionType {Sin, Linear, Quadratic, Cubic};
 			void init(std::vector<AuxPort::Case>& testcases, const std::vector<std::string>& initCommands);
-			void addSinTests(std::vector<AuxPort::Case>& testcases);
-			void addLinearTests(std::vector<AuxPort::Case>& testcases);
-			void addQuadraticTests(std::vector<AuxPort::Case>& testcases);
-			void addCubicTests(std::vector<AuxPort::Case>& testcases);
-			bool testInterpolation(std::function<float(float)> testFunction, const AuxPort::Interpolation::Type& type, const std::vector<std::string>& commands);
+			void addLinearInterpolatorTests(std::vector<AuxPort::Case>& testcases);
+			void addCubicInterpolatorTests(std::vector<AuxPort::Case>& testcases);
+			void addCosineInterpolatorTests(std::vector<AuxPort::Case>& testcases);
+			void addLagrangeInterpolatorTests(std::vector<AuxPort::Case>& testcases);
+			void addNewtonInterpolatorTests(std::vector<AuxPort::Case>& testcases);
+			bool testInterpolator(const InterpolatorType& interpolatorType, const TestFunctionType& testFuncType, const std::vector<std::string>& commands);
 		}
 	}
 }

@@ -1,71 +1,31 @@
 #include "AuxInterpolation.h"
 
-AuxPort::Interpolation::Interpolation()
+AuxPort::Interpolator::Interpolator(size_t bufferSize) : bufferSize(bufferSize), circularBuffer(bufferSize)
 {
-	this->type = Type::Linear;
-	valuesCount = 0;
 }
 
-void AuxPort::Interpolation::setType(Type type)
+void AuxPort::Interpolator::generateXYVectors(std::vector<float>& xValues, std::vector<float>& yValues, float currSample)
 {
-	this->type = type;
-}
-
-void AuxPort::Interpolation::setXValues(float start, float end, float delta)
-{
-	AuxAssert(start < end, "Start should be less than end!");
-	AuxAssert(delta > 0, "Delta should be positive (greater than 0)!");
-	AuxAssert(end >= start + delta, "There should be atleast 2 values for interpolation!");
-	this->valuesCount = (end - start) / delta + 1;
-	xValues.reserve(valuesCount);
-	for (float currVal = start; currVal <= end; currVal += delta)
-		xValues.push_back(currVal);
-}
-
-void AuxPort::Interpolation::setXValues(const std::vector<float> xValues)
-{
-	this->xValues = xValues;
-	valuesCount = xValues.size();
-	std::sort((this->xValues).begin(), (this->xValues).end());
-}
-
-void AuxPort::Interpolation::setYValues(const std::vector<float> yValues)
-{
-	AuxAssert(valuesCount != 0, "No xValues provided. Call setXValues() first!");
-	AuxAssert(yValues.size() == valuesCount, "Number of yValues must be equal to number of xValues!");
-	this->yValues = yValues;
-}
-
-float AuxPort::Interpolation::interpolate(float val)
-{
-	AuxAssert(valuesCount != 0, "No xValues provided. Call setXValues() first!");
-	AuxAssert(yValues.size() == valuesCount, "Number of yValues must be equal to number of xValues!");
-	AuxAssert(val >= xValues.front() && val <= xValues.back(), "val should lie within the provided Xvalues!");
-	switch (type)
+	xValues.reserve(bufferSize + 1);
+	yValues.reserve(bufferSize + 1);
+	for (size_t i = 0; i < bufferSize; i++)
 	{
-	case Type::Linear:
-		return _interpolateLinear(val);
-	case Type::Cubic:
-		return _interpolateCubic(val);
-	case Type::Lagrange:
-		return _interpolateLagrange(val);
-	case Type::Cosine:
-		return _interpolateCosine(val);
-	case Type::Newton:
-		return _interpolateNewton(val);
+		xValues.push_back(i);
+		yValues.push_back(circularBuffer.getShiftedElement(i));
 	}
+	xValues.push_back(bufferSize);
+	yValues.push_back(currSample);
 }
 
-float AuxPort::Interpolation::linearInterpolate(float x0, float y0, float x1, float y1, float x)
+float AuxPort::Interpolator::linearInterpolate(float x0, float y0, float x1, float y1, float x)
 {
 	AuxAssert(x >= x0 && x <= x1, "x should lie in the range [x0, x1]");
 	return y0 + (x - x0) * (y1 - y0) / (x1 - x0);;
 }
 
-float AuxPort::Interpolation::cubicInterpolate(const std::vector<float>& xValues, const std::vector<float>& yValues, float x)
+float AuxPort::Interpolator::cubicInterpolate(const std::vector<float>& xValues, const std::vector<float>& yValues, float x)
 {
 	AuxAssert(xValues.size() == 4 && yValues.size() == 4, "xValues and yValues should have size 4!");
-	AuxAssert(x >= xValues[1] && x <= xValues[2], "x should lie in the range [x1, x2]");
 
 	// Finding coefficients of cubic polynomial curve between x1 and x2
 	float a = (-yValues[0] + 3 * yValues[1] - 3 * yValues[2] + yValues[3]) / 2;
@@ -78,7 +38,7 @@ float AuxPort::Interpolation::cubicInterpolate(const std::vector<float>& xValues
 	return a * nVal * nVal * nVal + b * nVal * nVal + c * nVal + d;
 }
 
-float AuxPort::Interpolation::cosineInterpolate(float x0, float y0, float x1, float y1, float x)
+float AuxPort::Interpolator::cosineInterpolate(float x0, float y0, float x1, float y1, float x)
 {
 	AuxAssert(x >= x0 && x <= x1, "x should lie in the range [x0, x1]");
 	float mu = (x - x0) / (x1 - x0);
@@ -86,7 +46,7 @@ float AuxPort::Interpolation::cosineInterpolate(float x0, float y0, float x1, fl
 	return y0 * (1 - mu2) + y1 * mu2;
 }
 
-float AuxPort::Interpolation::lagrangeInterpolate(const std::vector<float>& xValues, const std::vector<float>& yValues, float x)
+float AuxPort::Interpolator::lagrangeInterpolate(const std::vector<float>& xValues, const std::vector<float>& yValues, float x)
 {
 	AuxAssert(xValues.size() == yValues.size(), "xValues and yValues should have same size!");
 	AuxAssert(x >= xValues.front() && x <= xValues.back(), "x should lie within the provided Xvalues!");
@@ -106,7 +66,7 @@ float AuxPort::Interpolation::lagrangeInterpolate(const std::vector<float>& xVal
 	return res;
 }
 
-float AuxPort::Interpolation::newtonInterpolate(const std::vector<float>& xValues, const std::vector<float>& yValues, float x)
+float AuxPort::Interpolator::newtonInterpolate(const std::vector<float>& xValues, const std::vector<float>& yValues, float x)
 {
 	AuxAssert(xValues.size() == yValues.size(), "xValues and yValues should have same size!");
 	AuxAssert(x >= xValues.front() && x <= xValues.back(), "x should lie within the provided Xvalues!");
@@ -131,157 +91,70 @@ float AuxPort::Interpolation::newtonInterpolate(const std::vector<float>& xValue
 	return res;
 }
 
-float AuxPort::Interpolation::_interpolateLinear(float val)
-{
-	AuxAssert(val >= xValues.front() && val <= xValues.back(), "val should lie within the provided Xvalues!");
-
-	size_t index = _findIndex(val);
-	if (index == valuesCount - 1) return yValues[index];
-
-	float x0 = xValues[index];
-	float x1 = xValues[index + 1];
-	float y0 = yValues[index];
-	float y1 = yValues[index + 1];
-	return linearInterpolate(x0, y0, x1, y1, val);
-	/*return y0 + (val - x0) * (y1 - y0) / (x1 - x0)*/;
-}
-
-float AuxPort::Interpolation::_interpolateCubic(float val)
-{
-	AuxAssert(val >= xValues.front() && val <= xValues.back(), "val should lie within the provided Xvalues!");
-
-	size_t index = _findIndex(val);
-	if (index == valuesCount - 1) return yValues[index];
-
-	float x0 = xValues[index == 0 ? 0 : index - 1];
-	float x1 = xValues[index];
-	float x2 = xValues[index + 1];
-	float x3 = xValues[index + 2 < valuesCount ? index + 2 : index + 1];
-
-	float y0 = yValues[index == 0 ? 0 : index - 1];
-	float y1 = yValues[index];
-	float y2 = yValues[index + 1];
-	float y3 = yValues[index + 2 < valuesCount ? index + 2 : index + 1];
-
-	return cubicInterpolate({ x0, x1, x2, x3 }, { y0, y1, y2, y3 }, val);
-}
-
-float AuxPort::Interpolation::_interpolateCosine(float val)
-{
-	AuxAssert(val >= xValues.front() && val <= xValues.back(), "val should lie within the provided Xvalues!");
-
-	size_t index = _findIndex(val);
-	if (index == valuesCount - 1) return yValues[index];
-
-	float x0 = xValues[index];
-	float x1 = xValues[index + 1];
-	float y0 = yValues[index];
-	float y1 = yValues[index + 1];
-
-	return cosineInterpolate(x0, y0, x1, y1, val);
-}
-
-float AuxPort::Interpolation::_interpolateLagrange(float val)
-{
-	AuxAssert(val >= xValues.front() && val <= xValues.back(), "val should lie within the provided Xvalues!");
-	return lagrangeInterpolate(xValues, yValues, val);
-}
-
-float AuxPort::Interpolation::_interpolateNewton(float val)
-{
-	AuxAssert(val >= xValues.front() && val <= xValues.back(), "val should lie within the provided Xvalues!");
-	return newtonInterpolate(xValues, yValues, val);
-}
-
-size_t AuxPort::Interpolation::_findIndex(float xVal)
-{
-	AuxAssert(xVal >= xValues.front() && xVal <= xValues.back(), "val should lie within the provided Xvalues!");
-	for (size_t i = 0; i < xValues.size(); i++)
-	{
-		if (xValues[i] > xVal)
-			return i - 1;
-	}
-	return valuesCount - 1;
-}
-
-AuxPort::SignalInterpolator::SignalInterpolator(size_t bufferSize) : bufferSize(bufferSize), circularBuffer(bufferSize)
+AuxPort::LinearInterpolator::LinearInterpolator() : Interpolator(1)
 {
 }
 
-void AuxPort::SignalInterpolator::generateXYVectors(std::vector<float>& xValues, std::vector<float>& yValues, float currSample)
-{
-	xValues.reserve(bufferSize + 1);
-	yValues.reserve(bufferSize + 1);
-	for (size_t i = 0; i < bufferSize; i++)
-	{
-		xValues.push_back(i);
-		yValues.push_back(circularBuffer.getShiftedElement(0));
-	}
-	xValues.push_back(bufferSize);
-	yValues.push_back(currSample);
-}
-
-AuxPort::LinearSignalInterpolator::LinearSignalInterpolator() : SignalInterpolator(1)
-{
-}
-
-float AuxPort::LinearSignalInterpolator::interpolate(float currSample)
+float AuxPort::LinearInterpolator::interpolate(float currSample)
 {
 	float y0 = circularBuffer.getShiftedElement(-1);
 	circularBuffer.push(currSample);
-	return Interpolation::linearInterpolate(0, y0, 1, currSample, 0.5);
+	return Interpolator::linearInterpolate(0, y0, 1, currSample, 0.5);
 }
 
-AuxPort::CubicSignalInterpolator::CubicSignalInterpolator() : SignalInterpolator(2)
+AuxPort::CubicInterpolator::CubicInterpolator() : Interpolator(3)
 {}
 
-float AuxPort::CubicSignalInterpolator::interpolate(float currSample, float nextSample)
+float AuxPort::CubicInterpolator::interpolate(float currSample)
 {
-	float y1 = circularBuffer.getShiftedElement(-1);
-	float y0 = circularBuffer.getShiftedElement(-2);
+	float y2 = circularBuffer.getShiftedElement(-1);
+	float y1 = circularBuffer.getShiftedElement(-2);
+	float y0 = circularBuffer.getShiftedElement(-3);
 	circularBuffer.push(currSample);
-	return Interpolation::cubicInterpolate({ 0, 1, 2, 3 }, {y0, y1, currSample, nextSample}, 1.5);
+	return Interpolator::cubicInterpolate({ 0, 1, 2, 3 }, {y0, y1, y2, currSample}, 2.5);
 }
 
-AuxPort::CosineSignalInterpolator::CosineSignalInterpolator() : SignalInterpolator(1)
+AuxPort::CosineInterpolator::CosineInterpolator() : Interpolator(1)
 {
 }
 
-float AuxPort::CosineSignalInterpolator::interpolate(float currSample)
+float AuxPort::CosineInterpolator::interpolate(float currSample)
 {
 	float y0 = circularBuffer.getShiftedElement(-1);
 	circularBuffer.push(currSample);
-	return Interpolation::cosineInterpolate(0, y0, 1, currSample, 0.5);
+	return Interpolator::cosineInterpolate(0, y0, 1, currSample, 0.5);
 }
 
-AuxPort::LagrangeSignalInterpolator::LagrangeSignalInterpolator() : SignalInterpolator(15)
+AuxPort::LagrangeInterpolator::LagrangeInterpolator() : Interpolator(15)
 {
 }
 
-AuxPort::LagrangeSignalInterpolator::LagrangeSignalInterpolator(size_t bufferSize) : SignalInterpolator(bufferSize)
+AuxPort::LagrangeInterpolator::LagrangeInterpolator(size_t bufferSize) : Interpolator(bufferSize)
 {
 }
 
-float AuxPort::LagrangeSignalInterpolator::interpolate(float currSample)
-{
-	std::vector<float> xValues;
-	std::vector<float> yValues;
-	generateXYVectors(xValues, yValues, currSample);
-	return Interpolation::lagrangeInterpolate(xValues, yValues, static_cast<float>(bufferSize) - 0.5f);
-}
-
-AuxPort::NewtonSignalInterpolator::NewtonSignalInterpolator() : SignalInterpolator(15)
-{
-}
-
-AuxPort::NewtonSignalInterpolator::NewtonSignalInterpolator(size_t bufferSize) : SignalInterpolator(bufferSize)
-{
-}
-
-float AuxPort::NewtonSignalInterpolator::interpolate(float currSample)
+float AuxPort::LagrangeInterpolator::interpolate(float currSample)
 {
 	std::vector<float> xValues;
 	std::vector<float> yValues;
 	generateXYVectors(xValues, yValues, currSample);
-	return Interpolation::newtonInterpolate(xValues, yValues, static_cast<float>(bufferSize) - 0.5f);
+	circularBuffer.push(currSample);
+	return Interpolator::lagrangeInterpolate(xValues, yValues, static_cast<float>(bufferSize) - 0.5f);
+}
+
+AuxPort::NewtonInterpolator::NewtonInterpolator() : Interpolator(15)
+{
+}
+
+AuxPort::NewtonInterpolator::NewtonInterpolator(size_t bufferSize) : Interpolator(bufferSize)
+{
+}
+
+float AuxPort::NewtonInterpolator::interpolate(float currSample)
+{
+	std::vector<float> xValues;
+	std::vector<float> yValues;
+	generateXYVectors(xValues, yValues, currSample);
+	circularBuffer.push(currSample);
+	return Interpolator::newtonInterpolate(xValues, yValues, static_cast<float>(bufferSize) - 0.5f);
 }

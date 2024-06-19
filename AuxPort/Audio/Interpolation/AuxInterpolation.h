@@ -45,102 +45,75 @@
 
 namespace AuxPort
 {
-	class Interpolation
+	class Interpolator
 	{
 	public:
-		enum class Type { Linear, Cubic, Cosine, Lagrange, Newton };
-		Interpolation();
-		~Interpolation() = default;
-		Interpolation(const Interpolation& interpolation) = default;
-		void setType(Type type);
-		void setXValues(float start, float end, float delta);
-		void setXValues(const std::vector<float> xValues);
-		void setYValues(const std::vector<float> yValues);
-		float interpolate(float val);
+		Interpolator(size_t bufferSize);
+		Interpolator(const Interpolator& obj) = default;
+		~Interpolator() = default;
 
+		virtual float interpolate(float currSample) = 0;
+	protected:
+		size_t bufferSize;
+		AuxPort::CircularBuffer<float> circularBuffer;
+
+		void generateXYVectors(std::vector<float>& xValues, std::vector<float>& yValues, float currSample);
 		static float linearInterpolate(float x0, float y0, float x1, float y1, float x);
 		static float cubicInterpolate(const std::vector<float>& xValues, const std::vector<float>& yValues, float x);
 		static float cosineInterpolate(float x0, float y0, float x1, float y1, float x);
 		static float lagrangeInterpolate(const std::vector<float>& xValues, const std::vector<float>& yValues, float x);
 		static float newtonInterpolate(const std::vector<float>& xValues, const std::vector<float>& yValues, float x);
+	};
+
+	class LinearInterpolator : public Interpolator
+	{
+	public:
+		LinearInterpolator();
+		LinearInterpolator(const LinearInterpolator& obj) = default;
+		~LinearInterpolator() = default;
+
+		float interpolate(float currSample);
+	};
+
+	class CubicInterpolator : public Interpolator
+	{
+	public:
+		CubicInterpolator();
+		CubicInterpolator(const CubicInterpolator& obj) = default;
+		~CubicInterpolator() = default;
+
+		float interpolate(float currSample);
 	private:
-		Type type;
-		size_t valuesCount;
-		std::vector<float> xValues;
-		std::vector<float> yValues;
-
-		float _interpolateLinear(float val);
-		float _interpolateCubic(float val);
-		float _interpolateCosine(float val);
-		float _interpolateLagrange(float val);
-		float _interpolateNewton(float val);
-		size_t _findIndex(float xVal);
 	};
 
-	class SignalInterpolator
+	class CosineInterpolator : public Interpolator
 	{
 	public:
-		SignalInterpolator(size_t bufferSize);
-		SignalInterpolator(const SignalInterpolator& obj) = default;
-		~SignalInterpolator() = default;
-
-		virtual float interpolate(float currSample) = 0;
-	protected:
-		AuxPort::CircularBuffer<float> circularBuffer;
-		size_t bufferSize;
-		void generateXYVectors(std::vector<float>& xValues, std::vector<float>& yValues, float currSample);
-	};
-
-	class LinearSignalInterpolator : public SignalInterpolator
-	{
-	public:
-		LinearSignalInterpolator();
-		LinearSignalInterpolator(const LinearSignalInterpolator& obj) = default;
-		~LinearSignalInterpolator() = default;
+		CosineInterpolator();
+		CosineInterpolator(const CosineInterpolator& obj) = default;
+		~CosineInterpolator() = default;
 
 		float interpolate(float currSample);
 	};
 
-	class CubicSignalInterpolator : public SignalInterpolator
+	class LagrangeInterpolator : public Interpolator
 	{
 	public:
-		CubicSignalInterpolator();
-		CubicSignalInterpolator(const CubicSignalInterpolator& obj) = default;
-		~CubicSignalInterpolator() = default;
-
-		float interpolate(float currSample, float nextSample);
-	private:
-		float interpolate(float currSample) = 0;
-	};
-
-	class CosineSignalInterpolator : public SignalInterpolator
-	{
-	public:
-		CosineSignalInterpolator();
-		CosineSignalInterpolator(const CosineSignalInterpolator& obj) = default;
-		~CosineSignalInterpolator() = default;
+		 LagrangeInterpolator();
+		 LagrangeInterpolator(size_t bufferSize);
+		 LagrangeInterpolator(const LagrangeInterpolator& obj) = default;
+		 ~LagrangeInterpolator() = default;
 
 		float interpolate(float currSample);
 	};
 
-	class LagrangeSignalInterpolator : public SignalInterpolator
+	class NewtonInterpolator : public Interpolator
 	{
 	public:
-		 LagrangeSignalInterpolator();
-		 LagrangeSignalInterpolator(size_t bufferSize);
-		 LagrangeSignalInterpolator(const LagrangeSignalInterpolator& obj) = default;
-		 ~LagrangeSignalInterpolator() = default;
-
-		float interpolate(float currSample);
-	};
-
-	class NewtonSignalInterpolator : public SignalInterpolator
-	{
-	public:
-		NewtonSignalInterpolator();
-		NewtonSignalInterpolator(size_t bufferSize);
-		NewtonSignalInterpolator(const NewtonSignalInterpolator& obj) = default;
-		~NewtonSignalInterpolator() = default;
+		NewtonInterpolator();
+		NewtonInterpolator(size_t bufferSize);
+		NewtonInterpolator(const NewtonInterpolator& obj) = default;
+		~NewtonInterpolator() = default;
 
 		float interpolate(float currSample);
 	};

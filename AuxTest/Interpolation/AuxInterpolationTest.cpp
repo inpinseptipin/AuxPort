@@ -5,278 +5,305 @@ void AuxTest::UnitTests::Interpolation::init(std::vector<AuxPort::Case>& testcas
 	if (initCommands.empty())
 	{
 		// Default Initialization if no commands are given!
-		addSinTests(testcases);
-		addLinearTests(testcases);
-		addQuadraticTests(testcases);
-		addCubicTests(testcases);
+		addLinearInterpolatorTests(testcases);
+		addCubicInterpolatorTests(testcases);
+		addCosineInterpolatorTests(testcases);
+		addLagrangeInterpolatorTests(testcases);
+		addNewtonInterpolatorTests(testcases);
 	}
 	else
 	{
 		for (const auto& command : initCommands)
 		{
-			if (command == "sin")
-				addSinTests(testcases);
-			else if (command == "linear")
-				addLinearTests(testcases);
-			else if (command == "quadratic")
-				addQuadraticTests(testcases);
-			else if (command == "cubic")
-				addCubicTests(testcases);
+			if (command == "Linear")
+				addLinearInterpolatorTests(testcases);
+			else if (command == "Cubic")
+				addCubicInterpolatorTests(testcases);
+			else if (command == "Cosine")
+				addCosineInterpolatorTests(testcases);
+			else if (command == "Lagrange")
+				addLagrangeInterpolatorTests(testcases);
+			else if (command == "Newton")
+				addNewtonInterpolatorTests(testcases);
 		}
 	}
 }
 
-void AuxTest::UnitTests::Interpolation::addSinTests(std::vector<AuxPort::Case>& testcases)
+void AuxTest::UnitTests::Interpolation::addLinearInterpolatorTests(std::vector<AuxPort::Case>& testcases)
 {
 	addTestCase(testcases,
-		"AuxUT_Interpolation_001",
-		"Linear Interpolation Test for sin function",
+		"AuxUT_LinearInterpolator_001",
+		"Linear Interpolator Test for sin function",
 		[](const std::vector<std::string>& commands)
 		{
-			return testInterpolation((float(*)(float))sin, AuxPort::Interpolation::Type::Linear, commands);
+			return testInterpolator(InterpolatorType::Linear, TestFunctionType::Sin, commands);
 		}
 	);
 
 	addTestCase(testcases,
-		"AuxUT_Interpolation_002",
-		"Cubic Interpolation Test for sin function",
+		"AuxUT_LinearInterpolator_002",
+		"Linear Interpolator Test for Linear function f(x) = (5x  - 9)",
 		[](const std::vector<std::string>& commands)
 		{
-			return testInterpolation((float(*)(float))sin, AuxPort::Interpolation::Type::Cubic, commands);
+			return testInterpolator(InterpolatorType::Linear, TestFunctionType::Linear, commands);
 		}
 	);
 
 	addTestCase(testcases,
-		"AuxUT_Interpolation_003",
-		"Cosine Interpolation Test for sin function",
+		"AuxUT_LinearInterpolator_003",
+		"Linear Interpolator Test for Quadratic function f(x) = (9x^2 + 5x - 7)",
 		[](const std::vector<std::string>& commands)
 		{
-			return testInterpolation((float(*)(float))sin, AuxPort::Interpolation::Type::Cosine, commands);
+			return testInterpolator(InterpolatorType::Linear, TestFunctionType::Quadratic, commands);
 		}
 	);
 
 	addTestCase(testcases,
-		"AuxUT_Interpolation_004",
-		"Lagrange Interpolation Test for sin function",
+		"AuxUT_LinearInterpolator_004",
+		"Linear Interpolator Test for Cubic function f(x) = (5x^3 - 9x^2 + 5x - 7)",
 		[](const std::vector<std::string>& commands)
 		{
-			return testInterpolation((float(*)(float))sin, AuxPort::Interpolation::Type::Lagrange, commands);
-		}
-	);
-
-	addTestCase(testcases,
-		"AuxUT_Interpolation_005",
-		"Newton Interpolation Test for sin function",
-		[](const std::vector<std::string>& commands)
-		{
-			return testInterpolation((float(*)(float))sin, AuxPort::Interpolation::Type::Newton, commands);
+			return testInterpolator(InterpolatorType::Linear, TestFunctionType::Cubic, commands);
 		}
 	);
 }
 
-void AuxTest::UnitTests::Interpolation::addLinearTests(std::vector<AuxPort::Case>& testcases)
+void AuxTest::UnitTests::Interpolation::addCubicInterpolatorTests(std::vector<AuxPort::Case>& testcases)
 {
 	addTestCase(testcases,
-		"AuxUT_Interpolation_006",
-		"Linear Interpolation Test for Linear function f(x) = (5x  - 9)",
+		"AuxUT_CubicInterpolator_001",
+		"Cubic Interpolator Test for sin function",
 		[](const std::vector<std::string>& commands)
 		{
-			auto testFunction = [](float val) { return 5 * val - 9;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Linear, commands);
+			return testInterpolator(InterpolatorType::Cubic, TestFunctionType::Sin, commands);
 		}
 	);
 
 	addTestCase(testcases,
-		"AuxUT_Interpolation_007",
-		"Cubic Interpolation Test for Linear function f(x) = (5x  - 9)",
+		"AuxUT_CubicInterpolator_002",
+		"Cubic Interpolator Test for Linear function f(x) = (5x  - 9)",
 		[](const std::vector<std::string>& commands)
 		{
-			auto testFunction = [](float val) { return 5 * val - 9;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Cubic, commands);
-		}
-	);
-
-
-	addTestCase(testcases,
-		"AuxUT_Interpolation_008",
-		"Cosine Interpolation Test for Linear function f(x) = (5x  - 9)",
-		[](const std::vector<std::string>& commands)
-		{
-			auto testFunction = [](float val) { return 5 * val - 9;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Cosine, commands);
+			return testInterpolator(InterpolatorType::Cubic, TestFunctionType::Linear, commands);
 		}
 	);
 
 	addTestCase(testcases,
-		"AuxUT_Interpolation_009",
-		"Lagrange Interpolation Test for Linear function f(x) = (5x  - 9)",
+		"AuxUT_CubicInterpolator_003",
+		"Cubic Interpolator Test for Quadratic function f(x) = (9x^2 + 5x - 7)",
 		[](const std::vector<std::string>& commands)
 		{
-			auto testFunction = [](float val) { return 5 * val - 9;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Lagrange, commands);
+			return testInterpolator(InterpolatorType::Cubic, TestFunctionType::Quadratic, commands);
 		}
 	);
 
-
 	addTestCase(testcases,
-		"AuxUT_Interpolation_010",
-		"Newton Interpolation Test for Linear function f(x) = (5x  - 9)",
+		"AuxUT_CubicInterpolator_004",
+		"Cubic Interpolator Test for Cubic function f(x) = (5x^3 - 9x^2 + 5x - 7)",
 		[](const std::vector<std::string>& commands)
 		{
-			auto testFunction = [](float val) { return 5 * val - 9;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Newton, commands);
+			return testInterpolator(InterpolatorType::Cubic, TestFunctionType::Cubic, commands);
 		}
 	);
 }
 
-void AuxTest::UnitTests::Interpolation::addQuadraticTests(std::vector<AuxPort::Case>& testcases)
+void AuxTest::UnitTests::Interpolation::addCosineInterpolatorTests(std::vector<AuxPort::Case>& testcases)
 {
 	addTestCase(testcases,
-		"AuxUT_Interpolation_011",
-		"Linear Interpolation Test for Quadratic function f(x) = (9x^2 + 5x - 7)",
+		"AuxUT_CosineInterpolator_001",
+		"Cosine Interpolator Test for sin function",
 		[](const std::vector<std::string>& commands)
 		{
-			auto testFunction = [](float val) { return 9 * val * val + 5 * val - 7;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Linear, commands);
+			return testInterpolator(InterpolatorType::Cosine, TestFunctionType::Sin, commands);
 		}
 	);
 
 	addTestCase(testcases,
-		"AuxUT_Interpolation_012",
-		"Cubic Interpolation Test for Quadratic function f(x) = (9x^2 + 5x - 7)",
+		"AuxUT_CosineInterpolator_002",
+		"Cosine Interpolator Test for Linear function f(x) = (5x  - 9)",
 		[](const std::vector<std::string>& commands)
 		{
-			auto testFunction = [](float val) { return 9 * val * val + 5 * val - 7;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Cubic, commands);
+			return testInterpolator(InterpolatorType::Cosine, TestFunctionType::Linear, commands);
+		}
+	);
+	
+	addTestCase(testcases,
+		"AuxUT_CosineInterpolator_003",
+		"Cosine Interpolator Test for Quadratic function f(x) = (9x^2 + 5x - 7)",
+		[](const std::vector<std::string>& commands)
+		{
+			return testInterpolator(InterpolatorType::Cosine, TestFunctionType::Quadratic, commands);
 		}
 	);
 
 	addTestCase(testcases,
-		"AuxUT_Interpolation_013",
-		"Cosine Interpolation Test for Quadratic function f(x) = (9x^2 + 5x - 7)",
+		"AuxUT_CosineInterpolator_004",
+		"Cosine Interpolator Test for Cubic function f(x) = (5x^3 - 9x^2 + 5x - 7)",
 		[](const std::vector<std::string>& commands)
 		{
-			auto testFunction = [](float val) { return 9 * val * val + 5 * val - 7;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Cosine, commands);
+			return testInterpolator(InterpolatorType::Cosine, TestFunctionType::Cubic, commands);
+		}
+	);
+
+}
+
+void AuxTest::UnitTests::Interpolation::addLagrangeInterpolatorTests(std::vector<AuxPort::Case>& testcases)
+{
+	addTestCase(testcases,
+		"AuxUT_LagrangeInterpolator_001",
+		"Lagrange Interpolator Test for sin function",
+		[](const std::vector<std::string>& commands)
+		{
+			return testInterpolator(InterpolatorType::Lagrange, TestFunctionType::Sin, commands);
 		}
 	);
 
 	addTestCase(testcases,
-		"AuxUT_Interpolation_014",
-		"Lagrange Interpolation Test for Quadratic function f(x) = (9x^2 + 5x - 7)",
+		"AuxUT_LagrangeInterpolator_002",
+		"Lagrange Interpolator Test for Linear function f(x) = (5x  - 9)",
 		[](const std::vector<std::string>& commands)
 		{
-			auto testFunction = [](float val) { return 9 * val * val + 5 * val - 7;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Lagrange, commands);
+			return testInterpolator(InterpolatorType::Lagrange, TestFunctionType::Linear, commands);
+		}
+	);
+	
+	addTestCase(testcases,
+		"AuxUT_LagrangeInterpolator_003",
+		"Lagrange Interpolator Test for Quadratic function f(x) = (9x^2 + 5x - 7)",
+		[](const std::vector<std::string>& commands)
+		{
+			return testInterpolator(InterpolatorType::Lagrange, TestFunctionType::Quadratic, commands);
+		}
+	);
+	
+	addTestCase(testcases,
+		"AuxUT_LagrangeInterpolator_004",
+		"Lagrange Interpolator Test for Cubic function f(x) = (5x^3 - 9x^2 + 5x - 7)",
+		[](const std::vector<std::string>& commands)
+		{
+			return testInterpolator(InterpolatorType::Lagrange, TestFunctionType::Cubic, commands);
+		}
+	);
+
+}
+
+void AuxTest::UnitTests::Interpolation::addNewtonInterpolatorTests(std::vector<AuxPort::Case>& testcases)
+{
+	addTestCase(testcases,
+		"AuxUT_NewtonInterpolator_001",
+		"Newton Interpolator Test for sin function",
+		[](const std::vector<std::string>& commands)
+		{
+			return testInterpolator(InterpolatorType::Newton, TestFunctionType::Sin, commands);
 		}
 	);
 
 	addTestCase(testcases,
-		"AuxUT_Interpolation_015",
-		"Newton Interpolation Test for Quadratic function f(x) = (9x^2 + 5x - 7)",
+		"AuxUT_NewtonInterpolator_002",
+		"Newton Interpolator Test for Linear function f(x) = (5x  - 9)",
 		[](const std::vector<std::string>& commands)
 		{
-			auto testFunction = [](float val) { return 9 * val * val + 5 * val - 7;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Newton, commands);
+			return testInterpolator(InterpolatorType::Newton, TestFunctionType::Linear, commands);
+		}
+	);
+
+	addTestCase(testcases,
+		"AuxUT_NewtonInterpolator_003",
+		"Newton Interpolator Test for Quadratic function f(x) = (9x^2 + 5x - 7)",
+		[](const std::vector<std::string>& commands)
+		{
+			return testInterpolator(InterpolatorType::Newton, TestFunctionType::Quadratic, commands);
+		}
+	);
+
+	addTestCase(testcases,
+		"AuxUT_NewtonInterpolator_004",
+		"Newton Interpolator Test for Cubic function f(x) = (5x^3 - 9x^2 + 5x - 7)",
+		[](const std::vector<std::string>& commands)
+		{
+			return testInterpolator(InterpolatorType::Newton, TestFunctionType::Cubic, commands);
 		}
 	);
 }
 
-void AuxTest::UnitTests::Interpolation::addCubicTests(std::vector<AuxPort::Case>& testcases)
+bool AuxTest::UnitTests::Interpolation::testInterpolator(const InterpolatorType& interpolatorType, const TestFunctionType& testFuncType, const std::vector<std::string>& commands)
 {
-	addTestCase(testcases,
-		"AuxUT_Interpolation_16",
-		"Linear Interpolation Test for Cubic function f(x) = (5x^3 - 9x^2 + 5x - 7)",
-		[](const std::vector<std::string>& commands)
-		{
-			auto testFunction = [](float val) { return 5 * val * val * val - 9 * val * val + 5 * val - 7;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Linear, commands);
-		}
-	);
+	// Deducing Interpolator
+	std::unique_ptr<AuxPort::Interpolator> interpolator;
+	switch (interpolatorType)
+	{
+	case InterpolatorType::Linear:
+		interpolator = std::unique_ptr<AuxPort::Interpolator>(new AuxPort::LinearInterpolator);
+		break;
 
-	addTestCase(testcases,
-		"AuxUT_Interpolation_17",
-		"Cubic Interpolation Test for Cubic function f(x) = (5x^3 - 9x^2 + 5x - 7)",
-		[](const std::vector<std::string>& commands)
-		{
-			auto testFunction = [](float val) { return 5 * val * val * val - 9 * val * val + 5 * val - 7;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Cubic, commands);
-		}
-	);
+	case InterpolatorType::Cubic:
+		interpolator = std::unique_ptr<AuxPort::Interpolator>(new AuxPort::CubicInterpolator);
+		break;
 
-	addTestCase(testcases,
-		"AuxUT_Interpolation_018",
-		"Cosine Interpolation Test for Cubic function f(x) = (5x^3 - 9x^2 + 5x - 7)",
-		[](const std::vector<std::string>& commands)
-		{
-			auto testFunction = [](float val) { return 5 * val * val * val - 9 * val * val + 5 * val - 7;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Cosine, commands);
-		}
-	);
+	case InterpolatorType::Cosine:
+		interpolator = std::unique_ptr<AuxPort::Interpolator>(new AuxPort::CosineInterpolator);
+		break;
 
-	addTestCase(testcases,
-		"AuxUT_Interpolation_019",
-		"Lagrange Interpolation Test for Cubic function f(x) = (5x^3 - 9x^2 + 5x - 7)",
-		[](const std::vector<std::string>& commands)
-		{
-			auto testFunction = [](float val) { return 5 * val * val * val - 9 * val * val + 5 * val - 7;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Lagrange, commands);
-		}
-	);
+	case InterpolatorType::Lagrange:
+		interpolator = std::unique_ptr<AuxPort::Interpolator>(new AuxPort::LagrangeInterpolator);
+		break;
 
-	addTestCase(testcases,
-		"AuxUT_Interpolation_020",
-		"Newton Interpolation Test for Cubic function f(x) = (5x^3 - 9x^2 + 5x - 7)",
-		[](const std::vector<std::string>& commands)
-		{
-			auto testFunction = [](float val) { return 5 * val * val * val - 9 * val * val + 5 * val - 7;  };
-			return testInterpolation(testFunction, AuxPort::Interpolation::Type::Newton, commands);
-		}
-	);
-}
+	case InterpolatorType::Newton:
+		interpolator = std::unique_ptr<AuxPort::Interpolator>(new AuxPort::NewtonInterpolator);
+		break;
+	}
 
-bool AuxTest::UnitTests::Interpolation::testInterpolation(std::function<float(float)> testFunction, const AuxPort::Interpolation::Type& type, const std::vector<std::string>& commands)
-{
+	// Deducing Test Function
+	std::function<float(float)> testFunction;
+	switch (testFuncType)
+	{
+	case TestFunctionType::Sin:
+		testFunction = (float(*)(float))sin;
+		break;
+
+	case TestFunctionType::Linear:
+		testFunction = [](float val) { return 5 * val - 9;  };
+		break;
+
+	case TestFunctionType::Quadratic:
+		testFunction = [](float val) { return 9 * val * val + 5 * val - 7;  };
+		break;
+
+	case TestFunctionType::Cubic:
+		testFunction = [](float val) { return 5 * val * val * val - 9 * val * val + 5 * val - 7;  };
+		break;
+	}
+
 	// Default parameters in case commands are not given to the testcase
-	float start = 0, end = 10, delta = 0.5, errorThreshold = 0.01;
+	size_t sampleCount = 1000;
+	uint32 sampleRate = 1000;
+	float errorThreshold = 0.01;
 	// Parsing the commands for parameters (if given)
 	if (!commands.empty())
 	{
-		float start = AuxPort::Casters::toFloat(commands[0]);
-		float end = AuxPort::Casters::toFloat(commands[1]);
-		float delta = AuxPort::Casters::toFloat(commands[2]);
-
-		float errorThreshold = AuxPort::Casters::toFloat(commands[3]);
+		sampleCount = AuxPort::Casters::toFloat(commands[0]);
+		sampleRate = AuxPort::Casters::toFloat(commands[1]);
+		errorThreshold = AuxPort::Casters::toFloat(commands[2]);
 	}
 
 	// Performing test
-	size_t valuesCount = (end - start) / delta + 1;
-	std::vector<float> yValues;
-	yValues.reserve(valuesCount);
-	for (float val = start; val <= end; val += delta)
-		yValues.push_back(testFunction(val));
+	std::vector<float> interpolatedSamples;
+	interpolatedSamples.reserve(sampleCount);
+	std::vector<float> expectedSamples;
+	expectedSamples.reserve(sampleCount);
 
-	AuxPort::Interpolation interpolation;
-	interpolation.setType(type);
-	interpolation.setXValues(start, end, delta);
-	interpolation.setYValues(yValues);
-
-	float startTestValue = start + delta / 2;
-	float testValuesCount = (end - startTestValue) / delta;
-	std::vector<float> interpolatedValues;
-	interpolatedValues.reserve(testValuesCount);
-	std::vector<float> expectedValues;
-	expectedValues.reserve(testValuesCount);
-	for (float val = startTestValue; val < end; val += delta)
+	float currSample;
+	for (size_t i = 0; i < sampleCount; i++)
 	{
-		interpolatedValues.push_back(interpolation.interpolate(val));
-		expectedValues.push_back(testFunction(val));
+		currSample = testFunction(static_cast<float>(i) / sampleRate);
+		interpolatedSamples.push_back(interpolator->interpolate(currSample));
+		expectedSamples.push_back(testFunction((static_cast<float>(i) - 0.5f) / sampleRate));
 	}
 
-	// Finding Error
+	// Finding Relative Error
 	AuxPort::Error<float> err;
 	err.setType(AuxPort::Error<float>::Type::Relative);
-	float resError = err.compute(interpolatedValues, expectedValues);
+	float resError = err.compute(interpolatedSamples, expectedSamples);
 	std::cout << resError << "\n";
 	if (resError < errorThreshold)
 		return true;
