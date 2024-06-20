@@ -1,5 +1,4 @@
-#include "AuxPan.h"
-
+  #include "AuxPan.h"
 /*
 *			AuxPort Library
 			"Modules for Audio Software Development" - inpinseptipin

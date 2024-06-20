@@ -37,23 +37,32 @@ cmake_minimum_required(VERSION 3.10)
 option(AUXPORT_BUILD_TESTS "Build AuxPort Test Library" OFF)
 option(AUXPORT_BUILD_SANDBOX "Build Sandbox Environment" OFF)
 
-set(SANDBOX_NAME "SandBox")
 
-
+if("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "Win32")
+	option(AUXPORT_BUILD_FOR_RACKAFX "Build AuxPort for RackAFX" OFF)  
+endif()
 
 project(AuxPort)
 add_subdirectory(AuxPort)
 
 
-if(AUXPORT_BUILD_SANDBOX)
 
+if(AUXPORT_BUILD_FOR_RACKAFX)
+	set(AUXPORT_RACKAFX_COMPILE_OPTIONS_DEBUG "-MTd")
+	set(AUXPORT_RACKAFX_COMPILE_OPTIONS_RELEASE "-MT")
+	target_compile_options(${PROJECT_NAME} PUBLIC "$<$<CONFIG:Debug>:${AUXPORT_RACKAFX_COMPILE_OPTIONS_DEBUG}>")
+	target_compile_options(${PROJECT_NAME} PUBLIC "$<$<CONFIG:Release>:${AUXPORT_RACKAFX_COMPILE_OPTIONS_RELEASE}>")
+ endif()
+
+
+if(AUXPORT_BUILD_SANDBOX)
+	set(SANDBOX_NAME "SandBox")
 	add_executable(
 		${SANDBOX_NAME}
 		main.cpp	
 	)
 	target_link_libraries(${SANDBOX_NAME} AuxPort)
 	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${SANDBOX_NAME})
-	set(SANDBOX_BUILT on)
 endif(AUXPORT_BUILD_SANDBOX)
 
 
@@ -66,3 +75,4 @@ if(AUXPORT_BUILD_TESTS)
 		target_link_libraries(${SANDBOX_NAME} AuxTest)
 	endif(SANDBOX_BUILT)
 endif(AUXPORT_BUILD_TESTS)
+
