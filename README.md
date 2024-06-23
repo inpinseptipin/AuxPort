@@ -9,4 +9,4 @@ The library is compatible with Windows and Linux
  
 # Documentation
 
-For now there are extremely detailed comments embedded inside the codebase. These comments can be parsed by any IDE intellisense which will provide you context and explaination on how to utilize the functions defined. 
+AuxPort Version 0.2 Documentation can be found here **[Here](https://inpinseptipin.github.io/AuxPort/)**
