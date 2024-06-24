@@ -98,6 +98,7 @@ AuxPort::FastRandomFloat::FastRandomFloat()
 
 AuxPort::FastRandomFloat::FastRandomFloat(const int& randomSeed)
 {
+    AuxAssert(randomSeed != 0, "randomSeed should be non-zero!");
     this->randomSeed = randomSeed;
 }
 
