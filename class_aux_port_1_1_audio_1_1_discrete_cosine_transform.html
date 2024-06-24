@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">AuxPort<span id="projectnumber">&#160;0.2</span>
    </div>
-   <div id="projectbrief">Modules for Software Development</div>
+   <div id="projectbrief">Modules for Audio Software Development</div>
   </td>
  </tr>
  </tbody>
@@ -111,36 +111,164 @@ $(function(){initNavTree('class_aux_port_1_1_audio_1_1_discrete_cosine_transform
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a4e3352adbe18bdea2b84a60089111d0d" id="r_a4e3352adbe18bdea2b84a60089111d0d"><td class="memItemLeft" align="right" valign="top"><a id="a4e3352adbe18bdea2b84a60089111d0d" name="a4e3352adbe18bdea2b84a60089111d0d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>DiscreteCosineTransform</b> (size_t dctSize)</td></tr>
-<tr class="memdesc:a4e3352adbe18bdea2b84a60089111d0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide DCT Size. <br /></td></tr>
+<tr class="memitem:a4e3352adbe18bdea2b84a60089111d0d" id="r_a4e3352adbe18bdea2b84a60089111d0d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e3352adbe18bdea2b84a60089111d0d">DiscreteCosineTransform</a> (size_t dctSize)</td></tr>
+<tr class="memdesc:a4e3352adbe18bdea2b84a60089111d0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide DCT Size.  <br /></td></tr>
 <tr class="separator:a4e3352adbe18bdea2b84a60089111d0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7546d37090770dddeabe41a77f38216" id="r_ab7546d37090770dddeabe41a77f38216"><td class="memItemLeft" align="right" valign="top"><a id="ab7546d37090770dddeabe41a77f38216" name="ab7546d37090770dddeabe41a77f38216"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>computeTransform</b> (const std::vector&lt; float &gt; &amp;inputBuffer, std::vector&lt; float &gt; &amp;outputBuffer)</td></tr>
-<tr class="memdesc:ab7546d37090770dddeabe41a77f38216"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs DCT on the AudioBuffer passed in the argument and returns an AudioBuffer with DCT Values. <br /></td></tr>
+<tr class="memitem:ab7546d37090770dddeabe41a77f38216" id="r_ab7546d37090770dddeabe41a77f38216"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab7546d37090770dddeabe41a77f38216">computeTransform</a> (const std::vector&lt; float &gt; &amp;inputBuffer, std::vector&lt; float &gt; &amp;outputBuffer)</td></tr>
+<tr class="memdesc:ab7546d37090770dddeabe41a77f38216"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs DCT on the AudioBuffer passed in the argument and returns an AudioBuffer with DCT Values.  <br /></td></tr>
 <tr class="separator:ab7546d37090770dddeabe41a77f38216"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a697248c4e7cae53e64e359dc2d6bf4fc" id="r_a697248c4e7cae53e64e359dc2d6bf4fc"><td class="memItemLeft" align="right" valign="top"><a id="a697248c4e7cae53e64e359dc2d6bf4fc" name="a697248c4e7cae53e64e359dc2d6bf4fc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>computeInverseTransform</b> (std::vector&lt; float &gt; &amp;outputBuffer)</td></tr>
-<tr class="memdesc:a697248c4e7cae53e64e359dc2d6bf4fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs Inverse DCT. <br /></td></tr>
+<tr class="memitem:a697248c4e7cae53e64e359dc2d6bf4fc" id="r_a697248c4e7cae53e64e359dc2d6bf4fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a697248c4e7cae53e64e359dc2d6bf4fc">computeInverseTransform</a> (std::vector&lt; float &gt; &amp;outputBuffer)</td></tr>
+<tr class="memdesc:a697248c4e7cae53e64e359dc2d6bf4fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs Inverse DCT.  <br /></td></tr>
 <tr class="separator:a697248c4e7cae53e64e359dc2d6bf4fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adcbb0c608b193dcf5429328d5ba79239" id="r_adcbb0c608b193dcf5429328d5ba79239"><td class="memItemLeft" align="right" valign="top"><a id="adcbb0c608b193dcf5429328d5ba79239" name="adcbb0c608b193dcf5429328d5ba79239"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (size_t index) const</td></tr>
-<tr class="memdesc:adcbb0c608b193dcf5429328d5ba79239"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the complex DCT value at a given index. <br /></td></tr>
+<tr class="memitem:adcbb0c608b193dcf5429328d5ba79239" id="r_adcbb0c608b193dcf5429328d5ba79239"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adcbb0c608b193dcf5429328d5ba79239">get</a> (size_t index) const</td></tr>
+<tr class="memdesc:adcbb0c608b193dcf5429328d5ba79239"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the complex DCT value at a given index.  <br /></td></tr>
 <tr class="separator:adcbb0c608b193dcf5429328d5ba79239"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30b3e942c953edce542b00408b0c937a" id="r_a30b3e942c953edce542b00408b0c937a"><td class="memItemLeft" align="right" valign="top"><a id="a30b3e942c953edce542b00408b0c937a" name="a30b3e942c953edce542b00408b0c937a"></a>
-std::vector&lt; float &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>getDCTFrame</b> ()</td></tr>
-<tr class="memdesc:a30b3e942c953edce542b00408b0c937a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pointer to the Cosine Transform Vector. <br /></td></tr>
+<tr class="memitem:a30b3e942c953edce542b00408b0c937a" id="r_a30b3e942c953edce542b00408b0c937a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a30b3e942c953edce542b00408b0c937a">getDCTFrame</a> ()</td></tr>
+<tr class="memdesc:a30b3e942c953edce542b00408b0c937a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pointer to the Cosine Transform Vector.  <br /></td></tr>
 <tr class="separator:a30b3e942c953edce542b00408b0c937a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a093c11c65527903f2d72f51d03154fd7" id="r_a093c11c65527903f2d72f51d03154fd7"><td class="memItemLeft" align="right" valign="top"><a id="a093c11c65527903f2d72f51d03154fd7" name="a093c11c65527903f2d72f51d03154fd7"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () const</td></tr>
-<tr class="memdesc:a093c11c65527903f2d72f51d03154fd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the size. <br /></td></tr>
+<tr class="memitem:a093c11c65527903f2d72f51d03154fd7" id="r_a093c11c65527903f2d72f51d03154fd7"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a093c11c65527903f2d72f51d03154fd7">size</a> () const</td></tr>
+<tr class="memdesc:a093c11c65527903f2d72f51d03154fd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the size.  <br /></td></tr>
 <tr class="separator:a093c11c65527903f2d72f51d03154fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementation of naive Discrete Cosine Transform. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_f_t_8h_source.html#l00147">147</a> of file <a class="el" href="_aux_f_f_t_8h_source.html">AuxFFT.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a4e3352adbe18bdea2b84a60089111d0d" name="a4e3352adbe18bdea2b84a60089111d0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e3352adbe18bdea2b84a60089111d0d">&#9670;&#160;</a></span>DiscreteCosineTransform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">AuxPort::Audio::DiscreteCosineTransform::DiscreteCosineTransform </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>dctSize</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Provide DCT Size. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_f_t_8cpp_source.html#l00157">157</a> of file <a class="el" href="_aux_f_f_t_8cpp_source.html">AuxFFT.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a697248c4e7cae53e64e359dc2d6bf4fc" name="a697248c4e7cae53e64e359dc2d6bf4fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a697248c4e7cae53e64e359dc2d6bf4fc">&#9670;&#160;</a></span>computeInverseTransform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Audio::DiscreteCosineTransform::computeInverseTransform </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; float &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>outputBuffer</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Performs Inverse DCT. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_f_t_8cpp_source.html#l00186">186</a> of file <a class="el" href="_aux_f_f_t_8cpp_source.html">AuxFFT.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab7546d37090770dddeabe41a77f38216" name="ab7546d37090770dddeabe41a77f38216"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7546d37090770dddeabe41a77f38216">&#9670;&#160;</a></span>computeTransform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Audio::DiscreteCosineTransform::computeTransform </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; float &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>inputBuffer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; float &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>outputBuffer</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Performs DCT on the AudioBuffer passed in the argument and returns an AudioBuffer with DCT Values. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_f_t_8cpp_source.html#l00162">162</a> of file <a class="el" href="_aux_f_f_t_8cpp_source.html">AuxFFT.cpp</a>.</p>
+
+</div>
+</div>
+<a id="adcbb0c608b193dcf5429328d5ba79239" name="adcbb0c608b193dcf5429328d5ba79239"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcbb0c608b193dcf5429328d5ba79239">&#9670;&#160;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float AuxPort::Audio::DiscreteCosineTransform::get </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the complex DCT value at a given index. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_f_t_8cpp_source.html#l00203">203</a> of file <a class="el" href="_aux_f_f_t_8cpp_source.html">AuxFFT.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a30b3e942c953edce542b00408b0c937a" name="a30b3e942c953edce542b00408b0c937a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30b3e942c953edce542b00408b0c937a">&#9670;&#160;</a></span>getDCTFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; float &gt; * AuxPort::Audio::DiscreteCosineTransform::getDCTFrame </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the pointer to the Cosine Transform Vector. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_f_t_8cpp_source.html#l00208">208</a> of file <a class="el" href="_aux_f_f_t_8cpp_source.html">AuxFFT.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a093c11c65527903f2d72f51d03154fd7" name="a093c11c65527903f2d72f51d03154fd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a093c11c65527903f2d72f51d03154fd7">&#9670;&#160;</a></span>size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t AuxPort::Audio::DiscreteCosineTransform::size </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the size. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_f_t_8cpp_source.html#l00213">213</a> of file <a class="el" href="_aux_f_f_t_8cpp_source.html">AuxFFT.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/FFT/<a class="el" href="_aux_f_f_t_8h_source.html">AuxFFT.h</a></li>
-<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/FFT/<b>AuxFFT.cpp</b></li>
+<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/FFT/<a class="el" href="_aux_f_f_t_8cpp_source.html">AuxFFT.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">AuxPort<span id="projectnumber">&#160;0.2</span>
    </div>
-   <div id="projectbrief">Modules for Software Development</div>
+   <div id="projectbrief">Modules for Audio Software Development</div>
   </td>
  </tr>
  </tbody>
@@ -104,28 +104,170 @@ $(function(){initNavTree('class_aux_port_1_1_error.html',''); initResizable(true
   <div class="headertitle"><div class="title">AuxPort::Error&lt; errorVal &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>This class provides an interface to calculate different types of errors.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_aux_math_8h_source.html">AuxMath.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a32ec8ff7e32e4dc83e0f50fd5cbadb23" id="r_a32ec8ff7e32e4dc83e0f50fd5cbadb23"><td class="memItemLeft" align="right" valign="top"><a id="a32ec8ff7e32e4dc83e0f50fd5cbadb23" name="a32ec8ff7e32e4dc83e0f50fd5cbadb23"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>Type</b> { <b>Mean</b>
+<tr class="memitem:a32ec8ff7e32e4dc83e0f50fd5cbadb23" id="r_a32ec8ff7e32e4dc83e0f50fd5cbadb23"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a32ec8ff7e32e4dc83e0f50fd5cbadb23">Type</a> { <b>Mean</b>
 , <b>Absolute</b>
 , <b>Relative</b>
 , <b>RMSE</b>
  }</td></tr>
+<tr class="memdesc:a32ec8ff7e32e4dc83e0f50fd5cbadb23"><td class="mdescLeft">&#160;</td><td class="mdescRight">This specifies the type of error.  <a href="#a32ec8ff7e32e4dc83e0f50fd5cbadb23">More...</a><br /></td></tr>
 <tr class="separator:a32ec8ff7e32e4dc83e0f50fd5cbadb23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a68ba5018896f1faf3a4cd5416539ebc4" id="r_a68ba5018896f1faf3a4cd5416539ebc4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a68ba5018896f1faf3a4cd5416539ebc4">Error</a> ()</td></tr>
+<tr class="memdesc:a68ba5018896f1faf3a4cd5416539ebc4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes error class with default type (Absolute <a class="el" href="class_aux_port_1_1_error.html" title="This class provides an interface to calculate different types of errors.">Error</a>).  <br /></td></tr>
+<tr class="separator:a68ba5018896f1faf3a4cd5416539ebc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad544f469d99111ebe429e1702f2236e9" id="r_ad544f469d99111ebe429e1702f2236e9"><td class="memItemLeft" align="right" valign="top"><a id="ad544f469d99111ebe429e1702f2236e9" name="ad544f469d99111ebe429e1702f2236e9"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Error</b> (const <a class="el" href="class_aux_port_1_1_error.html">Error</a> &amp;error)=default</td></tr>
 <tr class="separator:ad544f469d99111ebe429e1702f2236e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3bd9ed2f92d767d399379f6d2eefe1a" id="r_ad3bd9ed2f92d767d399379f6d2eefe1a"><td class="memItemLeft" align="right" valign="top"><a id="ad3bd9ed2f92d767d399379f6d2eefe1a" name="ad3bd9ed2f92d767d399379f6d2eefe1a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setType</b> (const Type &amp;type)</td></tr>
+<tr class="memitem:ad3bd9ed2f92d767d399379f6d2eefe1a" id="r_ad3bd9ed2f92d767d399379f6d2eefe1a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad3bd9ed2f92d767d399379f6d2eefe1a">setType</a> (const <a class="el" href="#a32ec8ff7e32e4dc83e0f50fd5cbadb23">Type</a> &amp;type)</td></tr>
+<tr class="memdesc:ad3bd9ed2f92d767d399379f6d2eefe1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the type of error.  <br /></td></tr>
 <tr class="separator:ad3bd9ed2f92d767d399379f6d2eefe1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43a92427d75a550706befadf4b9be7b7" id="r_a43a92427d75a550706befadf4b9be7b7"><td class="memItemLeft" align="right" valign="top"><a id="a43a92427d75a550706befadf4b9be7b7" name="a43a92427d75a550706befadf4b9be7b7"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>compute</b> (const std::vector&lt; errorVal &gt; &amp;calculatedValues, const std::vector&lt; errorVal &gt; &amp;expectedValues)</td></tr>
+<tr class="memitem:a43a92427d75a550706befadf4b9be7b7" id="r_a43a92427d75a550706befadf4b9be7b7"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43a92427d75a550706befadf4b9be7b7">compute</a> (const std::vector&lt; errorVal &gt; &amp;calculatedValues, const std::vector&lt; errorVal &gt; &amp;expectedValues)</td></tr>
+<tr class="memdesc:a43a92427d75a550706befadf4b9be7b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the error between provided vectors. Each value in the first vector will be compared with the corresponding values in the second vector, and the error will be computed based on the current error type.  <br /></td></tr>
 <tr class="separator:a43a92427d75a550706befadf4b9be7b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;class errorVal&gt;<br />
+class AuxPort::Error&lt; errorVal &gt;</div><p>This class provides an interface to calculate different types of errors. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_math_8h_source.html#l00052">52</a> of file <a class="el" href="_aux_math_8h_source.html">AuxMath.h</a>.</p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a32ec8ff7e32e4dc83e0f50fd5cbadb23" name="a32ec8ff7e32e4dc83e0f50fd5cbadb23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32ec8ff7e32e4dc83e0f50fd5cbadb23">&#9670;&#160;</a></span>Type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class errorVal &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#a32ec8ff7e32e4dc83e0f50fd5cbadb23">AuxPort::Error::Type</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>This specifies the type of error. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_math_8h_source.html#l00058">58</a> of file <a class="el" href="_aux_math_8h_source.html">AuxMath.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a68ba5018896f1faf3a4cd5416539ebc4" name="a68ba5018896f1faf3a4cd5416539ebc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68ba5018896f1faf3a4cd5416539ebc4">&#9670;&#160;</a></span>Error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class errorVal &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_aux_port_1_1_error.html">AuxPort::Error</a>&lt; errorVal &gt;::Error </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initializes error class with default type (Absolute <a class="el" href="class_aux_port_1_1_error.html" title="This class provides an interface to calculate different types of errors.">Error</a>). </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_math_8h_source.html#l00063">63</a> of file <a class="el" href="_aux_math_8h_source.html">AuxMath.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a43a92427d75a550706befadf4b9be7b7" name="a43a92427d75a550706befadf4b9be7b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43a92427d75a550706befadf4b9be7b7">&#9670;&#160;</a></span>compute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class errorVal &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float <a class="el" href="class_aux_port_1_1_error.html">AuxPort::Error</a>&lt; errorVal &gt;::compute </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; errorVal &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>calculatedValues</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; errorVal &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>expectedValues</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the error between provided vectors. Each value in the first vector will be compared with the corresponding values in the second vector, and the error will be computed based on the current error type. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_math_8h_source.html#l00085">85</a> of file <a class="el" href="_aux_math_8h_source.html">AuxMath.h</a>.</p>
+
+</div>
+</div>
+<a id="ad3bd9ed2f92d767d399379f6d2eefe1a" name="ad3bd9ed2f92d767d399379f6d2eefe1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3bd9ed2f92d767d399379f6d2eefe1a">&#9670;&#160;</a></span>setType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class errorVal &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_aux_port_1_1_error.html">AuxPort::Error</a>&lt; errorVal &gt;::setType </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="#a32ec8ff7e32e4dc83e0f50fd5cbadb23">Type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>type</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the type of error. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_math_8h_source.html#l00075">75</a> of file <a class="el" href="_aux_math_8h_source.html">AuxMath.h</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/Utility/<a class="el" href="_aux_math_8h_source.html">AuxMath.h</a></li>
 </ul>

@@ -18,12 +18,13 @@ var searchData=
   ['getinternalvector_15',['getInternalVector',['../class_aux_port_1_1_terms.html#a4b11ee61d580ddf396165cc0a1cb8fc3',1,'AuxPort::Terms']]],
   ['getlistoffiles_16',['getListOfFiles',['../class_aux_port_1_1_file.html#a643159a21c466434f97aa0b4803e772c',1,'AuxPort::File']]],
   ['getmax_17',['getMax',['../class_aux_port_1_1_utility.html#aebf5ee060edddc467cc57d59a6614f68',1,'AuxPort::Utility']]],
-  ['getresponseasstring_18',['getResponseAsString',['../class_aux_port_1_1_extensions_1_1_aux_curl.html#aa3795c039c9b308051f145f60f9ccd04',1,'AuxPort::Extensions::AuxCurl']]],
-  ['getrms_19',['getRMS',['../class_aux_port_1_1_audio_1_1_buffer.html#adac1c7e5eaf0302a52e62ec6cd13320e',1,'AuxPort::Audio::Buffer']]],
-  ['getshiftedelement_20',['getShiftedElement',['../class_aux_port_1_1_circular_buffer.html#a62bf1a5f4afdae3ba278409dc77c66b2',1,'AuxPort::CircularBuffer']]],
-  ['getsize_21',['getSize',['../class_aux_port_1_1_circular_buffer.html#a30936e61299e20fbb0bdc1c25d30ba20',1,'AuxPort::CircularBuffer']]],
-  ['getterms_22',['getTerms',['../class_aux_port_1_1_aux_series.html#aaa82b10e9296fc4b29e969f54b68fa84',1,'AuxPort::AuxSeries']]],
-  ['gettestid_23',['getTestID',['../class_aux_port_1_1_case.html#a1c6a590a92159ee7d6340cf0306241ba',1,'AuxPort::Case']]],
-  ['gettestname_24',['getTestName',['../class_aux_port_1_1_case.html#aa43d72fefcdba172183dcd0d44a15c97',1,'AuxPort::Case']]],
-  ['getuniqueidentifier_25',['getUniqueIdentifier',['../class_aux_port_1_1_text_format.html#a8add46d4b6e7383286ca2895a60da662',1,'AuxPort::TextFormat']]]
+  ['getrandomfloat_18',['getRandomFloat',['../class_aux_port_1_1_fast_random_float.html#a49b5308ea1fe0fbee95fb5f84b88862a',1,'AuxPort::FastRandomFloat::getRandomFloat()'],['../class_aux_port_1_1_fast_random_float.html#ab201561932733cbef25419a379454a84',1,'AuxPort::FastRandomFloat::getRandomFloat(float start, float end)']]],
+  ['getresponseasstring_19',['getResponseAsString',['../class_aux_port_1_1_extensions_1_1_aux_curl.html#aa3795c039c9b308051f145f60f9ccd04',1,'AuxPort::Extensions::AuxCurl']]],
+  ['getrms_20',['getRMS',['../class_aux_port_1_1_audio_1_1_buffer.html#adac1c7e5eaf0302a52e62ec6cd13320e',1,'AuxPort::Audio::Buffer']]],
+  ['getshiftedelement_21',['getShiftedElement',['../class_aux_port_1_1_circular_buffer.html#a62bf1a5f4afdae3ba278409dc77c66b2',1,'AuxPort::CircularBuffer']]],
+  ['getsize_22',['getSize',['../class_aux_port_1_1_circular_buffer.html#a30936e61299e20fbb0bdc1c25d30ba20',1,'AuxPort::CircularBuffer']]],
+  ['getterms_23',['getTerms',['../class_aux_port_1_1_aux_series.html#aaa82b10e9296fc4b29e969f54b68fa84',1,'AuxPort::AuxSeries']]],
+  ['gettestid_24',['getTestID',['../class_aux_port_1_1_case.html#a1c6a590a92159ee7d6340cf0306241ba',1,'AuxPort::Case']]],
+  ['gettestname_25',['getTestName',['../class_aux_port_1_1_case.html#aa43d72fefcdba172183dcd0d44a15c97',1,'AuxPort::Case']]],
+  ['getuniqueidentifier_26',['getUniqueIdentifier',['../class_aux_port_1_1_text_format.html#a8add46d4b6e7383286ca2895a60da662',1,'AuxPort::TextFormat']]]
 ];

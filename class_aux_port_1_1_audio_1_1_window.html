@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">AuxPort<span id="projectnumber">&#160;0.2</span>
    </div>
-   <div id="projectbrief">Modules for Software Development</div>
+   <div id="projectbrief">Modules for Audio Software Development</div>
   </td>
  </tr>
  </tbody>
@@ -112,7 +112,7 @@ $(function(){initNavTree('class_aux_port_1_1_audio_1_1_window.html',''); initRes
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a5026dd2d29a7848cb350dac202a390a7" id="r_a5026dd2d29a7848cb350dac202a390a7"><td class="memItemLeft" align="right" valign="top"><a id="a5026dd2d29a7848cb350dac202a390a7" name="a5026dd2d29a7848cb350dac202a390a7"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5026dd2d29a7848cb350dac202a390a7">Type</a> { <br />
+<tr class="memitem:a5026dd2d29a7848cb350dac202a390a7" id="r_a5026dd2d29a7848cb350dac202a390a7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5026dd2d29a7848cb350dac202a390a7">Type</a> { <br />
 &#160;&#160;<b>HannWin</b>
 , <b>HammWin</b>
 , <b>BlackmanWin</b>
@@ -126,25 +126,115 @@ Public Types</h2></td></tr>
 &#160;&#160;<b>RectangleWin</b>
 <br />
  }</td></tr>
-<tr class="memdesc:a5026dd2d29a7848cb350dac202a390a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the type of window. <br /></td></tr>
+<tr class="memdesc:a5026dd2d29a7848cb350dac202a390a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the type of window.  <a href="#a5026dd2d29a7848cb350dac202a390a7">More...</a><br /></td></tr>
 <tr class="separator:a5026dd2d29a7848cb350dac202a390a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:acf526527b90d5f7368e7f6a196ec8bd9" id="r_acf526527b90d5f7368e7f6a196ec8bd9"><td class="memTemplParams" colspan="2"><a id="acf526527b90d5f7368e7f6a196ec8bd9" name="acf526527b90d5f7368e7f6a196ec8bd9"></a>
-template&lt;class sample &gt; </td></tr>
-<tr class="memitem:acf526527b90d5f7368e7f6a196ec8bd9"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>generate</b> (std::vector&lt; sample &gt; &amp;windowBuffer, const <a class="el" href="#a5026dd2d29a7848cb350dac202a390a7">Type</a> &amp;windowType=Type::HannWin)</td></tr>
-<tr class="memdesc:acf526527b90d5f7368e7f6a196ec8bd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Samples a <a class="el" href="class_aux_port_1_1_audio_1_1_window.html" title="Computes Window functions such as Hann,Hamming,Kaiser.">Window</a> function and fills it in a memory allocated std::vector. <br /></td></tr>
+<tr class="memitem:acf526527b90d5f7368e7f6a196ec8bd9" id="r_acf526527b90d5f7368e7f6a196ec8bd9"><td class="memTemplParams" colspan="2">template&lt;class sample &gt; </td></tr>
+<tr class="memitem:acf526527b90d5f7368e7f6a196ec8bd9"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#acf526527b90d5f7368e7f6a196ec8bd9">generate</a> (std::vector&lt; sample &gt; &amp;windowBuffer, const <a class="el" href="#a5026dd2d29a7848cb350dac202a390a7">Type</a> &amp;windowType=Type::HannWin)</td></tr>
+<tr class="memdesc:acf526527b90d5f7368e7f6a196ec8bd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Samples a <a class="el" href="class_aux_port_1_1_audio_1_1_window.html" title="Computes Window functions such as Hann,Hamming,Kaiser.">Window</a> function and fills it in a memory allocated std::vector.  <br /></td></tr>
 <tr class="separator:acf526527b90d5f7368e7f6a196ec8bd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1652a0f9bc9ebcb7c017e964f1eeab5f" id="r_a1652a0f9bc9ebcb7c017e964f1eeab5f"><td class="memTemplParams" colspan="2"><a id="a1652a0f9bc9ebcb7c017e964f1eeab5f" name="a1652a0f9bc9ebcb7c017e964f1eeab5f"></a>
-template&lt;class sample &gt; </td></tr>
-<tr class="memitem:a1652a0f9bc9ebcb7c017e964f1eeab5f"><td class="memTemplItemLeft" align="right" valign="top">static std::vector&lt; sample &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>generate</b> (size_t windowSize, <a class="el" href="#a5026dd2d29a7848cb350dac202a390a7">Type</a> windowType=Type::HannWin)</td></tr>
-<tr class="memdesc:a1652a0f9bc9ebcb7c017e964f1eeab5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a std::vector with a Sampled <a class="el" href="class_aux_port_1_1_audio_1_1_window.html" title="Computes Window functions such as Hann,Hamming,Kaiser.">Window</a> Function. <br /></td></tr>
+<tr class="memitem:a1652a0f9bc9ebcb7c017e964f1eeab5f" id="r_a1652a0f9bc9ebcb7c017e964f1eeab5f"><td class="memTemplParams" colspan="2">template&lt;class sample &gt; </td></tr>
+<tr class="memitem:a1652a0f9bc9ebcb7c017e964f1eeab5f"><td class="memTemplItemLeft" align="right" valign="top">static std::vector&lt; sample &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="#a1652a0f9bc9ebcb7c017e964f1eeab5f">generate</a> (size_t windowSize, <a class="el" href="#a5026dd2d29a7848cb350dac202a390a7">Type</a> windowType=Type::HannWin)</td></tr>
+<tr class="memdesc:a1652a0f9bc9ebcb7c017e964f1eeab5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a std::vector with a Sampled <a class="el" href="class_aux_port_1_1_audio_1_1_window.html" title="Computes Window functions such as Hann,Hamming,Kaiser.">Window</a> Function.  <br /></td></tr>
 <tr class="separator:a1652a0f9bc9ebcb7c017e964f1eeab5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Computes <a class="el" href="class_aux_port_1_1_audio_1_1_window.html" title="Computes Window functions such as Hann,Hamming,Kaiser.">Window</a> functions such as Hann,Hamming,Kaiser. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+
+<p class="definition">Definition at line <a class="el" href="_aux_window_8h_source.html#l00053">53</a> of file <a class="el" href="_aux_window_8h_source.html">AuxWindow.h</a>.</p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a5026dd2d29a7848cb350dac202a390a7" name="a5026dd2d29a7848cb350dac202a390a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5026dd2d29a7848cb350dac202a390a7">&#9670;&#160;</a></span>Type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a5026dd2d29a7848cb350dac202a390a7">AuxPort::Audio::Window::Type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specifies the type of window. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_window_8h_source.html#l00059">59</a> of file <a class="el" href="_aux_window_8h_source.html">AuxWindow.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a1652a0f9bc9ebcb7c017e964f1eeab5f" name="a1652a0f9bc9ebcb7c017e964f1eeab5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1652a0f9bc9ebcb7c017e964f1eeab5f">&#9670;&#160;</a></span>generate() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::vector&lt; sample &gt; AuxPort::Audio::Window::generate </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>windowSize</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a5026dd2d29a7848cb350dac202a390a7">Type</a></td>          <td class="paramname"><span class="paramname"><em>windowType</em></span><span class="paramdefsep"> = </span><span class="paramdefval">Type::HannWin</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a std::vector with a Sampled <a class="el" href="class_aux_port_1_1_audio_1_1_window.html" title="Computes Window functions such as Hann,Hamming,Kaiser.">Window</a> Function. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_window_8h_source.html#l00110">110</a> of file <a class="el" href="_aux_window_8h_source.html">AuxWindow.h</a>.</p>
+
+</div>
+</div>
+<a id="acf526527b90d5f7368e7f6a196ec8bd9" name="acf526527b90d5f7368e7f6a196ec8bd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf526527b90d5f7368e7f6a196ec8bd9">&#9670;&#160;</a></span>generate() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void AuxPort::Audio::Window::generate </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; sample &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>windowBuffer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="#a5026dd2d29a7848cb350dac202a390a7">Type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>windowType</em></span><span class="paramdefsep"> = </span><span class="paramdefval">Type::HannWin</span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Samples a <a class="el" href="class_aux_port_1_1_audio_1_1_window.html" title="Computes Window functions such as Hann,Hamming,Kaiser.">Window</a> function and fills it in a memory allocated std::vector. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_window_8h_source.html#l00068">68</a> of file <a class="el" href="_aux_window_8h_source.html">AuxWindow.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/Windows/<a class="el" href="_aux_window_8h_source.html">AuxWindow.h</a></li>
 </ul>
 </div><!-- contents -->

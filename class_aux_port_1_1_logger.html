@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">AuxPort<span id="projectnumber">&#160;0.2</span>
    </div>
-   <div id="projectbrief">Modules for Software Development</div>
+   <div id="projectbrief">Modules for Audio Software Development</div>
   </td>
  </tr>
  </tbody>
@@ -122,10 +122,12 @@ Static Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class provides static interfaces to allow the end user to log their messages on the console. </p>
-<p>It also consists of Logging directives such as Info, Warning, <a class="el" href="class_aux_port_1_1_error.html">Error</a>, Success which are implemented in the form of interfaces.</p>
+<p>It also consists of Logging directives such as Info, Warning, <a class="el" href="class_aux_port_1_1_error.html" title="This class provides an interface to calculate different types of errors.">Error</a>, Success which are implemented in the form of interfaces.</p>
 <p>Example: </p><div class="fragment"><div class="line"><a class="code hl_function" href="#a0dba11dd22f027fc58157afa4e1d3463">AuxPort::Logger::Log</a>(<span class="stringliteral">&quot;message&quot;</span>); </div>
-<div class="ttc" id="aclass_aux_port_1_1_logger_html_a0dba11dd22f027fc58157afa4e1d3463"><div class="ttname"><a href="#a0dba11dd22f027fc58157afa4e1d3463">AuxPort::Logger::Log</a></div><div class="ttdeci">static void Log(const T &amp;message, const LogType &amp;logType=LogType::Info, const ColourType &amp;colourType=ColourType::White, const AuxPort::Time::TimeType &amp;timeType=AuxPort::Time::TimeType::time)</div><div class="ttdoc">Log is a function that allows you to log &quot;string&quot; messages on the console.</div><div class="ttdef"><b>Definition</b> AuxLog.h:165</div></div>
-</div><!-- fragment --> </div><h2 class="groupheader">Member Function Documentation</h2>
+<div class="ttc" id="aclass_aux_port_1_1_logger_html_a0dba11dd22f027fc58157afa4e1d3463"><div class="ttname"><a href="#a0dba11dd22f027fc58157afa4e1d3463">AuxPort::Logger::Log</a></div><div class="ttdeci">static void Log(const T &amp;message, const LogType &amp;logType=LogType::Info, const ColourType &amp;colourType=ColourType::White, const AuxPort::Time::TimeType &amp;timeType=AuxPort::Time::TimeType::time)</div><div class="ttdoc">Log is a function that allows you to log &quot;string&quot; messages on the console.</div><div class="ttdef"><b>Definition</b> <a href="_aux_log_8h_source.html#l00165">AuxLog.h:165</a></div></div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="_aux_log_8h_source.html#l00154">154</a> of file <a class="el" href="_aux_log_8h_source.html">AuxLog.h</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a0f936d4250bad8ae45c3b7e38d48b04b" name="a0f936d4250bad8ae45c3b7e38d48b04b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0f936d4250bad8ae45c3b7e38d48b04b">&#9670;&#160;</a></span>Log() <span class="overload">[1/2]</span></h2>
 
@@ -169,12 +171,14 @@ template&lt;class T &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">messages</td><td>Messages to be logged </td></tr>
-    <tr><td class="paramname">logType</td><td>This tells the function to which type of message is to be logged on the console. (Eg: <a class="el" href="class_aux_port_1_1_error.html">Error</a>, Warning, Success, Info) </td></tr>
+    <tr><td class="paramname">logType</td><td>This tells the function to which type of message is to be logged on the console. (Eg: <a class="el" href="class_aux_port_1_1_error.html" title="This class provides an interface to calculate different types of errors.">Error</a>, Warning, Success, Info) </td></tr>
     <tr><td class="paramname">colourType</td><td>Allows you to choose the colour of your logged message </td></tr>
     <tr><td class="paramname">timeType</td><td>Allows you to choose between different date or time stamps for the logged messages. </td></tr>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="_aux_log_8h_source.html#l00180">180</a> of file <a class="el" href="_aux_log_8h_source.html">AuxLog.h</a>.</p>
 
 </div>
 </div>
@@ -221,18 +225,20 @@ template&lt;class T &gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">message</td><td>Message to be logged </td></tr>
-    <tr><td class="paramname">logType</td><td>This tells the function to which type of message is to be logged on the console. (Eg: <a class="el" href="class_aux_port_1_1_error.html">Error</a>, Warning, Success, Info) </td></tr>
+    <tr><td class="paramname">logType</td><td>This tells the function to which type of message is to be logged on the console. (Eg: <a class="el" href="class_aux_port_1_1_error.html" title="This class provides an interface to calculate different types of errors.">Error</a>, Warning, Success, Info) </td></tr>
     <tr><td class="paramname">colourType</td><td>Allows you to choose the colour of your logged message </td></tr>
     <tr><td class="paramname">timeType</td><td>Allows you to choose between different date or time stamps for the logged messages. </td></tr>
   </table>
   </dd>
 </dl>
 
+<p class="definition">Definition at line <a class="el" href="_aux_log_8h_source.html#l00165">165</a> of file <a class="el" href="_aux_log_8h_source.html">AuxLog.h</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/Log/<a class="el" href="_aux_log_8h_source.html">AuxLog.h</a></li>
-<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/Log/<b>AuxLog.cpp</b></li>
+<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/Log/<a class="el" href="_aux_log_8cpp_source.html">AuxLog.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

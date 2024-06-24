@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">AuxPort<span id="projectnumber">&#160;0.2</span>
    </div>
-   <div id="projectbrief">Modules for Software Development</div>
+   <div id="projectbrief">Modules for Audio Software Development</div>
   </td>
  </tr>
  </tbody>
@@ -104,10 +104,15 @@ $(function(){initNavTree('class_aux_port_1_1_interpolation.html',''); initResiza
   <div class="headertitle"><div class="title">AuxPort::Interpolation Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>This class provides an interface for interpolation.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_aux_math_8h_source.html">AuxMath.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a76a0a75db8fae6c5ba32d611431e88aa" id="r_a76a0a75db8fae6c5ba32d611431e88aa"><td class="memItemLeft" align="right" valign="top"><a id="a76a0a75db8fae6c5ba32d611431e88aa" name="a76a0a75db8fae6c5ba32d611431e88aa"></a>enum class &#160;</td><td class="memItemRight" valign="bottom"><b>Type</b> { <br />
+<tr class="memitem:a76a0a75db8fae6c5ba32d611431e88aa" id="r_a76a0a75db8fae6c5ba32d611431e88aa"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a76a0a75db8fae6c5ba32d611431e88aa">Type</a> { <br />
 &#160;&#160;<b>Linear</b>
 , <b>Cubic</b>
 , <b>Cosine</b>
@@ -116,29 +121,181 @@ Public Types</h2></td></tr>
 &#160;&#160;<b>Newton</b>
 <br />
  }</td></tr>
+<tr class="memdesc:a76a0a75db8fae6c5ba32d611431e88aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the type of interpolation.  <a href="#a76a0a75db8fae6c5ba32d611431e88aa">More...</a><br /></td></tr>
 <tr class="separator:a76a0a75db8fae6c5ba32d611431e88aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:aa0a2a47251d33d23745d06f15b096c78" id="r_aa0a2a47251d33d23745d06f15b096c78"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0a2a47251d33d23745d06f15b096c78">Interpolation</a> ()</td></tr>
+<tr class="memdesc:aa0a2a47251d33d23745d06f15b096c78"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. Initializes the object with default type as Linear <a class="el" href="class_aux_port_1_1_interpolation.html" title="This class provides an interface for interpolation.">Interpolation</a>.  <br /></td></tr>
+<tr class="separator:aa0a2a47251d33d23745d06f15b096c78"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5b553a987a2798407945dbab9f8c117d" id="r_a5b553a987a2798407945dbab9f8c117d"><td class="memItemLeft" align="right" valign="top"><a id="a5b553a987a2798407945dbab9f8c117d" name="a5b553a987a2798407945dbab9f8c117d"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Interpolation</b> (const <a class="el" href="class_aux_port_1_1_interpolation.html">Interpolation</a> &amp;interpolation)=default</td></tr>
 <tr class="separator:a5b553a987a2798407945dbab9f8c117d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae8a90b49839eed27ba0c4900ff615584" id="r_ae8a90b49839eed27ba0c4900ff615584"><td class="memItemLeft" align="right" valign="top"><a id="ae8a90b49839eed27ba0c4900ff615584" name="ae8a90b49839eed27ba0c4900ff615584"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setType</b> (Type type)</td></tr>
+<tr class="memitem:ae8a90b49839eed27ba0c4900ff615584" id="r_ae8a90b49839eed27ba0c4900ff615584"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae8a90b49839eed27ba0c4900ff615584">setType</a> (<a class="el" href="#a76a0a75db8fae6c5ba32d611431e88aa">Type</a> type)</td></tr>
+<tr class="memdesc:ae8a90b49839eed27ba0c4900ff615584"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the type of interpoaltion.  <br /></td></tr>
 <tr class="separator:ae8a90b49839eed27ba0c4900ff615584"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae85453f6f4e368f0dda45fa48a0f7096" id="r_ae85453f6f4e368f0dda45fa48a0f7096"><td class="memItemLeft" align="right" valign="top"><a id="ae85453f6f4e368f0dda45fa48a0f7096" name="ae85453f6f4e368f0dda45fa48a0f7096"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setXValues</b> (float start, float end, float delta)</td></tr>
+<tr class="memitem:ae85453f6f4e368f0dda45fa48a0f7096" id="r_ae85453f6f4e368f0dda45fa48a0f7096"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae85453f6f4e368f0dda45fa48a0f7096">setXValues</a> (float start, float end, float delta)</td></tr>
+<tr class="memdesc:ae85453f6f4e368f0dda45fa48a0f7096"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use this function to provide the x coordinates of the points where the function's value in known.  <br /></td></tr>
 <tr class="separator:ae85453f6f4e368f0dda45fa48a0f7096"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0daade98597109b9355ea32837ab0673" id="r_a0daade98597109b9355ea32837ab0673"><td class="memItemLeft" align="right" valign="top"><a id="a0daade98597109b9355ea32837ab0673" name="a0daade98597109b9355ea32837ab0673"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setYValues</b> (const std::vector&lt; float &gt; yValues)</td></tr>
+<tr class="memitem:a0daade98597109b9355ea32837ab0673" id="r_a0daade98597109b9355ea32837ab0673"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0daade98597109b9355ea32837ab0673">setYValues</a> (const std::vector&lt; float &gt; yValues)</td></tr>
+<tr class="memdesc:a0daade98597109b9355ea32837ab0673"><td class="mdescLeft">&#160;</td><td class="mdescRight">Use this function to set the function's valuesat the given X coordinates.  <br /></td></tr>
 <tr class="separator:a0daade98597109b9355ea32837ab0673"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d8a2653e1769e8e9b42bdcd4a2f3ebc" id="r_a4d8a2653e1769e8e9b42bdcd4a2f3ebc"><td class="memItemLeft" align="right" valign="top"><a id="a4d8a2653e1769e8e9b42bdcd4a2f3ebc" name="a4d8a2653e1769e8e9b42bdcd4a2f3ebc"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>polate</b> (float val)</td></tr>
+<tr class="memitem:a4d8a2653e1769e8e9b42bdcd4a2f3ebc" id="r_a4d8a2653e1769e8e9b42bdcd4a2f3ebc"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d8a2653e1769e8e9b42bdcd4a2f3ebc">polate</a> (float val)</td></tr>
+<tr class="memdesc:a4d8a2653e1769e8e9b42bdcd4a2f3ebc"><td class="mdescLeft">&#160;</td><td class="mdescRight">This function interpolated the function's value at the given x-value.  <br /></td></tr>
 <tr class="separator:a4d8a2653e1769e8e9b42bdcd4a2f3ebc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>This class provides an interface for interpolation. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_math_8h_source.html#l00127">127</a> of file <a class="el" href="_aux_math_8h_source.html">AuxMath.h</a>.</p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a76a0a75db8fae6c5ba32d611431e88aa" name="a76a0a75db8fae6c5ba32d611431e88aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76a0a75db8fae6c5ba32d611431e88aa">&#9670;&#160;</a></span>Type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#a76a0a75db8fae6c5ba32d611431e88aa">AuxPort::Interpolation::Type</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Specifies the type of interpolation. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_math_8h_source.html#l00133">133</a> of file <a class="el" href="_aux_math_8h_source.html">AuxMath.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aa0a2a47251d33d23745d06f15b096c78" name="aa0a2a47251d33d23745d06f15b096c78"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0a2a47251d33d23745d06f15b096c78">&#9670;&#160;</a></span>Interpolation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">AuxPort::Interpolation::Interpolation </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Default Constructor. Initializes the object with default type as Linear <a class="el" href="class_aux_port_1_1_interpolation.html" title="This class provides an interface for interpolation.">Interpolation</a>. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_math_8cpp_source.html#l00003">3</a> of file <a class="el" href="_aux_math_8cpp_source.html">AuxMath.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a4d8a2653e1769e8e9b42bdcd4a2f3ebc" name="a4d8a2653e1769e8e9b42bdcd4a2f3ebc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d8a2653e1769e8e9b42bdcd4a2f3ebc">&#9670;&#160;</a></span>polate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float AuxPort::Interpolation::polate </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>val</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This function interpolated the function's value at the given x-value. </p>
+<dl class="section note"><dt>Note</dt><dd>val should be in the range [start, end] </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_aux_math_8cpp_source.html#l00032">32</a> of file <a class="el" href="_aux_math_8cpp_source.html">AuxMath.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae8a90b49839eed27ba0c4900ff615584" name="ae8a90b49839eed27ba0c4900ff615584"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8a90b49839eed27ba0c4900ff615584">&#9670;&#160;</a></span>setType()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Interpolation::setType </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a76a0a75db8fae6c5ba32d611431e88aa">Type</a></td>          <td class="paramname"><span class="paramname"><em>type</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the type of interpoaltion. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_math_8cpp_source.html#l00009">9</a> of file <a class="el" href="_aux_math_8cpp_source.html">AuxMath.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae85453f6f4e368f0dda45fa48a0f7096" name="ae85453f6f4e368f0dda45fa48a0f7096"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae85453f6f4e368f0dda45fa48a0f7096">&#9670;&#160;</a></span>setXValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Interpolation::setXValues </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>start</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>end</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>delta</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Use this function to provide the x coordinates of the points where the function's value in known. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_math_8cpp_source.html#l00014">14</a> of file <a class="el" href="_aux_math_8cpp_source.html">AuxMath.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a0daade98597109b9355ea32837ab0673" name="a0daade98597109b9355ea32837ab0673"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0daade98597109b9355ea32837ab0673">&#9670;&#160;</a></span>setYValues()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Interpolation::setYValues </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; float &gt;</td>          <td class="paramname"><span class="paramname"><em>yValues</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Use this function to set the function's valuesat the given X coordinates. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_math_8cpp_source.html#l00025">25</a> of file <a class="el" href="_aux_math_8cpp_source.html">AuxMath.cpp</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/Utility/<a class="el" href="_aux_math_8h_source.html">AuxMath.h</a></li>
-<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/Utility/<b>AuxMath.cpp</b></li>
+<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/Utility/<a class="el" href="_aux_math_8cpp_source.html">AuxMath.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">AuxPort<span id="projectnumber">&#160;0.2</span>
    </div>
-   <div id="projectbrief">Modules for Software Development</div>
+   <div id="projectbrief">Modules for Audio Software Development</div>
   </td>
  </tr>
  </tbody>
@@ -114,28 +114,139 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a71d217c6e24acccec256f2d143e4dec7" id="r_a71d217c6e24acccec256f2d143e4dec7"><td class="memItemLeft" align="right" valign="top"><a id="a71d217c6e24acccec256f2d143e4dec7" name="a71d217c6e24acccec256f2d143e4dec7"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>Terms</b> (const <a class="el" href="class_aux_port_1_1_terms.html">Terms</a> &amp;terms)=default</td></tr>
 <tr class="separator:a71d217c6e24acccec256f2d143e4dec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa86dd62ab315f3dd75a4fa25b90e150e" id="r_aa86dd62ab315f3dd75a4fa25b90e150e"><td class="memItemLeft" align="right" valign="top"><a id="aa86dd62ab315f3dd75a4fa25b90e150e" name="aa86dd62ab315f3dd75a4fa25b90e150e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>computePowers</b> (float sample, uint32_t powers)</td></tr>
-<tr class="memdesc:aa86dd62ab315f3dd75a4fa25b90e150e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the powers of the given sample (from sample^0 to sample^powers). The computed powers are stored in the internal vector. <br /></td></tr>
+<tr class="memitem:aa86dd62ab315f3dd75a4fa25b90e150e" id="r_aa86dd62ab315f3dd75a4fa25b90e150e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa86dd62ab315f3dd75a4fa25b90e150e">computePowers</a> (float sample, uint32_t powers)</td></tr>
+<tr class="memdesc:aa86dd62ab315f3dd75a4fa25b90e150e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the powers of the given sample (from sample^0 to sample^powers). The computed powers are stored in the internal vector.  <br /></td></tr>
 <tr class="separator:aa86dd62ab315f3dd75a4fa25b90e150e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8372411267a8255390f3292e0dca1f74" id="r_a8372411267a8255390f3292e0dca1f74"><td class="memItemLeft" align="right" valign="top"><a id="a8372411267a8255390f3292e0dca1f74" name="a8372411267a8255390f3292e0dca1f74"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>computeAdditionalPowers</b> (uint32_t start, uint32_t end)</td></tr>
-<tr class="memdesc:a8372411267a8255390f3292e0dca1f74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the additional powers of the given sample. <br /></td></tr>
+<tr class="memitem:a8372411267a8255390f3292e0dca1f74" id="r_a8372411267a8255390f3292e0dca1f74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8372411267a8255390f3292e0dca1f74">computeAdditionalPowers</a> (uint32_t start, uint32_t end)</td></tr>
+<tr class="memdesc:a8372411267a8255390f3292e0dca1f74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Computes the additional powers of the given sample.  <br /></td></tr>
 <tr class="separator:a8372411267a8255390f3292e0dca1f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b11ee61d580ddf396165cc0a1cb8fc3" id="r_a4b11ee61d580ddf396165cc0a1cb8fc3"><td class="memItemLeft" align="right" valign="top"><a id="a4b11ee61d580ddf396165cc0a1cb8fc3" name="a4b11ee61d580ddf396165cc0a1cb8fc3"></a>
-std::vector&lt; float &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getInternalVector</b> ()</td></tr>
-<tr class="memdesc:a4b11ee61d580ddf396165cc0a1cb8fc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a refrence to the internal vector which contains the calculated powers. <br /></td></tr>
+<tr class="memitem:a4b11ee61d580ddf396165cc0a1cb8fc3" id="r_a4b11ee61d580ddf396165cc0a1cb8fc3"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4b11ee61d580ddf396165cc0a1cb8fc3">getInternalVector</a> ()</td></tr>
+<tr class="memdesc:a4b11ee61d580ddf396165cc0a1cb8fc3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a refrence to the internal vector which contains the calculated powers.  <br /></td></tr>
 <tr class="separator:a4b11ee61d580ddf396165cc0a1cb8fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a520940a76e57168a2b5997846d1ccdb5" id="r_a520940a76e57168a2b5997846d1ccdb5"><td class="memItemLeft" align="right" valign="top"><a id="a520940a76e57168a2b5997846d1ccdb5" name="a520940a76e57168a2b5997846d1ccdb5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>swap</b> (<a class="el" href="class_aux_port_1_1_terms.html">Terms</a> &amp;term)</td></tr>
-<tr class="memdesc:a520940a76e57168a2b5997846d1ccdb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the contents with another Term Object. <br /></td></tr>
+<tr class="memitem:a520940a76e57168a2b5997846d1ccdb5" id="r_a520940a76e57168a2b5997846d1ccdb5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a520940a76e57168a2b5997846d1ccdb5">swap</a> (<a class="el" href="class_aux_port_1_1_terms.html">Terms</a> &amp;term)</td></tr>
+<tr class="memdesc:a520940a76e57168a2b5997846d1ccdb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Swaps the contents with another Term Object.  <br /></td></tr>
 <tr class="separator:a520940a76e57168a2b5997846d1ccdb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class provides functionality to compute and manage powers of a given sample. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+
+<p class="definition">Definition at line <a class="el" href="_aux_utility_8h_source.html#l00388">388</a> of file <a class="el" href="_aux_utility_8h_source.html">AuxUtility.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a0b2ae12a2d56b25fc8aa455115014897" name="a0b2ae12a2d56b25fc8aa455115014897"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b2ae12a2d56b25fc8aa455115014897">&#9670;&#160;</a></span>Terms()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">AuxPort::Terms::Terms </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_utility_8cpp_source.html#l00061">61</a> of file <a class="el" href="_aux_utility_8cpp_source.html">AuxUtility.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8372411267a8255390f3292e0dca1f74" name="a8372411267a8255390f3292e0dca1f74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8372411267a8255390f3292e0dca1f74">&#9670;&#160;</a></span>computeAdditionalPowers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Terms::computeAdditionalPowers </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>start</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>end</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes the additional powers of the given sample. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_utility_8cpp_source.html#l00075">75</a> of file <a class="el" href="_aux_utility_8cpp_source.html">AuxUtility.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa86dd62ab315f3dd75a4fa25b90e150e" name="aa86dd62ab315f3dd75a4fa25b90e150e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa86dd62ab315f3dd75a4fa25b90e150e">&#9670;&#160;</a></span>computePowers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Terms::computePowers </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>sample</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>powers</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Computes the powers of the given sample (from sample^0 to sample^powers). The computed powers are stored in the internal vector. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_utility_8cpp_source.html#l00066">66</a> of file <a class="el" href="_aux_utility_8cpp_source.html">AuxUtility.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a4b11ee61d580ddf396165cc0a1cb8fc3" name="a4b11ee61d580ddf396165cc0a1cb8fc3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b11ee61d580ddf396165cc0a1cb8fc3">&#9670;&#160;</a></span>getInternalVector()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; float &gt; &amp; AuxPort::Terms::getInternalVector </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a refrence to the internal vector which contains the calculated powers. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_utility_8cpp_source.html#l00083">83</a> of file <a class="el" href="_aux_utility_8cpp_source.html">AuxUtility.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a520940a76e57168a2b5997846d1ccdb5" name="a520940a76e57168a2b5997846d1ccdb5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a520940a76e57168a2b5997846d1ccdb5">&#9670;&#160;</a></span>swap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Terms::swap </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_aux_port_1_1_terms.html">Terms</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>term</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Swaps the contents with another Term Object. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_utility_8cpp_source.html#l00088">88</a> of file <a class="el" href="_aux_utility_8cpp_source.html">AuxUtility.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/Utility/<a class="el" href="_aux_utility_8h_source.html">AuxUtility.h</a></li>
-<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/Utility/<b>AuxUtility.cpp</b></li>
+<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/Utility/<a class="el" href="_aux_utility_8cpp_source.html">AuxUtility.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

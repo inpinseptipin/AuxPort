@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">AuxPort<span id="projectnumber">&#160;0.2</span>
    </div>
-   <div id="projectbrief">Modules for Software Development</div>
+   <div id="projectbrief">Modules for Audio Software Development</div>
   </td>
  </tr>
  </tbody>
@@ -112,9 +112,9 @@ $(function(){initNavTree('class_aux_port_1_1_audio_1_1_i_i_r_1_1_general.html','
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:aa1c836cf7c76342a57c85f96f595fa26" id="r_aa1c836cf7c76342a57c85f96f595fa26"><td class="memItemLeft" align="right" valign="top"><a id="aa1c836cf7c76342a57c85f96f595fa26" name="aa1c836cf7c76342a57c85f96f595fa26"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1c836cf7c76342a57c85f96f595fa26">Type</a> { <b>HighShelf</b>
+<tr class="memitem:aa1c836cf7c76342a57c85f96f595fa26" id="r_aa1c836cf7c76342a57c85f96f595fa26"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1c836cf7c76342a57c85f96f595fa26">Type</a> { <b>HighShelf</b>
  }</td></tr>
-<tr class="memdesc:aa1c836cf7c76342a57c85f96f595fa26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the type of Filter. <br /></td></tr>
+<tr class="memdesc:aa1c836cf7c76342a57c85f96f595fa26"><td class="mdescLeft">&#160;</td><td class="mdescRight">Specifies the type of Filter.  <a href="#aa1c836cf7c76342a57c85f96f595fa26">More...</a><br /></td></tr>
 <tr class="separator:aa1c836cf7c76342a57c85f96f595fa26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -122,20 +122,121 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:abc243aa1689c1a738dcf256648b3c91a" id="r_abc243aa1689c1a738dcf256648b3c91a"><td class="memItemLeft" align="right" valign="top"><a id="abc243aa1689c1a738dcf256648b3c91a" name="abc243aa1689c1a738dcf256648b3c91a"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>General</b> (const <a class="el" href="class_aux_port_1_1_audio_1_1_i_i_r_1_1_general.html">General</a> &amp;general)=default</td></tr>
 <tr class="separator:abc243aa1689c1a738dcf256648b3c91a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16e56e95e6a6b823cf4fa3f20fd23448" id="r_a16e56e95e6a6b823cf4fa3f20fd23448"><td class="memItemLeft" align="right" valign="top"><a id="a16e56e95e6a6b823cf4fa3f20fd23448" name="a16e56e95e6a6b823cf4fa3f20fd23448"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>prepareToPlay</b> (float fc, float q, float boost, float sampleRate, <a class="el" href="#aa1c836cf7c76342a57c85f96f595fa26">Type</a> type=Type::HighShelf)</td></tr>
-<tr class="memdesc:a16e56e95e6a6b823cf4fa3f20fd23448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares the <a class="el" href="namespace_aux_port_1_1_audio_1_1_i_i_r.html" title="This namespace contains IIR Filter Classes.">IIR</a> Filter for playback. <br /></td></tr>
+<tr class="memitem:a16e56e95e6a6b823cf4fa3f20fd23448" id="r_a16e56e95e6a6b823cf4fa3f20fd23448"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16e56e95e6a6b823cf4fa3f20fd23448">prepareToPlay</a> (float fc, float q, float boost, float sampleRate, <a class="el" href="#aa1c836cf7c76342a57c85f96f595fa26">Type</a> type=Type::HighShelf)</td></tr>
+<tr class="memdesc:a16e56e95e6a6b823cf4fa3f20fd23448"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares the <a class="el" href="namespace_aux_port_1_1_audio_1_1_i_i_r.html" title="This namespace contains IIR Filter Classes.">IIR</a> Filter for playback.  <br /></td></tr>
 <tr class="separator:a16e56e95e6a6b823cf4fa3f20fd23448"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae334f99e11ccacd74ea79658557f4aa9" id="r_ae334f99e11ccacd74ea79658557f4aa9"><td class="memItemLeft" align="right" valign="top"><a id="ae334f99e11ccacd74ea79658557f4aa9" name="ae334f99e11ccacd74ea79658557f4aa9"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>processSample</b> (float sample)</td></tr>
-<tr class="memdesc:ae334f99e11ccacd74ea79658557f4aa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the sample after applying <a class="el" href="namespace_aux_port_1_1_audio_1_1_i_i_r.html" title="This namespace contains IIR Filter Classes.">IIR</a> Filter to it. <br /></td></tr>
+<tr class="memitem:ae334f99e11ccacd74ea79658557f4aa9" id="r_ae334f99e11ccacd74ea79658557f4aa9"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae334f99e11ccacd74ea79658557f4aa9">processSample</a> (float sample)</td></tr>
+<tr class="memdesc:ae334f99e11ccacd74ea79658557f4aa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the sample after applying <a class="el" href="namespace_aux_port_1_1_audio_1_1_i_i_r.html" title="This namespace contains IIR Filter Classes.">IIR</a> Filter to it.  <br /></td></tr>
 <tr class="separator:ae334f99e11ccacd74ea79658557f4aa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="namespace_aux_port_1_1_audio_1_1_i_i_r.html" title="This namespace contains IIR Filter Classes.">IIR</a> Filter Algorithms that are not part of a filterbank. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+
+<p class="definition">Definition at line <a class="el" href="_aux_i_i_r_8h_source.html#l00171">171</a> of file <a class="el" href="_aux_i_i_r_8h_source.html">AuxIIR.h</a>.</p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="aa1c836cf7c76342a57c85f96f595fa26" name="aa1c836cf7c76342a57c85f96f595fa26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1c836cf7c76342a57c85f96f595fa26">&#9670;&#160;</a></span>Type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#aa1c836cf7c76342a57c85f96f595fa26">AuxPort::Audio::IIR::General::Type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Specifies the type of Filter. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_i_i_r_8h_source.html#l00177">177</a> of file <a class="el" href="_aux_i_i_r_8h_source.html">AuxIIR.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a18eb854734be84e0c222962d8651d906" name="a18eb854734be84e0c222962d8651d906"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18eb854734be84e0c222962d8651d906">&#9670;&#160;</a></span>General()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">AuxPort::Audio::IIR::General::General </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_i_i_r_8cpp_source.html#l00399">399</a> of file <a class="el" href="_aux_i_i_r_8cpp_source.html">AuxIIR.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a16e56e95e6a6b823cf4fa3f20fd23448" name="a16e56e95e6a6b823cf4fa3f20fd23448"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a16e56e95e6a6b823cf4fa3f20fd23448">&#9670;&#160;</a></span>prepareToPlay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Audio::IIR::General::prepareToPlay </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>fc</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>q</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>boost</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>sampleRate</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#aa1c836cf7c76342a57c85f96f595fa26">Type</a></td>          <td class="paramname"><span class="paramname"><em>type</em></span><span class="paramdefsep"> = </span><span class="paramdefval">Type::HighShelf</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prepares the <a class="el" href="namespace_aux_port_1_1_audio_1_1_i_i_r.html" title="This namespace contains IIR Filter Classes.">IIR</a> Filter for playback. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_i_i_r_8cpp_source.html#l00409">409</a> of file <a class="el" href="_aux_i_i_r_8cpp_source.html">AuxIIR.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae334f99e11ccacd74ea79658557f4aa9" name="ae334f99e11ccacd74ea79658557f4aa9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae334f99e11ccacd74ea79658557f4aa9">&#9670;&#160;</a></span>processSample()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float AuxPort::Audio::IIR::General::processSample </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>sample</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the sample after applying <a class="el" href="namespace_aux_port_1_1_audio_1_1_i_i_r.html" title="This namespace contains IIR Filter Classes.">IIR</a> Filter to it. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_i_i_r_8cpp_source.html#l00431">431</a> of file <a class="el" href="_aux_i_i_r_8cpp_source.html">AuxIIR.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/Filters/<a class="el" href="_aux_i_i_r_8h_source.html">AuxIIR.h</a></li>
-<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/Filters/<b>AuxIIR.cpp</b></li>
+<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/Filters/<a class="el" href="_aux_i_i_r_8cpp_source.html">AuxIIR.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

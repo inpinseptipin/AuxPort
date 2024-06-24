@@ -4,7 +4,7 @@ var searchData=
   ['ilog_1',['ILog',['../class_aux_port_1_1_i_log.html',1,'AuxPort']]],
   ['incrementindex_2',['incrementIndex',['../class_aux_port_1_1_circular_buffer.html#ad1d21ad22b2a40fcddef7d60fa3cef24',1,'AuxPort::CircularBuffer']]],
   ['init_3',['init',['../namespace_aux_test_1_1_unit_tests_1_1_string.html#ab0750688899072fb629b59bfa92c3416',1,'AuxTest::UnitTests::String']]],
-  ['interpolation_4',['Interpolation',['../class_aux_port_1_1_interpolation.html',1,'AuxPort']]],
+  ['interpolation_4',['Interpolation',['../class_aux_port_1_1_interpolation.html',1,'AuxPort::Interpolation'],['../class_aux_port_1_1_interpolation.html#aa0a2a47251d33d23745d06f15b096c78',1,'AuxPort::Interpolation::Interpolation()']]],
   ['is32bit_5',['is32Bit',['../class_aux_port_1_1_env.html#a4f830ec9e4b35e505e5d4ae7d521a670',1,'AuxPort::Env']]],
   ['is64bit_6',['is64Bit',['../class_aux_port_1_1_env.html#a629fa07c1872f8468f424c02a44ffd9f',1,'AuxPort::Env']]],
   ['islinuxos_7',['isLinuxOS',['../class_aux_port_1_1_env.html#a37b72702ade326cee88a8faf8fdfe8ad',1,'AuxPort::Env']]],

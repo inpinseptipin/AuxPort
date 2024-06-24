@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">AuxPort<span id="projectnumber">&#160;0.2</span>
    </div>
-   <div id="projectbrief">Modules for Software Development</div>
+   <div id="projectbrief">Modules for Audio Software Development</div>
   </td>
  </tr>
  </tbody>
@@ -111,36 +111,164 @@ $(function(){initNavTree('class_aux_port_1_1_audio_1_1_fourier_transform.html','
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3df94c5a9c341777261abf6d7f1fa447" id="r_a3df94c5a9c341777261abf6d7f1fa447"><td class="memItemLeft" align="right" valign="top"><a id="a3df94c5a9c341777261abf6d7f1fa447" name="a3df94c5a9c341777261abf6d7f1fa447"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>FourierTransform</b> (size_t fftSize)</td></tr>
-<tr class="memdesc:a3df94c5a9c341777261abf6d7f1fa447"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide FFT Size, (Note should be a power of 2). <br /></td></tr>
+<tr class="memitem:a3df94c5a9c341777261abf6d7f1fa447" id="r_a3df94c5a9c341777261abf6d7f1fa447"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3df94c5a9c341777261abf6d7f1fa447">FourierTransform</a> (size_t fftSize)</td></tr>
+<tr class="memdesc:a3df94c5a9c341777261abf6d7f1fa447"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provide FFT Size, (Note should be a power of 2).  <br /></td></tr>
 <tr class="separator:a3df94c5a9c341777261abf6d7f1fa447"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affef5b5e5101f62b7be0a2534ea046ec" id="r_affef5b5e5101f62b7be0a2534ea046ec"><td class="memItemLeft" align="right" valign="top"><a id="affef5b5e5101f62b7be0a2534ea046ec" name="affef5b5e5101f62b7be0a2534ea046ec"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>computeTransform</b> (const std::vector&lt; float &gt; &amp;inputBuffer, std::vector&lt; float &gt; &amp;output)</td></tr>
-<tr class="memdesc:affef5b5e5101f62b7be0a2534ea046ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs FFT on the AudioBuffer passed in the argument and returns an AudioBuffer with FFT Values. <br /></td></tr>
+<tr class="memitem:affef5b5e5101f62b7be0a2534ea046ec" id="r_affef5b5e5101f62b7be0a2534ea046ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#affef5b5e5101f62b7be0a2534ea046ec">computeTransform</a> (const std::vector&lt; float &gt; &amp;inputBuffer, std::vector&lt; float &gt; &amp;output)</td></tr>
+<tr class="memdesc:affef5b5e5101f62b7be0a2534ea046ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs FFT on the AudioBuffer passed in the argument and returns an AudioBuffer with FFT Values.  <br /></td></tr>
 <tr class="separator:affef5b5e5101f62b7be0a2534ea046ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b51b9f50c8f33363c0c38ff3ed8452b" id="r_a5b51b9f50c8f33363c0c38ff3ed8452b"><td class="memItemLeft" align="right" valign="top"><a id="a5b51b9f50c8f33363c0c38ff3ed8452b" name="a5b51b9f50c8f33363c0c38ff3ed8452b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>computeInverseTransform</b> (std::vector&lt; float &gt; &amp;outputBuffer)</td></tr>
-<tr class="memdesc:a5b51b9f50c8f33363c0c38ff3ed8452b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs in place IFFT. <br /></td></tr>
+<tr class="memitem:a5b51b9f50c8f33363c0c38ff3ed8452b" id="r_a5b51b9f50c8f33363c0c38ff3ed8452b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5b51b9f50c8f33363c0c38ff3ed8452b">computeInverseTransform</a> (std::vector&lt; float &gt; &amp;outputBuffer)</td></tr>
+<tr class="memdesc:a5b51b9f50c8f33363c0c38ff3ed8452b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs in place IFFT.  <br /></td></tr>
 <tr class="separator:a5b51b9f50c8f33363c0c38ff3ed8452b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8b3f973e87e00c9822452b87ec74e42" id="r_aa8b3f973e87e00c9822452b87ec74e42"><td class="memItemLeft" align="right" valign="top"><a id="aa8b3f973e87e00c9822452b87ec74e42" name="aa8b3f973e87e00c9822452b87ec74e42"></a>
-std::complex&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>get</b> (size_t index) const</td></tr>
-<tr class="memdesc:aa8b3f973e87e00c9822452b87ec74e42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs in-place FFT. <br /></td></tr>
+<tr class="memitem:aa8b3f973e87e00c9822452b87ec74e42" id="r_aa8b3f973e87e00c9822452b87ec74e42"><td class="memItemLeft" align="right" valign="top">std::complex&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa8b3f973e87e00c9822452b87ec74e42">get</a> (size_t index) const</td></tr>
+<tr class="memdesc:aa8b3f973e87e00c9822452b87ec74e42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs in-place FFT.  <br /></td></tr>
 <tr class="separator:aa8b3f973e87e00c9822452b87ec74e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac54d62b4a6bec6223cd24af38383da6c" id="r_ac54d62b4a6bec6223cd24af38383da6c"><td class="memItemLeft" align="right" valign="top"><a id="ac54d62b4a6bec6223cd24af38383da6c" name="ac54d62b4a6bec6223cd24af38383da6c"></a>
-std::vector&lt; std::complex&lt; float &gt; &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>getFourierTransformFrame</b> ()</td></tr>
-<tr class="memdesc:ac54d62b4a6bec6223cd24af38383da6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pointer to the Fourier Transform Vector. <br /></td></tr>
+<tr class="memitem:ac54d62b4a6bec6223cd24af38383da6c" id="r_ac54d62b4a6bec6223cd24af38383da6c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::complex&lt; float &gt; &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac54d62b4a6bec6223cd24af38383da6c">getFourierTransformFrame</a> ()</td></tr>
+<tr class="memdesc:ac54d62b4a6bec6223cd24af38383da6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the pointer to the Fourier Transform Vector.  <br /></td></tr>
 <tr class="separator:ac54d62b4a6bec6223cd24af38383da6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa1dc96ff69af836475a370f058d217f9" id="r_aa1dc96ff69af836475a370f058d217f9"><td class="memItemLeft" align="right" valign="top"><a id="aa1dc96ff69af836475a370f058d217f9" name="aa1dc96ff69af836475a370f058d217f9"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>size</b> () const</td></tr>
-<tr class="memdesc:aa1dc96ff69af836475a370f058d217f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the size. <br /></td></tr>
+<tr class="memitem:aa1dc96ff69af836475a370f058d217f9" id="r_aa1dc96ff69af836475a370f058d217f9"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1dc96ff69af836475a370f058d217f9">size</a> () const</td></tr>
+<tr class="memdesc:aa1dc96ff69af836475a370f058d217f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the size.  <br /></td></tr>
 <tr class="separator:aa1dc96ff69af836475a370f058d217f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementation of Fast Fourier Transform based on optimized Cooley-Tukey Algorithm. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_f_t_8h_source.html#l00051">51</a> of file <a class="el" href="_aux_f_f_t_8h_source.html">AuxFFT.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a3df94c5a9c341777261abf6d7f1fa447" name="a3df94c5a9c341777261abf6d7f1fa447"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3df94c5a9c341777261abf6d7f1fa447">&#9670;&#160;</a></span>FourierTransform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">AuxPort::Audio::FourierTransform::FourierTransform </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>fftSize</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Provide FFT Size, (Note should be a power of 2). </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_f_t_8cpp_source.html#l00003">3</a> of file <a class="el" href="_aux_f_f_t_8cpp_source.html">AuxFFT.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5b51b9f50c8f33363c0c38ff3ed8452b" name="a5b51b9f50c8f33363c0c38ff3ed8452b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b51b9f50c8f33363c0c38ff3ed8452b">&#9670;&#160;</a></span>computeInverseTransform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Audio::FourierTransform::computeInverseTransform </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; float &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>outputBuffer</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Performs in place IFFT. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_f_t_8cpp_source.html#l00022">22</a> of file <a class="el" href="_aux_f_f_t_8cpp_source.html">AuxFFT.cpp</a>.</p>
+
+</div>
+</div>
+<a id="affef5b5e5101f62b7be0a2534ea046ec" name="affef5b5e5101f62b7be0a2534ea046ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#affef5b5e5101f62b7be0a2534ea046ec">&#9670;&#160;</a></span>computeTransform()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Audio::FourierTransform::computeTransform </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; float &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>inputBuffer</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; float &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>output</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Performs FFT on the AudioBuffer passed in the argument and returns an AudioBuffer with FFT Values. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_f_t_8cpp_source.html#l00011">11</a> of file <a class="el" href="_aux_f_f_t_8cpp_source.html">AuxFFT.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa8b3f973e87e00c9822452b87ec74e42" name="aa8b3f973e87e00c9822452b87ec74e42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa8b3f973e87e00c9822452b87ec74e42">&#9670;&#160;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::complex&lt; float &gt; AuxPort::Audio::FourierTransform::get </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>index</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Performs in-place FFT. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_f_t_8cpp_source.html#l00033">33</a> of file <a class="el" href="_aux_f_f_t_8cpp_source.html">AuxFFT.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac54d62b4a6bec6223cd24af38383da6c" name="ac54d62b4a6bec6223cd24af38383da6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac54d62b4a6bec6223cd24af38383da6c">&#9670;&#160;</a></span>getFourierTransformFrame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::complex&lt; float &gt; &gt; * AuxPort::Audio::FourierTransform::getFourierTransformFrame </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the pointer to the Fourier Transform Vector. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_f_t_8cpp_source.html#l00038">38</a> of file <a class="el" href="_aux_f_f_t_8cpp_source.html">AuxFFT.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa1dc96ff69af836475a370f058d217f9" name="aa1dc96ff69af836475a370f058d217f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1dc96ff69af836475a370f058d217f9">&#9670;&#160;</a></span>size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t AuxPort::Audio::FourierTransform::size </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the size. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_f_t_8cpp_source.html#l00043">43</a> of file <a class="el" href="_aux_f_f_t_8cpp_source.html">AuxFFT.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/FFT/<a class="el" href="_aux_f_f_t_8h_source.html">AuxFFT.h</a></li>
-<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/FFT/<b>AuxFFT.cpp</b></li>
+<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/FFT/<a class="el" href="_aux_f_f_t_8cpp_source.html">AuxFFT.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

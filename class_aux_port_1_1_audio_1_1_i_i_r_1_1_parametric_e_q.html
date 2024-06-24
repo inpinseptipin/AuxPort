@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">AuxPort<span id="projectnumber">&#160;0.2</span>
    </div>
-   <div id="projectbrief">Modules for Software Development</div>
+   <div id="projectbrief">Modules for Audio Software Development</div>
   </td>
  </tr>
  </tbody>
@@ -114,20 +114,97 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:af5cc7ac90231196e4243d977b615c8fe" id="r_af5cc7ac90231196e4243d977b615c8fe"><td class="memItemLeft" align="right" valign="top"><a id="af5cc7ac90231196e4243d977b615c8fe" name="af5cc7ac90231196e4243d977b615c8fe"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>ParametricEQ</b> (const <a class="el" href="class_aux_port_1_1_audio_1_1_i_i_r_1_1_parametric_e_q.html">ParametricEQ</a> &amp;peq)=default</td></tr>
 <tr class="separator:af5cc7ac90231196e4243d977b615c8fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad736f56f8c2389dc73f9cb70827bbf07" id="r_ad736f56f8c2389dc73f9cb70827bbf07"><td class="memItemLeft" align="right" valign="top"><a id="ad736f56f8c2389dc73f9cb70827bbf07" name="ad736f56f8c2389dc73f9cb70827bbf07"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>prepareToPlay</b> (float fc, float q, float boost, float sampleRate)</td></tr>
-<tr class="memdesc:ad736f56f8c2389dc73f9cb70827bbf07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares the Filter for playback. <br /></td></tr>
+<tr class="memitem:ad736f56f8c2389dc73f9cb70827bbf07" id="r_ad736f56f8c2389dc73f9cb70827bbf07"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad736f56f8c2389dc73f9cb70827bbf07">prepareToPlay</a> (float fc, float q, float boost, float sampleRate)</td></tr>
+<tr class="memdesc:ad736f56f8c2389dc73f9cb70827bbf07"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares the Filter for playback.  <br /></td></tr>
 <tr class="separator:ad736f56f8c2389dc73f9cb70827bbf07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f44ee69d683a73cba5b897302d9be80" id="r_a6f44ee69d683a73cba5b897302d9be80"><td class="memItemLeft" align="right" valign="top"><a id="a6f44ee69d683a73cba5b897302d9be80" name="a6f44ee69d683a73cba5b897302d9be80"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>processSample</b> (float sample)</td></tr>
-<tr class="memdesc:a6f44ee69d683a73cba5b897302d9be80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the sample after applying Filter to it. <br /></td></tr>
+<tr class="memitem:a6f44ee69d683a73cba5b897302d9be80" id="r_a6f44ee69d683a73cba5b897302d9be80"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f44ee69d683a73cba5b897302d9be80">processSample</a> (float sample)</td></tr>
+<tr class="memdesc:a6f44ee69d683a73cba5b897302d9be80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the sample after applying Filter to it.  <br /></td></tr>
 <tr class="separator:a6f44ee69d683a73cba5b897302d9be80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A 2nd Order Parameteric EQ to generate bandpeak and bandreject filters. </p>
-</div><hr/>The documentation for this class was generated from the following files:<ul>
+
+<p class="definition">Definition at line <a class="el" href="_aux_i_i_r_8h_source.html#l00102">102</a> of file <a class="el" href="_aux_i_i_r_8h_source.html">AuxIIR.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a20e5c88059016bfde8b8749edf302976" name="a20e5c88059016bfde8b8749edf302976"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20e5c88059016bfde8b8749edf302976">&#9670;&#160;</a></span>ParametricEQ()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">AuxPort::Audio::IIR::ParametricEQ::ParametricEQ </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_i_i_r_8cpp_source.html#l00317">317</a> of file <a class="el" href="_aux_i_i_r_8cpp_source.html">AuxIIR.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ad736f56f8c2389dc73f9cb70827bbf07" name="ad736f56f8c2389dc73f9cb70827bbf07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad736f56f8c2389dc73f9cb70827bbf07">&#9670;&#160;</a></span>prepareToPlay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Audio::IIR::ParametricEQ::prepareToPlay </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>fc</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>q</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>boost</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>sampleRate</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prepares the Filter for playback. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_i_i_r_8cpp_source.html#l00327">327</a> of file <a class="el" href="_aux_i_i_r_8cpp_source.html">AuxIIR.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a6f44ee69d683a73cba5b897302d9be80" name="a6f44ee69d683a73cba5b897302d9be80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f44ee69d683a73cba5b897302d9be80">&#9670;&#160;</a></span>processSample()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float AuxPort::Audio::IIR::ParametricEQ::processSample </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>sample</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the sample after applying Filter to it. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_i_i_r_8cpp_source.html#l00348">348</a> of file <a class="el" href="_aux_i_i_r_8cpp_source.html">AuxIIR.cpp</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/Filters/<a class="el" href="_aux_i_i_r_8h_source.html">AuxIIR.h</a></li>
-<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/Filters/<b>AuxIIR.cpp</b></li>
+<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/Filters/<a class="el" href="_aux_i_i_r_8cpp_source.html">AuxIIR.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

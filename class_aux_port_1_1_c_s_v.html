@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">AuxPort<span id="projectnumber">&#160;0.2</span>
    </div>
-   <div id="projectbrief">Modules for Software Development</div>
+   <div id="projectbrief">Modules for Audio Software Development</div>
   </td>
  </tr>
  </tbody>
@@ -127,9 +127,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aaf26b79cfa68244ad61bcef017a950e7" id="r_aaf26b79cfa68244ad61bcef017a950e7"><td class="memItemLeft" align="right" valign="top"><a id="aaf26b79cfa68244ad61bcef017a950e7" name="aaf26b79cfa68244ad61bcef017a950e7"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>CSV</b> (const <a class="el" href="class_aux_port_1_1_c_s_v.html">CSV</a> &amp;csv)=default</td></tr>
 <tr class="separator:aaf26b79cfa68244ad61bcef017a950e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa7d83fb191f4a23be4a433111882474e" id="r_aa7d83fb191f4a23be4a433111882474e"><td class="memItemLeft" align="right" valign="top"><a id="aa7d83fb191f4a23be4a433111882474e" name="aa7d83fb191f4a23be4a433111882474e"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>open</b> (const std::string &amp;fileName, const <a class="el" href="class_aux_port_1_1_file.html#a1c64cf7976cbee0506f5b9132b5e02d2">Mode</a> &amp;mode=Mode::Read, bool containsHeader=false, const char &amp;delimiter=',', bool log=false)</td></tr>
-<tr class="memdesc:aa7d83fb191f4a23be4a433111882474e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a <a class="el" href="class_aux_port_1_1_c_s_v.html" title="This class provides functionality to read and write CSV Files.">CSV</a> <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a>. <br /></td></tr>
+<tr class="memitem:aa7d83fb191f4a23be4a433111882474e" id="r_aa7d83fb191f4a23be4a433111882474e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa7d83fb191f4a23be4a433111882474e">open</a> (const std::string &amp;fileName, const <a class="el" href="class_aux_port_1_1_file.html#a1c64cf7976cbee0506f5b9132b5e02d2">Mode</a> &amp;mode=Mode::Read, bool containsHeader=false, const char &amp;delimiter=',', bool log=false)</td></tr>
+<tr class="memdesc:aa7d83fb191f4a23be4a433111882474e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a <a class="el" href="class_aux_port_1_1_c_s_v.html" title="This class provides functionality to read and write CSV Files.">CSV</a> <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a>.  <br /></td></tr>
 <tr class="separator:aa7d83fb191f4a23be4a433111882474e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aef654f71b50a881bfb6fbee6a26e42da" id="r_aef654f71b50a881bfb6fbee6a26e42da"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef654f71b50a881bfb6fbee6a26e42da">close</a> (bool log=false)</td></tr>
 <tr class="memdesc:aef654f71b50a881bfb6fbee6a26e42da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the stream to currently opened <a class="el" href="class_aux_port_1_1_c_s_v.html" title="This class provides functionality to read and write CSV Files.">CSV</a> <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a>.  <br /></td></tr>
@@ -165,39 +164,33 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>open</b> (const std::
 <tr class="memitem:afa935ce05022eb53a8ca4e9d496f0ac6 inherit pub_methods_class_aux_port_1_1_text_format" id="r_afa935ce05022eb53a8ca4e9d496f0ac6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#afa935ce05022eb53a8ca4e9d496f0ac6">Log</a> () override</td></tr>
 <tr class="memdesc:afa935ce05022eb53a8ca4e9d496f0ac6 inherit pub_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement this method in the derived class to specify logging behaviour.  <br /></td></tr>
 <tr class="separator:afa935ce05022eb53a8ca4e9d496f0ac6 inherit pub_methods_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a767f7e3e16f8af5733156cd5a5c8b407 inherit pub_methods_class_aux_port_1_1_text_format" id="r_a767f7e3e16f8af5733156cd5a5c8b407"><td class="memItemLeft" align="right" valign="top">
-std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getFormatName</b> ()</td></tr>
-<tr class="memdesc:a767f7e3e16f8af5733156cd5a5c8b407 inherit pub_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the format name. <br /></td></tr>
+<tr class="memitem:a767f7e3e16f8af5733156cd5a5c8b407 inherit pub_methods_class_aux_port_1_1_text_format" id="r_a767f7e3e16f8af5733156cd5a5c8b407"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#a767f7e3e16f8af5733156cd5a5c8b407">getFormatName</a> ()</td></tr>
+<tr class="memdesc:a767f7e3e16f8af5733156cd5a5c8b407 inherit pub_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the format name.  <br /></td></tr>
 <tr class="separator:a767f7e3e16f8af5733156cd5a5c8b407 inherit pub_methods_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8add46d4b6e7383286ca2895a60da662 inherit pub_methods_class_aux_port_1_1_text_format" id="r_a8add46d4b6e7383286ca2895a60da662"><td class="memItemLeft" align="right" valign="top">
-std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getUniqueIdentifier</b> ()</td></tr>
-<tr class="memdesc:a8add46d4b6e7383286ca2895a60da662 inherit pub_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the unique identifier for the text format. <br /></td></tr>
+<tr class="memitem:a8add46d4b6e7383286ca2895a60da662 inherit pub_methods_class_aux_port_1_1_text_format" id="r_a8add46d4b6e7383286ca2895a60da662"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#a8add46d4b6e7383286ca2895a60da662">getUniqueIdentifier</a> ()</td></tr>
+<tr class="memdesc:a8add46d4b6e7383286ca2895a60da662 inherit pub_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the unique identifier for the text format.  <br /></td></tr>
 <tr class="separator:a8add46d4b6e7383286ca2895a60da662 inherit pub_methods_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a077b92c24a2e375df8095f3ce2dabdce inherit pub_methods_class_aux_port_1_1_text_format" id="r_a077b92c24a2e375df8095f3ce2dabdce"><td class="memItemLeft" align="right" valign="top">
-std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getExtensionName</b> ()</td></tr>
-<tr class="memdesc:a077b92c24a2e375df8095f3ce2dabdce inherit pub_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the extension name. <br /></td></tr>
+<tr class="memitem:a077b92c24a2e375df8095f3ce2dabdce inherit pub_methods_class_aux_port_1_1_text_format" id="r_a077b92c24a2e375df8095f3ce2dabdce"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#a077b92c24a2e375df8095f3ce2dabdce">getExtensionName</a> ()</td></tr>
+<tr class="memdesc:a077b92c24a2e375df8095f3ce2dabdce inherit pub_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the extension name.  <br /></td></tr>
 <tr class="separator:a077b92c24a2e375df8095f3ce2dabdce inherit pub_methods_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abecc69095e1bb6f640b22647ee8e7f48 inherit pub_methods_class_aux_port_1_1_text_format" id="r_abecc69095e1bb6f640b22647ee8e7f48"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setExtensionName</b> (const std::string &amp;extensionName)</td></tr>
-<tr class="memdesc:abecc69095e1bb6f640b22647ee8e7f48 inherit pub_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the extension name. <br /></td></tr>
+<tr class="memitem:abecc69095e1bb6f640b22647ee8e7f48 inherit pub_methods_class_aux_port_1_1_text_format" id="r_abecc69095e1bb6f640b22647ee8e7f48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#abecc69095e1bb6f640b22647ee8e7f48">setExtensionName</a> (const std::string &amp;extensionName)</td></tr>
+<tr class="memdesc:abecc69095e1bb6f640b22647ee8e7f48 inherit pub_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the extension name.  <br /></td></tr>
 <tr class="separator:abecc69095e1bb6f640b22647ee8e7f48 inherit pub_methods_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43f588e8e4460adc288139554e761972 inherit pub_methods_class_aux_port_1_1_text_format" id="r_a43f588e8e4460adc288139554e761972"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setUniqueIdentifier</b> (const std::string &amp;uniqueIdentifier)</td></tr>
-<tr class="memdesc:a43f588e8e4460adc288139554e761972 inherit pub_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the unique identifier for the text format. <br /></td></tr>
+<tr class="memitem:a43f588e8e4460adc288139554e761972 inherit pub_methods_class_aux_port_1_1_text_format" id="r_a43f588e8e4460adc288139554e761972"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#a43f588e8e4460adc288139554e761972">setUniqueIdentifier</a> (const std::string &amp;uniqueIdentifier)</td></tr>
+<tr class="memdesc:a43f588e8e4460adc288139554e761972 inherit pub_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the unique identifier for the text format.  <br /></td></tr>
 <tr class="separator:a43f588e8e4460adc288139554e761972 inherit pub_methods_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1037f32d0c75e96ad82377ab98a01da3 inherit pub_methods_class_aux_port_1_1_text_format" id="r_a1037f32d0c75e96ad82377ab98a01da3"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setFormatName</b> (const std::string &amp;formatName)</td></tr>
-<tr class="memdesc:a1037f32d0c75e96ad82377ab98a01da3 inherit pub_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the format name. <br /></td></tr>
+<tr class="memitem:a1037f32d0c75e96ad82377ab98a01da3 inherit pub_methods_class_aux_port_1_1_text_format" id="r_a1037f32d0c75e96ad82377ab98a01da3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#a1037f32d0c75e96ad82377ab98a01da3">setFormatName</a> (const std::string &amp;formatName)</td></tr>
+<tr class="memdesc:a1037f32d0c75e96ad82377ab98a01da3 inherit pub_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the format name.  <br /></td></tr>
 <tr class="separator:a1037f32d0c75e96ad82377ab98a01da3 inherit pub_methods_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_types_class_aux_port_1_1_file"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_types_class_aux_port_1_1_file')"><img src="closed.png" alt="-"/>&#160;Protected Types inherited from <a class="el" href="class_aux_port_1_1_file.html">AuxPort::File</a></td></tr>
-<tr class="memitem:a1c64cf7976cbee0506f5b9132b5e02d2 inherit pro_types_class_aux_port_1_1_file" id="r_a1c64cf7976cbee0506f5b9132b5e02d2"><td class="memItemLeft" align="right" valign="top"><a id="a1c64cf7976cbee0506f5b9132b5e02d2" name="a1c64cf7976cbee0506f5b9132b5e02d2"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_file.html#a1c64cf7976cbee0506f5b9132b5e02d2">Mode</a> { <b>Idle</b> = 0
+<tr class="memitem:a1c64cf7976cbee0506f5b9132b5e02d2 inherit pro_types_class_aux_port_1_1_file" id="r_a1c64cf7976cbee0506f5b9132b5e02d2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_file.html#a1c64cf7976cbee0506f5b9132b5e02d2">Mode</a> { <b>Idle</b> = 0
 , <b>Read</b> = 1
 , <b>Write</b> = 2
  }</td></tr>
-<tr class="memdesc:a1c64cf7976cbee0506f5b9132b5e02d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Easy way to specify the Read/Write behavior of the <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a> Stream. <br /></td></tr>
+<tr class="memdesc:a1c64cf7976cbee0506f5b9132b5e02d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Easy way to specify the Read/Write behavior of the <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a> Stream.  <a href="class_aux_port_1_1_file.html#a1c64cf7976cbee0506f5b9132b5e02d2">More...</a><br /></td></tr>
 <tr class="separator:a1c64cf7976cbee0506f5b9132b5e02d2 inherit pro_types_class_aux_port_1_1_file"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_aux_port_1_1_text_file"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_aux_port_1_1_text_file')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_aux_port_1_1_text_file.html">AuxPort::TextFile</a></td></tr>
 <tr class="memitem:a203bc32ab92625d2a34e88788de52637 inherit pro_methods_class_aux_port_1_1_text_file" id="r_a203bc32ab92625d2a34e88788de52637"><td class="memItemLeft" align="right" valign="top">
@@ -208,17 +201,14 @@ Additional Inherited Members</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>~TextFile</b> ()=default</td></tr>
 <tr class="memdesc:aeacd020b03c75bdd447d589bc549cdc9 inherit pro_methods_class_aux_port_1_1_text_file"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Destructor. <br /></td></tr>
 <tr class="separator:aeacd020b03c75bdd447d589bc549cdc9 inherit pro_methods_class_aux_port_1_1_text_file"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a40bcb77db68498155eece5405a294be7 inherit pro_methods_class_aux_port_1_1_text_file" id="r_a40bcb77db68498155eece5405a294be7"><td class="memItemLeft" align="right" valign="top">
-std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>readFileAsString</b> ()</td></tr>
-<tr class="memdesc:a40bcb77db68498155eece5405a294be7 inherit pro_methods_class_aux_port_1_1_text_file"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the entire text file and saves it in a <a class="el" href="class_aux_port_1_1_string.html" title="Abstraction over C-Style Strings for ease of use.">String</a>. <br /></td></tr>
+<tr class="memitem:a40bcb77db68498155eece5405a294be7 inherit pro_methods_class_aux_port_1_1_text_file" id="r_a40bcb77db68498155eece5405a294be7"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_file.html#a40bcb77db68498155eece5405a294be7">readFileAsString</a> ()</td></tr>
+<tr class="memdesc:a40bcb77db68498155eece5405a294be7 inherit pro_methods_class_aux_port_1_1_text_file"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the entire text file and saves it in a <a class="el" href="class_aux_port_1_1_string.html" title="Abstraction over C-Style Strings for ease of use.">String</a>.  <br /></td></tr>
 <tr class="separator:a40bcb77db68498155eece5405a294be7 inherit pro_methods_class_aux_port_1_1_text_file"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a392914e4ef1492e24819df93dfe4ee51 inherit pro_methods_class_aux_port_1_1_text_file" id="r_a392914e4ef1492e24819df93dfe4ee51"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>writeLineToFile</b> (const std::string &amp;data, bool log=false)</td></tr>
-<tr class="memdesc:a392914e4ef1492e24819df93dfe4ee51 inherit pro_methods_class_aux_port_1_1_text_file"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a line to the Text <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a>. <br /></td></tr>
+<tr class="memitem:a392914e4ef1492e24819df93dfe4ee51 inherit pro_methods_class_aux_port_1_1_text_file" id="r_a392914e4ef1492e24819df93dfe4ee51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_file.html#a392914e4ef1492e24819df93dfe4ee51">writeLineToFile</a> (const std::string &amp;data, bool log=false)</td></tr>
+<tr class="memdesc:a392914e4ef1492e24819df93dfe4ee51 inherit pro_methods_class_aux_port_1_1_text_file"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a line to the Text <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a>.  <br /></td></tr>
 <tr class="separator:a392914e4ef1492e24819df93dfe4ee51 inherit pro_methods_class_aux_port_1_1_text_file"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a12c38f2f85433aac41e03ccd3b737051 inherit pro_methods_class_aux_port_1_1_text_file" id="r_a12c38f2f85433aac41e03ccd3b737051"><td class="memItemLeft" align="right" valign="top">
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>readLineFromFile</b> (std::string &amp;line, bool log=false)</td></tr>
-<tr class="memdesc:a12c38f2f85433aac41e03ccd3b737051 inherit pro_methods_class_aux_port_1_1_text_file"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a line to the Text <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a>. <br /></td></tr>
+<tr class="memitem:a12c38f2f85433aac41e03ccd3b737051 inherit pro_methods_class_aux_port_1_1_text_file" id="r_a12c38f2f85433aac41e03ccd3b737051"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_file.html#a12c38f2f85433aac41e03ccd3b737051">readLineFromFile</a> (std::string &amp;line, bool log=false)</td></tr>
+<tr class="memdesc:a12c38f2f85433aac41e03ccd3b737051 inherit pro_methods_class_aux_port_1_1_text_file"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a line to the Text <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a>.  <br /></td></tr>
 <tr class="separator:a12c38f2f85433aac41e03ccd3b737051 inherit pro_methods_class_aux_port_1_1_text_file"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3390ad434f6f9b2308f23d70be8788e6 inherit pro_methods_class_aux_port_1_1_text_file" id="r_a3390ad434f6f9b2308f23d70be8788e6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_file.html#a3390ad434f6f9b2308f23d70be8788e6">open</a> (const std::string &amp;fileName, const <a class="el" href="class_aux_port_1_1_file.html#a1c64cf7976cbee0506f5b9132b5e02d2">Mode</a> &amp;mode=Mode::Read, bool log=false) override</td></tr>
 <tr class="memdesc:a3390ad434f6f9b2308f23d70be8788e6 inherit pro_methods_class_aux_port_1_1_text_file"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the given file as a text file.  <br /></td></tr>
@@ -230,13 +220,11 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>readLineFromFile</b> 
 <tr class="memitem:a65cba2499d736af53e6b484a68efe292 inherit pro_methods_class_aux_port_1_1_file" id="r_a65cba2499d736af53e6b484a68efe292"><td class="memItemLeft" align="right" valign="top">
 &#160;</td><td class="memItemRight" valign="bottom"><b>File</b> (const <a class="el" href="class_aux_port_1_1_file.html">File</a> &amp;file)=default</td></tr>
 <tr class="separator:a65cba2499d736af53e6b484a68efe292 inherit pro_methods_class_aux_port_1_1_file"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a811d1d757b9f8d188e87d71744743d96 inherit pro_methods_class_aux_port_1_1_file" id="r_a811d1d757b9f8d188e87d71744743d96"><td class="memItemLeft" align="right" valign="top">
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getCurrentDirectory</b> ()</td></tr>
-<tr class="memdesc:a811d1d757b9f8d188e87d71744743d96 inherit pro_methods_class_aux_port_1_1_file"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current directory, the program is running in. <br /></td></tr>
+<tr class="memitem:a811d1d757b9f8d188e87d71744743d96 inherit pro_methods_class_aux_port_1_1_file" id="r_a811d1d757b9f8d188e87d71744743d96"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_file.html#a811d1d757b9f8d188e87d71744743d96">getCurrentDirectory</a> ()</td></tr>
+<tr class="memdesc:a811d1d757b9f8d188e87d71744743d96 inherit pro_methods_class_aux_port_1_1_file"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current directory, the program is running in.  <br /></td></tr>
 <tr class="separator:a811d1d757b9f8d188e87d71744743d96 inherit pro_methods_class_aux_port_1_1_file"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a643159a21c466434f97aa0b4803e772c inherit pro_methods_class_aux_port_1_1_file" id="r_a643159a21c466434f97aa0b4803e772c"><td class="memItemLeft" align="right" valign="top">
-std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getListOfFiles</b> (const std::string &amp;extension=&quot;&quot;)</td></tr>
-<tr class="memdesc:a643159a21c466434f97aa0b4803e772c inherit pro_methods_class_aux_port_1_1_file"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns list of files present in the current directory. <br /></td></tr>
+<tr class="memitem:a643159a21c466434f97aa0b4803e772c inherit pro_methods_class_aux_port_1_1_file" id="r_a643159a21c466434f97aa0b4803e772c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_file.html#a643159a21c466434f97aa0b4803e772c">getListOfFiles</a> (const std::string &amp;extension=&quot;&quot;)</td></tr>
+<tr class="memdesc:a643159a21c466434f97aa0b4803e772c inherit pro_methods_class_aux_port_1_1_file"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns list of files present in the current directory.  <br /></td></tr>
 <tr class="separator:a643159a21c466434f97aa0b4803e772c inherit pro_methods_class_aux_port_1_1_file"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5fa2f0da6682cca254e31231cdb02f9 inherit pro_methods_class_aux_port_1_1_file" id="r_ab5fa2f0da6682cca254e31231cdb02f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_file.html#ab5fa2f0da6682cca254e31231cdb02f9">Log</a> () override</td></tr>
 <tr class="memdesc:ab5fa2f0da6682cca254e31231cdb02f9 inherit pro_methods_class_aux_port_1_1_file"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this function to specify logging behavior.  <br /></td></tr>
@@ -252,63 +240,70 @@ std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign
 <tr class="memitem:afa935ce05022eb53a8ca4e9d496f0ac6 inherit pro_methods_class_aux_port_1_1_text_format" id="r_afa935ce05022eb53a8ca4e9d496f0ac6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#afa935ce05022eb53a8ca4e9d496f0ac6">Log</a> () override</td></tr>
 <tr class="memdesc:afa935ce05022eb53a8ca4e9d496f0ac6 inherit pro_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement this method in the derived class to specify logging behaviour.  <br /></td></tr>
 <tr class="separator:afa935ce05022eb53a8ca4e9d496f0ac6 inherit pro_methods_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a767f7e3e16f8af5733156cd5a5c8b407 inherit pro_methods_class_aux_port_1_1_text_format" id="r_a767f7e3e16f8af5733156cd5a5c8b407"><td class="memItemLeft" align="right" valign="top">
-std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getFormatName</b> ()</td></tr>
-<tr class="memdesc:a767f7e3e16f8af5733156cd5a5c8b407 inherit pro_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the format name. <br /></td></tr>
+<tr class="memitem:a767f7e3e16f8af5733156cd5a5c8b407 inherit pro_methods_class_aux_port_1_1_text_format" id="r_a767f7e3e16f8af5733156cd5a5c8b407"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#a767f7e3e16f8af5733156cd5a5c8b407">getFormatName</a> ()</td></tr>
+<tr class="memdesc:a767f7e3e16f8af5733156cd5a5c8b407 inherit pro_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the format name.  <br /></td></tr>
 <tr class="separator:a767f7e3e16f8af5733156cd5a5c8b407 inherit pro_methods_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8add46d4b6e7383286ca2895a60da662 inherit pro_methods_class_aux_port_1_1_text_format" id="r_a8add46d4b6e7383286ca2895a60da662"><td class="memItemLeft" align="right" valign="top">
-std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getUniqueIdentifier</b> ()</td></tr>
-<tr class="memdesc:a8add46d4b6e7383286ca2895a60da662 inherit pro_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the unique identifier for the text format. <br /></td></tr>
+<tr class="memitem:a8add46d4b6e7383286ca2895a60da662 inherit pro_methods_class_aux_port_1_1_text_format" id="r_a8add46d4b6e7383286ca2895a60da662"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#a8add46d4b6e7383286ca2895a60da662">getUniqueIdentifier</a> ()</td></tr>
+<tr class="memdesc:a8add46d4b6e7383286ca2895a60da662 inherit pro_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the unique identifier for the text format.  <br /></td></tr>
 <tr class="separator:a8add46d4b6e7383286ca2895a60da662 inherit pro_methods_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a077b92c24a2e375df8095f3ce2dabdce inherit pro_methods_class_aux_port_1_1_text_format" id="r_a077b92c24a2e375df8095f3ce2dabdce"><td class="memItemLeft" align="right" valign="top">
-std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getExtensionName</b> ()</td></tr>
-<tr class="memdesc:a077b92c24a2e375df8095f3ce2dabdce inherit pro_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the extension name. <br /></td></tr>
+<tr class="memitem:a077b92c24a2e375df8095f3ce2dabdce inherit pro_methods_class_aux_port_1_1_text_format" id="r_a077b92c24a2e375df8095f3ce2dabdce"><td class="memItemLeft" align="right" valign="top">std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#a077b92c24a2e375df8095f3ce2dabdce">getExtensionName</a> ()</td></tr>
+<tr class="memdesc:a077b92c24a2e375df8095f3ce2dabdce inherit pro_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the extension name.  <br /></td></tr>
 <tr class="separator:a077b92c24a2e375df8095f3ce2dabdce inherit pro_methods_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abecc69095e1bb6f640b22647ee8e7f48 inherit pro_methods_class_aux_port_1_1_text_format" id="r_abecc69095e1bb6f640b22647ee8e7f48"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setExtensionName</b> (const std::string &amp;extensionName)</td></tr>
-<tr class="memdesc:abecc69095e1bb6f640b22647ee8e7f48 inherit pro_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the extension name. <br /></td></tr>
+<tr class="memitem:abecc69095e1bb6f640b22647ee8e7f48 inherit pro_methods_class_aux_port_1_1_text_format" id="r_abecc69095e1bb6f640b22647ee8e7f48"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#abecc69095e1bb6f640b22647ee8e7f48">setExtensionName</a> (const std::string &amp;extensionName)</td></tr>
+<tr class="memdesc:abecc69095e1bb6f640b22647ee8e7f48 inherit pro_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the extension name.  <br /></td></tr>
 <tr class="separator:abecc69095e1bb6f640b22647ee8e7f48 inherit pro_methods_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43f588e8e4460adc288139554e761972 inherit pro_methods_class_aux_port_1_1_text_format" id="r_a43f588e8e4460adc288139554e761972"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setUniqueIdentifier</b> (const std::string &amp;uniqueIdentifier)</td></tr>
-<tr class="memdesc:a43f588e8e4460adc288139554e761972 inherit pro_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the unique identifier for the text format. <br /></td></tr>
+<tr class="memitem:a43f588e8e4460adc288139554e761972 inherit pro_methods_class_aux_port_1_1_text_format" id="r_a43f588e8e4460adc288139554e761972"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#a43f588e8e4460adc288139554e761972">setUniqueIdentifier</a> (const std::string &amp;uniqueIdentifier)</td></tr>
+<tr class="memdesc:a43f588e8e4460adc288139554e761972 inherit pro_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the unique identifier for the text format.  <br /></td></tr>
 <tr class="separator:a43f588e8e4460adc288139554e761972 inherit pro_methods_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1037f32d0c75e96ad82377ab98a01da3 inherit pro_methods_class_aux_port_1_1_text_format" id="r_a1037f32d0c75e96ad82377ab98a01da3"><td class="memItemLeft" align="right" valign="top">
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setFormatName</b> (const std::string &amp;formatName)</td></tr>
-<tr class="memdesc:a1037f32d0c75e96ad82377ab98a01da3 inherit pro_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the format name. <br /></td></tr>
+<tr class="memitem:a1037f32d0c75e96ad82377ab98a01da3 inherit pro_methods_class_aux_port_1_1_text_format" id="r_a1037f32d0c75e96ad82377ab98a01da3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#a1037f32d0c75e96ad82377ab98a01da3">setFormatName</a> (const std::string &amp;formatName)</td></tr>
+<tr class="memdesc:a1037f32d0c75e96ad82377ab98a01da3 inherit pro_methods_class_aux_port_1_1_text_format"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the format name.  <br /></td></tr>
 <tr class="separator:a1037f32d0c75e96ad82377ab98a01da3 inherit pro_methods_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_aux_port_1_1_file"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_aux_port_1_1_file')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_aux_port_1_1_file.html">AuxPort::File</a></td></tr>
-<tr class="memitem:a9144f4f9333b3f006d4d9a62d33aebc8 inherit pro_attribs_class_aux_port_1_1_file" id="r_a9144f4f9333b3f006d4d9a62d33aebc8"><td class="memItemLeft" align="right" valign="top">
-std::unique_ptr&lt; std::ofstream &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>fileWriter</b></td></tr>
+<tr class="memitem:a9144f4f9333b3f006d4d9a62d33aebc8 inherit pro_attribs_class_aux_port_1_1_file" id="r_a9144f4f9333b3f006d4d9a62d33aebc8"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; std::ofstream &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_file.html#a9144f4f9333b3f006d4d9a62d33aebc8">fileWriter</a></td></tr>
 <tr class="separator:a9144f4f9333b3f006d4d9a62d33aebc8 inherit pro_attribs_class_aux_port_1_1_file"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e3ce1657edbdee9286b3f9ac383b66d inherit pro_attribs_class_aux_port_1_1_file" id="r_a1e3ce1657edbdee9286b3f9ac383b66d"><td class="memItemLeft" align="right" valign="top">
-std::unique_ptr&lt; std::ifstream &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>fileReader</b></td></tr>
+<tr class="memitem:a1e3ce1657edbdee9286b3f9ac383b66d inherit pro_attribs_class_aux_port_1_1_file" id="r_a1e3ce1657edbdee9286b3f9ac383b66d"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; std::ifstream &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_file.html#a1e3ce1657edbdee9286b3f9ac383b66d">fileReader</a></td></tr>
 <tr class="separator:a1e3ce1657edbdee9286b3f9ac383b66d inherit pro_attribs_class_aux_port_1_1_file"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07e44390cd7101f79c9309c57de0a3ed inherit pro_attribs_class_aux_port_1_1_file" id="r_a07e44390cd7101f79c9309c57de0a3ed"><td class="memItemLeft" align="right" valign="top">
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>fileName</b></td></tr>
+<tr class="memitem:a07e44390cd7101f79c9309c57de0a3ed inherit pro_attribs_class_aux_port_1_1_file" id="r_a07e44390cd7101f79c9309c57de0a3ed"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_file.html#a07e44390cd7101f79c9309c57de0a3ed">fileName</a></td></tr>
 <tr class="separator:a07e44390cd7101f79c9309c57de0a3ed inherit pro_attribs_class_aux_port_1_1_file"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64e76595e036d0dbdc67fbbedcbaa1ee inherit pro_attribs_class_aux_port_1_1_file" id="r_a64e76595e036d0dbdc67fbbedcbaa1ee"><td class="memItemLeft" align="right" valign="top">
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>fileExtension</b></td></tr>
+<tr class="memitem:a64e76595e036d0dbdc67fbbedcbaa1ee inherit pro_attribs_class_aux_port_1_1_file" id="r_a64e76595e036d0dbdc67fbbedcbaa1ee"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_file.html#a64e76595e036d0dbdc67fbbedcbaa1ee">fileExtension</a></td></tr>
 <tr class="separator:a64e76595e036d0dbdc67fbbedcbaa1ee inherit pro_attribs_class_aux_port_1_1_file"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8b9cab1e775798d818192ef93de3a80 inherit pro_attribs_class_aux_port_1_1_file" id="r_af8b9cab1e775798d818192ef93de3a80"><td class="memItemLeft" align="right" valign="top">
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>errorMessage</b></td></tr>
+<tr class="memitem:af8b9cab1e775798d818192ef93de3a80 inherit pro_attribs_class_aux_port_1_1_file" id="r_af8b9cab1e775798d818192ef93de3a80"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_file.html#af8b9cab1e775798d818192ef93de3a80">errorMessage</a></td></tr>
 <tr class="separator:af8b9cab1e775798d818192ef93de3a80 inherit pro_attribs_class_aux_port_1_1_file"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0271a6be979f26ff954d14454b3c95f inherit pro_attribs_class_aux_port_1_1_file" id="r_ac0271a6be979f26ff954d14454b3c95f"><td class="memItemLeft" align="right" valign="top">
-<a class="el" href="class_aux_port_1_1_file.html#a1c64cf7976cbee0506f5b9132b5e02d2">Mode</a>&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
+<tr class="memitem:ac0271a6be979f26ff954d14454b3c95f inherit pro_attribs_class_aux_port_1_1_file" id="r_ac0271a6be979f26ff954d14454b3c95f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_aux_port_1_1_file.html#a1c64cf7976cbee0506f5b9132b5e02d2">Mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_file.html#ac0271a6be979f26ff954d14454b3c95f">mode</a></td></tr>
 <tr class="separator:ac0271a6be979f26ff954d14454b3c95f inherit pro_attribs_class_aux_port_1_1_file"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_aux_port_1_1_text_format"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_aux_port_1_1_text_format')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_aux_port_1_1_text_format.html">AuxPort::TextFormat</a></td></tr>
-<tr class="memitem:a2ff2fa1427bfffcb7bf2e8e147625931 inherit pro_attribs_class_aux_port_1_1_text_format" id="r_a2ff2fa1427bfffcb7bf2e8e147625931"><td class="memItemLeft" align="right" valign="top">
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>formatName</b></td></tr>
+<tr class="memitem:a2ff2fa1427bfffcb7bf2e8e147625931 inherit pro_attribs_class_aux_port_1_1_text_format" id="r_a2ff2fa1427bfffcb7bf2e8e147625931"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#a2ff2fa1427bfffcb7bf2e8e147625931">formatName</a></td></tr>
 <tr class="separator:a2ff2fa1427bfffcb7bf2e8e147625931 inherit pro_attribs_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71da2b86d8008b31f066044a51e80fa5 inherit pro_attribs_class_aux_port_1_1_text_format" id="r_a71da2b86d8008b31f066044a51e80fa5"><td class="memItemLeft" align="right" valign="top">
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>uniqueIdentifier</b></td></tr>
+<tr class="memitem:a71da2b86d8008b31f066044a51e80fa5 inherit pro_attribs_class_aux_port_1_1_text_format" id="r_a71da2b86d8008b31f066044a51e80fa5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#a71da2b86d8008b31f066044a51e80fa5">uniqueIdentifier</a></td></tr>
 <tr class="separator:a71da2b86d8008b31f066044a51e80fa5 inherit pro_attribs_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14dea63e434c504fe3006892271f2be2 inherit pro_attribs_class_aux_port_1_1_text_format" id="r_a14dea63e434c504fe3006892271f2be2"><td class="memItemLeft" align="right" valign="top">
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extensionName</b></td></tr>
+<tr class="memitem:a14dea63e434c504fe3006892271f2be2 inherit pro_attribs_class_aux_port_1_1_text_format" id="r_a14dea63e434c504fe3006892271f2be2"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_text_format.html#a14dea63e434c504fe3006892271f2be2">extensionName</a></td></tr>
 <tr class="separator:a14dea63e434c504fe3006892271f2be2 inherit pro_attribs_class_aux_port_1_1_text_format"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class provides functionality to read and write <a class="el" href="class_aux_port_1_1_c_s_v.html" title="This class provides functionality to read and write CSV Files.">CSV</a> Files. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8h_source.html#l00362">362</a> of file <a class="el" href="_aux_file_8h_source.html">AuxFile.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aaa213687a81dac3637727c323e979c8c" name="aaa213687a81dac3637727c323e979c8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa213687a81dac3637727c323e979c8c">&#9670;&#160;</a></span>CSV()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">AuxPort::CSV::CSV </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00278">278</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a5363d6800ee273e93268145662ccccd5" name="a5363d6800ee273e93268145662ccccd5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5363d6800ee273e93268145662ccccd5">&#9670;&#160;</a></span>addDataRow()</h2>
 
@@ -326,6 +321,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extensionName<
 
 <p>Adds a data row to be written to the <a class="el" href="class_aux_port_1_1_c_s_v.html" title="This class provides functionality to read and write CSV Files.">CSV</a> <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a>. </p>
 <dl class="section note"><dt>Note</dt><dd>This function does not write the data row to <a class="el" href="class_aux_port_1_1_c_s_v.html" title="This class provides functionality to read and write CSV Files.">CSV</a> <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a>. Added data rows are written to file when <a class="el" href="#ab53306f419afacf92f31447396c8f206" title="Writes a CSV file using information set through addDataRow(), setHeader() functions.">write()</a> is called. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00361">361</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
 
 </div>
 </div>
@@ -356,6 +353,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extensionName<
 
 <p>Implements <a class="el" href="class_aux_port_1_1_file.html#a1dde988a8faae6d68385245fd72f2433">AuxPort::File</a>.</p>
 
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00292">292</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
+
 </div>
 </div>
 <a id="a2811c1ae0948cff2c86d1d4a2b269196" name="a2811c1ae0948cff2c86d1d4a2b269196"></a>
@@ -380,6 +379,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extensionName<
 <p>Reads a specific data row from the file. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if the read was sucessful. Otherwise, it returns false in case the given rowNum is greater than number of data rows in the file. </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>If the containsHeader Flag has been set to false, all rows in the file will be considered as data rows and there will be no header rows. Otherwise, the first row will be considered a header row and all successive rows will be considered data rows. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00322">322</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
 
 </div>
 </div>
@@ -410,6 +411,48 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extensionName<
 
 <p>Reimplemented from <a class="el" href="class_aux_port_1_1_i_log.html#a5a9286e8a8917e35bd3154611dd7e849">AuxPort::ILog</a>.</p>
 
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00373">373</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa7d83fb191f4a23be4a433111882474e" name="aa7d83fb191f4a23be4a433111882474e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7d83fb191f4a23be4a433111882474e">&#9670;&#160;</a></span>open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool AuxPort::CSV::open </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>fileName</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_aux_port_1_1_file.html#a1c64cf7976cbee0506f5b9132b5e02d2">Mode</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>mode</em></span><span class="paramdefsep"> = </span><span class="paramdefval">Mode::Read</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>containsHeader</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char &amp;</td>          <td class="paramname"><span class="paramname"><em>delimiter</em></span><span class="paramdefsep"> = </span><span class="paramdefval">','</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>log</em></span><span class="paramdefsep"> = </span><span class="paramdefval">false</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opens a <a class="el" href="class_aux_port_1_1_c_s_v.html" title="This class provides functionality to read and write CSV Files.">CSV</a> <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a>. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00285">285</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
+
 </div>
 </div>
 <a id="ad814a0bc35ba09dcb9cbc5c1380fa00c" name="ad814a0bc35ba09dcb9cbc5c1380fa00c"></a>
@@ -429,6 +472,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extensionName<
 
 <p>Reads data from a <a class="el" href="class_aux_port_1_1_c_s_v.html" title="This class provides functionality to read and write CSV Files.">CSV</a> file and stores it in the 2-d Vector. </p>
 <dl class="section note"><dt>Note</dt><dd>If the containsHeader Flag has been set to false, all rows in the file will be considered as data rows. Otherwise, the first row will not be considered a data row and will not be populated in the given vector. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00297">297</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
 
 </div>
 </div>
@@ -454,6 +499,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extensionName<
 <p>Reads data from a <a class="el" href="class_aux_port_1_1_c_s_v.html" title="This class provides functionality to read and write CSV Files.">CSV</a> file. </p>
 <dl class="section note"><dt>Note</dt><dd>If the containsHeader Flag has been set to false, all rows in the file will be considered as data rows and there will be no header rows. Otherwise, the first row will be considered a header row and all successive rows will be considered data rows. </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00304">304</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
+
 </div>
 </div>
 <a id="abfd7b152f9d92ca7fbff75e21d8afccf" name="abfd7b152f9d92ca7fbff75e21d8afccf"></a>
@@ -473,6 +520,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extensionName<
 
 <p>Sets the header row to be written to the <a class="el" href="class_aux_port_1_1_c_s_v.html" title="This class provides functionality to read and write CSV Files.">CSV</a> <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a>. </p>
 <dl class="section note"><dt>Note</dt><dd>This function does not write the headers to <a class="el" href="class_aux_port_1_1_c_s_v.html" title="This class provides functionality to read and write CSV Files.">CSV</a> <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a>, instead, it sets the headers which will be written to file later using <a class="el" href="#ab53306f419afacf92f31447396c8f206" title="Writes a CSV file using information set through addDataRow(), setHeader() functions.">write()</a>. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00356">356</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
 
 </div>
 </div>
@@ -495,6 +544,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><b>extensionName<
 <dl class="section note"><dt>Note</dt><dd><a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a> must be opened in Write mode. </dd>
 <dd>
 If containsHeader flag is set to false, then headers will not be written (even if they have been set using setHeaders()). </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00341">341</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
 
 </div>
 </div>
@@ -522,11 +573,13 @@ If containsHeader flag is set to false, then headers will not be written (even i
 <dd>
 If containsHeader flag is set to false, then headers will not be written (even if they have been set using setHeaders()). </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00366">366</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/File/<a class="el" href="_aux_file_8h_source.html">AuxFile.h</a></li>
-<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/File/<b>AuxFile.cpp</b></li>
+<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/File/<a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

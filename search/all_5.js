@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['fastrandomfloat_0',['FastRandomFloat',['../class_aux_port_1_1_fast_random_float.html',1,'AuxPort']]],
+  ['fastrandomfloat_0',['FastRandomFloat',['../class_aux_port_1_1_fast_random_float.html',1,'AuxPort::FastRandomFloat'],['../class_aux_port_1_1_fast_random_float.html#abcc789620f96ddf08c2761acff5d6d52',1,'AuxPort::FastRandomFloat::FastRandomFloat()'],['../class_aux_port_1_1_fast_random_float.html#a74af9a92d383ca45f32e096b829d6525',1,'AuxPort::FastRandomFloat::FastRandomFloat(const int &amp;randomSeed)']]],
   ['file_1',['File',['../class_aux_port_1_1_file.html',1,'AuxPort']]],
   ['filter_2',['Filter',['../class_aux_port_1_1_audio_1_1_i_i_r_1_1_engine.html#ae31af1201fa39d57570ba265169815ce',1,'AuxPort::Audio::IIR::Engine']]],
   ['filteralgo_3',['filterAlgo',['../class_aux_port_1_1_audio_1_1_f_i_r.html#aa5d00b5ac13a4ca4467b2294e3646e04',1,'AuxPort::Audio::FIR::filterAlgo()'],['../class_aux_port_1_1_audio_1_1_rectangle_f_i_r.html#aa514c83a111901fc1995a9d22430679d',1,'AuxPort::Audio::RectangleFIR::filterAlgo()']]],

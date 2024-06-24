@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">AuxPort<span id="projectnumber">&#160;0.2</span>
    </div>
-   <div id="projectbrief">Modules for Software Development</div>
+   <div id="projectbrief">Modules for Audio Software Development</div>
   </td>
  </tr>
  </tbody>
@@ -128,11 +128,11 @@ Inheritance diagram for AuxPort::File:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a1c64cf7976cbee0506f5b9132b5e02d2" id="r_a1c64cf7976cbee0506f5b9132b5e02d2"><td class="memItemLeft" align="right" valign="top"><a id="a1c64cf7976cbee0506f5b9132b5e02d2" name="a1c64cf7976cbee0506f5b9132b5e02d2"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c64cf7976cbee0506f5b9132b5e02d2">Mode</a> { <b>Idle</b> = 0
+<tr class="memitem:a1c64cf7976cbee0506f5b9132b5e02d2" id="r_a1c64cf7976cbee0506f5b9132b5e02d2"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c64cf7976cbee0506f5b9132b5e02d2">Mode</a> { <b>Idle</b> = 0
 , <b>Read</b> = 1
 , <b>Write</b> = 2
  }</td></tr>
-<tr class="memdesc:a1c64cf7976cbee0506f5b9132b5e02d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Easy way to specify the Read/Write behavior of the <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a> Stream. <br /></td></tr>
+<tr class="memdesc:a1c64cf7976cbee0506f5b9132b5e02d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Easy way to specify the Read/Write behavior of the <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a> Stream.  <a href="#a1c64cf7976cbee0506f5b9132b5e02d2">More...</a><br /></td></tr>
 <tr class="separator:a1c64cf7976cbee0506f5b9132b5e02d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -146,13 +146,11 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1dde988a8faae6d68385245fd72f2433" id="r_a1dde988a8faae6d68385245fd72f2433"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1dde988a8faae6d68385245fd72f2433">close</a> (bool log=false)=0</td></tr>
 <tr class="memdesc:a1dde988a8faae6d68385245fd72f2433"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement this function to specify the closing behavior of the <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a>.  <br /></td></tr>
 <tr class="separator:a1dde988a8faae6d68385245fd72f2433"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a811d1d757b9f8d188e87d71744743d96" id="r_a811d1d757b9f8d188e87d71744743d96"><td class="memItemLeft" align="right" valign="top"><a id="a811d1d757b9f8d188e87d71744743d96" name="a811d1d757b9f8d188e87d71744743d96"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>getCurrentDirectory</b> ()</td></tr>
-<tr class="memdesc:a811d1d757b9f8d188e87d71744743d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current directory, the program is running in. <br /></td></tr>
+<tr class="memitem:a811d1d757b9f8d188e87d71744743d96" id="r_a811d1d757b9f8d188e87d71744743d96"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a811d1d757b9f8d188e87d71744743d96">getCurrentDirectory</a> ()</td></tr>
+<tr class="memdesc:a811d1d757b9f8d188e87d71744743d96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the current directory, the program is running in.  <br /></td></tr>
 <tr class="separator:a811d1d757b9f8d188e87d71744743d96"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a643159a21c466434f97aa0b4803e772c" id="r_a643159a21c466434f97aa0b4803e772c"><td class="memItemLeft" align="right" valign="top"><a id="a643159a21c466434f97aa0b4803e772c" name="a643159a21c466434f97aa0b4803e772c"></a>
-std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getListOfFiles</b> (const std::string &amp;extension=&quot;&quot;)</td></tr>
-<tr class="memdesc:a643159a21c466434f97aa0b4803e772c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns list of files present in the current directory. <br /></td></tr>
+<tr class="memitem:a643159a21c466434f97aa0b4803e772c" id="r_a643159a21c466434f97aa0b4803e772c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a643159a21c466434f97aa0b4803e772c">getListOfFiles</a> (const std::string &amp;extension=&quot;&quot;)</td></tr>
+<tr class="memdesc:a643159a21c466434f97aa0b4803e772c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns list of files present in the current directory.  <br /></td></tr>
 <tr class="separator:a643159a21c466434f97aa0b4803e772c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5fa2f0da6682cca254e31231cdb02f9" id="r_ab5fa2f0da6682cca254e31231cdb02f9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab5fa2f0da6682cca254e31231cdb02f9">Log</a> () override</td></tr>
 <tr class="memdesc:ab5fa2f0da6682cca254e31231cdb02f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Override this function to specify logging behavior.  <br /></td></tr>
@@ -160,23 +158,17 @@ std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a9144f4f9333b3f006d4d9a62d33aebc8" id="r_a9144f4f9333b3f006d4d9a62d33aebc8"><td class="memItemLeft" align="right" valign="top"><a id="a9144f4f9333b3f006d4d9a62d33aebc8" name="a9144f4f9333b3f006d4d9a62d33aebc8"></a>
-std::unique_ptr&lt; std::ofstream &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>fileWriter</b></td></tr>
+<tr class="memitem:a9144f4f9333b3f006d4d9a62d33aebc8" id="r_a9144f4f9333b3f006d4d9a62d33aebc8"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; std::ofstream &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9144f4f9333b3f006d4d9a62d33aebc8">fileWriter</a></td></tr>
 <tr class="separator:a9144f4f9333b3f006d4d9a62d33aebc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e3ce1657edbdee9286b3f9ac383b66d" id="r_a1e3ce1657edbdee9286b3f9ac383b66d"><td class="memItemLeft" align="right" valign="top"><a id="a1e3ce1657edbdee9286b3f9ac383b66d" name="a1e3ce1657edbdee9286b3f9ac383b66d"></a>
-std::unique_ptr&lt; std::ifstream &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>fileReader</b></td></tr>
+<tr class="memitem:a1e3ce1657edbdee9286b3f9ac383b66d" id="r_a1e3ce1657edbdee9286b3f9ac383b66d"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; std::ifstream &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e3ce1657edbdee9286b3f9ac383b66d">fileReader</a></td></tr>
 <tr class="separator:a1e3ce1657edbdee9286b3f9ac383b66d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a07e44390cd7101f79c9309c57de0a3ed" id="r_a07e44390cd7101f79c9309c57de0a3ed"><td class="memItemLeft" align="right" valign="top"><a id="a07e44390cd7101f79c9309c57de0a3ed" name="a07e44390cd7101f79c9309c57de0a3ed"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>fileName</b></td></tr>
+<tr class="memitem:a07e44390cd7101f79c9309c57de0a3ed" id="r_a07e44390cd7101f79c9309c57de0a3ed"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07e44390cd7101f79c9309c57de0a3ed">fileName</a></td></tr>
 <tr class="separator:a07e44390cd7101f79c9309c57de0a3ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64e76595e036d0dbdc67fbbedcbaa1ee" id="r_a64e76595e036d0dbdc67fbbedcbaa1ee"><td class="memItemLeft" align="right" valign="top"><a id="a64e76595e036d0dbdc67fbbedcbaa1ee" name="a64e76595e036d0dbdc67fbbedcbaa1ee"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>fileExtension</b></td></tr>
+<tr class="memitem:a64e76595e036d0dbdc67fbbedcbaa1ee" id="r_a64e76595e036d0dbdc67fbbedcbaa1ee"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a64e76595e036d0dbdc67fbbedcbaa1ee">fileExtension</a></td></tr>
 <tr class="separator:a64e76595e036d0dbdc67fbbedcbaa1ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af8b9cab1e775798d818192ef93de3a80" id="r_af8b9cab1e775798d818192ef93de3a80"><td class="memItemLeft" align="right" valign="top"><a id="af8b9cab1e775798d818192ef93de3a80" name="af8b9cab1e775798d818192ef93de3a80"></a>
-std::string&#160;</td><td class="memItemRight" valign="bottom"><b>errorMessage</b></td></tr>
+<tr class="memitem:af8b9cab1e775798d818192ef93de3a80" id="r_af8b9cab1e775798d818192ef93de3a80"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af8b9cab1e775798d818192ef93de3a80">errorMessage</a></td></tr>
 <tr class="separator:af8b9cab1e775798d818192ef93de3a80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac0271a6be979f26ff954d14454b3c95f" id="r_ac0271a6be979f26ff954d14454b3c95f"><td class="memItemLeft" align="right" valign="top"><a id="ac0271a6be979f26ff954d14454b3c95f" name="ac0271a6be979f26ff954d14454b3c95f"></a>
-<a class="el" href="#a1c64cf7976cbee0506f5b9132b5e02d2">Mode</a>&#160;</td><td class="memItemRight" valign="bottom"><b>mode</b></td></tr>
+<tr class="memitem:ac0271a6be979f26ff954d14454b3c95f" id="r_ac0271a6be979f26ff954d14454b3c95f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a1c64cf7976cbee0506f5b9132b5e02d2">Mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0271a6be979f26ff954d14454b3c95f">mode</a></td></tr>
 <tr class="separator:ac0271a6be979f26ff954d14454b3c95f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
@@ -188,7 +180,48 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This class provides an interface for working with files. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8h_source.html#l00182">182</a> of file <a class="el" href="_aux_file_8h_source.html">AuxFile.h</a>.</p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a1c64cf7976cbee0506f5b9132b5e02d2" name="a1c64cf7976cbee0506f5b9132b5e02d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c64cf7976cbee0506f5b9132b5e02d2">&#9670;&#160;</a></span>Mode</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a1c64cf7976cbee0506f5b9132b5e02d2">AuxPort::File::Mode</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Easy way to specify the Read/Write behavior of the <a class="el" href="class_aux_port_1_1_file.html" title="This class provides an interface for working with files.">File</a> Stream. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8h_source.html#l00188">188</a> of file <a class="el" href="_aux_file_8h_source.html">AuxFile.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a7a169ebf956c0e52f14dd91b4b969968" name="a7a169ebf956c0e52f14dd91b4b969968"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a169ebf956c0e52f14dd91b4b969968">&#9670;&#160;</a></span>File()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">AuxPort::File::File </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00042">42</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="a1dde988a8faae6d68385245fd72f2433" name="a1dde988a8faae6d68385245fd72f2433"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1dde988a8faae6d68385245fd72f2433">&#9670;&#160;</a></span>close()</h2>
 
@@ -218,6 +251,48 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<a id="a811d1d757b9f8d188e87d71744743d96" name="a811d1d757b9f8d188e87d71744743d96"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a811d1d757b9f8d188e87d71744743d96">&#9670;&#160;</a></span>getCurrentDirectory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string AuxPort::File::getCurrentDirectory </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the current directory, the program is running in. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00097">97</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a643159a21c466434f97aa0b4803e772c" name="a643159a21c466434f97aa0b4803e772c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a643159a21c466434f97aa0b4803e772c">&#9670;&#160;</a></span>getListOfFiles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; &amp; AuxPort::File::getListOfFiles </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>extension</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;&quot;</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns list of files present in the current directory. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00055">55</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
+
+</div>
+</div>
 <a id="ab5fa2f0da6682cca254e31231cdb02f9" name="ab5fa2f0da6682cca254e31231cdb02f9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab5fa2f0da6682cca254e31231cdb02f9">&#9670;&#160;</a></span>Log()</h2>
 
@@ -244,6 +319,8 @@ Additional Inherited Members</h2></td></tr>
 <p>Override this function to specify logging behavior. </p>
 
 <p>Reimplemented from <a class="el" href="class_aux_port_1_1_i_log.html#a5a9286e8a8917e35bd3154611dd7e849">AuxPort::ILog</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8cpp_source.html#l00078">78</a> of file <a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a>.</p>
 
 </div>
 </div>
@@ -285,9 +362,154 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="af8b9cab1e775798d818192ef93de3a80" name="af8b9cab1e775798d818192ef93de3a80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8b9cab1e775798d818192ef93de3a80">&#9670;&#160;</a></span>errorMessage</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string AuxPort::File::errorMessage</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8h_source.html#l00229">229</a> of file <a class="el" href="_aux_file_8h_source.html">AuxFile.h</a>.</p>
+
+</div>
+</div>
+<a id="a64e76595e036d0dbdc67fbbedcbaa1ee" name="a64e76595e036d0dbdc67fbbedcbaa1ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64e76595e036d0dbdc67fbbedcbaa1ee">&#9670;&#160;</a></span>fileExtension</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string AuxPort::File::fileExtension</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8h_source.html#l00228">228</a> of file <a class="el" href="_aux_file_8h_source.html">AuxFile.h</a>.</p>
+
+</div>
+</div>
+<a id="a07e44390cd7101f79c9309c57de0a3ed" name="a07e44390cd7101f79c9309c57de0a3ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07e44390cd7101f79c9309c57de0a3ed">&#9670;&#160;</a></span>fileName</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string AuxPort::File::fileName</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8h_source.html#l00227">227</a> of file <a class="el" href="_aux_file_8h_source.html">AuxFile.h</a>.</p>
+
+</div>
+</div>
+<a id="a1e3ce1657edbdee9286b3f9ac383b66d" name="a1e3ce1657edbdee9286b3f9ac383b66d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e3ce1657edbdee9286b3f9ac383b66d">&#9670;&#160;</a></span>fileReader</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;std::ifstream&gt; AuxPort::File::fileReader</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8h_source.html#l00226">226</a> of file <a class="el" href="_aux_file_8h_source.html">AuxFile.h</a>.</p>
+
+</div>
+</div>
+<a id="a9144f4f9333b3f006d4d9a62d33aebc8" name="a9144f4f9333b3f006d4d9a62d33aebc8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9144f4f9333b3f006d4d9a62d33aebc8">&#9670;&#160;</a></span>fileWriter</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt;std::ofstream&gt; AuxPort::File::fileWriter</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8h_source.html#l00225">225</a> of file <a class="el" href="_aux_file_8h_source.html">AuxFile.h</a>.</p>
+
+</div>
+</div>
+<a id="ac0271a6be979f26ff954d14454b3c95f" name="ac0271a6be979f26ff954d14454b3c95f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0271a6be979f26ff954d14454b3c95f">&#9670;&#160;</a></span>mode</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a1c64cf7976cbee0506f5b9132b5e02d2">Mode</a> AuxPort::File::mode</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_file_8h_source.html#l00230">230</a> of file <a class="el" href="_aux_file_8h_source.html">AuxFile.h</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/File/<a class="el" href="_aux_file_8h_source.html">AuxFile.h</a></li>
-<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/File/<b>AuxFile.cpp</b></li>
+<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/File/<a class="el" href="_aux_file_8cpp_source.html">AuxFile.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

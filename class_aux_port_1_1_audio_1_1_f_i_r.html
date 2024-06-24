@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">AuxPort<span id="projectnumber">&#160;0.2</span>
    </div>
-   <div id="projectbrief">Modules for Software Development</div>
+   <div id="projectbrief">Modules for Audio Software Development</div>
   </td>
  </tr>
  </tbody>
@@ -132,12 +132,12 @@ Inheritance diagram for AuxPort::Audio::FIR:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a62b5c3d050de611f54d921700f3db0c8" id="r_a62b5c3d050de611f54d921700f3db0c8"><td class="memItemLeft" align="right" valign="top"><a id="a62b5c3d050de611f54d921700f3db0c8" name="a62b5c3d050de611f54d921700f3db0c8"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62b5c3d050de611f54d921700f3db0c8">Type</a> { <b>LowPass</b>
+<tr class="memitem:a62b5c3d050de611f54d921700f3db0c8" id="r_a62b5c3d050de611f54d921700f3db0c8"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62b5c3d050de611f54d921700f3db0c8">Type</a> { <b>LowPass</b>
 , <b>HighPass</b>
 , <b>BandPass</b>
 , <b>BandReject</b>
  }</td></tr>
-<tr class="memdesc:a62b5c3d050de611f54d921700f3db0c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the type of <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> Filter. <br /></td></tr>
+<tr class="memdesc:a62b5c3d050de611f54d921700f3db0c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Represents the type of <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> Filter.  <a href="#a62b5c3d050de611f54d921700f3db0c8">More...</a><br /></td></tr>
 <tr class="separator:a62b5c3d050de611f54d921700f3db0c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -148,43 +148,35 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aa5d00b5ac13a4ca4467b2294e3646e04" id="r_aa5d00b5ac13a4ca4467b2294e3646e04"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5d00b5ac13a4ca4467b2294e3646e04">filterAlgo</a> ()=0</td></tr>
 <tr class="memdesc:aa5d00b5ac13a4ca4467b2294e3646e04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implement this function with your <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> Algorithm in your Derived Class [Overridable].  <br /></td></tr>
 <tr class="separator:aa5d00b5ac13a4ca4467b2294e3646e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0932aa2b39936c3b6b90a7adcde02153" id="r_a0932aa2b39936c3b6b90a7adcde02153"><td class="memItemLeft" align="right" valign="top"><a id="a0932aa2b39936c3b6b90a7adcde02153" name="a0932aa2b39936c3b6b90a7adcde02153"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setSampleRate</b> (uint32_t sampleRate)</td></tr>
-<tr class="memdesc:a0932aa2b39936c3b6b90a7adcde02153"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the Sample Rate. <br /></td></tr>
+<tr class="memitem:a0932aa2b39936c3b6b90a7adcde02153" id="r_a0932aa2b39936c3b6b90a7adcde02153"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0932aa2b39936c3b6b90a7adcde02153">setSampleRate</a> (uint32_t sampleRate)</td></tr>
+<tr class="memdesc:a0932aa2b39936c3b6b90a7adcde02153"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the Sample Rate.  <br /></td></tr>
 <tr class="separator:a0932aa2b39936c3b6b90a7adcde02153"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac322124e2dae7dad68c0bb9ce9e7bfb" id="r_aac322124e2dae7dad68c0bb9ce9e7bfb"><td class="memItemLeft" align="right" valign="top"><a id="aac322124e2dae7dad68c0bb9ce9e7bfb" name="aac322124e2dae7dad68c0bb9ce9e7bfb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>compute</b> (float passband, float stopband, uint32_t order, <a class="el" href="#a62b5c3d050de611f54d921700f3db0c8">Type</a> filterType=Type::LowPass)</td></tr>
-<tr class="memdesc:aac322124e2dae7dad68c0bb9ce9e7bfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function designs an <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> by taking in Passband and stopband frequencies for a particular provided Order. <br /></td></tr>
+<tr class="memitem:aac322124e2dae7dad68c0bb9ce9e7bfb" id="r_aac322124e2dae7dad68c0bb9ce9e7bfb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aac322124e2dae7dad68c0bb9ce9e7bfb">compute</a> (float passband, float stopband, uint32_t order, <a class="el" href="#a62b5c3d050de611f54d921700f3db0c8">Type</a> filterType=Type::LowPass)</td></tr>
+<tr class="memdesc:aac322124e2dae7dad68c0bb9ce9e7bfb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function designs an <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> by taking in Passband and stopband frequencies for a particular provided Order.  <br /></td></tr>
 <tr class="separator:aac322124e2dae7dad68c0bb9ce9e7bfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0a46014f40d4f66a9c2461a05559bfa" id="r_af0a46014f40d4f66a9c2461a05559bfa"><td class="memItemLeft" align="right" valign="top"><a id="af0a46014f40d4f66a9c2461a05559bfa" name="af0a46014f40d4f66a9c2461a05559bfa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>compute</b> (float cutoffFrequency, uint32_t order, <a class="el" href="#a62b5c3d050de611f54d921700f3db0c8">Type</a> filterType=Type::LowPass)</td></tr>
-<tr class="memdesc:af0a46014f40d4f66a9c2461a05559bfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function designs an <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> by taking a cutoff frequency for a particular provided Order. <br /></td></tr>
+<tr class="memitem:af0a46014f40d4f66a9c2461a05559bfa" id="r_af0a46014f40d4f66a9c2461a05559bfa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0a46014f40d4f66a9c2461a05559bfa">compute</a> (float cutoffFrequency, uint32_t order, <a class="el" href="#a62b5c3d050de611f54d921700f3db0c8">Type</a> filterType=Type::LowPass)</td></tr>
+<tr class="memdesc:af0a46014f40d4f66a9c2461a05559bfa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function designs an <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> by taking a cutoff frequency for a particular provided Order.  <br /></td></tr>
 <tr class="separator:af0a46014f40d4f66a9c2461a05559bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1fa63adde264052f72de5b35ee765ee" id="r_ae1fa63adde264052f72de5b35ee765ee"><td class="memItemLeft" align="right" valign="top"><a id="ae1fa63adde264052f72de5b35ee765ee" name="ae1fa63adde264052f72de5b35ee765ee"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>replace</b> (const std::vector&lt; float &gt; &amp;impulseResponse)</td></tr>
-<tr class="memdesc:ae1fa63adde264052f72de5b35ee765ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method to load an impulse response into an <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> object...can be used with the <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> Engine. <br /></td></tr>
+<tr class="memitem:ae1fa63adde264052f72de5b35ee765ee" id="r_ae1fa63adde264052f72de5b35ee765ee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1fa63adde264052f72de5b35ee765ee">replace</a> (const std::vector&lt; float &gt; &amp;impulseResponse)</td></tr>
+<tr class="memdesc:ae1fa63adde264052f72de5b35ee765ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method to load an impulse response into an <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> object...can be used with the <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> Engine.  <br /></td></tr>
 <tr class="separator:ae1fa63adde264052f72de5b35ee765ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5400925440c32f7ec8de2e7d82c43d98" id="r_a5400925440c32f7ec8de2e7d82c43d98"><td class="memItemLeft" align="right" valign="top"><a id="a5400925440c32f7ec8de2e7d82c43d98" name="a5400925440c32f7ec8de2e7d82c43d98"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>replace</b> (float *impulseResponse, uint32_t size)</td></tr>
-<tr class="memdesc:a5400925440c32f7ec8de2e7d82c43d98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method to load an impulse response into an <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> object...can be used with the <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> Engine. <br /></td></tr>
+<tr class="memitem:a5400925440c32f7ec8de2e7d82c43d98" id="r_a5400925440c32f7ec8de2e7d82c43d98"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5400925440c32f7ec8de2e7d82c43d98">replace</a> (float *impulseResponse, uint32_t size)</td></tr>
+<tr class="memdesc:a5400925440c32f7ec8de2e7d82c43d98"><td class="mdescLeft">&#160;</td><td class="mdescRight">Method to load an impulse response into an <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> object...can be used with the <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> Engine.  <br /></td></tr>
 <tr class="separator:a5400925440c32f7ec8de2e7d82c43d98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ce3cc76b2438e985fb8fa140b79c458" id="r_a4ce3cc76b2438e985fb8fa140b79c458"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4ce3cc76b2438e985fb8fa140b79c458">Log</a> () override</td></tr>
 <tr class="memdesc:a4ce3cc76b2438e985fb8fa140b79c458"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs the Impulse Response onto the Console.  <br /></td></tr>
 <tr class="separator:a4ce3cc76b2438e985fb8fa140b79c458"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2113af04a13c0bfc93bed43cdb32cdc" id="r_ad2113af04a13c0bfc93bed43cdb32cdc"><td class="memItemLeft" align="right" valign="top"><a id="ad2113af04a13c0bfc93bed43cdb32cdc" name="ad2113af04a13c0bfc93bed43cdb32cdc"></a>
-std::vector&lt; float &gt; *&#160;</td><td class="memItemRight" valign="bottom"><b>getImpulseResponse</b> ()</td></tr>
-<tr class="memdesc:ad2113af04a13c0bfc93bed43cdb32cdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the internal std::vector containing the IR. <br /></td></tr>
+<tr class="memitem:ad2113af04a13c0bfc93bed43cdb32cdc" id="r_ad2113af04a13c0bfc93bed43cdb32cdc"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad2113af04a13c0bfc93bed43cdb32cdc">getImpulseResponse</a> ()</td></tr>
+<tr class="memdesc:ad2113af04a13c0bfc93bed43cdb32cdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a pointer to the internal std::vector containing the IR.  <br /></td></tr>
 <tr class="separator:ad2113af04a13c0bfc93bed43cdb32cdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:a00ec32e30cf2b367aeb451441ebf4be5" id="r_a00ec32e30cf2b367aeb451441ebf4be5"><td class="memItemLeft" align="right" valign="top"><a id="a00ec32e30cf2b367aeb451441ebf4be5" name="a00ec32e30cf2b367aeb451441ebf4be5"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>normalize</b> ()</td></tr>
-<tr class="memdesc:a00ec32e30cf2b367aeb451441ebf4be5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normalize the Impulse Response (In Development) <br /></td></tr>
+<tr class="memitem:a00ec32e30cf2b367aeb451441ebf4be5" id="r_a00ec32e30cf2b367aeb451441ebf4be5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00ec32e30cf2b367aeb451441ebf4be5">normalize</a> ()</td></tr>
+<tr class="memdesc:a00ec32e30cf2b367aeb451441ebf4be5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normalize the Impulse Response (In Development)  <br /></td></tr>
 <tr class="separator:a00ec32e30cf2b367aeb451441ebf4be5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa52daa19620da101caf885d9350da909" id="r_aa52daa19620da101caf885d9350da909"><td class="memItemLeft" align="right" valign="top"><a id="aa52daa19620da101caf885d9350da909" name="aa52daa19620da101caf885d9350da909"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>spectralReversal</b> ()</td></tr>
-<tr class="memdesc:aa52daa19620da101caf885d9350da909"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs spectral reversal of Impulse Response. <br /></td></tr>
+<tr class="memitem:aa52daa19620da101caf885d9350da909" id="r_aa52daa19620da101caf885d9350da909"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa52daa19620da101caf885d9350da909">spectralReversal</a> ()</td></tr>
+<tr class="memdesc:aa52daa19620da101caf885d9350da909"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs spectral reversal of Impulse Response.  <br /></td></tr>
 <tr class="separator:aa52daa19620da101caf885d9350da909"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad54020ddb9ff5a6446136cc3f1d11ac9" id="r_ad54020ddb9ff5a6446136cc3f1d11ac9"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad54020ddb9ff5a6446136cc3f1d11ac9">applyWindow</a> ()</td></tr>
 <tr class="memdesc:ad54020ddb9ff5a6446136cc3f1d11ac9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applyies a window on the Impulse Response.  <br /></td></tr>
@@ -196,34 +188,47 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>spectralReversal</b> 
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a2bc80d9079e6cb35cdb89b1b08fee000" id="r_a2bc80d9079e6cb35cdb89b1b08fee000"><td class="memItemLeft" align="right" valign="top"><a id="a2bc80d9079e6cb35cdb89b1b08fee000" name="a2bc80d9079e6cb35cdb89b1b08fee000"></a>
-<a class="el" href="#a62b5c3d050de611f54d921700f3db0c8">Type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>filterType</b></td></tr>
+<tr class="memitem:a2bc80d9079e6cb35cdb89b1b08fee000" id="r_a2bc80d9079e6cb35cdb89b1b08fee000"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a62b5c3d050de611f54d921700f3db0c8">Type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2bc80d9079e6cb35cdb89b1b08fee000">filterType</a></td></tr>
 <tr class="separator:a2bc80d9079e6cb35cdb89b1b08fee000"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4833b286e2e21db11611214b00160282" id="r_a4833b286e2e21db11611214b00160282"><td class="memItemLeft" align="right" valign="top"><a id="a4833b286e2e21db11611214b00160282" name="a4833b286e2e21db11611214b00160282"></a>
-std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>impulseResponse</b></td></tr>
+<tr class="memitem:a4833b286e2e21db11611214b00160282" id="r_a4833b286e2e21db11611214b00160282"><td class="memItemLeft" align="right" valign="top">std::vector&lt; float &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4833b286e2e21db11611214b00160282">impulseResponse</a></td></tr>
 <tr class="separator:a4833b286e2e21db11611214b00160282"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a993d5a44da161f71adea9a85d5ae6f13" id="r_a993d5a44da161f71adea9a85d5ae6f13"><td class="memItemLeft" align="right" valign="top"><a id="a993d5a44da161f71adea9a85d5ae6f13" name="a993d5a44da161f71adea9a85d5ae6f13"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>passband</b> = 0</td></tr>
+<tr class="memitem:a993d5a44da161f71adea9a85d5ae6f13" id="r_a993d5a44da161f71adea9a85d5ae6f13"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a993d5a44da161f71adea9a85d5ae6f13">passband</a> = 0</td></tr>
 <tr class="separator:a993d5a44da161f71adea9a85d5ae6f13"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8faba84ee5cb04a449b3e6de4e66974f" id="r_a8faba84ee5cb04a449b3e6de4e66974f"><td class="memItemLeft" align="right" valign="top"><a id="a8faba84ee5cb04a449b3e6de4e66974f" name="a8faba84ee5cb04a449b3e6de4e66974f"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>stopband</b> = 0</td></tr>
+<tr class="memitem:a8faba84ee5cb04a449b3e6de4e66974f" id="r_a8faba84ee5cb04a449b3e6de4e66974f"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8faba84ee5cb04a449b3e6de4e66974f">stopband</a> = 0</td></tr>
 <tr class="separator:a8faba84ee5cb04a449b3e6de4e66974f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7be6fcfda77a9e9983e1cb946b96d37b" id="r_a7be6fcfda77a9e9983e1cb946b96d37b"><td class="memItemLeft" align="right" valign="top"><a id="a7be6fcfda77a9e9983e1cb946b96d37b" name="a7be6fcfda77a9e9983e1cb946b96d37b"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>cutoff</b> = 0</td></tr>
+<tr class="memitem:a7be6fcfda77a9e9983e1cb946b96d37b" id="r_a7be6fcfda77a9e9983e1cb946b96d37b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7be6fcfda77a9e9983e1cb946b96d37b">cutoff</a> = 0</td></tr>
 <tr class="separator:a7be6fcfda77a9e9983e1cb946b96d37b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace63677cc3f6d7d96129e020392ea96a" id="r_ace63677cc3f6d7d96129e020392ea96a"><td class="memItemLeft" align="right" valign="top"><a id="ace63677cc3f6d7d96129e020392ea96a" name="ace63677cc3f6d7d96129e020392ea96a"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>normFreq</b> = 0</td></tr>
+<tr class="memitem:ace63677cc3f6d7d96129e020392ea96a" id="r_ace63677cc3f6d7d96129e020392ea96a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace63677cc3f6d7d96129e020392ea96a">normFreq</a> = 0</td></tr>
 <tr class="separator:ace63677cc3f6d7d96129e020392ea96a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0dd0eff8fa25ae369858871f7c4459a6" id="r_a0dd0eff8fa25ae369858871f7c4459a6"><td class="memItemLeft" align="right" valign="top"><a id="a0dd0eff8fa25ae369858871f7c4459a6" name="a0dd0eff8fa25ae369858871f7c4459a6"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>order</b> = 0</td></tr>
+<tr class="memitem:a0dd0eff8fa25ae369858871f7c4459a6" id="r_a0dd0eff8fa25ae369858871f7c4459a6"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0dd0eff8fa25ae369858871f7c4459a6">order</a> = 0</td></tr>
 <tr class="separator:a0dd0eff8fa25ae369858871f7c4459a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ad1f12fd5d822f8a7f15c597057bdab" id="r_a6ad1f12fd5d822f8a7f15c597057bdab"><td class="memItemLeft" align="right" valign="top"><a id="a6ad1f12fd5d822f8a7f15c597057bdab" name="a6ad1f12fd5d822f8a7f15c597057bdab"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>sampleRate</b> = 0</td></tr>
+<tr class="memitem:a6ad1f12fd5d822f8a7f15c597057bdab" id="r_a6ad1f12fd5d822f8a7f15c597057bdab"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6ad1f12fd5d822f8a7f15c597057bdab">sampleRate</a> = 0</td></tr>
 <tr class="separator:a6ad1f12fd5d822f8a7f15c597057bdab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Parent class for all <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> Design SubClasses. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8h_source.html#l00018">18</a> of file <a class="el" href="_aux_f_i_r_8h_source.html">AuxFIR.h</a>.</p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a62b5c3d050de611f54d921700f3db0c8" name="a62b5c3d050de611f54d921700f3db0c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62b5c3d050de611f54d921700f3db0c8">&#9670;&#160;</a></span>Type</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="#a62b5c3d050de611f54d921700f3db0c8">AuxPort::Audio::FIR::Type</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Represents the type of <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> Filter. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8h_source.html#l00024">24</a> of file <a class="el" href="_aux_f_i_r_8h_source.html">AuxFIR.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="ad54020ddb9ff5a6446136cc3f1d11ac9" name="ad54020ddb9ff5a6446136cc3f1d11ac9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad54020ddb9ff5a6446136cc3f1d11ac9">&#9670;&#160;</a></span>applyWindow()</h2>
 
@@ -250,6 +255,73 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>sampleRate</b> = 
 <p>Applyies a window on the Impulse Response. </p>
 
 <p>Reimplemented in <a class="el" href="class_aux_port_1_1_audio_1_1_bartlett_f_i_r.html#a084313cff365d38bd9359dd452c4d685">AuxPort::Audio::BartlettFIR</a>, <a class="el" href="class_aux_port_1_1_audio_1_1_bartlett_hann_f_i_r.html#a06a5264ff13188bb8e8024209ff33a9e">AuxPort::Audio::BartlettHannFIR</a>, <a class="el" href="class_aux_port_1_1_audio_1_1_blackman_f_i_r.html#aa8518bf082bd99d846950d878d81e221">AuxPort::Audio::BlackmanFIR</a>, <a class="el" href="class_aux_port_1_1_audio_1_1_blackman_harris_f_i_r.html#a38c8c15cc0972c4127b4a9c0f38a90f5">AuxPort::Audio::BlackmanHarrisFIR</a>, <a class="el" href="class_aux_port_1_1_audio_1_1_flat_f_i_r.html#abf00998875d5a16eaca9ec46b5bd136e">AuxPort::Audio::FlatFIR</a>, <a class="el" href="class_aux_port_1_1_audio_1_1_hamming_f_i_r.html#a527838fcbc7d6668d655faed2cde6a03">AuxPort::Audio::HammingFIR</a>, <a class="el" href="class_aux_port_1_1_audio_1_1_hann_f_i_r.html#ab3a0ca87a27c7e3339aaf627f46a445d">AuxPort::Audio::HannFIR</a>, and <a class="el" href="class_aux_port_1_1_audio_1_1_nuttall_f_i_r.html#a6c49c80eb8b586d3f8647861542c18c1">AuxPort::Audio::NuttallFIR</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8cpp_source.html#l00039">39</a> of file <a class="el" href="_aux_f_i_r_8cpp_source.html">AuxFIR.cpp</a>.</p>
+
+</div>
+</div>
+<a id="af0a46014f40d4f66a9c2461a05559bfa" name="af0a46014f40d4f66a9c2461a05559bfa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0a46014f40d4f66a9c2461a05559bfa">&#9670;&#160;</a></span>compute() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Audio::FIR::compute </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>cutoffFrequency</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>order</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a62b5c3d050de611f54d921700f3db0c8">Type</a></td>          <td class="paramname"><span class="paramname"><em>filterType</em></span><span class="paramdefsep"> = </span><span class="paramdefval">Type::LowPass</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function designs an <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> by taking a cutoff frequency for a particular provided Order. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8cpp_source.html#l00080">80</a> of file <a class="el" href="_aux_f_i_r_8cpp_source.html">AuxFIR.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aac322124e2dae7dad68c0bb9ce9e7bfb" name="aac322124e2dae7dad68c0bb9ce9e7bfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac322124e2dae7dad68c0bb9ce9e7bfb">&#9670;&#160;</a></span>compute() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Audio::FIR::compute </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>passband</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>stopband</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>order</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a62b5c3d050de611f54d921700f3db0c8">Type</a></td>          <td class="paramname"><span class="paramname"><em>filterType</em></span><span class="paramdefsep"> = </span><span class="paramdefval">Type::LowPass</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function designs an <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> by taking in Passband and stopband frequencies for a particular provided Order. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8cpp_source.html#l00060">60</a> of file <a class="el" href="_aux_f_i_r_8cpp_source.html">AuxFIR.cpp</a>.</p>
 
 </div>
 </div>
@@ -282,6 +354,27 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>sampleRate</b> = 
 
 </div>
 </div>
+<a id="ad2113af04a13c0bfc93bed43cdb32cdc" name="ad2113af04a13c0bfc93bed43cdb32cdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2113af04a13c0bfc93bed43cdb32cdc">&#9670;&#160;</a></span>getImpulseResponse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; float &gt; * AuxPort::Audio::FIR::getImpulseResponse </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a pointer to the internal std::vector containing the IR. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8cpp_source.html#l00055">55</a> of file <a class="el" href="_aux_f_i_r_8cpp_source.html">AuxFIR.cpp</a>.</p>
+
+</div>
+</div>
 <a id="a4ce3cc76b2438e985fb8fa140b79c458" name="a4ce3cc76b2438e985fb8fa140b79c458"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4ce3cc76b2438e985fb8fa140b79c458">&#9670;&#160;</a></span>Log()</h2>
 
@@ -309,11 +402,331 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>sampleRate</b> = 
 
 <p>Reimplemented from <a class="el" href="class_aux_port_1_1_i_log.html#a5a9286e8a8917e35bd3154611dd7e849">AuxPort::ILog</a>.</p>
 
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8cpp_source.html#l00045">45</a> of file <a class="el" href="_aux_f_i_r_8cpp_source.html">AuxFIR.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a00ec32e30cf2b367aeb451441ebf4be5" name="a00ec32e30cf2b367aeb451441ebf4be5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00ec32e30cf2b367aeb451441ebf4be5">&#9670;&#160;</a></span>normalize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Audio::FIR::normalize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Normalize the Impulse Response (In Development) </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8cpp_source.html#l00023">23</a> of file <a class="el" href="_aux_f_i_r_8cpp_source.html">AuxFIR.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ae1fa63adde264052f72de5b35ee765ee" name="ae1fa63adde264052f72de5b35ee765ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1fa63adde264052f72de5b35ee765ee">&#9670;&#160;</a></span>replace() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Audio::FIR::replace </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; float &gt; &amp;</td>          <td class="paramname"><span class="paramname"><em>impulseResponse</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Method to load an impulse response into an <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> object...can be used with the <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> Engine. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8cpp_source.html#l00009">9</a> of file <a class="el" href="_aux_f_i_r_8cpp_source.html">AuxFIR.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5400925440c32f7ec8de2e7d82c43d98" name="a5400925440c32f7ec8de2e7d82c43d98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5400925440c32f7ec8de2e7d82c43d98">&#9670;&#160;</a></span>replace() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Audio::FIR::replace </td>
+          <td>(</td>
+          <td class="paramtype">float *</td>          <td class="paramname"><span class="paramname"><em>impulseResponse</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>size</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Method to load an impulse response into an <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> object...can be used with the <a class="el" href="class_aux_port_1_1_audio_1_1_f_i_r.html" title="Parent class for all FIR Design SubClasses.">FIR</a> Engine. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8cpp_source.html#l00014">14</a> of file <a class="el" href="_aux_f_i_r_8cpp_source.html">AuxFIR.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a0932aa2b39936c3b6b90a7adcde02153" name="a0932aa2b39936c3b6b90a7adcde02153"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0932aa2b39936c3b6b90a7adcde02153">&#9670;&#160;</a></span>setSampleRate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Audio::FIR::setSampleRate </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>sampleRate</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the Sample Rate. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8cpp_source.html#l00004">4</a> of file <a class="el" href="_aux_f_i_r_8cpp_source.html">AuxFIR.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aa52daa19620da101caf885d9350da909" name="aa52daa19620da101caf885d9350da909"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa52daa19620da101caf885d9350da909">&#9670;&#160;</a></span>spectralReversal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void AuxPort::Audio::FIR::spectralReversal </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Performs spectral reversal of Impulse Response. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8cpp_source.html#l00031">31</a> of file <a class="el" href="_aux_f_i_r_8cpp_source.html">AuxFIR.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a7be6fcfda77a9e9983e1cb946b96d37b" name="a7be6fcfda77a9e9983e1cb946b96d37b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7be6fcfda77a9e9983e1cb946b96d37b">&#9670;&#160;</a></span>cutoff</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float AuxPort::Audio::FIR::cutoff = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8h_source.html#l00092">92</a> of file <a class="el" href="_aux_f_i_r_8h_source.html">AuxFIR.h</a>.</p>
+
+</div>
+</div>
+<a id="a2bc80d9079e6cb35cdb89b1b08fee000" name="a2bc80d9079e6cb35cdb89b1b08fee000"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2bc80d9079e6cb35cdb89b1b08fee000">&#9670;&#160;</a></span>filterType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a62b5c3d050de611f54d921700f3db0c8">Type</a> AuxPort::Audio::FIR::filterType</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8h_source.html#l00088">88</a> of file <a class="el" href="_aux_f_i_r_8h_source.html">AuxFIR.h</a>.</p>
+
+</div>
+</div>
+<a id="a4833b286e2e21db11611214b00160282" name="a4833b286e2e21db11611214b00160282"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4833b286e2e21db11611214b00160282">&#9670;&#160;</a></span>impulseResponse</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;float&gt; AuxPort::Audio::FIR::impulseResponse</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8h_source.html#l00089">89</a> of file <a class="el" href="_aux_f_i_r_8h_source.html">AuxFIR.h</a>.</p>
+
+</div>
+</div>
+<a id="ace63677cc3f6d7d96129e020392ea96a" name="ace63677cc3f6d7d96129e020392ea96a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace63677cc3f6d7d96129e020392ea96a">&#9670;&#160;</a></span>normFreq</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float AuxPort::Audio::FIR::normFreq = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8h_source.html#l00093">93</a> of file <a class="el" href="_aux_f_i_r_8h_source.html">AuxFIR.h</a>.</p>
+
+</div>
+</div>
+<a id="a0dd0eff8fa25ae369858871f7c4459a6" name="a0dd0eff8fa25ae369858871f7c4459a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0dd0eff8fa25ae369858871f7c4459a6">&#9670;&#160;</a></span>order</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t AuxPort::Audio::FIR::order = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8h_source.html#l00094">94</a> of file <a class="el" href="_aux_f_i_r_8h_source.html">AuxFIR.h</a>.</p>
+
+</div>
+</div>
+<a id="a993d5a44da161f71adea9a85d5ae6f13" name="a993d5a44da161f71adea9a85d5ae6f13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a993d5a44da161f71adea9a85d5ae6f13">&#9670;&#160;</a></span>passband</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float AuxPort::Audio::FIR::passband = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8h_source.html#l00090">90</a> of file <a class="el" href="_aux_f_i_r_8h_source.html">AuxFIR.h</a>.</p>
+
+</div>
+</div>
+<a id="a6ad1f12fd5d822f8a7f15c597057bdab" name="a6ad1f12fd5d822f8a7f15c597057bdab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ad1f12fd5d822f8a7f15c597057bdab">&#9670;&#160;</a></span>sampleRate</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t AuxPort::Audio::FIR::sampleRate = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8h_source.html#l00095">95</a> of file <a class="el" href="_aux_f_i_r_8h_source.html">AuxFIR.h</a>.</p>
+
+</div>
+</div>
+<a id="a8faba84ee5cb04a449b3e6de4e66974f" name="a8faba84ee5cb04a449b3e6de4e66974f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8faba84ee5cb04a449b3e6de4e66974f">&#9670;&#160;</a></span>stopband</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float AuxPort::Audio::FIR::stopband = 0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_f_i_r_8h_source.html#l00091">91</a> of file <a class="el" href="_aux_f_i_r_8h_source.html">AuxFIR.h</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/Filters/<a class="el" href="_aux_f_i_r_8h_source.html">AuxFIR.h</a></li>
-<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/Filters/<b>AuxFIR.cpp</b></li>
+<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Audio/Filters/<a class="el" href="_aux_f_i_r_8cpp_source.html">AuxFIR.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

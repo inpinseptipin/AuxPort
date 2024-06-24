@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">AuxPort<span id="projectnumber">&#160;0.2</span>
    </div>
-   <div id="projectbrief">Modules for Software Development</div>
+   <div id="projectbrief">Modules for Audio Software Development</div>
   </td>
  </tr>
  </tbody>
@@ -103,25 +103,128 @@ $(function(){initNavTree('class_aux_port_1_1_fast_random_float.html',''); initRe
   <div class="headertitle"><div class="title">AuxPort::FastRandomFloat Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>This class provides an efficient way to generate random float values.  
+ <a href="#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_aux_utility_8h_source.html">AuxUtility.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a74af9a92d383ca45f32e096b829d6525" id="r_a74af9a92d383ca45f32e096b829d6525"><td class="memItemLeft" align="right" valign="top"><a id="a74af9a92d383ca45f32e096b829d6525" name="a74af9a92d383ca45f32e096b829d6525"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>FastRandomFloat</b> (const int &amp;randomSeed)</td></tr>
+<tr class="memitem:abcc789620f96ddf08c2761acff5d6d52" id="r_abcc789620f96ddf08c2761acff5d6d52"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abcc789620f96ddf08c2761acff5d6d52">FastRandomFloat</a> ()</td></tr>
+<tr class="memdesc:abcc789620f96ddf08c2761acff5d6d52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. This initializes the class with a random seed value of 1.  <br /></td></tr>
+<tr class="separator:abcc789620f96ddf08c2761acff5d6d52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74af9a92d383ca45f32e096b829d6525" id="r_a74af9a92d383ca45f32e096b829d6525"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a74af9a92d383ca45f32e096b829d6525">FastRandomFloat</a> (const int &amp;randomSeed)</td></tr>
+<tr class="memdesc:a74af9a92d383ca45f32e096b829d6525"><td class="mdescLeft">&#160;</td><td class="mdescRight">This initialized the class with the given random seed value. T.  <br /></td></tr>
 <tr class="separator:a74af9a92d383ca45f32e096b829d6525"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad5ea76e43eb588162b13bb0c49763e82" id="r_ad5ea76e43eb588162b13bb0c49763e82"><td class="memItemLeft" align="right" valign="top"><a id="ad5ea76e43eb588162b13bb0c49763e82" name="ad5ea76e43eb588162b13bb0c49763e82"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>FastRandomFloat</b> (const <a class="el" href="class_aux_port_1_1_fast_random_float.html">FastRandomFloat</a> &amp;random)=default</td></tr>
 <tr class="separator:ad5ea76e43eb588162b13bb0c49763e82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49b5308ea1fe0fbee95fb5f84b88862a" id="r_a49b5308ea1fe0fbee95fb5f84b88862a"><td class="memItemLeft" align="right" valign="top"><a id="a49b5308ea1fe0fbee95fb5f84b88862a" name="a49b5308ea1fe0fbee95fb5f84b88862a"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>getRandomFloat</b> ()</td></tr>
+<tr class="memitem:a49b5308ea1fe0fbee95fb5f84b88862a" id="r_a49b5308ea1fe0fbee95fb5f84b88862a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a49b5308ea1fe0fbee95fb5f84b88862a">getRandomFloat</a> ()</td></tr>
+<tr class="memdesc:a49b5308ea1fe0fbee95fb5f84b88862a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a random float value between -1 and 1.  <br /></td></tr>
 <tr class="separator:a49b5308ea1fe0fbee95fb5f84b88862a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab201561932733cbef25419a379454a84" id="r_ab201561932733cbef25419a379454a84"><td class="memItemLeft" align="right" valign="top"><a id="ab201561932733cbef25419a379454a84" name="ab201561932733cbef25419a379454a84"></a>
-float&#160;</td><td class="memItemRight" valign="bottom"><b>getRandomFloat</b> (float start, float end)</td></tr>
+<tr class="memitem:ab201561932733cbef25419a379454a84" id="r_ab201561932733cbef25419a379454a84"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab201561932733cbef25419a379454a84">getRandomFloat</a> (float start, float end)</td></tr>
+<tr class="memdesc:ab201561932733cbef25419a379454a84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a random float value in the range [start, end].  <br /></td></tr>
 <tr class="separator:ab201561932733cbef25419a379454a84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>This class provides an efficient way to generate random float values. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_utility_8h_source.html#l00422">422</a> of file <a class="el" href="_aux_utility_8h_source.html">AuxUtility.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="abcc789620f96ddf08c2761acff5d6d52" name="abcc789620f96ddf08c2761acff5d6d52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcc789620f96ddf08c2761acff5d6d52">&#9670;&#160;</a></span>FastRandomFloat() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">AuxPort::FastRandomFloat::FastRandomFloat </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Default constructor. This initializes the class with a random seed value of 1. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_utility_8cpp_source.html#l00094">94</a> of file <a class="el" href="_aux_utility_8cpp_source.html">AuxUtility.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a74af9a92d383ca45f32e096b829d6525" name="a74af9a92d383ca45f32e096b829d6525"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74af9a92d383ca45f32e096b829d6525">&#9670;&#160;</a></span>FastRandomFloat() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">AuxPort::FastRandomFloat::FastRandomFloat </td>
+          <td>(</td>
+          <td class="paramtype">const int &amp;</td>          <td class="paramname"><span class="paramname"><em>randomSeed</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>This initialized the class with the given random seed value. T. </p>
+<dl class="section note"><dt>Note</dt><dd>The given randomSeed should be non-zero. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_aux_utility_8cpp_source.html#l00099">99</a> of file <a class="el" href="_aux_utility_8cpp_source.html">AuxUtility.cpp</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a49b5308ea1fe0fbee95fb5f84b88862a" name="a49b5308ea1fe0fbee95fb5f84b88862a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49b5308ea1fe0fbee95fb5f84b88862a">&#9670;&#160;</a></span>getRandomFloat() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float AuxPort::FastRandomFloat::getRandomFloat </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a random float value between -1 and 1. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_utility_8cpp_source.html#l00105">105</a> of file <a class="el" href="_aux_utility_8cpp_source.html">AuxUtility.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab201561932733cbef25419a379454a84" name="ab201561932733cbef25419a379454a84"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab201561932733cbef25419a379454a84">&#9670;&#160;</a></span>getRandomFloat() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float AuxPort::FastRandomFloat::getRandomFloat </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>start</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>end</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns a random float value in the range [start, end]. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_utility_8cpp_source.html#l00111">111</a> of file <a class="el" href="_aux_utility_8cpp_source.html">AuxUtility.cpp</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/Utility/<a class="el" href="_aux_utility_8h_source.html">AuxUtility.h</a></li>
-<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/Utility/<b>AuxUtility.cpp</b></li>
+<li>C:/ROOT/AuxPort/AuxPort_Master/master/AuxPort/Core/Utility/<a class="el" href="_aux_utility_8cpp_source.html">AuxUtility.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

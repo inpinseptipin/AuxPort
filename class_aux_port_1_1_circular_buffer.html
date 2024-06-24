@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">AuxPort<span id="projectnumber">&#160;0.2</span>
    </div>
-   <div id="projectbrief">Modules for Software Development</div>
+   <div id="projectbrief">Modules for Audio Software Development</div>
   </td>
  </tr>
  </tbody>
@@ -122,13 +122,11 @@ Inheritance diagram for AuxPort::CircularBuffer&lt; sample &gt;:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aa119105a0c1082a24f3e3ce22f8127ac" id="r_aa119105a0c1082a24f3e3ce22f8127ac"><td class="memItemLeft" align="right" valign="top"><a id="aa119105a0c1082a24f3e3ce22f8127ac" name="aa119105a0c1082a24f3e3ce22f8127ac"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CircularBuffer</b> ()</td></tr>
-<tr class="memdesc:aa119105a0c1082a24f3e3ce22f8127ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor. <br /></td></tr>
+<tr class="memitem:aa119105a0c1082a24f3e3ce22f8127ac" id="r_aa119105a0c1082a24f3e3ce22f8127ac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa119105a0c1082a24f3e3ce22f8127ac">CircularBuffer</a> ()</td></tr>
+<tr class="memdesc:aa119105a0c1082a24f3e3ce22f8127ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default Constructor.  <br /></td></tr>
 <tr class="separator:aa119105a0c1082a24f3e3ce22f8127ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1268016668e5881ebcfbb66707a939e1" id="r_a1268016668e5881ebcfbb66707a939e1"><td class="memItemLeft" align="right" valign="top"><a id="a1268016668e5881ebcfbb66707a939e1" name="a1268016668e5881ebcfbb66707a939e1"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>CircularBuffer</b> (const size_t &amp;capacity)</td></tr>
-<tr class="memdesc:a1268016668e5881ebcfbb66707a939e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <a class="el" href="class_aux_port_1_1_circular_buffer.html" title="Represents a circular buffer data structure.">CircularBuffer</a> Object with the given capacity. <br /></td></tr>
+<tr class="memitem:a1268016668e5881ebcfbb66707a939e1" id="r_a1268016668e5881ebcfbb66707a939e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1268016668e5881ebcfbb66707a939e1">CircularBuffer</a> (const size_t &amp;capacity)</td></tr>
+<tr class="memdesc:a1268016668e5881ebcfbb66707a939e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <a class="el" href="class_aux_port_1_1_circular_buffer.html" title="Represents a circular buffer data structure.">CircularBuffer</a> Object with the given capacity.  <br /></td></tr>
 <tr class="separator:a1268016668e5881ebcfbb66707a939e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a225918f7005729b2c26d745a256e6172" id="r_a225918f7005729b2c26d745a256e6172"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a225918f7005729b2c26d745a256e6172">CircularBuffer</a> (const std::vector&lt; sample &gt; &amp;buffer)</td></tr>
 <tr class="memdesc:a225918f7005729b2c26d745a256e6172"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a <a class="el" href="class_aux_port_1_1_circular_buffer.html" title="Represents a circular buffer data structure.">CircularBuffer</a> Object using contents of a given vector.  <br /></td></tr>
@@ -147,28 +145,23 @@ virtual&#160;</td><td class="memItemRight" valign="bottom"><b>~CircularBuffer</b
 <tr class="memitem:a8d93f9e2c4127d9afd6f465336685f2e" id="r_a8d93f9e2c4127d9afd6f465336685f2e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d93f9e2c4127d9afd6f465336685f2e">push</a> (const sample &amp;val)</td></tr>
 <tr class="memdesc:a8d93f9e2c4127d9afd6f465336685f2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pushes an element onto the circular buffer.  <br /></td></tr>
 <tr class="separator:a8d93f9e2c4127d9afd6f465336685f2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3aecf179ae43245d6b4a5e117627fe18" id="r_a3aecf179ae43245d6b4a5e117627fe18"><td class="memItemLeft" align="right" valign="top"><a id="a3aecf179ae43245d6b4a5e117627fe18" name="a3aecf179ae43245d6b4a5e117627fe18"></a>
-sample&#160;</td><td class="memItemRight" valign="bottom"><b>pop</b> ()</td></tr>
-<tr class="memdesc:a3aecf179ae43245d6b4a5e117627fe18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pops an element from the circular buffer. The buffer should not be empty. <br /></td></tr>
+<tr class="memitem:a3aecf179ae43245d6b4a5e117627fe18" id="r_a3aecf179ae43245d6b4a5e117627fe18"><td class="memItemLeft" align="right" valign="top">sample&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3aecf179ae43245d6b4a5e117627fe18">pop</a> ()</td></tr>
+<tr class="memdesc:a3aecf179ae43245d6b4a5e117627fe18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pops an element from the circular buffer. The buffer should not be empty.  <br /></td></tr>
 <tr class="separator:a3aecf179ae43245d6b4a5e117627fe18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34353a5456aadc46fa2918558a3e935a" id="r_a34353a5456aadc46fa2918558a3e935a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a34353a5456aadc46fa2918558a3e935a">Log</a> () override</td></tr>
 <tr class="memdesc:a34353a5456aadc46fa2918558a3e935a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Logs the details of the circular buffer.  <br /></td></tr>
 <tr class="separator:a34353a5456aadc46fa2918558a3e935a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada6bdcf105cc5beaadb04cd4dafaa0a3" id="r_ada6bdcf105cc5beaadb04cd4dafaa0a3"><td class="memItemLeft" align="right" valign="top"><a id="ada6bdcf105cc5beaadb04cd4dafaa0a3" name="ada6bdcf105cc5beaadb04cd4dafaa0a3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>reset</b> ()</td></tr>
-<tr class="memdesc:ada6bdcf105cc5beaadb04cd4dafaa0a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the circular buffer. This reduces size to zero. <br /></td></tr>
+<tr class="memitem:ada6bdcf105cc5beaadb04cd4dafaa0a3" id="r_ada6bdcf105cc5beaadb04cd4dafaa0a3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ada6bdcf105cc5beaadb04cd4dafaa0a3">reset</a> ()</td></tr>
+<tr class="memdesc:ada6bdcf105cc5beaadb04cd4dafaa0a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the circular buffer. This reduces size to zero.  <br /></td></tr>
 <tr class="separator:ada6bdcf105cc5beaadb04cd4dafaa0a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1529983f2930720aaeaa36235909e6a1" id="r_a1529983f2930720aaeaa36235909e6a1"><td class="memItemLeft" align="right" valign="top"><a id="a1529983f2930720aaeaa36235909e6a1" name="a1529983f2930720aaeaa36235909e6a1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>meanRemoval</b> ()</td></tr>
-<tr class="memdesc:a1529983f2930720aaeaa36235909e6a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtracts the mean of the buffer from each element in the buffer. <br /></td></tr>
+<tr class="memitem:a1529983f2930720aaeaa36235909e6a1" id="r_a1529983f2930720aaeaa36235909e6a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1529983f2930720aaeaa36235909e6a1">meanRemoval</a> ()</td></tr>
+<tr class="memdesc:a1529983f2930720aaeaa36235909e6a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Subtracts the mean of the buffer from each element in the buffer.  <br /></td></tr>
 <tr class="separator:a1529983f2930720aaeaa36235909e6a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30936e61299e20fbb0bdc1c25d30ba20" id="r_a30936e61299e20fbb0bdc1c25d30ba20"><td class="memItemLeft" align="right" valign="top"><a id="a30936e61299e20fbb0bdc1c25d30ba20" name="a30936e61299e20fbb0bdc1c25d30ba20"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>getSize</b> ()</td></tr>
-<tr class="memdesc:a30936e61299e20fbb0bdc1c25d30ba20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the size of the buffer. <br /></td></tr>
+<tr class="memitem:a30936e61299e20fbb0bdc1c25d30ba20" id="r_a30936e61299e20fbb0bdc1c25d30ba20"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a30936e61299e20fbb0bdc1c25d30ba20">getSize</a> ()</td></tr>
+<tr class="memdesc:a30936e61299e20fbb0bdc1c25d30ba20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the size of the buffer.  <br /></td></tr>
 <tr class="separator:a30936e61299e20fbb0bdc1c25d30ba20"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cbfe820c5b8cca670307bdd997d74ec" id="r_a4cbfe820c5b8cca670307bdd997d74ec"><td class="memItemLeft" align="right" valign="top"><a id="a4cbfe820c5b8cca670307bdd997d74ec" name="a4cbfe820c5b8cca670307bdd997d74ec"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>resize</b> (size_t newCapacity)</td></tr>
-<tr class="memdesc:a4cbfe820c5b8cca670307bdd997d74ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes the buffer capacity but also resets the current buffer. <br /></td></tr>
+<tr class="memitem:a4cbfe820c5b8cca670307bdd997d74ec" id="r_a4cbfe820c5b8cca670307bdd997d74ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4cbfe820c5b8cca670307bdd997d74ec">resize</a> (size_t newCapacity)</td></tr>
+<tr class="memdesc:a4cbfe820c5b8cca670307bdd997d74ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes the buffer capacity but also resets the current buffer.  <br /></td></tr>
 <tr class="separator:a4cbfe820c5b8cca670307bdd997d74ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62bf1a5f4afdae3ba278409dc77c66b2" id="r_a62bf1a5f4afdae3ba278409dc77c66b2"><td class="memItemLeft" align="right" valign="top">sample&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62bf1a5f4afdae3ba278409dc77c66b2">getShiftedElement</a> (int index)</td></tr>
 <tr class="memdesc:a62bf1a5f4afdae3ba278409dc77c66b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return the element at the given shifted index. (Read Head has index 0, and so on...).  <br /></td></tr>
@@ -176,9 +169,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>resize</b> (size_t ne
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ad1d21ad22b2a40fcddef7d60fa3cef24" id="r_ad1d21ad22b2a40fcddef7d60fa3cef24"><td class="memItemLeft" align="right" valign="top"><a id="ad1d21ad22b2a40fcddef7d60fa3cef24" name="ad1d21ad22b2a40fcddef7d60fa3cef24"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>incrementIndex</b> (size_t &amp;index)</td></tr>
-<tr class="memdesc:ad1d21ad22b2a40fcddef7d60fa3cef24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments the given index in a circular manner. <br /></td></tr>
+<tr class="memitem:ad1d21ad22b2a40fcddef7d60fa3cef24" id="r_ad1d21ad22b2a40fcddef7d60fa3cef24"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad1d21ad22b2a40fcddef7d60fa3cef24">incrementIndex</a> (size_t &amp;index)</td></tr>
+<tr class="memdesc:ad1d21ad22b2a40fcddef7d60fa3cef24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Increments the given index in a circular manner.  <br /></td></tr>
 <tr class="separator:ad1d21ad22b2a40fcddef7d60fa3cef24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_aux_port_1_1_i_log"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_aux_port_1_1_i_log')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_aux_port_1_1_i_log.html">AuxPort::ILog</a></td></tr>
 <tr class="memitem:ac9841110c93a33354a2ed6a9f07eefab inherit pro_methods_class_aux_port_1_1_i_log" id="r_ac9841110c93a33354a2ed6a9f07eefab"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_aux_port_1_1_i_log.html#ac9841110c93a33354a2ed6a9f07eefab">setColour</a> (const <a class="el" href="namespace_aux_port.html#a7991652d34d5bd9e7be89163bcea3a51">ColourType</a> &amp;colourType)</td></tr>
@@ -187,28 +179,87 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>incrementIndex</b> (s
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:afb218e7a4741d800962fd7ae7d1f0423" id="r_afb218e7a4741d800962fd7ae7d1f0423"><td class="memItemLeft" align="right" valign="top"><a id="afb218e7a4741d800962fd7ae7d1f0423" name="afb218e7a4741d800962fd7ae7d1f0423"></a>
-std::vector&lt; sample &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>buffer</b></td></tr>
+<tr class="memitem:afb218e7a4741d800962fd7ae7d1f0423" id="r_afb218e7a4741d800962fd7ae7d1f0423"><td class="memItemLeft" align="right" valign="top">std::vector&lt; sample &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb218e7a4741d800962fd7ae7d1f0423">buffer</a></td></tr>
 <tr class="separator:afb218e7a4741d800962fd7ae7d1f0423"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aacca2069cd446c17fd1907713a90ffdc" id="r_aacca2069cd446c17fd1907713a90ffdc"><td class="memItemLeft" align="right" valign="top"><a id="aacca2069cd446c17fd1907713a90ffdc" name="aacca2069cd446c17fd1907713a90ffdc"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>capacity</b></td></tr>
+<tr class="memitem:aacca2069cd446c17fd1907713a90ffdc" id="r_aacca2069cd446c17fd1907713a90ffdc"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aacca2069cd446c17fd1907713a90ffdc">capacity</a></td></tr>
 <tr class="separator:aacca2069cd446c17fd1907713a90ffdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f4844370ec9d601fcaad9f85a91a5ae" id="r_a6f4844370ec9d601fcaad9f85a91a5ae"><td class="memItemLeft" align="right" valign="top"><a id="a6f4844370ec9d601fcaad9f85a91a5ae" name="a6f4844370ec9d601fcaad9f85a91a5ae"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>size</b></td></tr>
+<tr class="memitem:a6f4844370ec9d601fcaad9f85a91a5ae" id="r_a6f4844370ec9d601fcaad9f85a91a5ae"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f4844370ec9d601fcaad9f85a91a5ae">size</a></td></tr>
 <tr class="separator:a6f4844370ec9d601fcaad9f85a91a5ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af84c7515cc12ee6e82baac4c18c5b2c7" id="r_af84c7515cc12ee6e82baac4c18c5b2c7"><td class="memItemLeft" align="right" valign="top"><a id="af84c7515cc12ee6e82baac4c18c5b2c7" name="af84c7515cc12ee6e82baac4c18c5b2c7"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>readIndex</b></td></tr>
+<tr class="memitem:af84c7515cc12ee6e82baac4c18c5b2c7" id="r_af84c7515cc12ee6e82baac4c18c5b2c7"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af84c7515cc12ee6e82baac4c18c5b2c7">readIndex</a></td></tr>
 <tr class="separator:af84c7515cc12ee6e82baac4c18c5b2c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7586c6a17aeba3697ab93e594b4f912a" id="r_a7586c6a17aeba3697ab93e594b4f912a"><td class="memItemLeft" align="right" valign="top"><a id="a7586c6a17aeba3697ab93e594b4f912a" name="a7586c6a17aeba3697ab93e594b4f912a"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>writeIndex</b></td></tr>
+<tr class="memitem:a7586c6a17aeba3697ab93e594b4f912a" id="r_a7586c6a17aeba3697ab93e594b4f912a"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7586c6a17aeba3697ab93e594b4f912a">writeIndex</a></td></tr>
 <tr class="separator:a7586c6a17aeba3697ab93e594b4f912a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;class sample&gt;<br />
 class AuxPort::CircularBuffer&lt; sample &gt;</div><p>Represents a circular buffer data structure. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00050">50</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aa119105a0c1082a24f3e3ce22f8127ac" name="aa119105a0c1082a24f3e3ce22f8127ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa119105a0c1082a24f3e3ce22f8127ac">&#9670;&#160;</a></span>CircularBuffer() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_aux_port_1_1_circular_buffer.html">AuxPort::CircularBuffer</a>&lt; sample &gt;::CircularBuffer </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Default Constructor. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00056">56</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
+</div>
+</div>
+<a id="a1268016668e5881ebcfbb66707a939e1" name="a1268016668e5881ebcfbb66707a939e1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1268016668e5881ebcfbb66707a939e1">&#9670;&#160;</a></span>CircularBuffer() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_aux_port_1_1_circular_buffer.html">AuxPort::CircularBuffer</a>&lt; sample &gt;::CircularBuffer </td>
+          <td>(</td>
+          <td class="paramtype">const size_t &amp;</td>          <td class="paramname"><span class="paramname"><em>capacity</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initializes a <a class="el" href="class_aux_port_1_1_circular_buffer.html" title="Represents a circular buffer data structure.">CircularBuffer</a> Object with the given capacity. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00067">67</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
+</div>
+</div>
 <a id="a225918f7005729b2c26d745a256e6172" name="a225918f7005729b2c26d745a256e6172"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a225918f7005729b2c26d745a256e6172">&#9670;&#160;</a></span>CircularBuffer() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a225918f7005729b2c26d745a256e6172">&#9670;&#160;</a></span>CircularBuffer() <span class="overload">[3/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -237,10 +288,12 @@ template&lt;class sample &gt; </div>
 <dd>
 First element of the given vector will be the first element of the buffer. </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00080">80</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
 </div>
 </div>
 <a id="acdf5b3f3013231dc436e2882be850692" name="acdf5b3f3013231dc436e2882be850692"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acdf5b3f3013231dc436e2882be850692">&#9670;&#160;</a></span>CircularBuffer() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#acdf5b3f3013231dc436e2882be850692">&#9670;&#160;</a></span>CircularBuffer() <span class="overload">[4/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -272,6 +325,8 @@ template&lt;class sample &gt; </div>
 <dl class="section note"><dt>Note</dt><dd>The <a class="el" href="class_aux_port_1_1_circular_buffer.html" title="Represents a circular buffer data structure.">CircularBuffer</a> will have same size and capacity as the number of elements. </dd>
 <dd>
 Initial element of the array will be the first element of the buffer. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00093">93</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
 
 </div>
 </div>
@@ -306,6 +361,70 @@ template&lt;class sample &gt; </div>
 <dd>
 Negative Indexing is also supported. </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00211">211</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
+</div>
+</div>
+<a id="a30936e61299e20fbb0bdc1c25d30ba20" name="a30936e61299e20fbb0bdc1c25d30ba20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30936e61299e20fbb0bdc1c25d30ba20">&#9670;&#160;</a></span>getSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t <a class="el" href="class_aux_port_1_1_circular_buffer.html">AuxPort::CircularBuffer</a>&lt; sample &gt;::getSize </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the size of the buffer. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00191">191</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
+</div>
+</div>
+<a id="ad1d21ad22b2a40fcddef7d60fa3cef24" name="ad1d21ad22b2a40fcddef7d60fa3cef24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1d21ad22b2a40fcddef7d60fa3cef24">&#9670;&#160;</a></span>incrementIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_aux_port_1_1_circular_buffer.html">AuxPort::CircularBuffer</a>&lt; sample &gt;::incrementIndex </td>
+          <td>(</td>
+          <td class="paramtype">size_t &amp;</td>          <td class="paramname"><span class="paramname"><em>index</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Increments the given index in a circular manner. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00226">226</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
 </div>
 </div>
 <a id="a34353a5456aadc46fa2918558a3e935a" name="a34353a5456aadc46fa2918558a3e935a"></a>
@@ -337,6 +456,70 @@ template&lt;class sample &gt; </div>
 
 <p>Reimplemented from <a class="el" href="class_aux_port_1_1_i_log.html#a5a9286e8a8917e35bd3154611dd7e849">AuxPort::ILog</a>.</p>
 
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00149">149</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
+</div>
+</div>
+<a id="a1529983f2930720aaeaa36235909e6a1" name="a1529983f2930720aaeaa36235909e6a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1529983f2930720aaeaa36235909e6a1">&#9670;&#160;</a></span>meanRemoval()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_aux_port_1_1_circular_buffer.html">AuxPort::CircularBuffer</a>&lt; sample &gt;::meanRemoval </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Subtracts the mean of the buffer from each element in the buffer. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00181">181</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
+</div>
+</div>
+<a id="a3aecf179ae43245d6b4a5e117627fe18" name="a3aecf179ae43245d6b4a5e117627fe18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3aecf179ae43245d6b4a5e117627fe18">&#9670;&#160;</a></span>pop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">sample <a class="el" href="class_aux_port_1_1_circular_buffer.html">AuxPort::CircularBuffer</a>&lt; sample &gt;::pop </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Pops an element from the circular buffer. The buffer should not be empty. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00137">137</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
 </div>
 </div>
 <a id="a8d93f9e2c4127d9afd6f465336685f2e" name="a8d93f9e2c4127d9afd6f465336685f2e"></a>
@@ -366,6 +549,201 @@ template&lt;class sample &gt; </div>
 
 <p>Pushes an element onto the circular buffer. </p>
 <dl class="section note"><dt>Note</dt><dd>If the buffer is already full, then the oldest element is removed and the new element is inserted. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00120">120</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
+</div>
+</div>
+<a id="ada6bdcf105cc5beaadb04cd4dafaa0a3" name="ada6bdcf105cc5beaadb04cd4dafaa0a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada6bdcf105cc5beaadb04cd4dafaa0a3">&#9670;&#160;</a></span>reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_aux_port_1_1_circular_buffer.html">AuxPort::CircularBuffer</a>&lt; sample &gt;::reset </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Resets the circular buffer. This reduces size to zero. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00173">173</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
+</div>
+</div>
+<a id="a4cbfe820c5b8cca670307bdd997d74ec" name="a4cbfe820c5b8cca670307bdd997d74ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4cbfe820c5b8cca670307bdd997d74ec">&#9670;&#160;</a></span>resize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="class_aux_port_1_1_circular_buffer.html">AuxPort::CircularBuffer</a>&lt; sample &gt;::resize </td>
+          <td>(</td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>newCapacity</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Resizes the buffer capacity but also resets the current buffer. </p>
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00199">199</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="afb218e7a4741d800962fd7ae7d1f0423" name="afb218e7a4741d800962fd7ae7d1f0423"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb218e7a4741d800962fd7ae7d1f0423">&#9670;&#160;</a></span>buffer</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;sample&gt; <a class="el" href="class_aux_port_1_1_circular_buffer.html">AuxPort::CircularBuffer</a>&lt; sample &gt;::buffer</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00217">217</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
+</div>
+</div>
+<a id="aacca2069cd446c17fd1907713a90ffdc" name="aacca2069cd446c17fd1907713a90ffdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aacca2069cd446c17fd1907713a90ffdc">&#9670;&#160;</a></span>capacity</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="class_aux_port_1_1_circular_buffer.html">AuxPort::CircularBuffer</a>&lt; sample &gt;::capacity</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00218">218</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
+</div>
+</div>
+<a id="af84c7515cc12ee6e82baac4c18c5b2c7" name="af84c7515cc12ee6e82baac4c18c5b2c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af84c7515cc12ee6e82baac4c18c5b2c7">&#9670;&#160;</a></span>readIndex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="class_aux_port_1_1_circular_buffer.html">AuxPort::CircularBuffer</a>&lt; sample &gt;::readIndex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00220">220</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
+</div>
+</div>
+<a id="a6f4844370ec9d601fcaad9f85a91a5ae" name="a6f4844370ec9d601fcaad9f85a91a5ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f4844370ec9d601fcaad9f85a91a5ae">&#9670;&#160;</a></span>size</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="class_aux_port_1_1_circular_buffer.html">AuxPort::CircularBuffer</a>&lt; sample &gt;::size</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00219">219</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
+
+</div>
+</div>
+<a id="a7586c6a17aeba3697ab93e594b4f912a" name="a7586c6a17aeba3697ab93e594b4f912a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7586c6a17aeba3697ab93e594b4f912a">&#9670;&#160;</a></span>writeIndex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class sample &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="class_aux_port_1_1_circular_buffer.html">AuxPort::CircularBuffer</a>&lt; sample &gt;::writeIndex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_aux_circular_buffer_8h_source.html#l00221">221</a> of file <a class="el" href="_aux_circular_buffer_8h_source.html">AuxCircularBuffer.h</a>.</p>
 
 </div>
 </div>
