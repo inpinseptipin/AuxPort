@@ -222,6 +222,15 @@ namespace AuxPort
 				AuxAssert(false, "String passed does not contain a valid rational number!");
 			}
 		}
+
+		template<class stringVal>
+		static std::string toRoundedString(stringVal val, uint32_t significantDigits)
+		{
+			AuxAssert(significantDigits <= 20, "Cannot handle more than 20 significant digits");
+			std::stringstream stream;
+			stream << std::fixed << std::setprecision(significantDigits) << val;
+			return stream.str();
+		}
 	};
 }
 #endif 
