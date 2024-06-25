@@ -266,4 +266,19 @@ void AuxPort::Audio::KPString::setFrequency(float frequency)
 	AuxPort::Utility::generateRandomValues<float>(seedBuffer);
 }
 
-
+float AuxPort::Audio::Parabolic::process()
+{
+	if (isPlaying())
+	{
+		if (mod >= 1)
+			mod = 0;
+		
+		float x1 = 0.25f - mod;
+		float x2 = 1 - 2 * x1;
+		sample = 8 * x1 * x2;
+		mod += inc;
+		return x1 * x2;
+	}
+	else
+		return 0.0f;
+}

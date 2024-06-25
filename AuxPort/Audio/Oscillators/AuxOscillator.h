@@ -285,6 +285,15 @@ namespace AuxPort
 			State state = State::OFF;
 			uint32_t count = 0;
 		};
+
+		class Parabolic : public Oscillator
+		{
+		public:
+			Parabolic() = default;
+			~Parabolic() = default;
+			Parabolic(const Parabolic& parabolic) = default;
+			float process() override;
+		};
 	}
 }
 
