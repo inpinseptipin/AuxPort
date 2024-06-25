@@ -194,6 +194,23 @@ namespace AuxPort
 			static float softClipper(float& audio, const bool& preserve = true);
 
 			///////////////////////////////////////////////////////////////////////////////////////
+			///	@brief This functions performs tanh-like soft clipping distortion on the audio signal. 
+			/// It is based on the pade - approximation of the tanh function with tweaked coefficients.
+			/// ~~~~
+			///	[Mathematical Formula]
+			///	Let x be the input sample
+			///	Let y be the output sample
+			/// if( x < -3 )
+			///		y = -1
+			/// else if (x > 3)
+			///		y = 1
+			/// else
+			///		y = x * (27 + x * x) / (27 + 9 * x * x)
+			/// ~~~~
+			///////////////////////////////////////////////////////////////////////////////////////
+			static float tanhSoftClipper(float& audio, const bool& preserve = true);
+
+			///////////////////////////////////////////////////////////////////////////////////////
 			///	@brief This functions distorts the audio signal by altering the bit depth of the signal
 			/// ~~~~
 			///	[Mathematical Formula]

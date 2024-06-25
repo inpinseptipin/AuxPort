@@ -132,6 +132,59 @@ float AuxPort::Audio::Distortion::softClipper(float& audio, const bool& preserve
 
 }
 
+float AuxPort::Audio::Distortion::tanhSoftClipper(float& audio, const bool& preserve)
+{
+	float res;
+	if (audio < -3)
+		res = -1;
+	else if (audio > 3)
+		res = 1;
+	else
+	{
+		if (AuxPort::Env::supportsSSE())
+		{
+			union U
+			{
+				__m128 v;    // SSE 4 x float vector
+				float a[4];  // scalar array of 4 floats
+			};
+
+			float audioSquared = audio * audio;
+			auto register1 = _mm_set_ps(0.0f, 0.0f, 9.0f, 1.0f);
+			auto register2 = _mm_set1_ps(audioSquared);
+			auto register3 = _mm_set1_ps(27.0f);
+			
+			U ans;
+			ans.v = _mm_fmadd_ps(register1, register2, register3);
+
+			res = audio * ans.a[0] / ans.a[1];
+		}
+		else if (AuxPort::Env::supportsAVX())
+		{
+			union U
+			{
+				__m256 v;    // AVX 8 x float vector
+				float a[4];  // scalar array of 8 floats
+			};
+
+			float audioSquared = audio * audio;
+			auto register1 = _mm256_set_ps(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 9.0f, 1.0f);
+			auto register2 = _mm256_set1_ps(audioSquared);
+			auto register3 = _mm256_set1_ps(27.0f);
+			
+			U ans;
+			ans.v = _mm256_fmadd_ps(register1, register2, register3);
+
+			res = audio * ans.a[0] / ans.a[1];
+		}
+		else
+		{
+			res = audio * (27 + audio * audio) / (27 + 9 * audio * audio);
+		}
+	}
+	return preserve == false ? audio = res : res;
+}
+
 float AuxPort::Audio::Distortion::crush(float& audio, const float& depth, const bool& preserve)
 {
 	auto quantizationLevel = powf(2, depth) - 1;
