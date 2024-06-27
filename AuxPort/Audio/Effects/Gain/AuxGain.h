@@ -47,7 +47,7 @@ namespace AuxPort
 			Gain(float defaultGain);
 			~Gain() = default;
 			Gain(const Gain& Gain) = default;
-			void process(float& leftChannel, float& rightChannel, float currGain);
+			void process(float* leftChannel, float* rightChannel, size_t bufferSize, float currGain);
 		private:
 			float smoothedGain;
 		};
