@@ -235,3 +235,74 @@ float AuxPort::Audio::Assymetric::process(float sample,float k,float g = 1.0,Typ
 		circBuffer.meanRemoval();
 	return circBuffer.pop();
 }
+
+AuxPort::Audio::DelayedSoftClipper::DelayedSoftClipper()
+{
+	AuxAssert(AuxPort::Env::supportsAVX() || AuxPort::Env::supportsSSE(), "SIMD Instructions not available!");
+	if (AuxPort::Env::supportsAVX())
+	{
+		inputSamples.resize(8);
+		outputSamples.resize(8);
+	}
+	else if (AuxPort::Env::supportsSSE())
+	{
+		inputSamples.resize(4);
+		outputSamples.resize(4);
+	}
+}
+
+float AuxPort::Audio::DelayedSoftClipper::process(float& audio, const bool& preserve)
+{
+	if (isFirstSample)
+	{
+		for (int i = 0; i < outputSamples.size(); i++)
+			outputSamples[i] = i * (audio / 8);
+		isFirstSample = false;
+	}
+	
+	if (currWriteIndex == inputSamples.size())
+	{
+		processInputSamples();
+		currReadIndex = currWriteIndex = 0;
+	}
+
+	inputSamples[currWriteIndex++] = audio;
+	return preserve == false ? audio = outputSamples[currReadIndex++] : outputSamples[currReadIndex++];
+}
+
+uint8 AuxPort::Audio::DelayedSoftClipper::getDelaySize()
+{
+	return inputSamples.size();
+}
+
+void AuxPort::Audio::DelayedSoftClipper::processInputSamples()
+{
+	if (inputSamples.size() == 4)
+	{
+		auto audio = _mm_loadu_ps(inputSamples.data());
+		auto audioSquared = _mm_mul_ps(audio, audio);
+		
+		auto register1 = _mm_set_ps(9.0f, 9.0f, 9.0f, 9.0f);
+		auto register2 = _mm_set1_ps(27.0f);
+
+		auto numerator = _mm_add_ps(register2, audioSquared);
+		auto denominator = _mm_fmadd_ps(register1, audioSquared, register2);
+
+		auto result = _mm_div_ps(_mm_mul_ps(audio, numerator), denominator);
+		_mm_storeu_ps(outputSamples.data(), result);
+	}
+	else if (inputSamples.size() == 8)
+	{
+		auto audio = _mm256_loadu_ps(inputSamples.data());
+		auto audioSquared = _mm256_mul_ps(audio, audio);
+
+		auto register1 = _mm256_set_ps(9.0f, 9.0f, 9.0f, 9.0f, 9.0f, 9.0f, 9.0f, 9.0f);
+		auto register2 = _mm256_set1_ps(27.0f);
+
+		auto numerator = _mm256_add_ps(register2, audioSquared);
+		auto denominator = _mm256_fmadd_ps(register1, audioSquared, register2);
+
+		auto result = _mm256_div_ps(_mm256_mul_ps(audio, numerator), denominator);
+		_mm256_storeu_ps(outputSamples.data(), result);
+	}
+}
