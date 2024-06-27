@@ -320,6 +320,29 @@ namespace AuxPort
 			}
 			str += tokens[tokensCount - 1];
 		}
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Returns the floor of log2
+		///////////////////////////////////////////////////////////////////////////////////////
+		static int floorOfLog2(float val)
+		{
+			AuxAssert(val > 0.0f, "val should be greater than 0!");
+			AuxAssert(sizeof(val) == sizeof(int), "This function only works when sizeof(float) == sizeof(int)!");
+			AuxAssert(sizeof(val) == 4, "This function only works for 32-bit floats!");
+			return (((*(int*)&val) & 0x7f800000) >> 23) - 0x7f;
+		}
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Returns approximated value of log2
+		///////////////////////////////////////////////////////////////////////////////////////
+		static float approxOfLog2(float val)
+		{
+			AuxAssert(val > 0.0f, "val should be greater than 0!");
+			AuxAssert(sizeof(val) == sizeof(int), "This function only works when sizeof(float) == sizeof(int)!");
+			AuxAssert(sizeof(val) == 4, "This function only works for 32-bit floats!");
+			int i = (*(int*)&val);
+			return (((i & 0x7f800000) >> 23) - 0x7f) + (i & 0x007fffff) / (float)0x800000;
+		}
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////
