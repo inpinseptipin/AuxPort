@@ -1,5 +1,5 @@
-#ifndef AUXPORT_GAIN_H
-#define AUXPORT_GAIN_H
+#ifndef AUXPORT_PAN_H
+#define AUXPORT_PAN_H
 
 /*
 *			AuxPort Library

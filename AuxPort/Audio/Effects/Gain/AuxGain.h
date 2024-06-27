@@ -1,5 +1,7 @@
+#ifndef AUXPORT_GAIN_H
+#define AUXPORT_GAIN_H
 /*
-*			AuxPort Library
+			AuxPort Library
 			"Modules for Audio Software Development" - inpinseptipin
 
 			BSD 3-Clause License
@@ -33,44 +35,22 @@
 			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
-
 /*===================================================================================*/
-#pragma once
-/*
-*			Core Headers
-*/
-#include "Core/Env/AuxEnv.h"
-#include "Core/Log/AuxLog.h"
-#include "Core/Time/AuxTime.h"
-#include "Core/String/AuxString.h"
-#include "Core/File/AuxFile.h"
-#include "Core/Utility/AuxCaster.h"
-#include "Core/Utility/AuxUtility.h"
-#include "Core/Utility/AuxSeries.h"
-#include "Core/Utility/AuxMath.h"
-#include "Core/Utility/AuxPascal.h"
-#include "Core/TestCase/AuxCase.h"
-#include "Core/SIMD/AuxSimd.h"
-#include "Core/Crypto/AuxCrypto.h"
 
-
-/*
-*			Audio Headers
-*/
-#include "Audio/Buffer/AuxBuffer.h"
-#include "Audio/Effects/Distortion/AuxDistortion.h"
-#include "Audio/Effects/Gain/AuxPan.h"
-#include "Audio/Effects/Gain/AuxGain.h"
-#include "Audio/Windows/AuxWindow.h"
-#include "Audio/FFT/AuxFFT.h"
-#include "Audio/Filters/AuxFIR.h"
-#include "Audio/Filters/AuxIIR.h"
-#include "Audio/Oscillators/AuxOscillator.h"
-
-
-
-
-
-
-
-/*===================================================================================*/
+namespace AuxPort
+{
+	namespace Audio
+	{
+		class Gain
+		{
+		public:
+			Gain(float defaultGain);
+			~Gain() = default;
+			Gain(const Gain& Gain) = default;
+			void process(float& leftChannel, float& rightChannel, float currGain);
+		private:
+			float smoothedGain;
+		};
+	}
+}
+#endif

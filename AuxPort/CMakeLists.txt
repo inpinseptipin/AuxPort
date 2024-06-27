@@ -75,6 +75,8 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Filters/AuxIIR.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxPan.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxPan.cpp
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxGain.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxGain.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Oscillators/AuxOscillator.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Oscillators/AuxOscillator.cpp
    
