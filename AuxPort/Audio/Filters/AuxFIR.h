@@ -215,6 +215,13 @@ namespace AuxPort
 			std::vector<float> impulseResponse;
 			AuxPort::CircularBuffer<float> inputBuffer;
 			size_t irSize;
+
+#ifdef AUXSIMD			
+			// This is the number of elements which fit into the SIMD blocks. 
+			// For Example: For a vector of 30 elements, 24 elements can be fit perectly into AVX registers
+			size_t perfectSimdSize;
+#endif
+			void setSize(size_t irSize);
 		public:
 			Convolution() = default;
 			~Convolution() = default;

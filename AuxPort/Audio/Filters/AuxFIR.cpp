@@ -1,5 +1,6 @@
 #include "AuxFIR.h"
 #include "AuxFIR.h"
+#include "AuxFIR.h"
 
 void AuxPort::Audio::FIR::setSampleRate(uint32_t sampleRate)
 {
@@ -184,19 +185,30 @@ void AuxPort::Audio::BlackmanHarrisFIR::applyWindow()
 	Utility::multiply(impulseResponse, window);
 }
 
+void AuxPort::Audio::Convolution::setSize(size_t size)
+{
+	this->irSize = size;
+#if AUXSIMD
+	if (AuxPort::Env::supportsAVX())
+		this->perfectSimdSize = floor(size / 8.0f) * 8;
+	else if (AuxPort::Env::supportsSSE())
+		this->perfectSimdSize = floor(size / 4.0f) * 4;
+#endif
+}
+
 void AuxPort::Audio::Convolution::setImpulseResponse(const std::vector<float>& impulseResponse)
 {
 	AuxAssert(impulseResponse.size() > 0, "Impulse Response cannot be empty!");
-	irSize = impulseResponse.size();
+	setSize(impulseResponse.size());
 	this->impulseResponse = impulseResponse;
-	inputBuffer.resize(irSize);
+	inputBuffer.resize(impulseResponse.size());
 }
 
 void AuxPort::Audio::Convolution::setImpulseResponse(float* impulseResponse, uint32_t size)
 {
 	AuxAssert(impulseResponse != nullptr, "Impulse Response can't be a nullptr");
 	AuxAssert(size > 0, "IR size should be greater than 0");
-	irSize = size;
+	setSize(size);
 	this->impulseResponse.resize(size);
 	for (uint32_t i = 0; i < size; i++)
 		this->impulseResponse[i] = impulseResponse[i];
@@ -207,7 +219,7 @@ void AuxPort::Audio::Convolution::setImpulseResponse(std::vector<float>* impulse
 {
 	AuxAssert(impulseResponse != nullptr, "Impulse Response can't be a nullptr");
 	AuxAssert(size > 0, "IR size should be greater than 0");
-	irSize = size;
+	setSize(size);
 	this->impulseResponse.resize(size);
 	for (uint32_t i = 0; i < size; i++)
 		this->impulseResponse[i] = (*impulseResponse)[i];
@@ -219,9 +231,60 @@ float AuxPort::Audio::Convolution::process(float sample)
 	AuxAssert(impulseResponse.size() > 0, "Impluse Response is not provided. Please set Impulse Response first using setImpulseResponse().");
 	float outputSample = 0;
 	inputBuffer.push(sample);
-	for (uint32_t i = 0; i < irSize; i++)
+#ifdef AUXSIMD
+	if (AuxPort::Env::supportsAVX())
 	{
-		outputSample += impulseResponse[i] * inputBuffer.getShiftedElement(-i);
+		if (irSize > 7)
+		{
+			auto outputs = _mm256_setzero_ps();
+			for (size_t i = 0; i < perfectSimdSize; i += 8)
+			{
+				auto IrRegister = _mm256_load_ps(impulseResponse.data() + i);
+				__m256 inputBufferRegister;
+				for (size_t j = 0; j < 8; j++)
+					inputBufferRegister.m256_f32[j] = inputBuffer.getShiftedElement(-(i + j));
+
+				outputs = _mm256_add_ps(outputs, _mm256_mul_ps(IrRegister, inputBufferRegister));
+			}
+			outputs = _mm256_hadd_ps(outputs, outputs);
+			outputs = _mm256_hadd_ps(outputs, outputs);
+			outputs = _mm256_hadd_ps(outputs, outputs);
+			outputSample += _mm256_cvtss_f32(outputs);
+		}
+
+		for(size_t i = perfectSimdSize; i < irSize; i++)
+			outputSample += impulseResponse[i] * inputBuffer.getShiftedElement(-i);
+	}
+	else if (AuxPort::Env::supportsSSE())
+	{
+		if (irSize > 3)
+		{
+			auto outputs = _mm_setzero_ps();
+			for (size_t i = 0; i < perfectSimdSize; i += 4)
+			{
+				auto IrRegister = _mm_load_ps(impulseResponse.data() + i);
+				__m128 inputBufferRegister;
+				for (size_t j = 0; j < 4; j++)
+					inputBufferRegister.m128_f32[j] = inputBuffer.getShiftedElement(-(i + j));
+
+				outputs = _mm_add_ps(outputs, _mm_mul_ps(IrRegister, inputBufferRegister));
+			}
+			outputs = _mm_hadd_ps(outputs, outputs);
+			outputs = _mm_hadd_ps(outputs, outputs);
+			outputs = _mm_hadd_ps(outputs, outputs);
+			outputSample += _mm_cvtss_f32(outputs);
+		}
+
+		for (size_t i = perfectSimdSize; i < irSize; i++)
+			outputSample += impulseResponse[i] * inputBuffer.getShiftedElement(-i);		
+	}
+	else
+#endif
+	{
+		for (size_t i = 0; i < irSize; i++)
+		{
+			outputSample += impulseResponse[i] * inputBuffer.getShiftedElement(-i);
+		}
 	}
 	inputBuffer.pop();
 	return outputSample;
