@@ -36,7 +36,9 @@
 
 */
 /*===================================================================================*/
-
+#include "../../../Core/Env/AuxEnv.h"
+#include <vector>
+#include <immintrin.h>
 namespace AuxPort
 {
 	namespace Audio
@@ -48,7 +50,14 @@ namespace AuxPort
 			~Gain() = default;
 			Gain(const Gain& Gain) = default;
 			void process(float* leftChannel, float* rightChannel, size_t bufferSize, float currGain);
+			float process(float sample, float currGain);
 		private:
+			uint8 currWriteIndex = 0;
+			uint8 currReadIndex = 0;
+			std::vector<float> inputSamples;
+			std::vector<float> smoothedGains;
+			std::vector<float> outputSamples;
+			void processInputSamples();
 			float smoothedGain;
 		};
 	}
