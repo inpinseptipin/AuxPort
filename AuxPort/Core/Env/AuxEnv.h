@@ -37,6 +37,7 @@
 */
 #include <assert.h>
 
+
 ///////////////////////////////////////////////////////////////////////////////////////
 /// @cond
 /// Command for Doxygen to ignore comments below
@@ -49,6 +50,7 @@
 	#include <intrin.h>
 	#define AUXSIMD 1
 #endif
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
 ///	Preprocessor Defintion to determine the current Compiler
@@ -174,6 +176,19 @@
 		typedef signed short int16;
 	#endif
 
+	#if __arm64__
+		#define AUXPORT_64 64
+		typedef int int32;
+		typedef unsigned int uint32;
+		typedef long long int int64;
+		typedef unsigned long long int uint64;
+		typedef unsigned char uint8;
+		typedef signed char int8;
+		typedef unsigned short uint16;
+		typedef signed short int16;
+	#endif
+
+
 	#define AUXPORT_MAC 9999
 	#define STR(x) #x
 	#define XSTR(x) STR(x)
@@ -208,6 +223,7 @@ namespace AuxPort
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[3] & (1 << 25));
 #endif
+
 #endif	
 			return false;
 		}
