@@ -34,6 +34,10 @@
 
 cmake_minimum_required(VERSION 3.10)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS  ON)
+
 option(AUXPORT_BUILD_TESTS "Build AuxPort Test Library" OFF)
 option(AUXPORT_BUILD_SANDBOX "Build Sandbox Environment" OFF)
 

@@ -44,6 +44,10 @@
 #ifndef AUXPORT_UTILITY_H
 #include "../Utility/AuxUtility.h"
 #endif
+
+#ifdef AUXPORT_MAC
+#include <iomanip>
+#endif
 namespace AuxPort
 {
 	///////////////////////////////////////////////////////////////////////////////////////
