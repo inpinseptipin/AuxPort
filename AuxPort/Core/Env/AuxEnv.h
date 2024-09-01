@@ -43,18 +43,11 @@
 /// Command for Doxygen to ignore comments below
 ///////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////
-///	Preprocessor Defintion for SIMD and SIMD Headers Inculsion
-///////////////////////////////////////////////////////////////////////////////////////
-#ifdef _MSC_VER
-	#include <intrin.h>
-	#define AUXSIMD 1
-#endif
-
 
 ///////////////////////////////////////////////////////////////////////////////////////
-///	Preprocessor Defintion to determine the current Compiler
+/// Preprocessor Definitions to Determine C++ Compiler
 ///////////////////////////////////////////////////////////////////////////////////////
+
 #ifdef _MSC_VER
 	#define AUXPORT_COMPILER_MSVC
 #elif __GNUC__
@@ -62,6 +55,20 @@
 #elif __clang__
 	#define AUXPORT_COMPILER_CLANG
 #endif
+
+///////////////////////////////////////////////////////////////////////////////////////
+/// Preprocessor Definitions for SIMD Header Availability (Header File)
+///////////////////////////////////////////////////////////////////////////////////////
+
+#ifdef AUXPORT_COMPILER_MSVC
+#include <intrin.h>
+#define AUXSIMD 1
+#elif defined(AUXPORT_COMPILER_GCC) || defined(AUXPORT_COMPILER_CLANG)
+	#include <immintrin.h>
+#	include <cpuid.h>
+	#define AUXSIMD 1
+#endif
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
 ///	Preprocessor Defintion to determine the current C++ Standard Version
@@ -218,12 +225,14 @@ namespace AuxPort
 		static bool supportsSSE()
 		{
 #if AUXSIMD
-#if _WIN32 || _WIN64
+#if AUXPORT_WINDOWS
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[3] & (1 << 25));
 #endif
+#if AUXPORT_LINUX
 
+#endif
 #endif	
 			return false;
 		}
@@ -234,7 +243,7 @@ namespace AuxPort
 		static bool supportsSSE2()
 		{
 #if AUXSIMD
-#if _WIN32 || _WIN64
+#if AUXPORT_WINDOWS
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[3] & (1 << 26));
@@ -249,7 +258,7 @@ namespace AuxPort
 		static bool supportsAVX()
 		{
 #if AUXSIMD
-#if _WIN32 || _WIN64
+#if AUXPORT_WINDOWS
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[2] & (1 << 28));

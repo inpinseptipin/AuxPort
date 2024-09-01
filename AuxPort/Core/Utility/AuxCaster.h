@@ -48,6 +48,10 @@
 #ifdef AUXPORT_MAC
 #include <iomanip>
 #endif
+
+#ifdef AUXPORT_LINUX
+#include <iomanip>
+#endif
 namespace AuxPort
 {
 	///////////////////////////////////////////////////////////////////////////////////////
