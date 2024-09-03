@@ -52,6 +52,7 @@
 	#define AUXPORT_COMPILER_MSVC
 #elif __GNUC__
 	#define AUXPORT_COMPILER_GCC
+	#include <cpuid.h>
 #elif __clang__
 	#define AUXPORT_COMPILER_CLANG
 #endif
@@ -216,8 +217,7 @@ namespace AuxPort
 	///////////////////////////////////////////////////////////////////////////////////////
 	///	@brief This class provides a interface to get information about the current environment
 	///////////////////////////////////////////////////////////////////////////////////////
-	class Env
-	{
+	class Env {
 	public:
 		///////////////////////////////////////////////////////////////////////////////////////
 		///	@brief Returns true if the CPU supports SSE Instruction Set. Otherwise, returns false.
@@ -229,9 +229,15 @@ namespace AuxPort
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[3] & (1 << 25));
-#endif
-#if AUXPORT_LINUX
-
+#elif AUXPORT_LINUX
+			int cpuInfo[4];
+			cpuid(cpuInfo,0);
+			int nIds = cpuInfo[0];
+			if(nIds >=0x00000001)
+			{
+				cpuid(cpuInfo,0x00000001);
+				return (cpuInfo[3] & static_cast<int>(1<<25)) !=0;
+			}
 #endif
 #endif	
 			return false;
@@ -247,6 +253,15 @@ namespace AuxPort
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[3] & (1 << 26));
+#elif AUXPORT_LINUX
+			int cpuInfo[4];
+			cpuid(cpuInfo,0);
+			int nIds = cpuInfo[0];
+			if(nIds >=0x00000001)
+			{
+				cpuid(cpuInfo,0x00000001);
+				return (cpuInfo[3] & static_cast<int>(1<<26)) !=0;
+			}
 #endif
 #endif
 			return false;
@@ -262,7 +277,17 @@ namespace AuxPort
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[2] & (1 << 28));
+#elif AUXPORT_LINUX
+			int cpuInfo[4];
+			cpuid(cpuInfo,0);
+			int nIds = cpuInfo[0];
+			if(nIds >=0x00000001)
+			{
+				cpuid(cpuInfo,0x00000001);
+				return (cpuInfo[2] & static_cast<int>(1<<28)) !=0;
+			}
 #endif
+
 #endif
 			return false;
 		}
@@ -321,6 +346,13 @@ namespace AuxPort
 #endif
 			return false;
 		}
+	private:
+#if AUXPORT_LINUX
+		static void cpuid(int info[4],int infoType)
+		{
+			__cpuid_count(infoType,0,info[0],info[1],info[2],info[3]);
+		}
+#endif
 
 	};
 }
