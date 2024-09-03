@@ -2,7 +2,7 @@
 
 void AuxPort::Simd::Float256::add(std::vector<float>& result, const std::vector<float>& vec1, const std::vector<float>& vec2)
 {
-#if AUXSIMD
+#if AUXSIMD && AUX64SIMD
 	AuxAssert(AuxPort::Env::supportsAVX(), "CPU doesn't support AVX 256 bit SIMD instructions");
 	AuxAssert(vec1.size() == vec2.size(), "The sizes of the Addends have to be the same");
 	AuxAssert(vec1.size() % 8 == 0, "Vectors should be sizes of 8");
@@ -22,7 +22,7 @@ void AuxPort::Simd::Float256::add(std::vector<float>& result, const std::vector<
 }
 void AuxPort::Simd::Float256::multiply(std::vector<float>& result,const std::vector<float>& vec1, const std::vector<float>& vec2)
 {
-#if AUXSIMD
+#if AUXSIMD && AUX64SIMD
 	AuxAssert(vec1.size() == vec2.size(), "The sizes of the Addends and the Result Vector have to be the same");
 	AuxAssert(vec1.size() % 8 == 0, "Vectors should be sizes of 8");
 	
@@ -41,7 +41,7 @@ void AuxPort::Simd::Float256::multiply(std::vector<float>& result,const std::vec
 
 void AuxPort::Simd::Float256::sqrt(std::vector<float>& result, const std::vector<float>& vec)
 {
-#if AUXSIMD
+#if AUXSIMD && AUX64SIMD
 	AuxAssert(AuxPort::Env::supportsAVX(), "The current processor does not support AVX and hence 256-bit SIMD instructions cannot be performed.");
 	AuxAssert(result.size() == vec.size(), "The sizes of the Input Vector and the Result Vector have to be the same");
 	AuxAssert(vec.size() % 8 == 0, "Vectors should be sizes of 8");
@@ -60,7 +60,7 @@ void AuxPort::Simd::Float256::sqrt(std::vector<float>& result, const std::vector
 
 void AuxPort::Simd::Float256::fma(std::vector<float>& result, const std::vector<float>& vec1, const std::vector<float>& vec2, const std::vector<float>& vec3)
 {
-#if AUXSIMD
+#if AUXSIMD && AUX64SIMD
 	AuxAssert(AuxPort::Env::supportsAVX(), "The current processor does not support AVX and hence 256-bit SIMD instructions cannot be performed.");
 	AuxAssert(vec1.size() == vec2.size() && vec2.size() == vec3.size() && result.size() == vec1.size(), "The sizes of the Input Vectors and the Result Vector have to be the same");
 	AuxAssert(vec1.size() % 8 == 0, "Vectors should be sizes of 8");
@@ -82,7 +82,7 @@ void AuxPort::Simd::Float256::fma(std::vector<float>& result, const std::vector<
 
 void AuxPort::Simd::Float128::add(std::vector<float>& result, const std::vector<float>& vec1, const std::vector<float>& vec2)
 {
-#if AUXSIMD
+#if AUXSIMD && AUX64SIMD
 	AuxAssert(result.size() == vec1.size(), "Result Vector should be the same size as the Addends");
 	AuxAssert(vec1.size() == vec2.size(), "The sizes of the Addends have to be the same");
 	AuxAssert(vec1.size() % 4 == 0, "Vectors should be sizes of 4");
@@ -102,7 +102,7 @@ void AuxPort::Simd::Float128::add(std::vector<float>& result, const std::vector<
 
 void AuxPort::Simd::Float128::multiply(std::vector<float>& result, const std::vector<float>& vec1, const std::vector<float>& vec2)
 {
-#if AUXSIMD
+#if AUXSIMD && AUX64SIMD
 	AuxAssert(vec1.size() == vec2.size(), "The sizes of the Addends have to be the same");
 	AuxAssert(vec1.size() % 4 == 0, "Vectors should be sizes of 4");
 
@@ -121,7 +121,7 @@ void AuxPort::Simd::Float128::multiply(std::vector<float>& result, const std::ve
 
 void AuxPort::Simd::Float128::sqrt(std::vector<float>& result, const std::vector<float>& vec)
 {
-#if AUXSIMD
+#if AUXSIMD && AUX64SIMD
 	AuxAssert(AuxPort::Env::supportsSSE(), "The current processor does not support SSE and hence 128-bit SIMD instructions cannot be performed.");
 	AuxAssert(result.size() == vec.size(), "The sizes of the Input Vector and the Result Vector have to be the same");
 	AuxAssert(vec.size() % 4 == 0, "Vectors should be sizes of 4");
@@ -140,7 +140,7 @@ void AuxPort::Simd::Float128::sqrt(std::vector<float>& result, const std::vector
 
 void AuxPort::Simd::Float128::fma(std::vector<float>& result, const std::vector<float>& vec1, const std::vector<float>& vec2, const std::vector<float>& vec3)
 {
-#if AUXSIMD
+#if AUXSIMD && AUX64SIMD
 	AuxAssert(AuxPort::Env::supportsSSE(), "The current processor does not support SSE and hence 128-bit SIMD instructions cannot be performed.");
 	AuxAssert(vec1.size() == vec2.size() && vec2.size() == vec3.size() && result.size() == vec1.size(), "The sizes of the Input Vectors and the Result Vector have to be the same");
 	AuxAssert(vec1.size() % 4 == 0, "Vectors should be sizes of 4");

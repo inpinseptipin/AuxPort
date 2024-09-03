@@ -52,7 +52,6 @@
 	#define AUXPORT_COMPILER_MSVC
 #elif __GNUC__
 	#define AUXPORT_COMPILER_GCC
-	#include <cpuid.h>
 #elif __clang__
 	#define AUXPORT_COMPILER_CLANG
 #endif
@@ -62,12 +61,21 @@
 ///////////////////////////////////////////////////////////////////////////////////////
 
 #ifdef AUXPORT_COMPILER_MSVC
-#include <intrin.h>
-#define AUXSIMD 1
-#elif defined(AUXPORT_COMPILER_GCC) || defined(AUXPORT_COMPILER_CLANG)
-	#include <immintrin.h>
-#	include <cpuid.h>
+#if _WIN32 || _WIN64
+	#include <intrin.h>
 	#define AUXSIMD 1
+#endif
+#elif defined(AUXPORT_COMPILER_GCC) || defined(AUXPORT_COMPILER_CLANG)
+#if __x86_64__ || _M_X64 || _M_IX86 || i386 || __i386__ || __i386
+	#include <immintrin.h>
+	#include <cpuid.h>
+	#define AUXSIMD 1
+	#define AUX64SIMD 1
+#elif __arm64__ || __APPLE__
+	#include <arm_neon.h>
+	#define AUXSIMD 1
+	#define AUXNEON 1
+#endif
 #endif
 
 
@@ -185,6 +193,7 @@
 	#endif
 
 	#if __arm64__
+		#define AUXPORT_ARM 640
 		#define AUXPORT_64 64
 		typedef int int32;
 		typedef unsigned int uint32;
@@ -346,6 +355,23 @@ namespace AuxPort
 #endif
 			return false;
 		}
+
+		static bool isArm()
+		{
+#if AUXPORT_ARM
+			return true;
+#endif
+			return false;
+		}
+
+		static bool supportsNeon()
+		{
+#if AUXPORT_ARM
+			return true;
+#endif
+			return false;
+		}
+
 	private:
 #if AUXPORT_LINUX
 		static void cpuid(int info[4],int infoType)
