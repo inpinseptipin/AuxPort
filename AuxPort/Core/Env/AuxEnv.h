@@ -64,6 +64,7 @@
 #if _WIN32 || _WIN64
 	#include <intrin.h>
 	#define AUXSIMD 1
+	#define AUX64SIMD 1
 #endif
 #elif defined(AUXPORT_COMPILER_GCC) || defined(AUXPORT_COMPILER_CLANG)
 #if __x86_64__ || _M_X64 || _M_IX86 || i386 || __i386__ || __i386
