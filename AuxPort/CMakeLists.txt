@@ -64,6 +64,8 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Crypto/AuxCrypto.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Crypto/AuxCrypto.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Buffer/AuxBuffer.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Templates/AuxEffect.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Templates/AuxEffect.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Distortion/AuxDistortion.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Distortion/AuxDistortion.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Windows/AuxWindow.h

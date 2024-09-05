@@ -54,10 +54,12 @@
 #include "Core/Crypto/AuxCrypto.h"
 
 
+
 /*
 *			Audio Headers
 */
 #include "Audio/Buffer/AuxBuffer.h"
+#include "Audio/Effects/Templates/AuxEffect.h"
 #include "Audio/Effects/Distortion/AuxDistortion.h"
 #include "Audio/Effects/Gain/AuxPan.h"
 #include "Audio/Windows/AuxWindow.h"
