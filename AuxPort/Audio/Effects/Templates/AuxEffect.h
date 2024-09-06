@@ -80,6 +80,10 @@ namespace AuxPort
 /// @brief Override this function to do analysis on the audio buffer
 ///////////////////////////////////////////////////////////////////////////////////////
 			virtual void analysisBlock(const float* buffer, uint32_t bufferSize) = 0;
+///////////////////////////////////////////////////////////////////////////////////////
+/// @brief Override this function to do analysis on the audio buffer
+///////////////////////////////////////////////////////////////////////////////////////
+			virtual void handleAudioProcessor(void* audioProcessor);
             uint32 sampleRate;
 			std::vector<float> parameters;
 			AuxPort::Timer timer;

@@ -20,3 +20,8 @@ void AuxPort::Audio::Effect::process(float * buffer, uint32_t bufferSize)
 	benchmarkBlock(timer.getEllapsedTime());
 	analysisBlock(buffer,bufferSize);
 }
+
+void AuxPort::Audio::Effect::handleAudioProcessor(void *audioProcessor)
+{
+	AuxAssert(1==1,"Implement this with a valid pointer to an audio processor");
+}
