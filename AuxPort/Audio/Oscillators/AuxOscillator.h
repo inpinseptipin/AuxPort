@@ -11,7 +11,7 @@ namespace AuxPort
 	namespace Audio
 	{
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// @brief Inheritable function that provides common functions for all Digital Oscillators 
+		/// @brief Inheritable Class that provides common functions for all Digital Oscillators 
 		///////////////////////////////////////////////////////////////////////////////////////
 		class Oscillator
 		{
@@ -284,6 +284,24 @@ namespace AuxPort
 			float envelope;
 			State state = State::OFF;
 			uint32_t count = 0;
+		};
+
+///////////////////////////////////////////////////////////////////////////////////////
+/// @brief Fast Sine Approximation using a second-order FeedForward Filters
+///////////////////////////////////////////////////////////////////////////////////////
+		class FastSine : public Oscillator
+		{
+		public:
+			FastSine() = default;
+			~FastSine() = default;
+			FastSine(const FastSine& fastSine) = default;
+			void setFrequency(float frequency) override;
+			float process() override;
+		private:
+			float x1 = 0;
+			float x0 = 0;
+			float x2 = 0;
+			float a = 0;
 		};
 	}
 }
