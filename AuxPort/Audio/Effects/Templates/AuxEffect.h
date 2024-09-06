@@ -66,20 +66,12 @@ namespace AuxPort
 ///////////////////////////////////////////////////////////////////////////////////////
 /// @brief This function processes a buffer
 ///////////////////////////////////////////////////////////////////////////////////////
-#if JUCE_API
-			void process(juce::AudioBuffer<float>& buffer);
-#else
-			void process(std::vector<float>& buffer);
-#endif
+            virtual void process(float* buffer, uint32_t bufferSize);
 		protected:
 ///////////////////////////////////////////////////////////////////////////////////////
 /// @brief Override this function to write your DSP for a buffer filled with audio.
 ///////////////////////////////////////////////////////////////////////////////////////
-#if JUCE_API
-			virtual void processBlock(juce::AudioBuffer<float>& buffer) = 0;
-#else
-			virtual void processBlock(std::vector<float>& buffer) = 0;
-#endif
+			virtual void processBlock(float* buffer,uint32_t bufferSize) = 0;
 ///////////////////////////////////////////////////////////////////////////////////////
 /// @brief Override this function to benchmark the DSP code...argument provides the computational time of the latest buffer
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -87,12 +79,8 @@ namespace AuxPort
 ///////////////////////////////////////////////////////////////////////////////////////
 /// @brief Override this function to do analysis on the audio buffer
 ///////////////////////////////////////////////////////////////////////////////////////
-#if JUCE_API
-			virtual void analysisBlock(const juce::AudioBuffer<float>& buffer) = 0;
-#else
-			virtual void analysisBlock(const std::vector<float>& buffer) = 0;
-#endif
-			uint32 sampleRate;
+			virtual void analysisBlock(const float* buffer, uint32_t bufferSize) = 0;
+            uint32 sampleRate;
 			std::vector<float> parameters;
 			AuxPort::Timer timer;
 		};
