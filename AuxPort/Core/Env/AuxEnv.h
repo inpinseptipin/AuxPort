@@ -303,6 +303,76 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
+		///	@brief Returns true if the CPU supports MMX
+		///////////////////////////////////////////////////////////////////////////////////////
+		static bool supportsMMX()
+		{
+#if AUXSIMD
+#if AUXPORT_WINDOWS
+			int cpuInfo[4];
+			__cpuid(cpuInfo, 1);
+			return (cpuInfo[3] & (1 << 23));
+#elif AUXPORT_LINUX
+			int cpuInfo[4];
+			cpuid(cpuInfo, 0);
+			int nIds = cpuInfo[0];
+			if (nIds >= 0x00000001)
+			{
+				cpuid(cpuInfo, 0x00000001);
+				return (cpuInfo[2] & static_cast<int>(1 << 23)) != 0;
+			}
+#endif
+#endif
+		}
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		///	@brief Returns true if the CPU supports SSE4_1
+		///////////////////////////////////////////////////////////////////////////////////////
+		static bool supportsSSE4_1()
+		{
+#if AUXSIMD
+#if AUXPORT_WINDOWS
+			int cpuInfo[4];
+			__cpuid(cpuInfo, 1);
+			return (cpuInfo[2] & (1 << 19));
+#elif AUXPORT_LINUX
+			int cpuInfo[4];
+			cpuid(cpuInfo, 0);
+			int nIds = cpuInfo[0];
+			if (nIds >= 0x00000001)
+			{
+				cpuid(cpuInfo, 0x00000001);
+				return (cpuInfo[2] & static_cast<int>(1 << 19)) != 0;
+			}
+#endif
+#endif
+		}
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		///	@brief Returns true if the CPU supports SSE4_2
+		///////////////////////////////////////////////////////////////////////////////////////
+		static bool supportsSSE4_2()
+		{
+#if AUXSIMD
+#if AUXPORT_WINDOWS
+			int cpuInfo[4];
+			__cpuid(cpuInfo, 1);
+			return (cpuInfo[2] & (1 << 20));
+#elif AUXPORT_LINUX
+			int cpuInfo[4];
+			cpuid(cpuInfo, 0);
+			int nIds = cpuInfo[0];
+			if (nIds >= 0x00000001)
+			{
+				cpuid(cpuInfo, 0x00000001);
+				return (cpuInfo[2] & static_cast<int>(1 << 20)) != 0;
+			}
+#endif
+#endif
+		}
+
+
+		///////////////////////////////////////////////////////////////////////////////////////
 		///	@brief Returns true if current platform is Windows
 		///////////////////////////////////////////////////////////////////////////////////////
 		static bool isWindowsOS()
