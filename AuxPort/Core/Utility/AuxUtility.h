@@ -42,6 +42,9 @@
 #include <complex>
 #include <random>
 #include <algorithm>
+#include <iomanip>
+#include <sstream>
+
 
 namespace AuxPort
 {
@@ -320,6 +323,8 @@ namespace AuxPort
 			}
 			str += tokens[tokensCount - 1];
 		}
+
+
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////
