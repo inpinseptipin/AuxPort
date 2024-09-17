@@ -43,18 +43,11 @@
 /// Command for Doxygen to ignore comments below
 ///////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////////////////////////////////////////////////
-///	Preprocessor Defintion for SIMD and SIMD Headers Inculsion
-///////////////////////////////////////////////////////////////////////////////////////
-#ifdef _MSC_VER
-	#include <intrin.h>
-	#define AUXSIMD 1
-#endif
-
 
 ///////////////////////////////////////////////////////////////////////////////////////
-///	Preprocessor Defintion to determine the current Compiler
+/// Preprocessor Definitions to Determine C++ Compiler
 ///////////////////////////////////////////////////////////////////////////////////////
+
 #ifdef _MSC_VER
 	#define AUXPORT_COMPILER_MSVC
 #elif __GNUC__
@@ -62,6 +55,30 @@
 #elif __clang__
 	#define AUXPORT_COMPILER_CLANG
 #endif
+
+///////////////////////////////////////////////////////////////////////////////////////
+/// Preprocessor Definitions for SIMD Header Availability (Header File)
+///////////////////////////////////////////////////////////////////////////////////////
+
+#ifdef AUXPORT_COMPILER_MSVC
+#if _WIN32 || _WIN64
+	#include <intrin.h>
+	#define AUXSIMD 1
+	#define AUX64SIMD 1
+#endif
+#elif defined(AUXPORT_COMPILER_GCC) || defined(AUXPORT_COMPILER_CLANG)
+#if __x86_64__ || _M_X64 || _M_IX86 || i386 || __i386__ || __i386
+	#include <immintrin.h>
+	#include <cpuid.h>
+	#define AUXSIMD 1
+	#define AUX64SIMD 1
+#elif __arm64__ || __APPLE__
+	#include <arm_neon.h>
+	#define AUXSIMD 1
+	#define AUXNEON 1
+#endif
+#endif
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
 ///	Preprocessor Defintion to determine the current C++ Standard Version
@@ -177,6 +194,7 @@
 	#endif
 
 	#if __arm64__
+		#define AUXPORT_ARM 640
 		#define AUXPORT_64 64
 		typedef int int32;
 		typedef unsigned int uint32;
@@ -209,8 +227,7 @@ namespace AuxPort
 	///////////////////////////////////////////////////////////////////////////////////////
 	///	@brief This class provides a interface to get information about the current environment
 	///////////////////////////////////////////////////////////////////////////////////////
-	class Env
-	{
+	class Env {
 	public:
 		///////////////////////////////////////////////////////////////////////////////////////
 		///	@brief Returns true if the CPU supports SSE Instruction Set. Otherwise, returns false.
@@ -218,12 +235,20 @@ namespace AuxPort
 		static bool supportsSSE()
 		{
 #if AUXSIMD
-#if _WIN32 || _WIN64
+#if AUXPORT_WINDOWS
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[3] & (1 << 25));
+#elif AUXPORT_LINUX
+			int cpuInfo[4];
+			cpuid(cpuInfo,0);
+			int nIds = cpuInfo[0];
+			if(nIds >=0x00000001)
+			{
+				cpuid(cpuInfo,0x00000001);
+				return (cpuInfo[3] & static_cast<int>(1<<25)) !=0;
+			}
 #endif
-
 #endif	
 			return false;
 		}
@@ -234,10 +259,19 @@ namespace AuxPort
 		static bool supportsSSE2()
 		{
 #if AUXSIMD
-#if _WIN32 || _WIN64
+#if AUXPORT_WINDOWS
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[3] & (1 << 26));
+#elif AUXPORT_LINUX
+			int cpuInfo[4];
+			cpuid(cpuInfo,0);
+			int nIds = cpuInfo[0];
+			if(nIds >=0x00000001)
+			{
+				cpuid(cpuInfo,0x00000001);
+				return (cpuInfo[3] & static_cast<int>(1<<26)) !=0;
+			}
 #endif
 #endif
 			return false;
@@ -249,14 +283,94 @@ namespace AuxPort
 		static bool supportsAVX()
 		{
 #if AUXSIMD
-#if _WIN32 || _WIN64
+#if AUXPORT_WINDOWS
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
 			return (cpuInfo[2] & (1 << 28));
+#elif AUXPORT_LINUX
+			int cpuInfo[4];
+			cpuid(cpuInfo,0);
+			int nIds = cpuInfo[0];
+			if(nIds >=0x00000001)
+			{
+				cpuid(cpuInfo,0x00000001);
+				return (cpuInfo[2] & static_cast<int>(1<<28)) !=0;
+			}
 #endif
+
 #endif
 			return false;
 		}
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		///	@brief Returns true if the CPU supports MMX
+		///////////////////////////////////////////////////////////////////////////////////////
+		static bool supportsMMX()
+		{
+#if AUXSIMD
+#if AUXPORT_WINDOWS
+			int cpuInfo[4];
+			__cpuid(cpuInfo, 1);
+			return (cpuInfo[3] & (1 << 23));
+#elif AUXPORT_LINUX
+			int cpuInfo[4];
+			cpuid(cpuInfo, 0);
+			int nIds = cpuInfo[0];
+			if (nIds >= 0x00000001)
+			{
+				cpuid(cpuInfo, 0x00000001);
+				return (cpuInfo[2] & static_cast<int>(1 << 23)) != 0;
+			}
+#endif
+#endif
+		}
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		///	@brief Returns true if the CPU supports SSE4_1
+		///////////////////////////////////////////////////////////////////////////////////////
+		static bool supportsSSE4_1()
+		{
+#if AUXSIMD
+#if AUXPORT_WINDOWS
+			int cpuInfo[4];
+			__cpuid(cpuInfo, 1);
+			return (cpuInfo[2] & (1 << 19));
+#elif AUXPORT_LINUX
+			int cpuInfo[4];
+			cpuid(cpuInfo, 0);
+			int nIds = cpuInfo[0];
+			if (nIds >= 0x00000001)
+			{
+				cpuid(cpuInfo, 0x00000001);
+				return (cpuInfo[2] & static_cast<int>(1 << 19)) != 0;
+			}
+#endif
+#endif
+		}
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		///	@brief Returns true if the CPU supports SSE4_2
+		///////////////////////////////////////////////////////////////////////////////////////
+		static bool supportsSSE4_2()
+		{
+#if AUXSIMD
+#if AUXPORT_WINDOWS
+			int cpuInfo[4];
+			__cpuid(cpuInfo, 1);
+			return (cpuInfo[2] & (1 << 20));
+#elif AUXPORT_LINUX
+			int cpuInfo[4];
+			cpuid(cpuInfo, 0);
+			int nIds = cpuInfo[0];
+			if (nIds >= 0x00000001)
+			{
+				cpuid(cpuInfo, 0x00000001);
+				return (cpuInfo[2] & static_cast<int>(1 << 20)) != 0;
+			}
+#endif
+#endif
+		}
+
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		///	@brief Returns true if current platform is Windows
@@ -312,6 +426,30 @@ namespace AuxPort
 #endif
 			return false;
 		}
+
+		static bool isArm()
+		{
+#if AUXPORT_ARM
+			return true;
+#endif
+			return false;
+		}
+
+		static bool supportsNeon()
+		{
+#if AUXPORT_ARM
+			return true;
+#endif
+			return false;
+		}
+
+	private:
+#if AUXPORT_LINUX
+		static void cpuid(int info[4],int infoType)
+		{
+			__cpuid_count(infoType,0,info[0],info[1],info[2],info[3]);
+		}
+#endif
 
 	};
 }

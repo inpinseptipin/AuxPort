@@ -64,6 +64,8 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Crypto/AuxCrypto.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Crypto/AuxCrypto.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Buffer/AuxBuffer.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Templates/AuxEffect.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Templates/AuxEffect.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Distortion/AuxDistortion.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Distortion/AuxDistortion.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Windows/AuxWindow.h
@@ -79,3 +81,9 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Oscillators/AuxOscillator.cpp
    
 )
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+endif()

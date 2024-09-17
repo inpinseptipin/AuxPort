@@ -335,17 +335,23 @@ namespace AuxPort
 	public:	
 		static void printAbout()
 		{
-			Env::is32Bit() == true ? AuxPort::Logger::Log("AuxPort Alpha Build, x32", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("AuxPort Alpha Build, x64", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+			Env::isArm() ? AuxPort::Logger::Log("Detected Architecture : Arm",AuxPort::LogType::Success,AuxPort::ColourType::Light_Purple):AuxPort::Logger::Log("Detected Architecture : x86_64",AuxPort::LogType::Success,AuxPort::ColourType::Light_Purple);
 			if (Env::isWindowsOS())
 				AuxPort::Logger::Log("Detected OS : Windows", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
 			else if (Env::isLinuxOS())
 				AuxPort::Logger::Log("Detected OS : Linux", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
-			else
+			else if (Env::isMacOS())
 				AuxPort::Logger::Log("Detected OS : Mac", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+			else
+				AuxPort::Logger::Log("Unknown OS", AuxPort::LogType::Warning, AuxPort::ColourType::Red);
 
+			Env::supportsMMX() == true ? AuxPort::Logger::Log("MMX is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("MMX is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
 			Env::supportsAVX() == true ? AuxPort::Logger::Log("AVX is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple): AuxPort::Logger::Log("AVX is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
 			Env::supportsSSE() == true ? AuxPort::Logger::Log("SSE is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("SSE is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
 			Env::supportsSSE2() == true ? AuxPort::Logger::Log("SSE2 is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple): AuxPort::Logger::Log("SSE2 is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+			Env::supportsSSE4_1() == true ? AuxPort::Logger::Log("SSE4.1 is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("SSE4.1 is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+			Env::supportsSSE4_2() == true ? AuxPort::Logger::Log("SSE4.2 is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("SSE4.2 is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+			Env::supportsNeon() == true ? AuxPort::Logger::Log("Neon is Supported",AuxPort::LogType::Success,AuxPort::ColourType::Light_Purple):AuxPort::Logger::Log("Neon is not Supported",AuxPort::LogType::Success,AuxPort::ColourType::Light_Purple);
 		}
 	private:
 	};
