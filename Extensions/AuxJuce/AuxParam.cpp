@@ -1,115 +1,46 @@
 #include "AuxParam.h"
 
-AuxPort::Extensions::ParameterMap::Parameter::Parameter(size_t index, const AuxPort::Extensions::ParameterMap::type& paramType, const std::string& paramName)
-{
-	parameterPosition = index;
-	this->parameterType = paramType;
-	this->parameterName = paramName;
-}
-
-std::string AuxPort::Extensions::ParameterMap::Parameter::getParameterName()
-{
-	return parameterName;
-}
-
-uint32_t AuxPort::Extensions::ParameterMap::Parameter::getParameterPosition()
-{
-	return parameterPosition;
-}
-
-AuxPort::Extensions::ParameterMap::type AuxPort::Extensions::ParameterMap::Parameter::getParameterType()
-{
-	return parameterType;
-}
-
-
-
-AuxPort::Extensions::ParameterMap::ParameterMap(juce::AudioProcessor* audioProcessor)
+void AuxPort::Extensions::ParameterMap::addAudioProcessor(juce::AudioProcessor* audioProcessor)
 {
 	this->audioProcessor = audioProcessor;
 }
 
-void AuxPort::Extensions::ParameterMap::addParameter(juce::AudioParameterBool* boolParam)
+void AuxPort::Extensions::ParameterMap::addParameter(juce::AudioProcessorParameter* parameter)
 {
-	for (uint32_t i = 0; i < map.size(); i++)
-	{
-		AuxAssert(map[i].getParameterName() != boolParam->name, "A Parameter with that name already exists");
-	}
-	boolParameters.push_back(boolParam);
-	map.push_back({ boolParameters.size() - 1,AuxPort::Extensions::ParameterMap::type::aBool,boolParam->name.toStdString()});
+	AuxAssert(audioProcessor != nullptr, "No Audio Processor is linked to the Parameter Map");
+	AuxAssert(parameter != nullptr, "Parameter can't be a nullptr");
+	auto hostedParam = dynamic_cast<juce::HostedAudioProcessorParameter*>(parameter);
+	AuxAssert(parameters.find(hostedParam->getParameterID().toStdString()) == parameters.end(),"Parameter with that ID already exists");
+	audioProcessor->addParameter(parameter);
+	std::pair<std::string, uint32_t> pair;
+	pair.first = hostedParam->getParameterID().toStdString();
+	pair.second = audioProcessor->getParameters().size() - 1;
+	parameters.insert(pair);
 }
 
-void AuxPort::Extensions::ParameterMap::addParameter(juce::AudioParameterFloat* floatParam)
+juce::AudioParameterFloat* AuxPort::Extensions::ParameterMap::getFloatParameter(const std::string& parameterID)
 {
-	for (uint32_t i = 0; i < map.size(); i++)
-	{
-		AuxAssert(map[i].getParameterName() != floatParam->name, "A Parameter with that name already exists");
-	}
-	floatParameters.push_back(floatParam);
-	map.push_back({ floatParameters.size() - 1,AuxPort::Extensions::ParameterMap::type::aFloat,floatParam->name.toStdString() });
+	return static_cast<juce::AudioParameterFloat*>(getParameter(parameterID));
 }
 
-void AuxPort::Extensions::ParameterMap::addParameter(juce::AudioParameterInt* intParam)
+juce::AudioParameterInt* AuxPort::Extensions::ParameterMap::getIntParameter(const std::string& parameterID)
 {
-	for (uint32_t i = 0; i < map.size(); i++)
-	{
-		AuxAssert(map[i].getParameterName() != intParam->name, "A Parameter with that name already exists");
-	}
-	intParameters.push_back(intParam);
-	map.push_back({ intParameters.size() - 1,AuxPort::Extensions::ParameterMap::type::aInt,intParam->name.toStdString()});
+	return static_cast<juce::AudioParameterInt*>(getParameter(parameterID));
 }
 
-juce::AudioParameterFloat* AuxPort::Extensions::ParameterMap::getFloatParameter(const std::string& parameterName)
+juce::AudioParameterBool* AuxPort::Extensions::ParameterMap::getBoolParameter(const std::string& parameterID)
 {
-	for (uint32_t i = 0; i < map.size(); i++)
-	{
-		AuxPort::Extensions::ParameterMap::Parameter* param = &map[i];
-		if (param->getParameterType() == AuxPort::Extensions::ParameterMap::aFloat)
-			if (param->getParameterName() == parameterName)
-				return floatParameters[param->getParameterPosition()];
-	}
+	return static_cast<juce::AudioParameterBool*>(getParameter(parameterID));
 }
 
-juce::AudioParameterBool* AuxPort::Extensions::ParameterMap::getBoolParameter(const std::string& parameterName)
+juce::AudioParameterChoice* AuxPort::Extensions::ParameterMap::getChoiceParameter(const std::string& parameterID)
 {
-	for (uint32_t i = 0; i < map.size(); i++)
-	{
-		AuxPort::Extensions::ParameterMap::Parameter* param = &map[i];
-		if (param->getParameterType() == AuxPort::Extensions::ParameterMap::aBool)
-			if (param->getParameterName() == parameterName)
-				return boolParameters[param->getParameterPosition()];
-	}
+	return static_cast<juce::AudioParameterChoice*>(getParameter(parameterID));
 }
 
-juce::AudioParameterInt* AuxPort::Extensions::ParameterMap::getIntParameter(const std::string& parameterName)
+juce::AudioProcessorParameter* AuxPort::Extensions::ParameterMap::getParameter(const std::string& parameterID)
 {
-	for (uint32_t i = 0; i < map.size(); i++)
-	{
-		AuxPort::Extensions::ParameterMap::Parameter* param = &map[i];
-		if (param->getParameterType() == AuxPort::Extensions::ParameterMap::aInt)
-			if (param->getParameterName() == parameterName)
-				return intParameters[param->getParameterPosition()];
-	}
-}
-
-
-
-void AuxPort::Extensions::ParameterMap::save()
-{
-	for (uint32_t i = 0; i < map.size(); i++)
-	{
-		AuxPort::Extensions::ParameterMap::Parameter* param = &map[i];
-		if (param->getParameterType() == AuxPort::Extensions::ParameterMap::aBool)
-		{
-			audioProcessor->addParameter(boolParameters[param->getParameterPosition()]);
-		}
-		if (param->getParameterType() == AuxPort::Extensions::ParameterMap::aFloat)
-		{
-			audioProcessor->addParameter(floatParameters[param->getParameterPosition()]);
-		}
-		if (param->getParameterType() == AuxPort::Extensions::ParameterMap::aInt)
-		{
-			audioProcessor->addParameter(intParameters[param->getParameterPosition()]);
-		}
-	}
+	auto parameter = parameters.find(parameterID);
+	AuxAssert(parameter != parameters.end(), "Parameter ID does not exist in the map");
+	return audioProcessor->getParameters().getUnchecked(parameter->second);
 }
