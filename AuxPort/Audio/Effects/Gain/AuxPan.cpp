@@ -42,6 +42,7 @@
 AuxPort::Audio::Pan::Pan(const Type& type)
 {
 	this->type = type;
+	this->pan = 0.0f;
 }
 
 void AuxPort::Audio::Pan::setPan(float pan, float panStart, float panEnd)
@@ -81,6 +82,13 @@ void AuxPort::Audio::Pan::process(float& leftChannel, float& rightChannel)
 		rightChannel *= sinf(pan * (AuxPort::pi / 4));
 	}
 
+}
+
+void AuxPort::Audio::Pan::process(float* leftChannel,float* rightChannel, uint32_t numberOfSamples)
+{
+	AuxAssert(numberOfSamples > 0, "Cannot Process an empty buffer");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+		this->process(leftChannel[i], rightChannel[i]);
 }
 
 
