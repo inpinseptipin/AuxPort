@@ -41,7 +41,6 @@ set(CMAKE_CXX_EXTENSIONS  ON)
 option(AUXPORT_BUILD_TESTS "Build AuxPort Test Library" OFF)
 option(AUXPORT_BUILD_SANDBOX "Build Sandbox Environment" OFF)
 
-
 if("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "Win32")
 	option(AUXPORT_BUILD_FOR_RACKAFX "Build AuxPort for RackAFX" OFF)  
 endif()
