@@ -149,6 +149,7 @@ const float* AuxPort::Graphics::DrawBuffer::getPointerToBuffer()
     return buffer.data();
 }
 
+
 void AuxPort::Graphics::ScopeBuffers::setDrawBufferSize(const std::vector<std::string>& bufferIDS, const std::vector<size_t> bufferSizes)
 {
     AuxAssert(bufferIDS.size() == bufferSizes.size(), "Number of Buffer IDS should match Number of Buffer Sizes passed");
@@ -182,4 +183,16 @@ const float* AuxPort::Graphics::ScopeBuffers::getPointerToBuffer(const std::stri
     AuxAssert(found != bufferMap.end(), "Invalid BufferID");
     return found->second.getPointerToBuffer();
 }
+
+std::vector<std::string> AuxPort::Graphics::ScopeBuffers::getBufferIDS()
+{
+    std::vector<std::string> bufferIDS;
+    for (auto const& element : bufferMap)
+    {
+        bufferIDS.push_back(element.first);
+    }
+    return bufferIDS;
+}
+
+
 

@@ -487,6 +487,7 @@ namespace AuxPort
 			void addToBuffer(const std::string& bufferID,const float* buffer, size_t numberOfSamples);
 			size_t size(const std::string& bufferID);
 			const float* getPointerToBuffer(const std::string& bufferID);
+			std::vector<std::string> getBufferIDS();
 		private:
 			std::unordered_map<std::string, AuxPort::Graphics::DrawBuffer> bufferMap;
 		};
