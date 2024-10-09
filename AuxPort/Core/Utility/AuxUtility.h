@@ -44,7 +44,7 @@
 #include <algorithm>
 #include <iomanip>
 #include <sstream>
-
+#include <unordered_map>
 
 namespace AuxPort
 {
@@ -458,6 +458,44 @@ namespace AuxPort
 	private:
 		int randomSeed;
 	};
+
+	namespace Graphics
+	{
+		class DrawBuffer
+		{
+		public:
+			DrawBuffer();
+			~DrawBuffer() = default;
+			DrawBuffer(const DrawBuffer& drawBuffer) = default;
+			void setDrawBufferSize(uint32_t bufferSize);
+			void addToBuffer(const float* buffer, uint32_t numberOfSamples);
+			size_t size();
+			const float* getPointerToBuffer();
+		protected:
+			std::vector<float> buffer;
+			size_t writeIndex;
+			size_t drawBufferSize;
+		};
+
+		class ScopeBuffers
+		{
+		public:
+			ScopeBuffers() = default;
+			~ScopeBuffers() = default;
+			ScopeBuffers(const ScopeBuffers& scopeBuffer) = default;
+			void setDrawBufferSize(const std::vector<std::string>& bufferIDS, const std::vector<size_t> bufferSizes);
+			void addToBuffer(const std::string& bufferID,const float* buffer, size_t numberOfSamples);
+			size_t size(const std::string& bufferID);
+			const float* getPointerToBuffer(const std::string& bufferID);
+		private:
+			std::unordered_map<std::string, AuxPort::Graphics::DrawBuffer> bufferMap;
+		};
+	}
+	
+
+
+
+	
 
 }
 #endif
