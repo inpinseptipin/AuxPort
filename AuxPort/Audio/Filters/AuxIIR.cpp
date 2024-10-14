@@ -193,7 +193,12 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
         if (channels > general1.size())
             general1.resize(channels);
         for (uint32_t i = 0; i < general1.size(); i++)
-            general1[i].prepareToPlay(fc, q, boost, sampleRate, AuxPort::Audio::IIR::General::HighShelf);
+        {
+            general1[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::HighShelf);
+            general1[i].setSampleRate(sampleRate);
+            general1[i].prepareToPlay({ fc, q, boost });
+        }
+            
     }
 
     if (filter == Shelfx2)
@@ -205,8 +210,12 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
         }
         for (uint32_t i = 0; i < general1.size(); i++)
         {
-            general1[i].prepareToPlay(fc, q, boost, sampleRate, AuxPort::Audio::IIR::General::HighShelf);
-            general2[i].prepareToPlay(fc, q, boost, sampleRate, AuxPort::Audio::IIR::General::HighShelf);
+            general1[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::HighShelf);
+            general1[i].setSampleRate(sampleRate);
+            general1[i].prepareToPlay({ fc, q, boost});
+            general2[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::HighShelf);
+            general2[i].setSampleRate(sampleRate);
+            general2[i].prepareToPlay({ fc, q, boost});
         }
             
     }
@@ -216,7 +225,11 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
         if (channels > firstOrder1.size())
             firstOrder1.resize(channels);
         for (uint32_t i = 0; i < firstOrder1.size(); i++)
-            firstOrder1[i].prepareToPlay(fc, sampleRate, AuxPort::Audio::IIR::FirstOrder::Allpass);
+        {
+            firstOrder1[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Allpass);
+            firstOrder1[i].prepareToPlay({ fc, sampleRate });
+        }
+           
     }
 
     if (filter == LPF1)
@@ -224,7 +237,11 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
         if (channels > firstOrder1.size())
             firstOrder1.resize(channels);
         for (uint32_t i = 0; i < firstOrder1.size(); i++)
-            firstOrder1[i].prepareToPlay(fc, sampleRate, AuxPort::Audio::IIR::FirstOrder::Lowpass);
+        {
+            firstOrder1[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Lowpass);
+            firstOrder1[i].prepareToPlay({ fc, sampleRate });
+        }
+            
     }
 
     if (filter == HPF1)
@@ -232,7 +249,11 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
         if (channels > firstOrder1.size())
             firstOrder1.resize(channels);
         for (uint32_t i = 0; i < firstOrder1.size(); i++)
-            firstOrder1[i].prepareToPlay(fc, sampleRate, AuxPort::Audio::IIR::FirstOrder::Highpass);
+        {
+            firstOrder1[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Highpass);
+            firstOrder1[i].prepareToPlay({ fc, sampleRate });
+        }
+
     }
 
     if (filter == APF2)
@@ -244,8 +265,10 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
         }
         for (uint32_t i = 0; i < firstOrder1.size(); i++)
         {
-            firstOrder1[i].prepareToPlay(fc, sampleRate, AuxPort::Audio::IIR::FirstOrder::Allpass);
-            firstOrder2[i].prepareToPlay(fc, sampleRate, AuxPort::Audio::IIR::FirstOrder::Allpass);
+            firstOrder1[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Allpass);
+            firstOrder1[i].prepareToPlay({ fc, sampleRate });
+            firstOrder2[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Allpass);
+            firstOrder2[i].prepareToPlay({ fc, sampleRate });
         }
     }
 
@@ -258,8 +281,10 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
         }
         for (uint32_t i = 0; i < firstOrder1.size(); i++)
         {
-            firstOrder1[i].prepareToPlay(fc, sampleRate, AuxPort::Audio::IIR::FirstOrder::Lowpass);
-            firstOrder2[i].prepareToPlay(fc, sampleRate, AuxPort::Audio::IIR::FirstOrder::Lowpass);
+            firstOrder1[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Lowpass);
+            firstOrder1[i].prepareToPlay({ fc, sampleRate });
+            firstOrder2[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Lowpass);
+            firstOrder2[i].prepareToPlay({ fc, sampleRate });
         }
     }
 
@@ -272,8 +297,10 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
         }
         for (uint32_t i = 0; i < firstOrder1.size(); i++)
         {
-            firstOrder1[i].prepareToPlay(fc, sampleRate, AuxPort::Audio::IIR::FirstOrder::Highpass);
-            firstOrder2[i].prepareToPlay(fc, sampleRate, AuxPort::Audio::IIR::FirstOrder::Highpass);
+            firstOrder1[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Highpass);
+            firstOrder1[i].prepareToPlay({ fc, sampleRate });
+            firstOrder2[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Highpass);
+            firstOrder2[i].prepareToPlay({ fc, sampleRate });
         }
     }
 
@@ -359,9 +386,9 @@ float AuxPort::Audio::IIR::Engine::process(const float& sample,uint32_t channelN
     if (filter == ParametericEQ)
         return paramEQ[channelNumber].process(sample);
     if (filter == APF1 || filter == LPF1 || filter == HPF1)
-        return firstOrder1[channelNumber].processSample(sample);
+        return firstOrder1[channelNumber].process(sample);
     if (filter == APF2 || filter == LPF2 || filter == HPF2)
-        return firstOrder2[channelNumber].processSample(firstOrder1[channelNumber].processSample(sample));
+        return firstOrder2[channelNumber].process(firstOrder1[channelNumber].process(sample));
     else
         return 0;
 
@@ -378,13 +405,13 @@ AuxPort::Audio::IIR::General::General()
         coefficients[i] = 0;
 }
 
-void AuxPort::Audio::IIR::General::prepareToPlay(float fc, float q, float boost, float sampleRate, Type type)
+void AuxPort::Audio::IIR::General::prepareToPlay(const std::vector<float>& parameters)
 {
 
     if (type == Type::HighShelf)
     {
-        float theta_c = 2.0f * AuxPort::pi * fc / sampleRate;
-        float mu = powf(10.0f, boost / 20.0f);
+        float theta_c = 2.0f * AuxPort::pi * parameters[fc] / sampleRate;
+        float mu = powf(10.0f, parameters[boost] / 20.0f);
         float beta = (1.0f + mu) / 4.0f;
         float delta = beta * tanf(theta_c / 2.0f);
         float gamma = (1.0f - delta) / (1.0f + delta);
@@ -417,13 +444,12 @@ AuxPort::Audio::IIR::FirstOrder::FirstOrder()
     type = Allpass;
 }
 
-void AuxPort::Audio::IIR::FirstOrder::prepareToPlay(float fc, float sampleRate,const Type& type)
+void AuxPort::Audio::IIR::FirstOrder::prepareToPlay(const std::vector<float>& parameters)
 {
-    c = (tanf(AuxPort::pi * fc / sampleRate) - 1) / (tanf(AuxPort::pi * fc / sampleRate) + 1);
-    this->type = type;
+    c = (tanf(AuxPort::pi * parameters[fc] / sampleRate) - 1) / (tanf(AuxPort::pi * parameters[fc] / sampleRate) + 1);
 }
 
-float AuxPort::Audio::IIR::FirstOrder::processSample(float sample)
+float AuxPort::Audio::IIR::FirstOrder::process(const float& sample)
 {
     xh_new = sample - c * xh;
     output = c * xh_new + xh;
@@ -435,7 +461,23 @@ float AuxPort::Audio::IIR::FirstOrder::processSample(float sample)
     if (type == Highpass)
         return 0.5f * (sample - output);
     else
-        return 0;
+        return sample;
+}
+
+void AuxPort::Audio::IIR::FirstOrder::process(float* buffer, uint32_t numberofSamples)
+{
+    for (uint32_t i = 0; i < numberofSamples; i++)
+    {
+        xh_new = buffer[i] - c * xh;
+        output = c * xh_new + xh;
+        xh = xh_new;
+        if (type == Allpass)
+            buffer[i] = output;
+        if (type == Lowpass)
+            buffer[i] = 0.5f * (buffer[i] + output);
+        if (type == Highpass)
+            buffer[i] = 0.5f * (buffer[i] - output);
+    }
 }
 
 void AuxPort::Audio::IIR::IIRFilter::setSampleRate(float sampleRate)

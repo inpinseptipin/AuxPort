@@ -65,7 +65,7 @@ namespace AuxPort
             public:
                 enum Type
                 {
-                    Lowpass,Highpass,Bandpass,BandReject,Notch,LowShelf,HighShelf,
+                    Lowpass,Highpass,Bandpass,BandReject,Notch,LowShelf,HighShelf,Allpass
                 };
                 IIRFilter() = default;
                 ~IIRFilter() = default;
@@ -152,17 +152,9 @@ namespace AuxPort
             ///////////////////////////////////////////////////////////////////////////////////////
             /// @brief A set of First Order IIR filters
             ///////////////////////////////////////////////////////////////////////////////////////
-            class FirstOrder
+            class FirstOrder : public IIRFilter
             {
             public:
-                ///////////////////////////////////////////////////////////////////////////////////////
-                /// @brief Specifies the type of Filter
-                ///////////////////////////////////////////////////////////////////////////////////////
-                enum Type
-                {
-                    Allpass, Lowpass, Highpass
-                };
-
                 ///////////////////////////////////////////////////////////////////////////////////////
                 /// @brief Default Constructor. Initializes an Allpass filter, by default.
                 ///////////////////////////////////////////////////////////////////////////////////////
@@ -173,13 +165,19 @@ namespace AuxPort
                 ///////////////////////////////////////////////////////////////////////////////////////            
                 /// @brief Prepares the IIR Filter for playback
                 ///////////////////////////////////////////////////////////////////////////////////////
-                void prepareToPlay(float fc, float sampleRate, const Type& type);
+                void prepareToPlay(const std::vector<float>& parameters) override;
 
                 ///////////////////////////////////////////////////////////////////////////////////////            
                 /// @brief Returns the sample after applying IIR Filter to it
                 ///////////////////////////////////////////////////////////////////////////////////////
-                float processSample(float sample);
+                float process(const float& sample) override;
+
+                void process(float* buffer, uint32_t numberofSamples) override;
             private:
+                enum Parameters
+                {
+                    fc
+                };
                 std::vector<float> coefficients;
                 float xh_new;
                 float xh;
@@ -191,16 +189,12 @@ namespace AuxPort
             ///////////////////////////////////////////////////////////////////////////////////////
             /// @brief IIR Filter Algorithms that are not part of a filterbank
             ///////////////////////////////////////////////////////////////////////////////////////
-            class General
+            class General : public IIRFilter
             {
             public:
                 ///////////////////////////////////////////////////////////////////////////////////////
                 /// @brief Specifies the type of Filter
                 ///////////////////////////////////////////////////////////////////////////////////////
-                enum Type
-                {
-                    HighShelf
-                };
 
                 General();
                 ~General() = default;
@@ -209,17 +203,20 @@ namespace AuxPort
                 ///////////////////////////////////////////////////////////////////////////////////////            
                 /// @brief Prepares the IIR Filter for playback
                 ///////////////////////////////////////////////////////////////////////////////////////
-                void prepareToPlay(float fc, float q, float boost, float sampleRate, Type type = Type::HighShelf);
+                void prepareToPlay(const std::vector<float>& parameters) override;
 
                 ///////////////////////////////////////////////////////////////////////////////////////            
                 /// @brief Returns the sample after applying IIR Filter to it
                 ///////////////////////////////////////////////////////////////////////////////////////
                 float processSample(float sample);
             private:
-                std::vector<float> coefficients;
                 enum index
                 {
                     a0, a1, a2, b1, b2, c0, d0
+                };
+                enum Parameters
+                {
+                    fc,q,boost
                 };
                 float z1;
                 float z2;
