@@ -58,48 +58,68 @@ namespace AuxPort
         namespace IIR
         {
             ///////////////////////////////////////////////////////////////////////////////////////           
-            /// @brief Consist of Lowpass, Highpass and Bandpass 2nd order IIR filters based on the Butterworth Formula
-            ///////////////////////////////////////////////////////////////////////////////////////           
-            class Butterworth
+            /// @brief Base class for all IIR Filters in AuxPort
+            ///////////////////////////////////////////////////////////////////////////////////////   
+            class IIRFilter
             {
             public:
-                ///////////////////////////////////////////////////////////////////////////////////////            
-                /// @brief Specifies the type of Filter
-                ///////////////////////////////////////////////////////////////////////////////////////
-                enum class Type
+                enum Type
                 {
-                    Lowpass, Highpass, Bandpass
+                    Lowpass,Highpass,Bandpass,BandReject,Notch,LowShelf,HighShelf,
                 };
+                IIRFilter() = default;
+                ~IIRFilter() = default;
+                IIRFilter(const IIRFilter& iirFilter) = default;
+                void setSampleRate(float sampleRate);
+                void setFilterType(Type type);
+                virtual void prepareToPlay(const std::vector<float>& parameters);
+                virtual void process(float* buffer, uint32_t numberOfSamples);
+                virtual float process(const float& sample);
+            protected:
+                Type type = Type::Lowpass;
+                float sampleRate;
+                std::vector<float> parameters;
+                std::vector<float> coefficients;
+            };
 
+            ///////////////////////////////////////////////////////////////////////////////////////           
+            /// @brief Consist of Lowpass, Highpass and Bandpass 2nd order IIR filters based on the Butterworth Formula
+            ///////////////////////////////////////////////////////////////////////////////////////   
+            class Butterworth : public IIRFilter
+            {
+            public:
                 Butterworth();
                 ~Butterworth() = default;
                 Butterworth(const Butterworth& butterworth) = default;
-
-                ///////////////////////////////////////////////////////////////////////////////////////            
-                /// @brief Prepares the IIR Filter for playback
-                ///////////////////////////////////////////////////////////////////////////////////////
-                void prepareToPlay(float fc, float q, float sampleRate, Type type = Type::Lowpass);
-
-                ///////////////////////////////////////////////////////////////////////////////////////            
-                /// @brief Returns the sample after applying IIR Filter to it
-                /////////////////////////////////////////////////////////////////////////////////////// 
-                float processSample(float sample);
+                ///////////////////////////////////////////////////////////////////////////////////////           
+                ///@brief
+                /// Expected Arguments for PrepareToPlay
+                /// fc : Cutoff Frequency
+                /// q : Q-Factor (Only for Bandpass)
+                ///////////////////////////////////////////////////////////////////////////////////////           
+                void prepareToPlay(const std::vector<float>& parameters) override;
+                void process(float* buffer, uint32_t numberOfSamples) override;
+                float process(const float& sample) override;
             private:
-                std::vector<float> coefficients;
+                enum Parameters
+                {
+                    fc,q
+                };
                 enum index
                 {
-                    a0, a1, a2, b1, b2
+                    a0,a1,a2,b1,b2
                 };
                 float z1;
                 float z2;
                 const float sqrt2 = sqrtf(2);
                 float output;
             };
+        
 
             ///////////////////////////////////////////////////////////////////////////////////////
             /// @brief A 2nd Order Parameteric EQ to generate bandpeak and bandreject filters
             ///////////////////////////////////////////////////////////////////////////////////////
-            class ParametricEQ
+            class ParametricEQ : public IIRFilter
             {
             public:
                 ParametricEQ();
@@ -109,17 +129,20 @@ namespace AuxPort
                 ///////////////////////////////////////////////////////////////////////////////////////            
                 /// @brief Prepares the Filter for playback
                 ///////////////////////////////////////////////////////////////////////////////////////
-                void prepareToPlay(float fc, float q, float boost, float sampleRate);
+                void prepareToPlay(const std::vector<float>& parameters) override;
 
                 ///////////////////////////////////////////////////////////////////////////////////////            
                 /// @brief Returns the sample after applying Filter to it
                 ///////////////////////////////////////////////////////////////////////////////////////
-                float processSample(float sample);
+                float process(const float& sample) override;
             private:
-                std::vector<float> coefficients;
                 enum index
                 {
                     a0, a1, a2, b1, b2
+                };
+                enum Parameters
+                {
+                    fc,q,boost
                 };
                 float z1;
                 float z2;
@@ -202,6 +225,8 @@ namespace AuxPort
                 float z2;
                 float output;
             };
+
+
 
             ///////////////////////////////////////////////////////////////////////////////////////
             /// @brief Engine implements all the IIR filters and can be used to process audio right away. It is also compatible with Juce::AudioBuffer<float>

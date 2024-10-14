@@ -49,55 +49,8 @@ AuxPort::Audio::IIR::Butterworth::Butterworth()
         coefficients[i] = 0;
 }
 
-void AuxPort::Audio::IIR::Butterworth::prepareToPlay(float fc, float q, float sampleRate, Type type)
-{
-    if (type == Type::Lowpass)
-    {
-        float theta_c = AuxPort::pi * fc / sampleRate;
-        float c = 1.0f / tanf(theta_c);
-        coefficients[index::a0] = 1.0f / (1.0f + sqrt2 * c + powf(c, 2));
-        coefficients[index::a1] = 2.0f * coefficients[index::a0];
-        coefficients[index::a2] = coefficients[index::a0];
-        coefficients[index::b1] = 2.0f * coefficients[index::a0] * (1.0f - powf(c, 2));
-        coefficients[index::b2] = coefficients[a0] * (1.0f - sqrt2 * c + powf(c, 2));
-    }
 
-    if (type == Type::Highpass)
-    {
-        float theta_c = AuxPort::pi * fc / sampleRate;
-        float c = 1.0f / tanf(theta_c);
-        coefficients[index::a0] = 1.0f / (1.0f + sqrt2 * c + powf(c, 2));
-        coefficients[index::a1] = -2.0f * coefficients[index::a0];
-        coefficients[index::a2] = coefficients[index::a0];
-        coefficients[index::b1] = 2.0f * coefficients[index::a0] * (powf(c, 2) - 1.0f);
-        coefficients[index::b2] = coefficients[index::a0] * (1.0f - sqrt2 * c + powf(c, 2));
-    }
 
-    if (type == Type::Bandpass)
-    {
-        float theta_c = 2.0f * AuxPort::pi * fc / sampleRate;
-        float bandwidth = fc / q;
-        float delta_c = AuxPort::pi * bandwidth / sampleRate;
-        if (delta_c >= 0.95f * AuxPort::pi / 2.0f)
-            delta_c = 0.95f * AuxPort::pi / 2.0f;
-        float c = 1.0f / tanf(delta_c);
-        float d = 2.0f * cosf(theta_c);
-
-        coefficients[index::a0] = 1.0f / (1.0f + c);
-        coefficients[index::a1] = 0.0f;
-        coefficients[index::a2] = -coefficients[index::a0];
-        coefficients[index::b1] = -coefficients[index::a0] * (c * d);
-        coefficients[index::b2] = coefficients[index::a0] * (c - 1.0f);
-    }
-}
-
-float AuxPort::Audio::IIR::Butterworth::processSample(float sample)
-{
-    output = sample * coefficients[index::a0] + z1;
-    z1 = sample * coefficients[index::a1] + z2 - coefficients[index::b1] * output;
-    z2 = sample * coefficients[index::a2] - coefficients[index::b2] * output;
-    return output;
-}
 
 AuxPort::Audio::IIR::Engine::Engine(Filter filter)
 {
@@ -139,7 +92,9 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
             butter1.resize(channels);
         for (uint32_t i = 0; i < butter1.size(); i++)
         {
-            butter1[i].prepareToPlay(fc, q, sampleRate, AuxPort::Audio::IIR::Butterworth::Type::Lowpass);
+            butter1[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Lowpass);
+            butter1[i].setSampleRate(sampleRate);
+            butter1[i].prepareToPlay({fc,q});
         }
     }
 
@@ -150,7 +105,9 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
             butter1.resize(channels);
         for (uint32_t i = 0; i < butter1.size(); i++)
         {
-            butter1[i].prepareToPlay(fc, q, sampleRate, AuxPort::Audio::IIR::Butterworth::Type::Highpass);
+            butter1[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Highpass);
+            butter1[i].setSampleRate(sampleRate);
+            butter1[i].prepareToPlay({ fc,q });
         }
     }
 
@@ -160,7 +117,9 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
             butter1.resize(channels);
         for (uint32_t i = 0; i < butter1.size(); i++)
         {
-            butter1[i].prepareToPlay(fc, q, sampleRate, AuxPort::Audio::IIR::Butterworth::Type::Bandpass);
+            butter1[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Bandpass);
+            butter1[i].setSampleRate(sampleRate);
+            butter1[i].prepareToPlay({ fc,q });
         }
     }
 
@@ -175,8 +134,12 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
             
         for (uint32_t i = 0; i < butter1.size(); i++)
         {
-            butter1[i].prepareToPlay(fc, q, sampleRate, AuxPort::Audio::IIR::Butterworth::Type::Highpass);
-            butter2[i].prepareToPlay(fc, q, sampleRate, AuxPort::Audio::IIR::Butterworth::Type::Highpass);
+            butter1[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Highpass);
+            butter1[i].setSampleRate(sampleRate);
+            butter1[i].prepareToPlay({ fc,q });
+            butter2[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Highpass);
+            butter2[i].setSampleRate(sampleRate);
+            butter2[i].prepareToPlay({ fc,q });
         }
     }
 
@@ -189,8 +152,12 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
         }
         for (uint32_t i = 0; i < butter1.size(); i++)
         {
-            butter1[i].prepareToPlay(fc, q, sampleRate, AuxPort::Audio::IIR::Butterworth::Type::Lowpass);
-            butter2[i].prepareToPlay(fc, q, sampleRate, AuxPort::Audio::IIR::Butterworth::Type::Lowpass);
+            butter1[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Lowpass);
+            butter1[i].setSampleRate(sampleRate);
+            butter1[i].prepareToPlay({ fc,q });
+            butter2[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Lowpass);
+            butter2[i].setSampleRate(sampleRate);
+            butter2[i].prepareToPlay({ fc,q });
         }
     }
 
@@ -203,8 +170,12 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
         }
         for (uint32_t i = 0; i < butter1.size(); i++)
         {
-            butter1[i].prepareToPlay(fc, q, sampleRate, AuxPort::Audio::IIR::Butterworth::Type::Bandpass);
-            butter2[i].prepareToPlay(fc, q, sampleRate, AuxPort::Audio::IIR::Butterworth::Type::Bandpass);
+            butter1[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Bandpass);
+            butter1[i].setSampleRate(sampleRate);
+            butter1[i].prepareToPlay({ fc,q });
+            butter2[i].setFilterType(AuxPort::Audio::IIR::IIRFilter::Bandpass);
+            butter2[i].setSampleRate(sampleRate);
+            butter2[i].prepareToPlay({ fc,q });
         }
     }
 
@@ -213,7 +184,7 @@ void AuxPort::Audio::IIR::Engine::prepareToPlay(float fc, float q, float sampleR
         if (channels > paramEQ.size())
             paramEQ.resize(channels);
         for (uint32_t i = 0; i < paramEQ.size(); i++)
-            paramEQ[i].prepareToPlay(fc, q, boost,sampleRate);
+            paramEQ[i].prepareToPlay({ fc, q, boost });
     }
 
 
@@ -324,19 +295,20 @@ AuxPort::Audio::IIR::ParametricEQ::ParametricEQ()
         coefficients[i] = 0;
 }
 
-void AuxPort::Audio::IIR::ParametricEQ::prepareToPlay(float fc, float q, float boost, float sampleRate)
+void AuxPort::Audio::IIR::ParametricEQ::prepareToPlay(const std::vector<float>& parameters)
 {
-    float k = tanf(AuxPort::pi * fc / sampleRate);
-    float vo = powf(10.0f, boost / 20.0f);
-    bool toBoost = boost >= 0 ? true : false;
+    this->parameters = parameters;
+    float k = tanf(AuxPort::pi * parameters[fc] / sampleRate);
+    float vo = powf(10.0f, parameters[boost] / 20.0f);
+    bool toBoost = parameters[boost] >= 0 ? true : false;
 
-    float d0 = 1.0f + (1.0f / q) * k + powf(k, 2);
-    float e0 = 1.0f + (1.0f / (vo * q)) * k + powf(k, 2);
-    float alpha = 1.0f + (vo / q) * k + powf(k, 2);
+    float d0 = 1.0f + (1.0f / parameters[q]) * k + powf(k, 2);
+    float e0 = 1.0f + (1.0f / (vo * parameters[q])) * k + powf(k, 2);
+    float alpha = 1.0f + (vo / parameters[q]) * k + powf(k, 2);
     float beta = 2.0f * (powf(k, 2) - 1.0f);
-    float gamma = 1.0f - (vo / q) * k + powf(k, 2);
-    float delta = 1.0f - (1.0f / q) * k + powf(k, 2);
-    float eta = 1.0f - (1.0f / (vo * q)) * k + powf(k, 2);
+    float gamma = 1.0f - (vo / parameters[q]) * k + powf(k, 2);
+    float delta = 1.0f - (1.0f / parameters[q]) * k + powf(k, 2);
+    float eta = 1.0f - (1.0f / (vo * parameters[q])) * k + powf(k, 2);
 
     coefficients[index::a0] = toBoost ? alpha / d0 : d0 / e0;
     coefficients[index::a1] = toBoost ? beta / d0 : beta / e0;
@@ -345,7 +317,7 @@ void AuxPort::Audio::IIR::ParametricEQ::prepareToPlay(float fc, float q, float b
     coefficients[index::b2] = toBoost ? delta / d0 : eta / e0;
 }
 
-float AuxPort::Audio::IIR::ParametricEQ::processSample(float sample)
+float AuxPort::Audio::IIR::ParametricEQ::process(const float& sample)
 {
     output = sample * coefficients[index::a0] + z1;
     z1 = sample * coefficients[index::a1] + z2 - coefficients[index::b1] * output;
@@ -377,15 +349,15 @@ void AuxPort::Audio::IIR::Engine::process(juce::AudioBuffer<float>& buffer)
 float AuxPort::Audio::IIR::Engine::process(const float& sample,uint32_t channelNumber)
 {
     if (filter == ButterLPF6dB || filter == ButterHPF6dB || filter == ButterBPF6dB)
-        return butter1[channelNumber].processSample(sample);
+        return butter1[channelNumber].process(sample);
     if (filter == ButterLPF12dB || filter == ButterHPF12dB || filter == ButterBPF12dB)
-        return butter2[channelNumber].processSample(butter1[channelNumber].processSample(sample));
+        return butter2[channelNumber].process(butter1[channelNumber].process(sample));
     if (filter == Shelf)
         return general1[channelNumber].processSample(sample);
     if (filter == Shelfx2)
         return general2[channelNumber].processSample(general1[channelNumber].processSample(sample));
     if (filter == ParametericEQ)
-        return paramEQ[channelNumber].processSample(sample);
+        return paramEQ[channelNumber].process(sample);
     if (filter == APF1 || filter == LPF1 || filter == HPF1)
         return firstOrder1[channelNumber].processSample(sample);
     if (filter == APF2 || filter == LPF2 || filter == HPF2)
@@ -466,3 +438,92 @@ float AuxPort::Audio::IIR::FirstOrder::processSample(float sample)
         return 0;
 }
 
+void AuxPort::Audio::IIR::IIRFilter::setSampleRate(float sampleRate)
+{
+    this->sampleRate = sampleRate;
+}
+
+void AuxPort::Audio::IIR::IIRFilter::setFilterType(Type type)
+{
+    this->type = type;
+}
+
+void AuxPort::Audio::IIR::IIRFilter::prepareToPlay(const std::vector<float>& parameters)
+{
+    this->parameters = parameters;
+}
+
+void AuxPort::Audio::IIR::IIRFilter::process(float* buffer, uint32_t numberOfSamples)
+{
+    return;
+}
+
+float AuxPort::Audio::IIR::IIRFilter::process(const float& sample)
+{
+    return sample;
+}
+
+void AuxPort::Audio::IIR::Butterworth::prepareToPlay(const std::vector<float>& parameters)
+{
+    this->parameters = parameters;
+
+    if (type == AuxPort::Audio::IIR::IIRFilter::Lowpass)
+    {
+        float theta_c = AuxPort::pi * parameters[fc] / sampleRate;
+        float c = 1.0f / tanf(theta_c);
+        coefficients[index::a0] = 1.0f / (1.0f + sqrt2 * c + powf(c, 2));
+        coefficients[index::a1] = 2.0f * coefficients[index::a0];
+        coefficients[index::a2] = coefficients[index::a0];
+        coefficients[index::b1] = 2.0f * coefficients[index::a0] * (1.0f - powf(c, 2));
+        coefficients[index::b2] = coefficients[a0] * (1.0f - sqrt2 * c + powf(c, 2));
+    }
+
+    if (type == Type::Highpass)
+    {
+        float theta_c = AuxPort::pi * parameters[fc] / sampleRate;
+        float c = 1.0f / tanf(theta_c);
+        coefficients[index::a0] = 1.0f / (1.0f + sqrt2 * c + powf(c, 2));
+        coefficients[index::a1] = -2.0f * coefficients[index::a0];
+        coefficients[index::a2] = coefficients[index::a0];
+        coefficients[index::b1] = 2.0f * coefficients[index::a0] * (powf(c, 2) - 1.0f);
+        coefficients[index::b2] = coefficients[index::a0] * (1.0f - sqrt2 * c + powf(c, 2));
+    }
+
+    if (type == Type::Bandpass)
+    {
+        float theta_c = 2.0f * AuxPort::pi * parameters[fc] / sampleRate;
+        float bandwidth = parameters[fc] / parameters[q];
+        float delta_c = AuxPort::pi * bandwidth / sampleRate;
+        if (delta_c >= 0.95f * AuxPort::pi / 2.0f)
+            delta_c = 0.95f * AuxPort::pi / 2.0f;
+        float c = 1.0f / tanf(delta_c);
+        float d = 2.0f * cosf(theta_c);
+
+        coefficients[index::a0] = 1.0f / (1.0f + c);
+        coefficients[index::a1] = 0.0f;
+        coefficients[index::a2] = -coefficients[index::a0];
+        coefficients[index::b1] = -coefficients[index::a0] * (c * d);
+        coefficients[index::b2] = coefficients[index::a0] * (c - 1.0f);
+    }
+}
+
+void AuxPort::Audio::IIR::Butterworth::process(float* buffer, uint32_t numberOfSamples)
+{
+    for (uint32_t i = 0; i < numberOfSamples; i++)
+    {
+        output = buffer[i] * coefficients[index::a0] + z1;
+        z1 = buffer[i] * coefficients[index::a1] + z2 - coefficients[index::b1] * output;
+        z2 = buffer[i] * coefficients[index::a2] - coefficients[index::b2] * output;
+        buffer[i] = output;
+    }
+
+   
+}
+
+float AuxPort::Audio::IIR::Butterworth::process(const float& sample)
+{
+    output = sample * coefficients[index::a0] + z1;
+    z1 = sample * coefficients[index::a1] + z2 - coefficients[index::b1] * output;
+    z2 = sample * coefficients[index::a2] - coefficients[index::b2] * output;
+    return output;
+}
