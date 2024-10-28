@@ -38,6 +38,28 @@ juce::AudioParameterChoice* AuxPort::Extensions::ParameterMap::getChoiceParamete
 	return static_cast<juce::AudioParameterChoice*>(getParameter(parameterID));
 }
 
+void AuxPort::Extensions::ParameterMap::getStateInformation(juce::MemoryBlock& destData)
+{
+	auto juceParameters = audioProcessor->getParameters();
+	auto stream = juce::MemoryOutputStream(destData, true);
+	for (uint32_t i = 0; i < juceParameters.size(); i++)
+	{
+		auto value = juceParameters.getUnchecked(i)->getValue();
+		stream.writeFloat(value);
+	}
+}
+
+void AuxPort::Extensions::ParameterMap::setStateInformation(const void* data, int sizeInBytes)
+{
+	auto juceParameters = audioProcessor->getParameters();
+	auto stream = juce::MemoryInputStream(data, static_cast<size_t>(sizeInBytes), true);
+	for (uint32_t i = 0; i < juceParameters.size(); i++)
+	{
+		auto value = stream.readFloat();
+		juceParameters.getUnchecked(i)->setValue(value);
+	}
+}
+
 juce::AudioProcessorParameter* AuxPort::Extensions::ParameterMap::getParameter(const std::string& parameterID)
 {
 	auto parameter = parameters.find(parameterID);
