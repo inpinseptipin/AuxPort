@@ -162,7 +162,7 @@ void AuxPort::Extensions::AuxMultiSelect::setOptions(const std::vector<juce::Str
 		pair.first = options[i];
 		pair.second = false;
 		this->options[i] = pair;
-		switchImages.push_back(juce::ImageCache::getFromMemory(BinaryData::medtoggleswitch_png, BinaryData::medtoggleswitch_pngSize));
+		//switchImages.push_back(juce::ImageCache::getFromMemory(BinaryData::medtoggleswitch_png, BinaryData::medtoggleswitch_pngSize));
 	}
 	this->maxSelect = maxSelect;
 	
