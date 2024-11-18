@@ -271,6 +271,7 @@ void AuxPort::Audio::FastSine::setFrequency(float frequency)
 	this->frequency = frequency;
 	a = 2 * cosf(2 * pi * this->frequency / this->sampleRate);
 	x1 = sinf(2 * pi * this->frequency / this->sampleRate);
+	inc = this->frequency / this->sampleRate;
 }
 
 float AuxPort::Audio::FastSine::process()
@@ -284,4 +285,12 @@ float AuxPort::Audio::FastSine::process()
 		return sample;
 	}
 	return 0.0f;
+}
+
+void AuxPort::Audio::FastSine::stop()
+{
+	x0 = 0;
+	x1 = 0;
+	x2 = 0;
+	inc = 0;
 }

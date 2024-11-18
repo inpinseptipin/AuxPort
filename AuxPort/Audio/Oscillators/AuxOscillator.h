@@ -297,6 +297,7 @@ namespace AuxPort
 			FastSine(const FastSine& fastSine) = default;
 			void setFrequency(float frequency) override;
 			float process() override;
+			void stop() override;
 		private:
 			float x1 = 0;
 			float x0 = 0;
