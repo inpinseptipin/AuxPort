@@ -3,7 +3,8 @@
 AuxPort::Interpolation::Interpolation()
 {
 	this->type = Type::Linear;
-	startX = endX = delta = valuesCount = 0;
+	startX = endX = delta = 0.0f;
+	valuesCount = 0;
 }
 
 void AuxPort::Interpolation::setType(Type type)
@@ -19,7 +20,7 @@ void AuxPort::Interpolation::setXValues(float start, float end, float delta)
 	this->startX = start;
 	this->endX = end;
 	this->delta = delta;
-	this->valuesCount = (end - start) / delta + 1;
+	this->valuesCount = static_cast<size_t>((end - start) / delta + 1);
 }
 
 void AuxPort::Interpolation::setYValues(const std::vector<float> yValues)
@@ -34,19 +35,29 @@ float AuxPort::Interpolation::polate(float val)
 	AuxAssert(valuesCount != 0, "No xValues provided. Call setXValues() first!");
 	AuxAssert(yValues.size() == valuesCount, "Number of yValues must be equal to number of xValues!");
 	AuxAssert(val >= startX && val <= endX, "val should be in the range [start, end]");
+	float polatedValue = 0.0f;
 	switch (type)
 	{
 	case Type::Linear:
-		return linearInterpolate(val);
+		polatedValue = linearInterpolate(val);
+		break;
 	case Type::Cubic:
-		return cubicInterpolate(val);
+		polatedValue = cubicInterpolate(val);
+		break;
 	case Type::Lagrange:
-		return lagrangeInterpolate(val);
+		polatedValue = lagrangeInterpolate(val);
+		break;
 	case Type::Cosine:
-		return cosineInterpolate(val);
+		polatedValue = cosineInterpolate(val);
+		break;
 	case Type::Newton:
-		return newtonInterpolate(val);
+		polatedValue = newtonInterpolate(val);
+		break;
+	default: 
+		polatedValue = val;
+		break;
 	}
+	return polatedValue;
 }
 
 float AuxPort::Interpolation::linearInterpolate(float val)
@@ -134,9 +145,9 @@ float AuxPort::Interpolation::newtonInterpolate(float val)
 	AuxAssert(val >= startX && val <= endX, "Given val should lie in the range [start, end]!");
 
 	std::vector<float> dividedDifferences = yValues;
-	for (int i = 1; i < dividedDifferences.size(); i++)
+	for (size_t i = 1; i < dividedDifferences.size(); i++)
 	{
-		for (int j = dividedDifferences.size() - 1; j >= i; j--)
+		for (size_t j = dividedDifferences.size() - 1; j >= i; j--)
 		{
 			dividedDifferences[j] = (dividedDifferences[j] - dividedDifferences[j - 1]) / (i * delta);
 		}
@@ -157,7 +168,7 @@ float AuxPort::Interpolation::newtonInterpolate(float val)
 
 size_t AuxPort::Interpolation::findIndex(float xVal)
 {
-	size_t index = (xVal - startX) / delta;
+	size_t index = static_cast<size_t>((xVal - startX) / delta);
 	AuxAssert(index < yValues.size() - 1 && index >= 0, "Given val should lie between two defined xValues!");
 	return index;
 }

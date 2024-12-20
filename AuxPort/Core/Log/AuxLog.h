@@ -204,7 +204,7 @@ namespace AuxPort
 		template<class T>
 		static void logMessage(const T& message,const LogType& logType,const AuxPort::Time::TimeType& timeType)
 		{
-			std::cout << getMessageFormat(logType) <<" | "<<Time::getCurrentTime(timeType) << " | " << message << "\n";
+			std::cout << getMessageFormat(logType) <<" | "<< Time::getCurrentTime(timeType) << " | " << message << "\n";
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////

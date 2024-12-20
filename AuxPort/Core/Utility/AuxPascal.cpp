@@ -125,7 +125,7 @@ void AuxPort::AuxPascal::readFromFile(const std::string& fileName)
 
 		pascalTriangle.clear();
 		pascalTriangle.resize(N);
-		for (int i = 0; i < N; i++)
+		for (uint32_t i = 0; i < N; i++)
 		{
 			if (fileReader->eof())
 			{
@@ -137,7 +137,7 @@ void AuxPort::AuxPascal::readFromFile(const std::string& fileName)
 			lineStream.str(currLine);
 
 			pascalTriangle[i].resize(i + 1);
-			for (int j = 0; j <= i; j++)
+			for (uint32_t j = 0; j <= i; j++)
 			{
 				if (!(lineStream >> pascalTriangle[i][j]))
 				{

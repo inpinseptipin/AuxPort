@@ -35,39 +35,34 @@
 
 */
 #include "AuxLog.h"
-#include <iomanip>
-
+#include <chrono>
 namespace AuxPort
 {
 	std::string Time::getCurrentTime(const TimeType& timeType)
 	{
-		time_t currentTime = std::time(0);
-		std::stringstream ss;
-		ss << std::put_time(std::localtime(&currentTime), "%c");
-		std::string returnTime = ss.str();
+		const std::time_t currentTime_t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+		char timeBuffer[26];
+		ctime_s(timeBuffer, sizeof(timeBuffer), &currentTime_t);
+		auto currentTime =  std::string(timeBuffer);
 		switch (timeType)
 		{
 		case TimeType::Day:
-			return "Day : " + returnTime.substr(0, 3);
+			return "Day : " + currentTime.substr(0, 3);
 			break;
-
 		case TimeType::Date:
-			return "Date : " + returnTime.substr(4, 6);
+			return "Date : " + currentTime.substr(4, 6);
 			break;
-
 		case TimeType::time:
-			return "Time : " + returnTime.substr(11, 8);
+			return "Time : " + currentTime.substr(11, 8);
 			break;
-
 		case TimeType::Year:
-			return "Year : " + returnTime.substr(20, 4);
+			return "Year : " + currentTime.substr(20, 4);
 			break;
-
 		case TimeType::Raw:
-			return returnTime.substr(0, 24);
+			return currentTime.substr(0, 24);
 			break;
 		}
-		return returnTime;
+		return currentTime;
 	}
 
 
@@ -76,7 +71,7 @@ namespace AuxPort
 	{
 #ifdef AUXPORT_WINDOWS
 		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-		SetConsoleTextAttribute(hStdOut, (unsigned int)colourType);
+		SetConsoleTextAttribute(hStdOut, (WORD)colourType);
 #elif defined(AUXPORT_LINUX) || defined(AUXPORT_MAC)
 		std::cout << "\033[" << (unsigned int) colourType << "m";
 #endif
@@ -103,7 +98,7 @@ namespace AuxPort
 	{
 #ifdef AUXPORT_WINDOWS
 		HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-		SetConsoleTextAttribute(hStdOut, (unsigned int)colourType);
+		SetConsoleTextAttribute(hStdOut, (WORD)colourType);
 #elif defined(AUXPORT_LINUX) || defined(AUXPORT_MAC)
 		std::cout << "\033[" << (unsigned int) colourType << "m";
 #endif

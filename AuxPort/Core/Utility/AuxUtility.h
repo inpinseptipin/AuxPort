@@ -66,7 +66,13 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		static uint64 numberOfDigits(int64 number)
 		{
-			uint64 noOfDigits = number ? 0 : 1; while (number) { noOfDigits++, number /= 10; };
+			uint64 noOfDigits = number ? 0l : 1l; while (number) { noOfDigits++, number /= 10; };
+			return noOfDigits;
+		}
+		
+		static uint64 numberOfDigits(uint64 number)
+		{
+			uint64 noOfDigits = number ? 0l : 1l; while (number) { noOfDigits++, number /= 10; };
 			return noOfDigits;
 		}
 #else	
@@ -467,8 +473,8 @@ namespace AuxPort
 			DrawBuffer();
 			~DrawBuffer() = default;
 			DrawBuffer(const DrawBuffer& drawBuffer) = default;
-			void setDrawBufferSize(uint32_t bufferSize);
-			void addToBuffer(const float* buffer, uint32_t numberOfSamples);
+			void setDrawBufferSize(size_t bufferSize);
+			void addToBuffer(const float* buffer, size_t numberOfSamples);
 			size_t size();
 			const float* getPointerToBuffer();
 		protected:

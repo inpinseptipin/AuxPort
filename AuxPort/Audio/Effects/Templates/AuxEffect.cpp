@@ -17,7 +17,7 @@ void AuxPort::Audio::MonoEffect::process(float * buffer, uint32_t bufferSize)
 	timer.start();
 	processBlock(buffer,bufferSize);
 	timer.stop();
-	benchmarkBlock(timer.getEllapsedTime());
+	benchmarkBlock(static_cast<float>(timer.getEllapsedTime()));
 	analysisBlock(buffer,bufferSize);
 }
 
@@ -34,6 +34,6 @@ void AuxPort::Audio::StereoEffect::process(float* leftChannel, float* rightChann
 	timer.start();
 	processBlock(leftChannel, rightChannel, bufferSize);
 	timer.stop();
-	benchmarkBlock(timer.getEllapsedTime());
+	benchmarkBlock(static_cast<float>(timer.getEllapsedTime()));
 	analysisBlock(leftChannel,rightChannel, bufferSize);
 }

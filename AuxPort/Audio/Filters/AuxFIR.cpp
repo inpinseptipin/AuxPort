@@ -221,7 +221,7 @@ float AuxPort::Audio::Convolution::process(float sample)
 	inputBuffer.push(sample);
 	for (uint32_t i = 0; i < irSize; i++)
 	{
-		outputSample += impulseResponse[i] * inputBuffer.getShiftedElement(-i);
+		outputSample += impulseResponse[i] * inputBuffer.getShiftedElement(-static_cast<int>(i));
 	}
 	inputBuffer.pop();
 	return outputSample;

@@ -17,9 +17,10 @@ void AuxPort::Expansions::setType(const Type& type)
 
 void AuxPort::Expansions::setMaxSize(uint32_t N)
 {
-    leftAccumulator.reserve(floor((N + 1) / 2));
-    rightAccumulator.reserve(floor((N + 1) / 2));
-    terms.reserve(N);
+    auto NewN = static_cast<float>(N);
+    leftAccumulator.reserve(static_cast<size_t>(floorf((NewN + 1) / 2)));
+    rightAccumulator.reserve(static_cast<size_t>(floorf((NewN + 1) / 2)));
+    terms.reserve(static_cast<size_t>(N));
 }
 
 std::vector<float>& AuxPort::Expansions::compute(const std::vector<float>& xPowers, const std::vector<float>& yPowers, uint32_t N)
@@ -111,7 +112,7 @@ float AuxPort::FastRandomFloat::getRandomFloat()
 float AuxPort::FastRandomFloat::getRandomFloat(float start, float end)
 {
     AuxAssert(start <= end, "start should be <= end.");
-    return start + (end - start) * (getRandomFloat() + 1.0) / 2;
+    return start + (end - start) * (getRandomFloat() + 1.0f) / 2.0f;
 }
 
 AuxPort::Graphics::DrawBuffer::DrawBuffer()
@@ -122,7 +123,7 @@ AuxPort::Graphics::DrawBuffer::DrawBuffer()
     writeIndex = 0;
 }
 
-void AuxPort::Graphics::DrawBuffer::setDrawBufferSize(uint32_t bufferSize)
+void AuxPort::Graphics::DrawBuffer::setDrawBufferSize(size_t bufferSize)
 {
     this->drawBufferSize = bufferSize;
     this->buffer.resize(drawBufferSize);
@@ -130,7 +131,7 @@ void AuxPort::Graphics::DrawBuffer::setDrawBufferSize(uint32_t bufferSize)
     std::fill(buffer.begin(), buffer.end(), 0.0f);
 }
 
-void AuxPort::Graphics::DrawBuffer::addToBuffer(const float* buffer, uint32_t numberOfSamples)
+void AuxPort::Graphics::DrawBuffer::addToBuffer(const float* buffer, size_t numberOfSamples)
 {
     for (uint32_t i = 0; i < numberOfSamples; i++)
     {
@@ -153,7 +154,7 @@ const float* AuxPort::Graphics::DrawBuffer::getPointerToBuffer()
 void AuxPort::Graphics::ScopeBuffers::setDrawBufferSize(const std::vector<std::string>& bufferIDS, const std::vector<size_t> bufferSizes)
 {
     AuxAssert(bufferIDS.size() == bufferSizes.size(), "Number of Buffer IDS should match Number of Buffer Sizes passed");
-    for (uint32_t i = 0; i < bufferIDS.size(); i++)
+    for (size_t i = 0; i < bufferIDS.size(); i++)
     {
         std::pair<std::string, AuxPort::Graphics::DrawBuffer> pair;
         pair.first = bufferIDS[i];

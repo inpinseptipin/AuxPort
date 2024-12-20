@@ -1,6 +1,5 @@
 #ifndef AUXPORT_OSCILLATOR_H
 #define AUXPORT_OSCILLATOR_H
-
 #include "../../Core/Env/AuxEnv.h"
 #include "../../Core/Utility/AuxUtility.h"
 #include "../Filters/AuxIIR.h"

@@ -340,6 +340,7 @@ std::string AuxPort::AuxSeries::getTypeAsString()
 		return "ln";
 	case Undefined:
 		return undefinedType;
+	default: return undefinedType;
 	}
 }
 
