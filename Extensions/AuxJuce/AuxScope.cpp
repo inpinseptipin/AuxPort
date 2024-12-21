@@ -17,24 +17,23 @@ AuxPort::Extensions::AuxScope::AuxScope()
 void AuxPort::Extensions::AuxScope::paint(juce::Graphics& g)
 {
 
-	auto scopeBounds = this->getLocalBounds().toFloat();
-	auto x = scopeBounds.getWidth() / 10;
-	auto y = scopeBounds.getHeight() / 10;
-	auto boundaryWidth = 10.0f;
+	auto backgroundBounds = this->getLocalBounds().toFloat();
+	auto backgroundWidth = 5.0f;
+	this->drawBackground(g, backgroundBounds,backgroundWidth);
 
-	this->drawAnalytics(g, juce::Rectangle<float>(scopeBounds.getX(), scopeBounds.getY(), 1.9 * x, scopeBounds.getHeight()));
-	this->drawScope(g, juce::Rectangle<float>(scopeBounds.getX() + 2 * x, scopeBounds.getY(), 6 * x, scopeBounds.getHeight()));
-
+	backgroundBounds = backgroundBounds.reduced(5.0f, backgroundWidth);
+	auto scopeBounds = backgroundBounds.removeFromLeft(0.5*backgroundBounds.getWidth());
+	scopeBounds.setX(0.5 * backgroundBounds.getWidth());
+	//this->drawAnalytics(g, juce::Rectangle<float>(scopeBounds.getX(), scopeBounds.getY(), 1.9 * x, scopeBounds.getHeight()));
+	this->drawScope(g, scopeBounds);
+	auto multiSelectBounds = juce::Rectangle<float>(scopeBounds.getRight(), scopeBounds.getTopRight().getY(), backgroundBounds.getRight() - scopeBounds.getRight(), backgroundBounds.getHeight());
+	multiSelect.setBounds(multiSelectBounds.toNearestInt());
 
 }
 
 void AuxPort::Extensions::AuxScope::resized()
 {
-	auto x = this->getLocalBounds().getWidth() / 10;
-	auto y = this->getLocalBounds().getHeight() / 10;
-
-	menu.setBounds(0, 9 * y, 1.9 * x, y);
-	multiSelect.setBounds(8 * x, 0, 2 * x, 10 * y);
+	repaint();
 }
 
 void AuxPort::Extensions::AuxScope::draw()
@@ -68,14 +67,7 @@ void AuxPort::Extensions::AuxScope::drawAnalytics(juce::Graphics& g,const juce::
 	auto headingBounds = juce::Rectangle<float>(analyticBounds.getX(), analyticBounds.getY(), 10*x, x);
 
 	g.setColour(juce::Colours::white);
-	g.drawText("Analytics", headingBounds, juce::Justification::horizontallyCentred, true);
-
-	/*Assignment
-	* 1. Calculate RMS or any other Loudness metric and showcase it here
-	*/
-
-
-	
+	g.drawText("Analytics", headingBounds, juce::Justification::horizontallyCentred, true);	
 }
 
 void AuxPort::Extensions::AuxScope::drawScope(juce::Graphics& g, const juce::Rectangle<float>& scopeBounds)
@@ -98,7 +90,6 @@ void AuxPort::Extensions::AuxScope::drawScope(juce::Graphics& g, const juce::Rec
 	{
 
 		g.setColour(juce::Colours::white);
-		auto startX = scopeBounds.getX() + boundaryWidth;
 		auto sources = multiSelect.getPointerToSources();
 		auto startColor = juce::Colours::white;
 		for (uint32_t sourceIndex = 0; sourceIndex < sources->size(); sourceIndex++)
@@ -108,16 +99,18 @@ void AuxPort::Extensions::AuxScope::drawScope(juce::Graphics& g, const juce::Rec
 				auto name = sources->at(sourceIndex).first.toStdString();
 				auto buffer = scopeBufferPointer->getPointerToBuffer(name);
 				auto numberOfSamples = scopeBufferPointer->size(name);
-				uint32_t strideLength = numberOfSamples / (scopeBounds.getWidth() - (2 * boundaryWidth));
-				pixelX0 = startX;
-				pixelY0 = AuxPort::Utility::remap<float>(0, scopeBounds.getHeight() - boundaryWidth, scopeBounds.getY() + boundaryWidth, -1, 1);
+				uint32_t strideLength = numberOfSamples / (scopeBackgroundBounds.getWidth());
+				float pixelDelta = scopeBackgroundBounds.getWidth() / numberOfSamples;
+				pixelX0 = AuxPort::Utility::remap<float>(0.0f, scopeBackgroundBounds.getX(), scopeBackgroundBounds.getWidth(), 0, static_cast<float>(numberOfSamples));
+				pixelY0 = AuxPort::Utility::remap<float>(0, scopeBackgroundBounds.getHeight(), scopeBackgroundBounds.getY(), -1, 1);
 				g.setColour(startColor.contrasting(sourceIndex * 0.5));
 				for (uint32_t i = 0; i < numberOfSamples; i += strideLength)
 				{
 					i = i >= numberOfSamples ? numberOfSamples - 1 : i;
-					pixelY1 = AuxPort::Utility::remap<float>(buffer[i], scopeBounds.getHeight() - boundaryWidth, scopeBounds.getY() + boundaryWidth, -1, 1);
-					g.drawLine(pixelX0, pixelY0, pixelX0 + 1, pixelY1);
-					pixelX0++;
+					pixelY1 = AuxPort::Utility::remap<float>(buffer[i], scopeBackgroundBounds.getHeight(), scopeBackgroundBounds.getY(), -1, 1);
+					auto pixelX1 = AuxPort::Utility::remap<float>(static_cast<float>(i), scopeBackgroundBounds.getX(), scopeBackgroundBounds.getX() + scopeBackgroundBounds.getWidth(), 0, static_cast<float>(numberOfSamples));
+					g.drawLine(pixelX0, pixelY0, pixelX1, pixelY1);
+					pixelX0 = pixelX1;
 					pixelY0 = pixelY1;
 				}
 			}
@@ -139,11 +132,26 @@ void AuxPort::Extensions::AuxScope::drawLabels(juce::Graphics& g, const juce::Re
 	auto textBounds = juce::Rectangle<float>(labelBounds.getX(), h, textLength, textLength);
 	g.drawText("1", textBounds, juce::Justification::horizontallyCentred, true);
 
+
+
 	textLength = 20.0f;
 	h = AuxPort::Utility::remap<float>(-1, labelBounds.getHeight(), labelBounds.getY(), -1, 1);
 	textBounds = juce::Rectangle<float>(labelBounds.getX(), h - textLength, textLength, textLength);
 	g.drawText("-1", textBounds, juce::Justification::horizontallyCentred, true);
 
+	textLength = 20.0f;
+	h = AuxPort::Utility::remap<float>(0, labelBounds.getHeight(), labelBounds.getY(), -1, 1);
+	textBounds = juce::Rectangle<float>(labelBounds.getX(), h - textLength, textLength, textLength);
+	g.drawText("0", textBounds, juce::Justification::horizontallyCentred, true);
+
+
+}
+
+void AuxPort::Extensions::AuxScope::drawBackground(juce::Graphics& g, const juce::Rectangle<float>& backgroundBounds,float backgroundWidth)
+{
+	g.setColour(juce::Colours::white);
+	g.drawRect(backgroundBounds, backgroundWidth);
+	g.setColour(juce::Colours::black);
 }
 
 AuxPort::Extensions::AuxMultiSelect::AuxMultiSelect()
@@ -238,5 +246,6 @@ void AuxPort::Extensions::AuxMultiSelect::drawSwitchImage(juce::Graphics& g, juc
 	float ry = centreY - switchImage.getWidth();
 	g.drawImage(switchImage, bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), 0, frameID * switchImage.getWidth(), switchImage.getWidth(), switchImage.getWidth(), false);
 }
+
 
 

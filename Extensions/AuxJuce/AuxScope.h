@@ -43,6 +43,7 @@ namespace AuxPort
 			void drawAnalytics(juce::Graphics&,const juce::Rectangle<float>& analyticBounds);
 			void drawScope(juce::Graphics&, const juce::Rectangle<float>& scopeBounds);
 			void drawLabels(juce::Graphics& g, const juce::Rectangle<float>& labelBounds);
+			void drawBackground(juce::Graphics& g, const juce::Rectangle<float>& backgroundBounds,float backgroundWidth);
 			std::mutex mutex;
 			bool canDraw = false;
 			AuxPort::Graphics::ScopeBuffers* scopeBufferPointer;
@@ -56,6 +57,8 @@ namespace AuxPort
 			JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AuxScope)
 
 		};
+
+
 
 
 
