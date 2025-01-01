@@ -294,3 +294,9 @@ void AuxPort::Audio::FastSine::stop()
 	x2 = 0;
 	inc = 0;
 }
+
+void AuxPort::Audio::DetunableOscillator::setDetune(float semitones, float cents)
+{
+	inc = this->frequency * (powf(2, (semitones*100 + cents) / 1200));
+	inc /= static_cast<float>(this->sampleRate);
+}
