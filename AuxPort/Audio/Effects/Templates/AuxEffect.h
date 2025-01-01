@@ -121,6 +121,21 @@ namespace AuxPort
             virtual void analysisBlock(const float* leftChannel,const float* rightChannel,uint32_t bufferSize) = 0;
             AuxPort::Timer timer;
         };
+
+
+        class Synthesizer : public AuxPort::Audio::Effect
+        {
+        public:
+            Synthesizer() = default;
+            ~Synthesizer() = default;
+            Synthesizer(const Synthesizer& juceSynthesizer) = default;
+        protected:
+            float midiToFreq(uint32_t midiNote);
+            virtual void handleMidiEvent(void* midiMessage);
+            virtual void handleNoteOn(void* midiMessage);
+            virtual void handleNoteOff(void* midiMessage);
+            virtual void handleAllNotesOff(void* midiMessage);
+        };
 	}
 }
 

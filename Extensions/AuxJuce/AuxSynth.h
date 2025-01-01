@@ -18,17 +18,12 @@ namespace AuxPort
 {
 	namespace Extensions
 	{
-		class Synthesizer : public AuxPort::Audio::Effect
-		{
-		public:
-			Synthesizer() = default;
-			~Synthesizer() = default;
-			Synthesizer(const Synthesizer& juceSynthesizer) = default;
-		protected:
-			float midiToFreq(uint32_t midiNote);
-		};
 
-		class JuceSynthesizer : public Synthesizer
+
+///////////////////////////////////////////////////////////////////////////////////////
+/// @brief This class implements a Polyphonic Synthesizer (Uses the JUCE Framework)
+///////////////////////////////////////////////////////////////////////////////////////
+		class JuceSynthesizer : public AuxPort::Audio::Synthesizer
 		{
 		public:
 			JuceSynthesizer() = default;
@@ -37,8 +32,9 @@ namespace AuxPort
 			void process(juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiBuffer);
 			void attachParameterMap(AuxPort::Extensions::ParameterMap* parameterMap);
 		protected:
-			virtual void handleMidiEvent(const juce::MidiMessage& midiMessage) = 0;
+			virtual void handleMidiEvent(void* midiMessage) override;
 			virtual void render(juce::AudioBuffer<float>& buffer, uint32_t startSample, uint32_t endSample) = 0;
+			void copyMonoToAll(juce::AudioBuffer<float>& buffer, uint32_t startSample, uint32_t endSample);
 			AuxPort::Extensions::ParameterMap* parameterMap;
 		};
 

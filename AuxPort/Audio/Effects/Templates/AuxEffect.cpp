@@ -37,3 +37,29 @@ void AuxPort::Audio::StereoEffect::process(float* leftChannel, float* rightChann
 	benchmarkBlock(static_cast<float>(timer.getEllapsedTime()));
 	analysisBlock(leftChannel,rightChannel, bufferSize);
 }
+
+
+float AuxPort::Audio::Synthesizer::midiToFreq(uint32_t midiNote)
+{
+	return 440 * std::powf(2, (static_cast<float>(midiNote) - 69) / 12.0f);
+}
+
+void AuxPort::Audio::Synthesizer::handleMidiEvent(void* midiMessage)
+{
+	AuxAssert(1 == 1, "Implement this Method");
+}
+
+void AuxPort::Audio::Synthesizer::handleNoteOn(void* midiMessage)
+{
+	AuxAssert(1 == 1, "Implement this Method");
+}
+
+void AuxPort::Audio::Synthesizer::handleNoteOff(void* midiMessage)
+{
+	AuxAssert(1 == 1, "Implement this Method");
+}
+
+void AuxPort::Audio::Synthesizer::handleAllNotesOff(void* midiMessage)
+{
+	AuxAssert(1 == 1, "Implement this Method");
+}

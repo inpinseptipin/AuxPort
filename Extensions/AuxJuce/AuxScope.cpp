@@ -12,6 +12,8 @@ AuxPort::Extensions::AuxScope::AuxScope()
 	pixelX0 = 0.0f;
 	pixelY0 = 0.0f;
 	pixelY1 = 0.0f;
+	scopeBufferPointer = nullptr;
+
 }
 
 void AuxPort::Extensions::AuxScope::paint(juce::Graphics& g)
@@ -156,7 +158,7 @@ void AuxPort::Extensions::AuxScope::drawBackground(juce::Graphics& g, const juce
 
 AuxPort::Extensions::AuxMultiSelect::AuxMultiSelect()
 {
-
+	headingHeight = 0.0f;
 }
 
 void AuxPort::Extensions::AuxMultiSelect::setOptions(const std::vector<juce::String>& options,uint32_t maxSelect)
@@ -173,14 +175,12 @@ void AuxPort::Extensions::AuxMultiSelect::setOptions(const std::vector<juce::Str
 		//switchImages.push_back(juce::ImageCache::getFromMemory(BinaryData::medtoggleswitch_png, BinaryData::medtoggleswitch_pngSize));
 	}
 	this->maxSelect = maxSelect;
-	
+
 }
 
 void AuxPort::Extensions::AuxMultiSelect::paint(juce::Graphics& g)
 {
-
 	auto bounds = this->getLocalBounds().toFloat();
-	auto width = bounds.getWidth();
 	headingHeight = bounds.getHeight() / 10;
 	g.setColour(juce::Colours::white);
 	g.drawText("Source", juce::Rectangle<float>(bounds.getX(), bounds.getY(), bounds.getWidth(), headingHeight), juce::Justification::horizontallyCentred, true);
@@ -221,13 +221,16 @@ void AuxPort::Extensions::AuxMultiSelect::resized()
 
 void AuxPort::Extensions::AuxMultiSelect::mouseDown(const juce::MouseEvent& event)
 {
-	auto mouseLocation = event.getMouseDownPosition();
-	auto bounds = this->getLocalBounds();
-	auto location = AuxPort::Utility::remap<float>(mouseLocation.getY(), 0, options.size(), bounds.getY(), bounds.getHeight());
-	uint32_t index  = static_cast<uint32_t>(floor(location));
-	std::lock_guard lock(mutex);
-	options[index].second = !options[index].second;
-	repaint();
+	if (this->options.size() > 0)
+	{
+		auto mouseLocation = event.getMouseDownPosition();
+		auto bounds = this->getLocalBounds();
+		auto location = AuxPort::Utility::remap<float>(mouseLocation.getY(), 0, options.size(), bounds.getY(), bounds.getHeight());
+		uint32_t index = static_cast<uint32_t>(floor(location));
+		std::lock_guard lock(mutex);
+		options[index].second = !options[index].second;
+		repaint();
+	}
 }
 
 std::vector<std::pair<juce::String, bool>>* AuxPort::Extensions::AuxMultiSelect::getPointerToSources()
@@ -239,11 +242,6 @@ void AuxPort::Extensions::AuxMultiSelect::drawSwitchImage(juce::Graphics& g, juc
 {
 	uint32_t noOfFrames = switchImage.getHeight() / switchImage.getWidth();
 	uint32_t frameID = state ? 1 : 0;
-	float radius = bounds.getWidth() / 2;
-	float centreX = bounds.getCentreX();
-	float centreY = bounds.getHeight();
-	float rx = centreX - switchImage.getWidth();
-	float ry = centreY - switchImage.getWidth();
 	g.drawImage(switchImage, bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), 0, frameID * switchImage.getWidth(), switchImage.getWidth(), switchImage.getWidth(), false);
 }
 
