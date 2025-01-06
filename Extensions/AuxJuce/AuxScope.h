@@ -30,6 +30,7 @@ namespace AuxPort
 			JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AuxMultiSelect)
 		};
 
+			
 		class AuxScope : public juce::Component
 		{
 		public:
@@ -53,10 +54,11 @@ namespace AuxPort
 			uint32_t numberOfSamples;
 			juce::ComboBox menu;
 			AuxMultiSelect multiSelect;
-			
 			JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AuxScope)
 
 		};
+
+
 
 
 

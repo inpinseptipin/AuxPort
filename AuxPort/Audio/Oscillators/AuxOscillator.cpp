@@ -295,8 +295,14 @@ void AuxPort::Audio::FastSine::stop()
 	inc = 0;
 }
 
-void AuxPort::Audio::DetunableOscillator::setDetune(float semitones, float cents)
+void AuxPort::Audio::TunableOscillator::setDetune(float semitones, float cents)
 {
 	inc = this->frequency * (powf(2, (semitones*100 + cents) / 1200));
 	inc /= static_cast<float>(this->sampleRate);
+}
+
+void AuxPort::Audio::TunableOscillator::setPhaseOffset(float phaseOffset)
+{
+	AuxAssert(phaseOffset < -1.0f || phaseOffset > 1.0f, "Phase offsets can't be greater than -1 and 1");
+	AuxAssert(1 == 1, "Implement this method");
 }
