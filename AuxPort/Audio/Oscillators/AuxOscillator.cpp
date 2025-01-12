@@ -28,30 +28,16 @@ bool AuxPort::Audio::Oscillator::isPlaying()
 
 float AuxPort::Audio::Sine::process()
 {
-	if (isPlaying())
-	{
-		if (mod >= 1)
-			mod = 0;
-		sample = sin(2 * pi * mod);
-		mod += inc;
-		return sample;
-	}
-	else
-		return 0.0f;
+	sample = isPlaying() ? sinf(2 * pi * mod) : 0.0f;
+	mod = mod >= 1 ? 0 : mod + inc;
+	return sample;
 }
 
 float AuxPort::Audio::UnipolarSawtooth::process()
 {
-	if (isPlaying())
-	{
-		if (mod >= 1)
-			mod = 0;
-		sample = mod;
-		mod += inc;
-		return sample;
-	}
-	else
-		return 0.0f;
+	sample = isPlaying() ? mod : 0.0f;
+	mod = mod >= 1 ? 0.0 : mod + inc;
+	return sample;
 }
 
 void AuxPort::Audio::Square::setPulseWidth(float pulseWidth)
@@ -61,77 +47,37 @@ void AuxPort::Audio::Square::setPulseWidth(float pulseWidth)
 
 float AuxPort::Audio::Square::process()
 {
-	if (isPlaying())
-	{
-		if (mod >= 1.0)
-			mod = 0;
-		sample = mod > pulseWidth ? -1.0f : 1.0f;
-		mod += inc;
-		return sample;
-	}
-	else
-		return 0.0f;
+	sample = isPlaying() ? ((mod > pulseWidth) ? -1.0f : 1.0f) : 0.0f;
+	mod = mod >= 1 ? 0.0 : mod + inc;
+	return sample;
 }
 
 float AuxPort::Audio::BipolarSawtooth::process()
 {
-	if (isPlaying())
-	{
-		if (mod >= 1.0)
-			mod = 0;
-		sample = 2.0f * mod - 1.0f;
-		mod += inc;
-		return sample;
-	}
-	else
-		return 0.0f;
+	sample = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
+	mod = mod >= 1.0f ? 0.0f : mod + inc;
+	return sample;
 }
 
 float AuxPort::Audio::Triangle::process()
 {
-	if (isPlaying())
-	{
-		if (mod >= 1.0f)
-			mod = 0.0f;
-		sample = 2.0f * fabs(2.0f * mod - 1.0f) - 1.0f;
-		mod += inc;
-		return sample;
-	}
-	else
-		return 0.0f;
+	sample = isPlaying() ? 2.0f * fabs(2.0f * mod - 1.0f) - 1.0f : 0.0f;
+	mod = mod >= 1.0f ? 0.0f : mod + inc;
+	return sample;
 }
 
 float AuxPort::Audio::PBSaw::process()
 {
-	if (isPlaying())
-	{
-		if (mod >= 1)
-			mod = -1;
-
-		if (mod >= -1 && mod <= 0)
-			sample = powf(mod, 2) + 2 * mod + 1;
-		else
-			sample = 2 * mod - powf(mod, 2) - 1;
-		mod += inc;
-
-		return sample;
-	}
-	else
-		return 0.0f;
+	sample = isPlaying() ? ((mod >= -1 && mod <= 0) ? (mod * mod) + 2.0f * mod + 1.0f : 2.0f * mod - powf(mod, 2) - 1.0f) : 0.0f;
+	mod = mod >= 1 ? -1 : mod + inc;
+	return sample;
 }
 
 float AuxPort::Audio::PBWSaw::process()
 {
-	if (isPlaying())
-	{
-		if (mod >= 1)
-			mod = 0;
-		sample = tanh(satLevel * (2 * mod - 1)) / tanh(satLevel);
-		mod += inc;
-		return sample;
-	}
-	else
-		return 0.0f;
+	sample = isPlaying() ? tanhf(satLevel * (2.0f * mod - 1.0f)) / tanhf(satLevel) : 0.0f;
+	mod = mod >= 1.0f ? 0.0f : mod + inc;
+	return sample;
 }
 
 void AuxPort::Audio::PBWSaw::setSaturationLevel(float sat)
@@ -147,11 +93,7 @@ AuxPort::Audio::WhiteNoise::WhiteNoise()
 
 float AuxPort::Audio::WhiteNoise::process()
 {
-	if (isPlaying())
-	{
-		return static_cast<float>(distribution->operator()(*gen));
-	}
-	return 0;
+	return isPlaying() ? static_cast<float>(distribution->operator()(*gen)) : 0.0f;
 }
 
 AuxPort::Audio::ADSR::ADSR()
@@ -262,7 +204,6 @@ void AuxPort::Audio::KPString::setFrequency(float frequency)
 {
 	seedSize = static_cast<uint32_t>(this->sampleRate / frequency);
 	inc = frequency / sampleRate;
-	
 	AuxPort::Utility::generateRandomValues<float>(seedBuffer);
 }
 
