@@ -41,9 +41,9 @@ namespace AuxPort
 			void draw();
 			void attachBuffer(AuxPort::Graphics::ScopeBuffers* scopeBufferPointer);
 		private:
-			void drawAnalytics(juce::Graphics&,const juce::Rectangle<float>& analyticBounds);
-			void drawScope(juce::Graphics&, const juce::Rectangle<float>& scopeBounds);
-			void drawLabels(juce::Graphics& g, const juce::Rectangle<float>& labelBounds);
+			void drawAnalytics(juce::Graphics& g,const juce::Rectangle<float>& analyticBounds);
+			void drawScope(juce::Graphics& g, const juce::Rectangle<float>& scopeBounds);
+			void drawLabels(juce::Graphics& g, const juce::Rectangle<float>& labelBounds, const std::vector<float>& labelInformation);
 			void drawBackground(juce::Graphics& g, const juce::Rectangle<float>& backgroundBounds,float backgroundWidth);
 			std::mutex mutex;
 			bool canDraw = false;
@@ -55,15 +55,7 @@ namespace AuxPort
 			juce::ComboBox menu;
 			AuxMultiSelect multiSelect;
 			JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AuxScope)
-
 		};
-
-
-
-
-
-
-
 	}
 }
 

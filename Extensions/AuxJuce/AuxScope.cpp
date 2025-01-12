@@ -84,7 +84,7 @@ void AuxPort::Extensions::AuxScope::drawScope(juce::Graphics& g, const juce::Rec
 	g.setColour(juce::Colour::fromRGBA(11, 12, 13, 255));
 	g.fillRect(scopeBackgroundBounds);
 
-	this->drawLabels(g, scopeBackgroundBounds);
+	this->drawLabels(g, scopeBackgroundBounds,{ -1, -0.5, 0, 0.5, 1 });
 	
 
 
@@ -126,27 +126,16 @@ void AuxPort::Extensions::AuxScope::drawScope(juce::Graphics& g, const juce::Rec
 	
 }
 
-void AuxPort::Extensions::AuxScope::drawLabels(juce::Graphics& g, const juce::Rectangle<float>& labelBounds)
+void AuxPort::Extensions::AuxScope::drawLabels(juce::Graphics& g, const juce::Rectangle<float>& labelBounds, const std::vector<float>& labelInformation)
 {
 	g.setColour(juce::Colour::fromRGBA(255, 255, 255, 100));
 	auto textLength = 20.0f;
-	auto h = AuxPort::Utility::remap<float>(1, labelBounds.getHeight(), labelBounds.getY(), -1, 1);
-	auto textBounds = juce::Rectangle<float>(labelBounds.getX(), h, textLength, textLength);
-	g.drawText("1", textBounds, juce::Justification::horizontallyCentred, true);
-
-
-
-	textLength = 20.0f;
-	h = AuxPort::Utility::remap<float>(-1, labelBounds.getHeight(), labelBounds.getY(), -1, 1);
-	textBounds = juce::Rectangle<float>(labelBounds.getX(), h - textLength, textLength, textLength);
-	g.drawText("-1", textBounds, juce::Justification::horizontallyCentred, true);
-
-	textLength = 20.0f;
-	h = AuxPort::Utility::remap<float>(0, labelBounds.getHeight(), labelBounds.getY(), -1, 1);
-	textBounds = juce::Rectangle<float>(labelBounds.getX(), h - textLength, textLength, textLength);
-	g.drawText("0", textBounds, juce::Justification::horizontallyCentred, true);
-
-
+	for (uint32_t i = 0; i < labelInformation.size(); i++)
+	{
+		auto h = AuxPort::Utility::remap<float>(labelInformation[i], labelBounds.getHeight(), labelBounds.getY(), -1, 1);
+		auto textBounds = juce::Rectangle<float>(labelBounds.getX(), h, textLength, textLength);
+		g.drawText(juce::String(labelInformation[i]), textBounds, juce::Justification::horizontallyCentred, true);
+	}
 }
 
 void AuxPort::Extensions::AuxScope::drawBackground(juce::Graphics& g, const juce::Rectangle<float>& backgroundBounds,float backgroundWidth)
