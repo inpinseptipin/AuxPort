@@ -73,6 +73,53 @@ float AuxPort::Audio::PBSaw::process()
 	return sample;
 }
 
+void AuxPort::Audio::DPWSaw::setFrequency(float frequency)
+{
+	this->frequency = frequency;
+	this->inc = static_cast<float>(this->frequency) / static_cast<float>(this->sampleRate);
+	c = static_cast<float>(sampleRate) / (4 * frequency * (1 - inc));
+}
+
+void AuxPort::Audio::DPWTriangle::setDetune(float semitones, float cents)
+{
+	inc = this->frequency * (powf(2, (semitones * 100 + cents) / 1200));
+	inc /= static_cast<float>(this->sampleRate);
+	square.setDetune(semitones, cents);
+}
+
+void AuxPort::Audio::DPWTriangle::setFrequency(float frequency)
+{
+	this->frequency = frequency;
+	this->inc = static_cast<float>(this->frequency) / static_cast<float>(this->sampleRate);
+	c = static_cast<float>(sampleRate) / (4 * frequency * (1 - inc));
+	square.setFrequency(inc);
+	square.setPulseWidth(50);
+}
+
+float AuxPort::Audio::DPWTriangle::process()
+{
+	x = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
+	mod = mod >= 1.0f ? 0.0f : mod + inc;
+	x *= x;
+	x = 1 - x;
+	x *= square.process();
+	sample = x - x1;
+	x1 = x;
+	return sample * c;
+}
+
+float AuxPort::Audio::DPWSaw::process()
+{
+	x = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
+	mod = mod >= 1.0f ? 0.0f : mod + inc;
+	x *= x;
+	sample = x - x1;
+	x1 = x;
+	return sample * c;
+}
+
+
+
 float AuxPort::Audio::PBWSaw::process()
 {
 	sample = isPlaying() ? tanhf(satLevel * (2.0f * mod - 1.0f)) / tanhf(satLevel) : 0.0f;
@@ -247,3 +294,5 @@ void AuxPort::Audio::TunableOscillator::setPhaseOffset(float phaseOffset)
 	AuxAssert(phaseOffset < -1.0f || phaseOffset > 1.0f, "Phase offsets can't be greater than -1 and 1");
 	AuxAssert(1 == 1, "Implement this method");
 }
+
+
