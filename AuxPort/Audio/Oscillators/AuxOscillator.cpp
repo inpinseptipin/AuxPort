@@ -77,35 +77,18 @@ void AuxPort::Audio::DPWSaw::setFrequency(float frequency)
 {
 	this->frequency = frequency;
 	this->inc = static_cast<float>(this->frequency) / static_cast<float>(this->sampleRate);
-	c = static_cast<float>(sampleRate) / (4 * frequency * (1 - inc));
+	c = this->sampleRate / (4 * this->frequency * (1 - inc));
 }
 
-void AuxPort::Audio::DPWTriangle::setDetune(float semitones, float cents)
-{
-	inc = this->frequency * (powf(2, (semitones * 100 + cents) / 1200));
-	inc /= static_cast<float>(this->sampleRate);
-	square.setDetune(semitones, cents);
-}
 
-void AuxPort::Audio::DPWTriangle::setFrequency(float frequency)
+float AuxPort::Audio::DPWTriangle1::process()
 {
-	this->frequency = frequency;
-	this->inc = static_cast<float>(this->frequency) / static_cast<float>(this->sampleRate);
-	c = static_cast<float>(sampleRate) / (4 * frequency * (1 - inc));
-	square.setFrequency(inc);
-	square.setPulseWidth(50);
-}
-
-float AuxPort::Audio::DPWTriangle::process()
-{
-	x = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
+	sample = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
 	mod = mod >= 1.0f ? 0.0f : mod + inc;
-	x *= x;
-	x = 1 - x;
-	x *= square.process();
-	sample = x - x1;
-	x1 = x;
-	return sample * c;
+	sample = abs(sample);
+	sample = 0.5 - sample;
+	sample = sample * 2;
+	return sample;
 }
 
 float AuxPort::Audio::DPWSaw::process()
@@ -118,6 +101,22 @@ float AuxPort::Audio::DPWSaw::process()
 	return sample * c;
 }
 
+void AuxPort::Audio::DPWTriangle2::setFrequency(float frequency)
+{
+	this->frequency = frequency;
+	this->inc = static_cast<float>(this->frequency) / static_cast<float>(this->sampleRate);
+	c = (this->sampleRate / this->frequency) / (4 * (1 - inc));
+}
+
+float AuxPort::Audio::DPWTriangle2::process()
+{
+	x = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
+	mod = mod >= 1.0f ? 0.0f : mod + inc;
+	x = x * (1 - abs(x));
+	sample = x-x1;
+	x1 = x;
+	return sample*2*c;
+}
 
 
 float AuxPort::Audio::PBWSaw::process()

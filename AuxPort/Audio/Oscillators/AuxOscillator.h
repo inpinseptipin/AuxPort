@@ -219,28 +219,28 @@ namespace AuxPort
 		};
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// @brief Differentiable Parabolic Waveform Triangle
+		/// @brief Differentiable Parabolic Waveform Triangle (Order - 1)
 		///////////////////////////////////////////////////////////////////////////////////////
-		class DPWTriangle : public DPWSaw
+		class DPWTriangle1 : public BipolarSawtooth
 		{
 		public:
-			DPWTriangle() = default;
-			~DPWTriangle() = default;
-			DPWTriangle(const DPWTriangle& dpwTriangle) = default;
-			///////////////////////////////////////////////////////////////////////////////////////
-			/// @brief This function detunes the oscillator by semitones and cents [Overridable]
-			///////////////////////////////////////////////////////////////////////////////////////
-			void setDetune(float semitones, float cents) override;
-			///////////////////////////////////////////////////////////////////////////////////////
-			/// @brief This function sets the frequency of the oscillator [Overridable]
-			///////////////////////////////////////////////////////////////////////////////////////
-			void setFrequency(float frequency) override;
+			DPWTriangle1() = default;
+			~DPWTriangle1() = default;
+			DPWTriangle1(const DPWTriangle1& dpwTriangle) = default;
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// @brief This function generates the sample from the Oscillator [Overriable]
 			///////////////////////////////////////////////////////////////////////////////////////
 			float process() override;
-		protected:
-			Square square;
+		};
+
+		class DPWTriangle2 : public DPWSaw
+		{
+		public:
+			DPWTriangle2() = default;
+			~DPWTriangle2() = default;
+			DPWTriangle2(const DPWTriangle2& dpwtriangle2) = default;
+			void setFrequency(float frequency) override;
+			float process() override;
 		};
 
 		///////////////////////////////////////////////////////////////////////////////////////
