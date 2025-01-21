@@ -113,7 +113,7 @@ float AuxPort::Audio::DPWSaw::process()
 }
 
 
-
+#if AUXPORT_EXP
 float AuxPort::Audio::DPWTriangle2::process()
 {
 	x = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
@@ -123,7 +123,7 @@ float AuxPort::Audio::DPWTriangle2::process()
 	x1 = x;
 	return sample * c;
 }
-
+#endif
 
 float AuxPort::Audio::PBWSaw::process()
 {
