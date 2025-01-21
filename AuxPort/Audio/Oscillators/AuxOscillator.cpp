@@ -33,6 +33,16 @@ float AuxPort::Audio::Sine::process()
 	return sample;
 }
 
+
+float AuxPort::Audio::ParabolicSine::process()
+{
+	sample = isPlaying() ? B * mod + C * mod * abs(mod) : 0.0f;
+	mod = mod >= pi ? -pi : mod + inc;
+	sample = P * (sample * abs(sample) - sample) + sample;
+	return sample;
+}
+
+
 float AuxPort::Audio::UnipolarSawtooth::process()
 {
 	sample = isPlaying() ? mod : 0.0f;
