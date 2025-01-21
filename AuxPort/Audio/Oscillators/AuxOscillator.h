@@ -169,7 +169,22 @@ namespace AuxPort
 			/// @brief This function generates the sample from the Oscillator
 			///////////////////////////////////////////////////////////////////////////////////////
 			float process() override;
+		protected:
+			float square = 0.0f;
+			float modx1 = 0.0f;
+			float x1 = 0.0f;
 		};
+
+
+		class PBSquare : public PBSaw
+		{
+		public:
+			PBSquare() = default;
+			~PBSquare() = default;
+			PBSquare(const PBSquare& pbsquare) = default;
+			float process() override;
+		};
+		
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Poly BLEP Waveshape Saw
@@ -239,7 +254,6 @@ namespace AuxPort
 			DPWTriangle2() = default;
 			~DPWTriangle2() = default;
 			DPWTriangle2(const DPWTriangle2& dpwtriangle2) = default;
-			void setFrequency(float frequency) override;
 			float process() override;
 		};
 

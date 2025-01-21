@@ -73,6 +73,17 @@ float AuxPort::Audio::PBSaw::process()
 	return sample;
 }
 
+float AuxPort::Audio::PBSquare::process()
+{
+	square = mod <= pi ? -1.0f : 1.0f;
+	sample = isPlaying() ? ((mod >= -1 && mod <= 0) ? (mod * mod) + 2.0f * mod + 1.0f : 2.0f * mod - powf(mod, 2) - 1.0f) : 0.0f;
+	mod = mod >= 1 ? -1 : mod + inc;
+	modx1 = (mod + 0.5) >= 1 ? -1 : mod + 0.5;
+	x1 = isPlaying() ? ((modx1 >= -1 && modx1 <= 0) ? (modx1 * modx1) + 2.0f * modx1 + 1.0f : 2.0f * modx1 - powf(modx1, 2) - 1.0f) : 0.0f;
+	sample = square + (sample - x1);
+	return sample+0.5;
+}
+
 void AuxPort::Audio::DPWSaw::setFrequency(float frequency)
 {
 	this->frequency = frequency;
@@ -101,21 +112,16 @@ float AuxPort::Audio::DPWSaw::process()
 	return sample * c;
 }
 
-void AuxPort::Audio::DPWTriangle2::setFrequency(float frequency)
-{
-	this->frequency = frequency;
-	this->inc = static_cast<float>(this->frequency) / static_cast<float>(this->sampleRate);
-	c = (this->sampleRate / this->frequency) / (4 * (1 - inc));
-}
+
 
 float AuxPort::Audio::DPWTriangle2::process()
 {
 	x = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
 	mod = mod >= 1.0f ? 0.0f : mod + inc;
-	x = x * (1 - abs(x));
-	sample = x-x1;
+	x *= x;
+	sample = x - x1;
 	x1 = x;
-	return sample*2*c;
+	return sample * c;
 }
 
 
