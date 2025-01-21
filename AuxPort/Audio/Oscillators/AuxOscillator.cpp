@@ -127,14 +127,16 @@ float AuxPort::Audio::DPWTriangle2::process()
 
 float AuxPort::Audio::PBWSaw::process()
 {
-	sample = isPlaying() ? tanhf(satLevel * (2.0f * mod - 1.0f)) / tanhf(satLevel) : 0.0f;
-	mod = mod >= 1.0f ? 0.0f : mod + inc;
+	sample = isPlaying() ? ((mod >= -1 && mod <= 0) ? tanhf(satLevel * (mod * mod) + 2.0f * mod + 1.0f) : tanhf(2.0f * mod - powf(mod, 2) - 1.0f)) : 0.0f;
+	sample *= satVal;
+	mod = mod >= 1 ? -1 : mod + inc;
 	return sample;
 }
 
 void AuxPort::Audio::PBWSaw::setSaturationLevel(float sat)
 {
 	this->satLevel = sat;
+	this->satVal = 1 / tanhf(satLevel);
 }
 
 AuxPort::Audio::WhiteNoise::WhiteNoise()

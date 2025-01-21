@@ -193,7 +193,7 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Poly BLEP Waveshape Saw
 		///////////////////////////////////////////////////////////////////////////////////////
-		class PBWSaw : public TunableOscillator
+		class PBWSaw : public PBSaw
 		{
 		public:
 			PBWSaw() = default;
@@ -209,8 +209,9 @@ namespace AuxPort
 			/// @brief Sets the saturation level for the oscillator
 			///////////////////////////////////////////////////////////////////////////////////////
 			void setSaturationLevel(float sat);
-		private:
+		protected:
 			float satLevel = 1;
+			float satVal = 1 / tanhf(1);
 		};
 
 
