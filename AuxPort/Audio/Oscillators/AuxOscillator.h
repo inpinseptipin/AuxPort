@@ -102,6 +102,42 @@ namespace AuxPort
 			float P = 0.225f;
 		};
 
+		class BhaskaraSine : public TunableOscillator
+		{
+		public:
+			BhaskaraSine() = default;
+			~BhaskaraSine() = default;
+			BhaskaraSine(const BhaskaraSine& bhaskaraSine) = default;
+			float process() override;
+		private:
+			float modToPi = 0.0f;
+		};
+
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Quadratic Sine Approximation by JavidX9 (One Lone Coder)
+		///////////////////////////////////////////////////////////////////////////////////////
+		class JavidX9Sine : public Sine
+		{
+		public:
+			JavidX9Sine() = default;
+			~JavidX9Sine() = default;
+			JavidX9Sine(const JavidX9Sine& javidX9) = default;
+			float process() override;
+		};
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief Cubic Sine Approximation by JavidX9 (One Lone Coder)
+		///////////////////////////////////////////////////////////////////////////////////////
+		class JavidX9Sine2 : public JavidX9Sine
+		{
+		public:
+			JavidX9Sine2() = default;
+			~JavidX9Sine2() = default;
+			JavidX9Sine2(const JavidX9Sine2& javidX9) = default;
+			float process() override;
+		};
+
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Unipolar Sawtooth
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -207,8 +243,6 @@ namespace AuxPort
 			float process() override;
 		};
 		
-
-
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Poly BLEP Waveshape Saw
@@ -412,6 +446,9 @@ namespace AuxPort
 			float x2 = 0;
 			float a = 0;
 		};
+
+
+
 	}
 }
 

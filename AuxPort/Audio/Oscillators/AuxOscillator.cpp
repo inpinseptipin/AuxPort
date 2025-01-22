@@ -43,6 +43,32 @@ float AuxPort::Audio::ParabolicSine::process()
 }
 
 
+float AuxPort::Audio::BhaskaraSine::process()
+{
+	modToPi = mod > 0.5 ? 2 * pi * (mod - 0.5) : 2 * pi * mod;
+	sample = isPlaying() ? (16 * modToPi * (pi - modToPi)) / (5 * pi * pi - 4 * modToPi * (pi - modToPi)):0.0f;
+	mod = mod >= 1? 0.0f : mod + inc;
+	return mod > 0.5 ? -sample:sample;
+}
+
+
+float AuxPort::Audio::JavidX9Sine::process()
+{
+	sample = isPlaying() ? (mod <= 0.5 ? (-16.0f*mod * mod) + (8.0f * mod) : (16.0f*mod * mod) - (24.0f*mod) + 8.0f) : 0.0f;
+	mod = mod >= 1 ? 0.0f : mod + inc;
+	return sample;
+}
+
+
+float AuxPort::Audio::JavidX9Sine2::process()
+{
+	sample = isPlaying() ? 20.785 * mod * (mod-0.5f) * (mod-1.0f) : 0.0f;
+	mod = mod >= 1.0f ? 0.0f : mod + inc;
+	return sample;
+}
+
+
+
 float AuxPort::Audio::UnipolarSawtooth::process()
 {
 	sample = isPlaying() ? mod : 0.0f;
@@ -311,5 +337,4 @@ void AuxPort::Audio::TunableOscillator::setPhaseOffset(float phaseOffset)
 	AuxAssert(phaseOffset < -1.0f || phaseOffset > 1.0f, "Phase offsets can't be greater than -1 and 1");
 	AuxAssert(1 == 1, "Implement this method");
 }
-
 
