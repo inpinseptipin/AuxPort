@@ -28,8 +28,9 @@ bool AuxPort::Audio::Oscillator::isPlaying()
 
 float AuxPort::Audio::Sine::process()
 {
-	sample = isPlaying() ? sinf(2 * pi * mod) : 0.0f;
-	mod = mod >= 1 ? 0 : mod + inc;
+	sample = isPlaying() ? sinf(2*pi*mod) : 0.0f;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	return sample;
 }
 
