@@ -68,12 +68,11 @@ float AuxPort::Audio::JavidX9Sine2::process()
 	return sample;
 }
 
-
-
 float AuxPort::Audio::UnipolarSawtooth::process()
 {
 	sample = isPlaying() ? mod : 0.0f;
-	mod = mod >= 1 ? 0.0 : mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	return sample;
 }
 
@@ -92,14 +91,16 @@ float AuxPort::Audio::Square::process()
 float AuxPort::Audio::BipolarSawtooth::process()
 {
 	sample = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
-	mod = mod >= 1.0f ? 0.0f : mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	return sample;
 }
 
 float AuxPort::Audio::Triangle::process()
 {
 	sample = isPlaying() ? 2.0f * fabs(2.0f * mod - 1.0f) - 1.0f : 0.0f;
-	mod = mod >= 1.0f ? 0.0f : mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	return sample;
 }
 
