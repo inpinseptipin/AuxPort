@@ -181,15 +181,15 @@ namespace AuxPort
 			Square(const Square& square) = default;
 
 			///////////////////////////////////////////////////////////////////////////////////////
-			/// @brief Sets the pulse width for the Square Oscillator
+			/// @brief Sets the pulse width for the Square Oscillator, pulseWidth = [0,100]
 			///////////////////////////////////////////////////////////////////////////////////////
-			void setPulseWidth(float pulseWidth);
+			void setPulseWidth(float pulseWidth = 50.0f);
 
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// @brief This function generates the sample from the Oscillator
 			///////////////////////////////////////////////////////////////////////////////////////
 			float process() override;
-		private:
+		protected:
 			float pulseWidth;
 		};
 
@@ -222,16 +222,13 @@ namespace AuxPort
 			/// @brief This function generates the sample from the Oscillator
 			///////////////////////////////////////////////////////////////////////////////////////
 			float process() override;
-		protected:
-			float square = 0.0f;
-			float modx1 = 0.0f;
-			float x1 = 0.0f;
 		};
 
+#if AUXPORT_EXP
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief PolyBlep Square Oscillator
 		///////////////////////////////////////////////////////////////////////////////////////
-		class PBSquare : public PBSaw
+		class PBSquare : public Square
 		{
 		public:
 			PBSquare() = default;
@@ -241,8 +238,12 @@ namespace AuxPort
 			/// @brief This function generates the sample from the Oscillator
 			///////////////////////////////////////////////////////////////////////////////////////
 			float process() override;
+		protected:
+			float square = 0.0f;
+			float modx1 = 0.0f;
+			float x1 = 0.0f;
 		};
-		
+#endif		
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Poly BLEP Waveshape Saw
