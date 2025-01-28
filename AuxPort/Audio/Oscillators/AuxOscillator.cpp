@@ -107,7 +107,6 @@ float AuxPort::Audio::Triangle::process()
 float AuxPort::Audio::PBSaw::process()
 {
 	sample = isPlaying() ? ((mod >= -1 && mod <= 0) ? (mod * mod) + 2.0f * mod + 1.0f : 2.0f * mod - powf(mod, 2) - 1.0f) : 0.0f;
-	mod += inc;
 	mod = mod >= 1 ? mod - static_cast<int>(mod) - 1 : mod + inc; 
 	return sample;
 }
@@ -135,8 +134,7 @@ void AuxPort::Audio::DPWSaw::setFrequency(float frequency)
 float AuxPort::Audio::DPWTriangle1::process()
 {
 	sample = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
-	mod += inc;
-	mod = mod >= 1 ? mod - static_cast<int>(mod) - 1 : mod + inc;
+	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
 	sample = abs(sample);
 	sample = 0.5 - sample;
 	sample = sample * 2;
@@ -146,7 +144,7 @@ float AuxPort::Audio::DPWTriangle1::process()
 float AuxPort::Audio::DPWSaw::process()
 {
 	x = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
-	mod = mod >= 1.0f ? 0.0f : mod + inc;
+	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
 	x *= x;
 	sample = x - x1;
 	x1 = x;
@@ -170,7 +168,7 @@ float AuxPort::Audio::PBWSaw::process()
 {
 	sample = isPlaying() ? ((mod >= -1 && mod <= 0) ? tanhf(satLevel * (mod * mod) + 2.0f * mod + 1.0f) : tanhf(2.0f * mod - powf(mod, 2) - 1.0f)) : 0.0f;
 	sample *= satVal;
-	mod = mod >= 1 ? -1 : mod + inc;
+	mod = mod >= 1 ? mod - static_cast<int>(mod) - 1 : mod + inc;
 	return sample;
 }
 
