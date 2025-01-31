@@ -48,7 +48,7 @@ float AuxPort::Audio::BhaskaraSine::process()
 {
 	modToPi = mod > 0.5 ? 2 * pi * (mod - 0.5) : 2 * pi * mod;
 	sample = isPlaying() ? (16 * modToPi * (pi - modToPi)) / (5 * pi * pi - 4 * modToPi * (pi - modToPi)):0.0f;
-	mod = mod >= 1? 0.0f : mod + inc;
+	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
 	return mod > 0.5 ? -sample:sample;
 }
 
@@ -56,7 +56,7 @@ float AuxPort::Audio::BhaskaraSine::process()
 float AuxPort::Audio::JavidX9Sine::process()
 {
 	sample = isPlaying() ? (mod <= 0.5 ? (-16.0f*mod * mod) + (8.0f * mod) : (16.0f*mod * mod) - (24.0f*mod) + 8.0f) : 0.0f;
-	mod = mod >= 1 ? 0.0f : mod + inc;
+	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
 	return sample;
 }
 
@@ -64,7 +64,7 @@ float AuxPort::Audio::JavidX9Sine::process()
 float AuxPort::Audio::JavidX9Sine2::process()
 {
 	sample = isPlaying() ? 20.785 * mod * (mod-0.5f) * (mod-1.0f) : 0.0f;
-	mod = mod >= 1.0f ? 0.0f : mod + inc;
+	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
 	return sample;
 }
 

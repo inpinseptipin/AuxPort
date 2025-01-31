@@ -132,7 +132,7 @@ namespace AuxPort
 		/// @brief Evaluates the Signum function
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
-		static inline sample signum(const sample& audio)
+		static inline sample signum(sample audio)
 		{
 			return  audio < 0 ? -1.0f : audio > 0;
 		}
@@ -141,7 +141,7 @@ namespace AuxPort
 		/// @brief Rounds a number to the nearest integer	
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
-		static inline sample round(const sample& audio)
+		static inline sample round(sample audio)
 		{
 			return audio > 0.0 ? static_cast<sample>(floor(audio + 0.5)) : static_cast<float>(ceil(audio - 0.5));
 		}
@@ -173,7 +173,7 @@ namespace AuxPort
 		/// @brief Computes the median for a vector [Time Complexity : O(Nlog2(n)), Memory Complexity : O(N)]	
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
-		static inline sample median(std::vector<sample> vector)
+		static inline sample median(const std::vector<sample>& vector)
 		{
 			std::sort(vector.begin(), vector.end());
 			return vector.size() % 2 == 0 ? vector[vector.size() / 2] : mean<sample>({ vector[vector.size() / 2],vector[vector.size() / 2 + 1] });
@@ -211,7 +211,6 @@ namespace AuxPort
 		{
 			std::vector<sample> vec;
 			vec.resize(size);
-			
 			std::random_device rd;
 			std::mt19937 gen(rd());
 			std::uniform_real_distribution<> distr(rangeStart, rangeEnd);
