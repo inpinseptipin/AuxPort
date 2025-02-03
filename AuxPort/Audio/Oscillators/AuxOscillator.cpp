@@ -26,7 +26,19 @@ bool AuxPort::Audio::Oscillator::isPlaying()
 	return inc != 0;
 }
 
-float AuxPort::Audio::Sine::process()
+void AuxPort::Audio::TunableOscillator::setDetune(float semitones, float cents)
+{
+	inc = this->frequency * (powf(2, (semitones * 100 + cents) / 1200));
+	inc /= static_cast<float>(this->sampleRate);
+}
+
+void AuxPort::Audio::TunableOscillator::setPhaseOffset(float phaseOffset)
+{
+	AuxAssert(phaseOffset < -1.0f || phaseOffset > 1.0f, "Phase offsets can't be greater than -1 and 1");
+	AuxAssert(1 == 1, "Implement this method");
+}
+
+float AuxPort::Audio::Sine::Sine::process()
 {
 	sample = isPlaying() ? sinf(2*pi*mod) : 0.0f;
 	mod += inc;
@@ -34,8 +46,16 @@ float AuxPort::Audio::Sine::process()
 	return sample;
 }
 
+float AuxPort::Audio::Sine::AuxSine::process()
+{
+	x = 2.0f * mod - 1.0f;
+	sample = isPlaying() ? x + x*x*x*(0.5*x*x-1.0f-0.5) : 0.0f;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
+	return sample;
+}
 
-float AuxPort::Audio::ParabolicSine::process()
+float AuxPort::Audio::Sine::ParabolicSine::process()
 {
 	sample = isPlaying() ? B * mod + C * mod * abs(mod) : 0.0f;
 	mod = mod >= pi ? -pi : mod + inc;
@@ -44,7 +64,7 @@ float AuxPort::Audio::ParabolicSine::process()
 }
 
 
-float AuxPort::Audio::BhaskaraSine::process()
+float AuxPort::Audio::Sine::BhaskaraSine::process()
 {
 	modToPi = mod > 0.5 ? 2 * pi * (mod - 0.5) : 2 * pi * mod;
 	sample = isPlaying() ? (16 * modToPi * (pi - modToPi)) / (5 * pi * pi - 4 * modToPi * (pi - modToPi)):0.0f;
@@ -53,7 +73,7 @@ float AuxPort::Audio::BhaskaraSine::process()
 }
 
 
-float AuxPort::Audio::JavidX9Sine::process()
+float AuxPort::Audio::Sine::JavidX9Sine::process()
 {
 	sample = isPlaying() ? (mod <= 0.5 ? (-16.0f*mod * mod) + (8.0f * mod) : (16.0f*mod * mod) - (24.0f*mod) + 8.0f) : 0.0f;
 	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
@@ -61,14 +81,44 @@ float AuxPort::Audio::JavidX9Sine::process()
 }
 
 
-float AuxPort::Audio::JavidX9Sine2::process()
+float AuxPort::Audio::Sine::JavidX9Sine2::process()
 {
 	sample = isPlaying() ? 20.785 * mod * (mod-0.5f) * (mod-1.0f) : 0.0f;
 	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
 	return sample;
 }
 
-float AuxPort::Audio::UnipolarSawtooth::process()
+
+void AuxPort::Audio::Sine::FastSine::setFrequency(float frequency)
+{
+	this->frequency = frequency;
+	a = 2 * cosf(2 * pi * this->frequency / this->sampleRate);
+	x1 = sinf(2 * pi * this->frequency / this->sampleRate);
+	inc = this->frequency / this->sampleRate;
+}
+
+float AuxPort::Audio::Sine::FastSine::process()
+{
+	if (isPlaying())
+	{
+		sample = x1;
+		x0 = x1 * a - x2;
+		x2 = x1;
+		x1 = x0;
+		return sample;
+	}
+	return 0.0f;
+}
+
+void AuxPort::Audio::Sine::FastSine::stop()
+{
+	x0 = 0;
+	x1 = 0;
+	x2 = 0;
+	inc = 0;
+}
+
+float AuxPort::Audio::Sawtooth::UnipolarSawtooth::process()
 {
 	sample = isPlaying() ? mod : 0.0f;
 	mod += inc;
@@ -76,19 +126,19 @@ float AuxPort::Audio::UnipolarSawtooth::process()
 	return sample;
 }
 
-void AuxPort::Audio::Square::setPulseWidth(float pulseWidth)
+void AuxPort::Audio::Square::Square::setPulseWidth(float pulseWidth)
 {
 	this->pulseWidth = pulseWidth / 100;
 }
 
-float AuxPort::Audio::Square::process()
+float AuxPort::Audio::Square::Square::process()
 {
 	sample = isPlaying() ? ((mod > pulseWidth) ? -1.0f : 1.0f) : 0.0f;
 	mod = mod >= 1 ? 0.0 : mod + inc;
 	return sample;
 }
 
-float AuxPort::Audio::BipolarSawtooth::process()
+float AuxPort::Audio::Sawtooth::BipolarSawtooth::process()
 {
 	sample = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
 	mod += inc;
@@ -96,7 +146,7 @@ float AuxPort::Audio::BipolarSawtooth::process()
 	return sample;
 }
 
-float AuxPort::Audio::Triangle::process()
+float AuxPort::Audio::Triangle::Triangle::process()
 {
 	sample = isPlaying() ? 2.0f * fabs(2.0f * mod - 1.0f) - 1.0f : 0.0f;
 	mod += inc;
@@ -104,7 +154,7 @@ float AuxPort::Audio::Triangle::process()
 	return sample;
 }
 
-float AuxPort::Audio::PBSaw::process()
+float AuxPort::Audio::Sawtooth::PBSaw::process()
 {
 	sample = isPlaying() ? ((mod >= -1 && mod <= 0) ? (mod * mod) + 2.0f * mod + 1.0f : 2.0f * mod - powf(mod, 2) - 1.0f) : 0.0f;
 	mod = mod >= 1 ? mod - static_cast<int>(mod) - 1 : mod + inc; 
@@ -123,7 +173,7 @@ float AuxPort::Audio::PBSquare::process()
 	return (sample);
 }
 #endif
-void AuxPort::Audio::DPWSaw::setFrequency(float frequency)
+void AuxPort::Audio::Sawtooth::DPWSaw::setFrequency(float frequency)
 {
 	this->frequency = frequency;
 	this->inc = static_cast<float>(this->frequency) / static_cast<float>(this->sampleRate);
@@ -131,7 +181,7 @@ void AuxPort::Audio::DPWSaw::setFrequency(float frequency)
 }
 
 
-float AuxPort::Audio::DPWTriangle1::process()
+float AuxPort::Audio::Triangle::DPWTriangle1::process()
 {
 	sample = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
 	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
@@ -141,7 +191,7 @@ float AuxPort::Audio::DPWTriangle1::process()
 	return sample;
 }
 
-float AuxPort::Audio::DPWSaw::process()
+float AuxPort::Audio::Sawtooth::DPWSaw::process()
 {
 	x = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
 	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
@@ -164,7 +214,7 @@ float AuxPort::Audio::DPWTriangle2::process()
 }
 #endif
 
-float AuxPort::Audio::PBWSaw::process()
+float AuxPort::Audio::Sawtooth::PBWSaw::process()
 {
 	sample = isPlaying() ? ((mod >= -1 && mod <= 0) ? tanhf(satLevel * (mod * mod) + 2.0f * mod + 1.0f) : tanhf(2.0f * mod - powf(mod, 2) - 1.0f)) : 0.0f;
 	sample *= satVal;
@@ -172,23 +222,25 @@ float AuxPort::Audio::PBWSaw::process()
 	return sample;
 }
 
-void AuxPort::Audio::PBWSaw::setSaturationLevel(float sat)
+void AuxPort::Audio::Sawtooth::PBWSaw::setSaturationLevel(float sat)
 {
 	this->satLevel = sat;
 	this->satVal = 1 / tanhf(satLevel);
 }
 
-AuxPort::Audio::WhiteNoise::WhiteNoise()
+AuxPort::Audio::Noise::WhiteNoise::WhiteNoise()
 {
 	gen.reset(new std::mt19937(randomDevice()));
 	distribution.reset(new std::uniform_real_distribution<>(-1, 1));
 }
 
-float AuxPort::Audio::WhiteNoise::process()
+float AuxPort::Audio::Noise::WhiteNoise::process()
 {
 	return isPlaying() ? static_cast<float>(distribution->operator()(*gen)) : 0.0f;
 }
 
+
+#if AUXPORT_EXP
 AuxPort::Audio::ADSR::ADSR()
 {
 	this->parameters.resize(8);
@@ -300,44 +352,8 @@ void AuxPort::Audio::KPString::setFrequency(float frequency)
 	AuxPort::Utility::generateRandomValues<float>(seedBuffer);
 }
 
-void AuxPort::Audio::FastSine::setFrequency(float frequency)
-{
-	this->frequency = frequency;
-	a = 2 * cosf(2 * pi * this->frequency / this->sampleRate);
-	x1 = sinf(2 * pi * this->frequency / this->sampleRate);
-	inc = this->frequency / this->sampleRate;
-}
+#endif
 
-float AuxPort::Audio::FastSine::process()
-{
-	if (isPlaying())
-	{
-		sample = x1;
-		x0 = x1 * a - x2;
-		x2 = x1;
-		x1 = x0;
-		return sample;
-	}
-	return 0.0f;
-}
 
-void AuxPort::Audio::FastSine::stop()
-{
-	x0 = 0;
-	x1 = 0;
-	x2 = 0;
-	inc = 0;
-}
 
-void AuxPort::Audio::TunableOscillator::setDetune(float semitones, float cents)
-{
-	inc = this->frequency * (powf(2, (semitones*100 + cents) / 1200));
-	inc /= static_cast<float>(this->sampleRate);
-}
-
-void AuxPort::Audio::TunableOscillator::setPhaseOffset(float phaseOffset)
-{
-	AuxAssert(phaseOffset < -1.0f || phaseOffset > 1.0f, "Phase offsets can't be greater than -1 and 1");
-	AuxAssert(1 == 1, "Implement this method");
-}
 
