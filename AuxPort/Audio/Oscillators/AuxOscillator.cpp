@@ -162,7 +162,7 @@ float AuxPort::Audio::Sawtooth::PBSaw::process()
 }
 
 #if AUXPORT_EXP
-float AuxPort::Audio::PBSquare::process()
+float AuxPort::Audio::Square::PBSquare::process()
 {
 	square = isPlaying() ? ((mod > pulseWidth) ? -1.0f : 1.0f) : 0.0f;
 	sample = isPlaying() ? ((mod >= -1 && mod <= 0) ? (mod * mod) + 2.0f * mod + 1.0f : 2.0f * mod - powf(mod, 2) - 1.0f) : 0.0f;
@@ -203,7 +203,7 @@ float AuxPort::Audio::Sawtooth::DPWSaw::process()
 
 
 #if AUXPORT_EXP
-float AuxPort::Audio::DPWTriangle2::process()
+float AuxPort::Audio::Triangle::DPWTriangle2::process()
 {
 	x = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
 	mod = mod >= 1.0f ? 0.0f : mod + inc;
@@ -244,26 +244,8 @@ float AuxPort::Audio::Noise::WhiteNoise2::process()
 	return isPlaying() ? getRandomFloat(-1, 1) : 0.0f;
 }
 
-float AuxPort::Audio::Noise::PinkNoise::process()
-{
-	return isPlaying() ? 0.5f*getPinkNoise() : 0.0f;
-}
 
-#if AUXPORT_EXP
-float AuxPort::Audio::Noise::PinkNoise::getPinkNoise()
-{
-	sample = getRandomFloat(-1, 1);
-	b0 = 0.99886 * b0 + sample * 0.0555179;
-	b1 = 0.99332 * b1 + sample * 0.0750759;
-	b2 = 0.96900 * b2 + sample * 0.1538520;
-	b3 = 0.86650 * b3 + sample * 0.3104856;
-	b4 = 0.55000 * b4 + sample * 0.5329522;
-	b5 = -0.7616 * b5 - sample * 0.0168980;
-	pink = b0 + b1 + b2 + b3 + b4 + b5 + b6 + sample * 0.5362;
-	b6 = sample * 0.115926;
-	return pink;
-}
-#endif
+
 
 
 
@@ -343,12 +325,12 @@ float AuxPort::Audio::ADSR::process()
 	return envelope;
 }
 
-AuxPort::Audio::KPString::KPString()
+AuxPort::Audio::String::KPString::KPString()
 {
 	seedBuffer.resize(sampleRate);
 }
 
-float AuxPort::Audio::KPString::process()
+float AuxPort::Audio::String::KPString::process()
 {
 	if (isPlaying())
 	{
@@ -362,7 +344,7 @@ float AuxPort::Audio::KPString::process()
 	return 0.0f;
 }
 
-void AuxPort::Audio::KPString::setSampleRate(uint32_t sampleRate)
+void AuxPort::Audio::String::KPString::setSampleRate(uint32_t sampleRate)
 {
 	if (this->sampleRate != sampleRate)
 	{
@@ -372,7 +354,7 @@ void AuxPort::Audio::KPString::setSampleRate(uint32_t sampleRate)
 	}
 }
 
-void AuxPort::Audio::KPString::setFrequency(float frequency)
+void AuxPort::Audio::String::KPString::setFrequency(float frequency)
 {
 	seedSize = static_cast<uint32_t>(this->sampleRate / frequency);
 	inc = frequency / sampleRate;

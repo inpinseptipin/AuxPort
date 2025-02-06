@@ -276,8 +276,6 @@ namespace AuxPort
 				float c = 0.0f;
 			};
 
-
-
 		}
 		
 
@@ -307,8 +305,28 @@ namespace AuxPort
 			};
 
 
-		}
+#if AUXPORT_EXP
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief PolyBlep Square Oscillator
+			///////////////////////////////////////////////////////////////////////////////////////
+			class PBSquare : public Square
+			{
+			public:
+				PBSquare() = default;
+				~PBSquare() = default;
+				PBSquare(const PBSquare& pbsquare) = default;
+				///////////////////////////////////////////////////////////////////////////////////////
+				/// @brief This function generates the sample from the Oscillator
+				///////////////////////////////////////////////////////////////////////////////////////
+				float process() override;
+			protected:
+				float square = 0.0f;
+				float modx1 = 0.0f;
+				float x1 = 0.0f;
+			};
+#endif
 
+		}
 
 		namespace Triangle
 		{
@@ -342,6 +360,20 @@ namespace AuxPort
 				///////////////////////////////////////////////////////////////////////////////////////
 				float process() override;
 			};
+
+#if AUXPORT_EXP
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief Differentiable Parabolic Waveform Triangle (Order - 2)
+			///////////////////////////////////////////////////////////////////////////////////////
+			class DPWTriangle2 : public Sawtooth::DPWSaw
+			{
+			public:
+				DPWTriangle2() = default;
+				~DPWTriangle2() = default;
+				DPWTriangle2(const DPWTriangle2& dpwtriangle2) = default;
+				float process() override;
+			};
+#endif
 
 		}
 
@@ -383,54 +415,6 @@ namespace AuxPort
 			};
 		}
 		
-
-	
-
-
-
-#if AUXPORT_EXP
-		///////////////////////////////////////////////////////////////////////////////////////
-		/// @brief PolyBlep Square Oscillator
-		///////////////////////////////////////////////////////////////////////////////////////
-		class PBSquare : public Square
-		{
-		public:
-			PBSquare() = default;
-			~PBSquare() = default;
-			PBSquare(const PBSquare& pbsquare) = default;
-			///////////////////////////////////////////////////////////////////////////////////////
-			/// @brief This function generates the sample from the Oscillator
-			///////////////////////////////////////////////////////////////////////////////////////
-			float process() override;
-		protected:
-			float square = 0.0f;
-			float modx1 = 0.0f;
-			float x1 = 0.0f;
-		};
-#endif		
-
-		
-
-
-		
-
-		
-
-#if AUXPORT_EXP
-		///////////////////////////////////////////////////////////////////////////////////////
-		/// @brief Differentiable Parabolic Waveform Triangle (Order - 2)
-		///////////////////////////////////////////////////////////////////////////////////////
-		class DPWTriangle2 : public DPWSaw
-		{
-		public:
-			DPWTriangle2() = default;
-			~DPWTriangle2() = default;
-			DPWTriangle2(const DPWTriangle2& dpwtriangle2) = default;
-			float process() override;
-		};
-#endif
-
-
 		namespace Noise
 		{
 			///////////////////////////////////////////////////////////////////////////////////////
@@ -464,31 +448,6 @@ namespace AuxPort
 				WhiteNoise2(const WhiteNoise2& whitenoise2) = default;
 				float process() override;
 			};
-#if AUXPORT_EXP
-			///////////////////////////////////////////////////////////////////////////////////////
-			/// @brief WhiteNoise Oscillator [uses Gaussian White Noise]
-			///////////////////////////////////////////////////////////////////////////////////////
-			class PinkNoise : public Oscillator, FastRandomFloat
-			{
-			public:
-				PinkNoise() = default;
-				~PinkNoise() = default;
-				PinkNoise(const PinkNoise& whiteNoise3) = default;
-				float process() override;
-			protected:
-				float getPinkNoise();
-				float b0 = 0.0f;
-				float b1 = 0.0f;
-				float b2 = 0.0f;
-				float b3 = 0.0f;
-				float b4 = 0.0f;
-				float b5 = 0.0f;
-				float b6 = 0.0f;
-				float pink;
-			};
-#endif
-			
-
 		}
 		
 
@@ -546,17 +505,10 @@ namespace AuxPort
 		};
 
 #endif // AUXPORT_EXP
-
-		
-
-		
-
-
-
-
-
-
 	}
+
+
+
 }
 
 #endif
