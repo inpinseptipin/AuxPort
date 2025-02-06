@@ -239,6 +239,33 @@ float AuxPort::Audio::Noise::WhiteNoise::process()
 	return isPlaying() ? static_cast<float>(distribution->operator()(*gen)) : 0.0f;
 }
 
+float AuxPort::Audio::Noise::WhiteNoise2::process()
+{
+	return isPlaying() ? getRandomFloat(-1, 1) : 0.0f;
+}
+
+float AuxPort::Audio::Noise::PinkNoise::process()
+{
+	return isPlaying() ? 0.5f*getPinkNoise() : 0.0f;
+}
+
+#if AUXPORT_EXP
+float AuxPort::Audio::Noise::PinkNoise::getPinkNoise()
+{
+	sample = getRandomFloat(-1, 1);
+	b0 = 0.99886 * b0 + sample * 0.0555179;
+	b1 = 0.99332 * b1 + sample * 0.0750759;
+	b2 = 0.96900 * b2 + sample * 0.1538520;
+	b3 = 0.86650 * b3 + sample * 0.3104856;
+	b4 = 0.55000 * b4 + sample * 0.5329522;
+	b5 = -0.7616 * b5 - sample * 0.0168980;
+	pink = b0 + b1 + b2 + b3 + b4 + b5 + b6 + sample * 0.5362;
+	b6 = sample * 0.115926;
+	return pink;
+}
+#endif
+
+
 
 #if AUXPORT_EXP
 AuxPort::Audio::ADSR::ADSR()
@@ -353,7 +380,5 @@ void AuxPort::Audio::KPString::setFrequency(float frequency)
 }
 
 #endif
-
-
 
 

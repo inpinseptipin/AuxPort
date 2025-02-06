@@ -452,6 +452,43 @@ namespace AuxPort
 				std::unique_ptr<std::mt19937> gen;
 				std::unique_ptr<std::uniform_real_distribution<>> distribution;
 			};
+
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief WhiteNoise Oscillator [uses Fast Random Float]
+			///////////////////////////////////////////////////////////////////////////////////////
+			class WhiteNoise2 : public Oscillator, FastRandomFloat
+			{
+			public:
+				WhiteNoise2() = default;
+				~WhiteNoise2() = default;
+				WhiteNoise2(const WhiteNoise2& whitenoise2) = default;
+				float process() override;
+			};
+#if AUXPORT_EXP
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief WhiteNoise Oscillator [uses Gaussian White Noise]
+			///////////////////////////////////////////////////////////////////////////////////////
+			class PinkNoise : public Oscillator, FastRandomFloat
+			{
+			public:
+				PinkNoise() = default;
+				~PinkNoise() = default;
+				PinkNoise(const PinkNoise& whiteNoise3) = default;
+				float process() override;
+			protected:
+				float getPinkNoise();
+				float b0 = 0.0f;
+				float b1 = 0.0f;
+				float b2 = 0.0f;
+				float b3 = 0.0f;
+				float b4 = 0.0f;
+				float b5 = 0.0f;
+				float b6 = 0.0f;
+				float pink;
+			};
+#endif
+			
+
 		}
 		
 
