@@ -55,6 +55,19 @@ float AuxPort::Audio::Sine::AuxSine::process()
 	return sample;
 }
 
+float AuxPort::Audio::Sine::AuxSine2::process()
+{
+	x = 2 * pi * mod;
+	sample = isPlaying() ? (x >= 0 && x < 0.5 * pi ? x / pi * (pi - powf((2 * x) / pi, 2) * ((2 * pi - 5) - powf((2 * x) / pi, 2) * (pi - 3))) : sample):0.0f;
+	sample = isPlaying() ? (x > 0.5 * pi && x < pi ? - (x-pi) / pi * (pi - powf((2 * (x-pi)) / pi, 2) * ((2 * pi - 5) - powf((2 * (x-pi)) / pi, 2) * (pi - 3))) : sample) : 0.0f;
+	sample = isPlaying() ? (x >= pi && x < 1.5*pi ? - (x - pi) / pi * (pi - powf((2 * (x - pi)) / pi, 2) * ((2 * pi - 5) - powf((2 * (x - pi)) / pi, 2) * (pi - 3))) : sample) : 0.0f;
+	sample = isPlaying() ? (x >= 1.5*pi && x < 2*pi ? (x-2*pi) / pi * (pi - powf((2 * (x-2*pi)) / pi, 2) * ((2 * pi - 5) - powf((2 * (x-2*pi)) / pi, 2) * (pi - 3))) : sample) : 0.0f;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
+	return sample;
+}
+
+
 float AuxPort::Audio::Sine::ParabolicSine::process()
 {
 	sample = isPlaying() ? B * mod + C * mod * abs(mod) : 0.0f;
@@ -68,7 +81,8 @@ float AuxPort::Audio::Sine::BhaskaraSine::process()
 {
 	modToPi = mod > 0.5 ? 2 * pi * (mod - 0.5) : 2 * pi * mod;
 	sample = isPlaying() ? (16 * modToPi * (pi - modToPi)) / (5 * pi * pi - 4 * modToPi * (pi - modToPi)):0.0f;
-	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	return mod > 0.5 ? -sample:sample;
 }
 
@@ -76,7 +90,8 @@ float AuxPort::Audio::Sine::BhaskaraSine::process()
 float AuxPort::Audio::Sine::JavidX9Sine::process()
 {
 	sample = isPlaying() ? (mod <= 0.5 ? (-16.0f*mod * mod) + (8.0f * mod) : (16.0f*mod * mod) - (24.0f*mod) + 8.0f) : 0.0f;
-	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	return sample;
 }
 
@@ -84,7 +99,8 @@ float AuxPort::Audio::Sine::JavidX9Sine::process()
 float AuxPort::Audio::Sine::JavidX9Sine2::process()
 {
 	sample = isPlaying() ? 20.785 * mod * (mod-0.5f) * (mod-1.0f) : 0.0f;
-	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	return sample;
 }
 
@@ -121,14 +137,16 @@ void AuxPort::Audio::Sine::FastSine::stop()
 float AuxPort::Audio::Sawtooth::UnipolarSawtooth::process()
 {
 	sample = isPlaying() ? mod : 0.0f;
-	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	return sample;
 }
 
 float AuxPort::Audio::Sawtooth::SawSin2::process()
 {
 	sample = isPlaying() ? ((mod <=0) ? -sinf(pi * mod) : 2.0f * mod - powf(mod, 2) - 1.0f) : 0.0f;
-	mod = mod >= 1 ? mod - static_cast<int>(mod) - 1: mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	return sample;
 }
 
@@ -136,7 +154,8 @@ float AuxPort::Audio::Sawtooth::SawSin2::process()
 float AuxPort::Audio::Sawtooth::SawSin1::process()
 {
 	sample = isPlaying() ? ((mod > 0.5) ? -sinf(2 * pi * mod) : 2.0f * mod - 1.0f) : 0.0f;
-	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	return sample;
 }
 
@@ -148,28 +167,32 @@ void AuxPort::Audio::Square::Square::setPulseWidth(float pulseWidth)
 float AuxPort::Audio::Square::Square::process()
 {
 	sample = isPlaying() ? ((mod > pulseWidth) ? -1.0f : 1.0f) : 0.0f;
-	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	return sample;
 }
 
 float AuxPort::Audio::Sawtooth::BipolarSawtooth::process()
 {
 	sample = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
-	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	return sample;
 }
 
 float AuxPort::Audio::Triangle::Triangle::process()
 {
 	sample = isPlaying() ? 2.0f * fabs(2.0f * mod - 1.0f) - 1.0f : 0.0f;
-	mod = mod >= 1 ? mod - static_cast<int>(mod): mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	return sample;
 }
 
 float AuxPort::Audio::Sawtooth::PBSaw::process()
 {
 	sample = isPlaying() ? ((mod >= -1 && mod <= 0) ? (mod * mod) + 2.0f * mod + 1.0f : 2.0f * mod - powf(mod, 2) - 1.0f) : 0.0f;
-	mod = mod >= 1 ? mod - static_cast<int>(mod) - 1 : mod + inc; 
+	mod += inc;
+	mod = mod - static_cast<int>(mod)-1.0f;
 	return sample;
 }
 
@@ -196,7 +219,8 @@ void AuxPort::Audio::Sawtooth::DPWSaw::setFrequency(float frequency)
 float AuxPort::Audio::Triangle::DPWTriangle1::process()
 {
 	sample = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
-	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	sample = abs(sample);
 	sample = 0.5 - sample;
 	sample = sample * 2;
@@ -206,7 +230,8 @@ float AuxPort::Audio::Triangle::DPWTriangle1::process()
 float AuxPort::Audio::Sawtooth::DPWSaw::process()
 {
 	x = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
-	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	x *= x;
 	sample = x - x1;
 	x1 = x;
@@ -230,7 +255,8 @@ float AuxPort::Audio::Sawtooth::PBWSaw::process()
 {
 	sample = isPlaying() ? ((mod >= -1 && mod <= 0) ? tanhf(satLevel * (mod * mod) + 2.0f * mod + 1.0f) : tanhf(2.0f * mod - powf(mod, 2) - 1.0f)) : 0.0f;
 	sample *= satVal;
-	mod = mod >= 1 ? mod - static_cast<int>(mod) - 1 : mod + inc;
+	mod += inc;
+	mod = mod - static_cast<int>(mod)-1.0f;
 	return sample;
 }
 
