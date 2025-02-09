@@ -276,6 +276,31 @@ namespace AuxPort
 				float c = 0.0f;
 			};
 
+			class SawSin1 : public BipolarSawtooth
+			{
+			public:
+				SawSin1() = default;
+				~SawSin1() = default;
+				SawSin1(const SawSin1& pbs) = default;
+				///////////////////////////////////////////////////////////////////////////////////////
+				/// @brief This function generates the sample from the Oscillator
+				///////////////////////////////////////////////////////////////////////////////////////
+				float process() override;
+			};
+
+
+			class SawSin2 : public PBSaw
+			{
+			public:
+				SawSin2() = default;
+				~SawSin2() = default;
+				SawSin2(const SawSin2& pbs) = default;
+				///////////////////////////////////////////////////////////////////////////////////////
+				/// @brief This function generates the sample from the Oscillator
+				///////////////////////////////////////////////////////////////////////////////////////
+				float process() override;
+			};
+
 		}
 		
 

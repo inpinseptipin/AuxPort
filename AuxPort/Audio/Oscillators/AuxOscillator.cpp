@@ -121,8 +121,22 @@ void AuxPort::Audio::Sine::FastSine::stop()
 float AuxPort::Audio::Sawtooth::UnipolarSawtooth::process()
 {
 	sample = isPlaying() ? mod : 0.0f;
-	mod += inc;
-	mod = mod - static_cast<int>(mod);
+	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
+	return sample;
+}
+
+float AuxPort::Audio::Sawtooth::SawSin2::process()
+{
+	sample = isPlaying() ? ((mod <=0) ? -sinf(pi * mod) : 2.0f * mod - powf(mod, 2) - 1.0f) : 0.0f;
+	mod = mod >= 1 ? mod - static_cast<int>(mod) - 1: mod + inc;
+	return sample;
+}
+
+
+float AuxPort::Audio::Sawtooth::SawSin1::process()
+{
+	sample = isPlaying() ? ((mod > 0.5) ? -sinf(2 * pi * mod) : 2.0f * mod - 1.0f) : 0.0f;
+	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
 	return sample;
 }
 
@@ -134,23 +148,21 @@ void AuxPort::Audio::Square::Square::setPulseWidth(float pulseWidth)
 float AuxPort::Audio::Square::Square::process()
 {
 	sample = isPlaying() ? ((mod > pulseWidth) ? -1.0f : 1.0f) : 0.0f;
-	mod = mod >= 1 ? 0.0 : mod + inc;
+	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
 	return sample;
 }
 
 float AuxPort::Audio::Sawtooth::BipolarSawtooth::process()
 {
 	sample = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
-	mod += inc;
-	mod = mod - static_cast<int>(mod);
+	mod = mod >= 1 ? mod - static_cast<int>(mod) : mod + inc;
 	return sample;
 }
 
 float AuxPort::Audio::Triangle::Triangle::process()
 {
 	sample = isPlaying() ? 2.0f * fabs(2.0f * mod - 1.0f) - 1.0f : 0.0f;
-	mod += inc;
-	mod = mod - static_cast<int>(mod);
+	mod = mod >= 1 ? mod - static_cast<int>(mod): mod + inc;
 	return sample;
 }
 
@@ -362,5 +374,4 @@ void AuxPort::Audio::String::KPString::setFrequency(float frequency)
 }
 
 #endif
-
 
