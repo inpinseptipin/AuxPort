@@ -30,12 +30,28 @@ namespace AuxPort
 			JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AuxMultiSelect)
 		};
 
-			
+#if AUXPORT_EXP		
 		class AuxScope : public juce::Component
 		{
 		public:
 			AuxScope();
 			~AuxScope() = default;
+			void paint(juce::Graphics& g) override;
+			void resized() override;
+			virtual void attachBuffer(AuxPort::Graphics::ScopeBuffers* scopeBufferPointer);
+		protected:
+			virtual void drawScope(juce::Graphics& g, const juce::Rectangle<float>* scopeBounds);
+			virtual void drawBackground(juce::Graphics& g, const juce::Rectangle<float>& backgroundBounds, float backgroundWidth);
+			virtual void drawLabels(juce::Graphics& g, const juce::Rectangle<float>& labelBounds, const std::vector<float>& labelInformation);
+			virtual void drawAnalytics(juce::Graphics& g, const juce::Rectangle<float>& analyticBounds);
+		};
+
+#endif
+		class OscilloScope : public juce::Component
+		{
+		public:
+			OscilloScope();
+			~OscilloScope() = default;
 			void paint(juce::Graphics& g) override;
 			void resized() override;
 			void draw();
@@ -54,7 +70,7 @@ namespace AuxPort
 			uint32_t numberOfSamples;
 			juce::ComboBox menu;
 			AuxMultiSelect multiSelect;
-			JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AuxScope)
+			JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OscilloScope)
 		};
 	}
 }

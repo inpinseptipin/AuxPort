@@ -1,6 +1,79 @@
 #include "AuxScope.h"
 
-AuxPort::Extensions::AuxScope::AuxScope()
+
+void AuxPort::Extensions::AuxMultiSelect::paint(juce::Graphics& g)
+{
+	auto bounds = this->getLocalBounds().toFloat();
+	headingHeight = bounds.getHeight() / 10;
+	g.setColour(juce::Colours::white);
+	g.drawText("Source", juce::Rectangle<float>(bounds.getX(), bounds.getY(), bounds.getWidth(), headingHeight), juce::Justification::horizontallyCentred, true);
+
+	if (options.size() > 0)
+	{
+		auto optionsHeight = bounds.getHeight() - 2 * headingHeight;
+		auto rowHeight = optionsHeight / options.size();
+		for (uint32_t i = 0; i < options.size(); i++)
+		{
+			auto row = AuxPort::Utility::remap<float>(i, headingHeight, optionsHeight, 0, options.size());
+			auto rect = juce::Rectangle<float>(bounds.getX(), row, bounds.getWidth(), rowHeight);
+			if (switchImages.size() > 0)
+			{
+				options[i].second == false ? this->drawSwitchImage(g, switchImages[i], rect, false) : this->drawSwitchImage(g, switchImages[i], rect, true);
+			}
+			else
+			{
+				g.drawRect(rect, 2);
+				options[i].second == false ? g.setColour(juce::Colours::red) : g.setColour(juce::Colours::green);
+				g.fillRect(rect);
+				g.setColour(juce::Colours::white);
+				g.drawText(options[i].first, rect, juce::Justification::horizontallyCentred, true);
+			}
+
+		}
+
+	}
+	else
+		g.drawText("No Sources", juce::Rectangle<float>(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()), juce::Justification::horizontallyCentred, true);
+
+}
+
+void AuxPort::Extensions::AuxMultiSelect::resized()
+{
+
+}
+
+void AuxPort::Extensions::AuxMultiSelect::mouseDown(const juce::MouseEvent& event)
+{
+	if (this->options.size() > 0)
+	{
+		auto mouseLocation = event.getMouseDownPosition();
+		auto bounds = this->getLocalBounds();
+		auto location = AuxPort::Utility::remap<float>(mouseLocation.getY(), 0, options.size(), bounds.getY(), bounds.getHeight());
+		uint32_t index = static_cast<uint32_t>(floor(location));
+		std::lock_guard lock(mutex);
+		options[index].second = !options[index].second;
+		repaint();
+	}
+}
+
+std::vector<std::pair<juce::String, bool>>* AuxPort::Extensions::AuxMultiSelect::getPointerToSources()
+{
+	return &options;
+}
+
+void AuxPort::Extensions::AuxMultiSelect::drawSwitchImage(juce::Graphics& g, juce::Image& switchImage, const juce::Rectangle<float>& bounds, bool state)
+{
+	uint32_t noOfFrames = switchImage.getHeight() / switchImage.getWidth();
+	uint32_t frameID = state ? 1 : 0;
+	g.drawImage(switchImage, bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), 0, frameID * switchImage.getWidth(), switchImage.getWidth(), switchImage.getWidth(), false);
+}
+
+
+
+
+
+
+AuxPort::Extensions::OscilloScope::OscilloScope()
 {
 	addAndMakeVisible(menu);
 	addAndMakeVisible(multiSelect);
@@ -16,7 +89,7 @@ AuxPort::Extensions::AuxScope::AuxScope()
 
 }
 
-void AuxPort::Extensions::AuxScope::paint(juce::Graphics& g)
+void AuxPort::Extensions::OscilloScope::paint(juce::Graphics& g)
 {
 
 	auto backgroundBounds = this->getLocalBounds().toFloat();
@@ -33,21 +106,21 @@ void AuxPort::Extensions::AuxScope::paint(juce::Graphics& g)
 
 }
 
-void AuxPort::Extensions::AuxScope::resized()
+void AuxPort::Extensions::OscilloScope::resized()
 {
 	repaint();
 }
 
-void AuxPort::Extensions::AuxScope::draw()
+void AuxPort::Extensions::OscilloScope::draw()
 {
 	repaint();
 }
 
-void AuxPort::Extensions::AuxScope::attachBuffer(AuxPort::Graphics::ScopeBuffers* scopeBufferPointer)
+void AuxPort::Extensions::OscilloScope::attachBuffer(AuxPort::Graphics::ScopeBuffers* scopeBufferPointer)
 {
 	AuxAssert(scopeBufferPointer != nullptr, "Pointer does not point to a valid memory chunk");
 	this->scopeBufferPointer = scopeBufferPointer;
-	auto ids = scopeBufferPointer->getBufferIDS();
+	auto ids = scopeBufferPointer->getNames();
 	std::vector<juce::String> juceIds;
 	juceIds.resize(ids.size());
 	for (uint32_t i = 0; i < ids.size(); i++)
@@ -62,7 +135,7 @@ void AuxPort::Extensions::AuxScope::attachBuffer(AuxPort::Graphics::ScopeBuffers
 	
 }
 
-void AuxPort::Extensions::AuxScope::drawAnalytics(juce::Graphics& g,const juce::Rectangle<float>& analyticBounds)
+void AuxPort::Extensions::OscilloScope::drawAnalytics(juce::Graphics& g,const juce::Rectangle<float>& analyticBounds)
 {
 	auto x = analyticBounds.getWidth() / 10;
 	auto y = analyticBounds.getHeight() / 10;
@@ -72,7 +145,7 @@ void AuxPort::Extensions::AuxScope::drawAnalytics(juce::Graphics& g,const juce::
 	g.drawText("Analytics", headingBounds, juce::Justification::horizontallyCentred, true);	
 }
 
-void AuxPort::Extensions::AuxScope::drawScope(juce::Graphics& g, const juce::Rectangle<float>& scopeBounds)
+void AuxPort::Extensions::OscilloScope::drawScope(juce::Graphics& g, const juce::Rectangle<float>& scopeBounds)
 {
 	auto boundaryWidth = 10.0f;
 	g.setColour(juce::Colours::grey);
@@ -126,7 +199,7 @@ void AuxPort::Extensions::AuxScope::drawScope(juce::Graphics& g, const juce::Rec
 	
 }
 
-void AuxPort::Extensions::AuxScope::drawLabels(juce::Graphics& g, const juce::Rectangle<float>& labelBounds, const std::vector<float>& labelInformation)
+void AuxPort::Extensions::OscilloScope::drawLabels(juce::Graphics& g, const juce::Rectangle<float>& labelBounds, const std::vector<float>& labelInformation)
 {
 	g.setColour(juce::Colour::fromRGBA(255, 255, 255, 100));
 	auto textLength = 20.0f;
@@ -138,7 +211,7 @@ void AuxPort::Extensions::AuxScope::drawLabels(juce::Graphics& g, const juce::Re
 	}
 }
 
-void AuxPort::Extensions::AuxScope::drawBackground(juce::Graphics& g, const juce::Rectangle<float>& backgroundBounds,float backgroundWidth)
+void AuxPort::Extensions::OscilloScope::drawBackground(juce::Graphics& g, const juce::Rectangle<float>& backgroundBounds,float backgroundWidth)
 {
 	g.setColour(juce::Colours::white);
 	g.drawRect(backgroundBounds, backgroundWidth);
@@ -148,6 +221,7 @@ void AuxPort::Extensions::AuxScope::drawBackground(juce::Graphics& g, const juce
 AuxPort::Extensions::AuxMultiSelect::AuxMultiSelect()
 {
 	headingHeight = 0.0f;
+	maxSelect = 0;
 }
 
 void AuxPort::Extensions::AuxMultiSelect::setOptions(const std::vector<juce::String>& options,uint32_t maxSelect)
@@ -165,73 +239,6 @@ void AuxPort::Extensions::AuxMultiSelect::setOptions(const std::vector<juce::Str
 	}
 	this->maxSelect = maxSelect;
 
-}
-
-void AuxPort::Extensions::AuxMultiSelect::paint(juce::Graphics& g)
-{
-	auto bounds = this->getLocalBounds().toFloat();
-	headingHeight = bounds.getHeight() / 10;
-	g.setColour(juce::Colours::white);
-	g.drawText("Source", juce::Rectangle<float>(bounds.getX(), bounds.getY(), bounds.getWidth(), headingHeight), juce::Justification::horizontallyCentred, true);
-
-	if (options.size() > 0)
-	{
-		auto optionsHeight = bounds.getHeight() - 2*headingHeight;
-		auto rowHeight = optionsHeight / options.size();
-		for (uint32_t i = 0; i < options.size(); i++)
-		{
-			auto row = AuxPort::Utility::remap<float>(i, headingHeight, optionsHeight, 0, options.size());
-			auto rect = juce::Rectangle<float>(bounds.getX(), row, bounds.getWidth(), rowHeight);
-			if (switchImages.size() > 0)
-			{
-				options[i].second == false ? this->drawSwitchImage(g, switchImages[i], rect, false) : this->drawSwitchImage(g, switchImages[i], rect, true);
-			}
-			else
-			{
-				g.drawRect(rect, 2);
-				options[i].second == false ? g.setColour(juce::Colours::red) : g.setColour(juce::Colours::green);
-				g.fillRect(rect);
-				g.setColour(juce::Colours::white);
-				g.drawText(options[i].first, rect, juce::Justification::horizontallyCentred, true);
-			}
-			
-		}
-
-	}
-	else
-		g.drawText("No Sources", juce::Rectangle<float>(bounds.getX(), bounds.getY(), bounds.getWidth(),  bounds.getHeight()), juce::Justification::horizontallyCentred, true);
-
-}
-
-void AuxPort::Extensions::AuxMultiSelect::resized()
-{
-	
-}
-
-void AuxPort::Extensions::AuxMultiSelect::mouseDown(const juce::MouseEvent& event)
-{
-	if (this->options.size() > 0)
-	{
-		auto mouseLocation = event.getMouseDownPosition();
-		auto bounds = this->getLocalBounds();
-		auto location = AuxPort::Utility::remap<float>(mouseLocation.getY(), 0, options.size(), bounds.getY(), bounds.getHeight());
-		uint32_t index = static_cast<uint32_t>(floor(location));
-		std::lock_guard lock(mutex);
-		options[index].second = !options[index].second;
-		repaint();
-	}
-}
-
-std::vector<std::pair<juce::String, bool>>* AuxPort::Extensions::AuxMultiSelect::getPointerToSources()
-{
-	return &options;
-}
-
-void AuxPort::Extensions::AuxMultiSelect::drawSwitchImage(juce::Graphics& g, juce::Image& switchImage, const juce::Rectangle<float>& bounds,bool state)
-{
-	uint32_t noOfFrames = switchImage.getHeight() / switchImage.getWidth();
-	uint32_t frameID = state ? 1 : 0;
-	g.drawImage(switchImage, bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), 0, frameID * switchImage.getWidth(), switchImage.getWidth(), switchImage.getWidth(), false);
 }
 
 
