@@ -38,6 +38,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS  ON)
 
+
+
+
+
+option(AUXPORT_EXPERIMENTAL "Use Experimental Code" OFF)
 option(AUXPORT_BUILD_TESTS "Build AuxPort Test Library" OFF)
 option(AUXPORT_BUILD_SANDBOX "Build Sandbox Environment" OFF)
 
@@ -45,8 +50,12 @@ if("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "Win32")
 	option(AUXPORT_BUILD_FOR_RACKAFX "Build AuxPort for RackAFX" OFF)  
 endif()
 
+if(AUXPORT_EXPERIMENTAL)
+	add_compile_definitions(AUXPORT_EXP 1337)
+endif()
 project(AuxPort)
 add_subdirectory(AuxPort)
+
 
 
 
