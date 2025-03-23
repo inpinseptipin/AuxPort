@@ -53,11 +53,42 @@ namespace AuxPort
 			~AuxScope() = default;
 			void paint(juce::Graphics& g) override;
 			void resized() override;
+			/**
+			 * \brief Use this function to set the pointer of the audio buffer to the Scope Renderer.
+			 * 
+			 * \param scopeBufferPointer
+			 */
 			virtual void attachBuffer(AuxPort::Graphics::ScopeBuffers* scopeBufferPointer);
 		protected:
+			/**
+			 * \brief [Overridable] Use or override this function to draw out your scope.
+			 * 
+			 * \param g - Juce::Graphics Context
+			 * \param scopeBounds - Juce::Rectangle<float> Box 
+			 */
 			virtual void drawScope(juce::Graphics& g, const juce::Rectangle<float>& scopeBounds);
+			/**
+			 * \brief [Overridable] Use or override this function to render the background
+			 * 
+			 * \param g - Juce::Graphics Context
+			 * \param backgroundBounds - Juce::Rectangle<float> Background Environment
+			 * \param backgroundWidth - Width of the Border
+			 */
 			virtual void drawBackground(juce::Graphics& g, const juce::Rectangle<float>& backgroundBounds, float backgroundWidth);
+			/**
+			 * \brief [Overridable] Use or override this function to render the y-labels
+			 * 
+			 * \param g
+			 * \param labelBounds
+			 * \param labelInformation
+			 */
 			virtual void drawLabels(juce::Graphics& g, const juce::Rectangle<float>& labelBounds, const std::vector<float>& labelInformation);
+			/**
+			 * \brief [Overridable] Use or override this function to render the analytics.
+			 * 
+			 * \param g - Juce::Graphics Context
+			 * \param analyticBounds - Juce::Rectangle<float> Bounds where the Analytic Region is rendered
+			 */
 			virtual void drawAnalytics(juce::Graphics& g, const juce::Rectangle<float>& analyticBounds);
 			juce::ComboBox menu;
 			AuxMultiSelect multiSelect;
