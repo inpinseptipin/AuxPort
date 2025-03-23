@@ -1,3 +1,10 @@
+/*****************************************************************//**
+ * \file   AuxScope.h
+ * \brief  Scope UI Objects for JUCE
+ * 
+ * \author Satyarth Arora
+ * \date   March 2025
+ *********************************************************************/
 #ifndef AUXSCOPE_H
 #define AUXSCOPE_H
 
@@ -9,12 +16,20 @@ namespace AuxPort
 {
 	namespace Extensions
 	{
-
+		/**
+		 * \brief AuxMultiSelect UI Object.
+		 */
 		class AuxMultiSelect : public juce::Component
 		{
 		public:
 			AuxMultiSelect();
 			~AuxMultiSelect() = default;
+			/**
+			 * 
+			 * \brief Sets the MultiSelect with different options.
+			 * \param options
+			 * \param maxSelect
+			 */
 			void setOptions(const std::vector<juce::String>& options, uint32_t maxSelect);
 			void paint(juce::Graphics& g) override;
 			void resized() override;
