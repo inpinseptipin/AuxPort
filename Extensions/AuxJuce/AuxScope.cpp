@@ -69,8 +69,89 @@ void AuxPort::Extensions::AuxMultiSelect::drawSwitchImage(juce::Graphics& g, juc
 }
 
 
+AuxPort::Extensions::AuxScope::AuxScope()
+{
+	addAndMakeVisible(menu);
+	addAndMakeVisible(multiSelect);
+	menu.onChange = [this]
+		{
+			repaint();
+		};
+	scopeBufferPointer = nullptr;
+}
 
+void AuxPort::Extensions::AuxScope::paint(juce::Graphics& g)
+{
+	auto backgroundBounds = this->getLocalBounds().toFloat();
+	auto backgroundWidth = 5.0f;
+	drawBackground(g,backgroundBounds, backgroundWidth);
+	backgroundBounds = backgroundBounds.reduced(5.0f, backgroundWidth);
+	auto scopeBounds = backgroundBounds.removeFromLeft(0.5 * backgroundBounds.getWidth());
+	scopeBounds.setX(0.5 * backgroundBounds.getWidth());
+	this->drawScope(g, scopeBounds);
+	auto multiSelectBounds = juce::Rectangle<float>(scopeBounds.getRight(), scopeBounds.getTopRight().getY(), backgroundBounds.getRight() - scopeBounds.getRight(), backgroundBounds.getHeight());
+	multiSelect.setBounds(multiSelectBounds.toNearestInt());
+	
+}
 
+void AuxPort::Extensions::AuxScope::resized()
+{
+	repaint();
+}
+
+void AuxPort::Extensions::AuxScope::attachBuffer(AuxPort::Graphics::ScopeBuffers* scopeBufferPointer)
+{
+	AuxAssert(scopeBufferPointer != nullptr, "Pointer does not point to a valid memory chunk");
+	this->scopeBufferPointer = scopeBufferPointer;
+	auto ids = scopeBufferPointer->getNames();
+	std::vector<juce::String> juceIds;
+	juceIds.resize(ids.size());
+	for (uint32_t i = 0; i < ids.size(); i++)
+	{
+		juceIds[i] = juce::String(ids[i]);
+		menu.addItem(juceIds[i], i + 1);
+	}
+	menu.setSelectedId(1);
+	multiSelect.setOptions(juceIds, 2);
+}
+
+void AuxPort::Extensions::AuxScope::drawScope(juce::Graphics& g, const juce::Rectangle<float>& scopeBounds)
+{
+	auto boundaryWidth = 10.0f;
+	g.setColour(juce::Colours::grey);
+	g.drawRect(scopeBounds.getX(), scopeBounds.getY(), scopeBounds.getWidth(), scopeBounds.getHeight(), boundaryWidth);
+	g.setColour(juce::Colour::fromRGBA(11, 12, 13, 0));
+	g.fillRect(scopeBounds);
+	auto scopeBackgroundBounds = scopeBounds.reduced(boundaryWidth);
+	g.setColour(juce::Colour::fromRGBA(11, 12, 13, 255));
+	g.fillRect(scopeBackgroundBounds);
+	this->drawLabels(g, scopeBackgroundBounds, { -1, -0.5, 0, 0.5, 1 });
+
+}
+
+void AuxPort::Extensions::AuxScope::drawBackground(juce::Graphics& g, const juce::Rectangle<float>& backgroundBounds, float backgroundWidth)
+{
+	g.setColour(juce::Colours::white);
+	g.drawRect(backgroundBounds, backgroundWidth);
+	g.setColour(juce::Colours::black);
+}
+
+void AuxPort::Extensions::AuxScope::drawLabels(juce::Graphics& g, const juce::Rectangle<float>& labelBounds, const std::vector<float>& labelInformation)
+{
+	g.setColour(juce::Colour::fromRGBA(255, 255, 255, 100));
+	auto textLength = 25.0f;
+	for (uint32_t i = 0; i < labelInformation.size(); i++)
+	{
+		auto h = AuxPort::Utility::remap<float>(labelInformation[i], labelBounds.getHeight(), labelBounds.getY(), -1, 1);
+		auto textBounds = juce::Rectangle<float>(labelBounds.getX(), h, labelBounds.getWidth(), textLength);
+		g.drawText(juce::String(labelInformation[i]), textBounds, juce::Justification::centredLeft, true);
+	}
+}
+
+void AuxPort::Extensions::AuxScope::drawAnalytics(juce::Graphics& g, const juce::Rectangle<float>& analyticBounds)
+{
+	AuxAssert(1 == 1, "Implement this");
+}
 
 
 AuxPort::Extensions::OscilloScope::OscilloScope()
@@ -81,7 +162,6 @@ AuxPort::Extensions::OscilloScope::OscilloScope()
 		{
 			repaint();
 		};
-	numberOfSamples = 0;
 	pixelX0 = 0.0f;
 	pixelY0 = 0.0f;
 	pixelY1 = 0.0f;
@@ -152,15 +232,10 @@ void AuxPort::Extensions::OscilloScope::drawScope(juce::Graphics& g, const juce:
 	g.drawRect(scopeBounds.getX() , scopeBounds.getY(),scopeBounds.getWidth(), scopeBounds.getHeight(), boundaryWidth);
 	g.setColour(juce::Colour::fromRGBA(11, 12, 13, 0));
 	g.fillRect(scopeBounds);
-
 	auto scopeBackgroundBounds = scopeBounds.reduced(boundaryWidth);
 	g.setColour(juce::Colour::fromRGBA(11, 12, 13, 255));
 	g.fillRect(scopeBackgroundBounds);
-
 	this->drawLabels(g, scopeBackgroundBounds,{ -1, -0.5, 0, 0.5, 1 });
-	
-
-
 	if (canDraw)
 	{
 
@@ -188,35 +263,14 @@ void AuxPort::Extensions::OscilloScope::drawScope(juce::Graphics& g, const juce:
 					pixelX0 = pixelX1;
 					pixelY0 = pixelY1;
 				}
-			}
-
-			
-		}
-		
-	}
-
-
-	
-}
-
-void AuxPort::Extensions::OscilloScope::drawLabels(juce::Graphics& g, const juce::Rectangle<float>& labelBounds, const std::vector<float>& labelInformation)
-{
-	g.setColour(juce::Colour::fromRGBA(255, 255, 255, 100));
-	auto textLength = 20.0f;
-	for (uint32_t i = 0; i < labelInformation.size(); i++)
-	{
-		auto h = AuxPort::Utility::remap<float>(labelInformation[i], labelBounds.getHeight(), labelBounds.getY(), -1, 1);
-		auto textBounds = juce::Rectangle<float>(labelBounds.getX(), h, textLength, textLength);
-		g.drawText(juce::String(labelInformation[i]), textBounds, juce::Justification::horizontallyCentred, true);
+			}		
+		}	
 	}
 }
 
-void AuxPort::Extensions::OscilloScope::drawBackground(juce::Graphics& g, const juce::Rectangle<float>& backgroundBounds,float backgroundWidth)
-{
-	g.setColour(juce::Colours::white);
-	g.drawRect(backgroundBounds, backgroundWidth);
-	g.setColour(juce::Colours::black);
-}
+
+
+
 
 AuxPort::Extensions::AuxMultiSelect::AuxMultiSelect()
 {
@@ -240,6 +294,4 @@ void AuxPort::Extensions::AuxMultiSelect::setOptions(const std::vector<juce::Str
 	this->maxSelect = maxSelect;
 
 }
-
-
 

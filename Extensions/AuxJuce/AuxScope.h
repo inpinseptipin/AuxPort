@@ -30,7 +30,7 @@ namespace AuxPort
 			JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AuxMultiSelect)
 		};
 
-#if AUXPORT_EXP		
+
 		class AuxScope : public juce::Component
 		{
 		public:
@@ -40,14 +40,18 @@ namespace AuxPort
 			void resized() override;
 			virtual void attachBuffer(AuxPort::Graphics::ScopeBuffers* scopeBufferPointer);
 		protected:
-			virtual void drawScope(juce::Graphics& g, const juce::Rectangle<float>* scopeBounds);
+			virtual void drawScope(juce::Graphics& g, const juce::Rectangle<float>& scopeBounds);
 			virtual void drawBackground(juce::Graphics& g, const juce::Rectangle<float>& backgroundBounds, float backgroundWidth);
 			virtual void drawLabels(juce::Graphics& g, const juce::Rectangle<float>& labelBounds, const std::vector<float>& labelInformation);
 			virtual void drawAnalytics(juce::Graphics& g, const juce::Rectangle<float>& analyticBounds);
+			juce::ComboBox menu;
+			AuxMultiSelect multiSelect;
+			AuxPort::Graphics::ScopeBuffers* scopeBufferPointer;
+			JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AuxScope)
 		};
 
-#endif
-		class OscilloScope : public juce::Component
+
+		class OscilloScope : public AuxScope
 		{
 		public:
 			OscilloScope();
@@ -57,17 +61,13 @@ namespace AuxPort
 			void draw();
 			void attachBuffer(AuxPort::Graphics::ScopeBuffers* scopeBufferPointer);
 		private:
-			void drawAnalytics(juce::Graphics& g,const juce::Rectangle<float>& analyticBounds);
-			void drawScope(juce::Graphics& g, const juce::Rectangle<float>& scopeBounds);
-			void drawLabels(juce::Graphics& g, const juce::Rectangle<float>& labelBounds, const std::vector<float>& labelInformation);
-			void drawBackground(juce::Graphics& g, const juce::Rectangle<float>& backgroundBounds,float backgroundWidth);
+			void drawAnalytics(juce::Graphics& g, const juce::Rectangle<float>& analyticBounds) override;
+			void drawScope(juce::Graphics& g, const juce::Rectangle<float>& scopeBounds) override;
 			std::mutex mutex;
 			bool canDraw = false;
-			AuxPort::Graphics::ScopeBuffers* scopeBufferPointer;
 			float pixelY0;
 			float pixelY1;
 			float pixelX0;
-			uint32_t numberOfSamples;
 			juce::ComboBox menu;
 			AuxMultiSelect multiSelect;
 			JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OscilloScope)
