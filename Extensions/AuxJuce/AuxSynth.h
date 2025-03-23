@@ -38,6 +38,56 @@ namespace AuxPort
 			AuxPort::Extensions::ParameterMap* parameterMap;
 		};
 
+
+		class SimplePolyphony : public JuceSynthesizer
+		{
+		public:
+			/**
+			///////////////////////////////////////////////////////////////////////////////////////
+			 * \brief [Overridable] Sets the Sample Rate to the Synthesizer
+			 * 
+			 * \param sampleRate
+			///////////////////////////////////////////////////////////////////////////////////////
+			 */
+			void setSampleRate(float sampleRate) override;
+			/**
+			///////////////////////////////////////////////////////////////////////////////////////
+			 * \brief [Overridable] Attaches an Audio Processor or Parameter Map to the Synthesizer
+			 * 
+			 * \param parameterMap
+			///////////////////////////////////////////////////////////////////////////////////////
+			 */
+			void handleAudioProcessor(void* parameterMap) override;
+		protected:
+			/**
+			///////////////////////////////////////////////////////////////////////////////////////
+			 * \brief [Pure Virtual] Renders a Juce::AudioBuffer with Synthesizer output
+			 * 
+			 * \param buffer
+			 * \param startSample
+			 * \param endSample
+			///////////////////////////////////////////////////////////////////////////////////////
+			 */
+			void render(juce::AudioBuffer<float>& buffer, uint32_t startSample, uint32_t endSample) override;
+			/**
+			///////////////////////////////////////////////////////////////////////////////////////
+			 * \brief [Pure Virtual] Implement this function to handle midi note on
+			 * \param midiMessage - Cast this to the appropriate MidiObject class
+			  
+			  
+			 
+			 * \code{.cpp}
+			  	auto midi = static_cast<juce::MidiMessage*>(midiMessage);
+				oscillator[midi->getNoteNumber()].setFrequency(midiToFreq(midi->getNoteNumber()));
+				\endcode
+			///////////////////////////////////////////////////////////////////////////////////////
+			 */
+			void handleNoteOn(void* midiMessage) override;
+			void handleNoteOff(void* midiMessage) override;
+			void handleAllNotesOff(void* midiMessage) override;
+			std::vector<AuxPort::Audio::Sine::Sine> oscillator;
+		};
+
 	}
 }
 
