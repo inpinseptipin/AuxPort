@@ -18,11 +18,7 @@ namespace AuxPort
 {
 	namespace Extensions
 	{
-
-
-///////////////////////////////////////////////////////////////////////////////////////
-/// @brief This class implements a Polyphonic Synthesizer (Uses the JUCE Framework)
-///////////////////////////////////////////////////////////////////////////////////////
+/// @brief This class implements a Polyphonic Synthesizer (Uses the Juce AudioBuffer Object)
 		class JuceSynthesizer : public AuxPort::Audio::Synthesizer
 		{
 		public:
@@ -33,8 +29,54 @@ namespace AuxPort
 			void attachParameterMap(AuxPort::Extensions::ParameterMap* parameterMap);
 		protected:
 			virtual void handleMidiEvent(void* midiMessage) override;
+			/**
+			 @brief [Pure Virtual] Renders a Juce::AudioBuffer with Synthesizer output
+			 @param buffer
+			 @param startSample
+			 @param endSample
+			 @details
+			 Example Definition
+			\code{.cpp}
+				void render(juce::AudioBuffer<float>& buffer, uint32_t startSample, uint32_t endSample)
+				{
+					auto firstChannel = buffer.getWritePointer(0);
+					for (uint32_t i = 0; i < oscillator.size(); i++)
+					{
+						if (oscillator[i].isPlaying())
+						{
+							for (uint32_t k = startSample; k < endSample; k++)
+							{
+								firstChannel[k] += oscillator[i].process();
+							}
+						}
+					}
+				}
+			\endcode
+			 */
 			virtual void render(juce::AudioBuffer<float>& buffer, uint32_t startSample, uint32_t endSample) = 0;
+			/**
+			   @brief Copies the first channel (Mono) to all valid channels in the Juce::AudioBuffer grid
+			   @param buffer
+			   @param startSample
+			   @param endSample
+			   @details
+			   Example Definition/Implementation
+			   Following is an example on if you want copy [0,N] samples from the first channel to l
+			   \code{.cpp}
+			   
+			   \endcode 
+			*/
 			void copyMonoToAll(juce::AudioBuffer<float>& buffer, uint32_t startSample, uint32_t endSample);
+			/**
+			   @brief [Overridable] Reimplement this function to handle how you want to mix the channels.
+			   @param buffer
+			   @details
+			   Example Definition/Implementation
+			   \code{.cpp}
+			   
+			   \endcode 
+			*/
+			virtual void mix(juce::AudioBuffer<float>& buffer);
 			AuxPort::Extensions::ParameterMap* parameterMap;
 		};
 
@@ -43,39 +85,76 @@ namespace AuxPort
 		{
 		public:
 			/**
-			 * \brief [Overridable] Sets the Sample Rate to the Synthesizer
-			 * 
-			 * \param sampleRate
-			 */
+			   @brief [Constructor] Use this constructor to initialize your oscillators or any objects related to your Synthesizer
+			   @details
+			   Example Definition/Implementation
+			   Following code snippet initalizes 128 objects of the oscillator (Polyphony mode : MIDI 1.0 Compatibility)
+			   \code{.cpp}
+				SimplePolyphony()
+				{
+					oscillator.resize(128);
+				}
+			   \endcode 
+			*/
+			SimplePolyphony();
+			~SimplePolyphony() = default;
+			SimplePolyphony(const SimplePolyphony& simplePolyphony) = default;
+			/**
+			   @brief [Overridable] Reimplement this function to set the sample rate to your oscillators
+			   @param sampleRate
+			   @details
+			   Example Definition/Implementation
+			   \code{.cpp}
+			   void setSampleRate(float sampleRate)
+			   {
+					this->sampleRate = sampleRate;
+					for (uint32_t i = 0; i < oscillator.size(); i++)
+						this->oscillator[i].setSampleRate(sampleRate);
+			   }
+			   \endcode 
+			*/
 			void setSampleRate(float sampleRate) override;
 			/**
-			 * \brief [Overridable] Attaches an Audio Processor or Parameter Map to the Synthesizer
-			 * 
-			 * \param parameterMap
-			 */
+			   @brief [Overridable] Attach a parameter map or an audio processor that has access to parameters.
+			   @param parameterMap
+			   @details
+			   Example Definition/Implementation
+			   Attach an AuxPort::ParameterMap to the Synthesizer by casting the void*
+			   \code{.cpp}
+			   void handleAudioProcessor(void* parameterMap) override
+			   {
+					this->parameterMap = static_cast<AuxPort::Extensions::ParameterMap*>(parameterMap);
+			   }
+			   \endcode 
+			*/
 			void handleAudioProcessor(void* parameterMap) override;
 		protected:
 			/**
-			 * \brief [Pure Virtual] Renders a Juce::AudioBuffer with Synthesizer output
-			 * 
-			 * \param buffer
-			 * \param startSample
-			 * \param endSample
+			 @brief [Pure Virtual] Renders a Juce::AudioBuffer with Synthesizer output
+			 @param buffer
+			 @param startSample
+			 @param endSample
+			 @details
+			 Example Definition
+			\code{.cpp}
+				void render(juce::AudioBuffer<float>& buffer, uint32_t startSample, uint32_t endSample)
+				{
+					auto firstChannel = buffer.getWritePointer(0);
+					for (uint32_t i = 0; i < oscillator.size(); i++)
+					{
+						if (oscillator[i].isPlaying())
+						{
+							for (uint32_t k = startSample; k < endSample; k++)
+							{
+								firstChannel[k] += oscillator[i].process();
+							}
+						}
+					}
+				}
+			\endcode
 			 */
 			void render(juce::AudioBuffer<float>& buffer, uint32_t startSample, uint32_t endSample) override;
-			/**
-			 * \brief [Pure Virtual] Implement this function to handle midi note on
-			 * \param midiMessage - Cast this to the appropriate MidiObject class
-			 * \code{.cpp}
-				void handleNoteOn(void* midiMessage)
-				{
-					auto midi = static_cast<juce::MidiMessage*>(midiMessage);
-					oscillator[midi->getNoteNumber()].setFrequency(midiToFreq(midi->getNoteNumber()));
-				}
-				\endcode
-			 */
 			void handleNoteOn(void* midiMessage) override;
-			
 			void handleNoteOff(void* midiMessage) override;
 			void handleAllNotesOff(void* midiMessage) override;
 			std::vector<AuxPort::Audio::Sine::Sine> oscillator;

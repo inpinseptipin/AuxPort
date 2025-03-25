@@ -12,6 +12,7 @@ void AuxPort::Extensions::JuceSynthesizer::process(juce::AudioBuffer<float>& buf
 		handleMidiEvent(static_cast<void*>(&message));
 	}
 	render(buffer, currentSample, buffer.getNumSamples());
+	mix(buffer);
 }
 
 void AuxPort::Extensions::JuceSynthesizer::attachParameterMap(AuxPort::Extensions::ParameterMap* parameterMap)
@@ -47,10 +48,19 @@ void AuxPort::Extensions::JuceSynthesizer::copyMonoToAll(juce::AudioBuffer<float
 	}
 }
 
+void AuxPort::Extensions::JuceSynthesizer::mix(juce::AudioBuffer<float>& buffer)
+{
+	copyMonoToAll(buffer, 0, buffer.getNumSamples());
+}
+
+AuxPort::Extensions::SimplePolyphony::SimplePolyphony()
+{
+	oscillator.resize(128);
+}
+
 void AuxPort::Extensions::SimplePolyphony::setSampleRate(float sampleRate)
 {
 	this->sampleRate = sampleRate;
-	oscillator.resize(128);
 	for (uint32_t i = 0; i < oscillator.size(); i++)
 	{
 		this->oscillator[i].setSampleRate(sampleRate);
@@ -69,18 +79,11 @@ void AuxPort::Extensions::SimplePolyphony::render(juce::AudioBuffer<float>& buff
 	{
 		if (oscillator[i].isPlaying())
 		{
-			oscillator[i].setDetune(*parameterMap->getFloatParameter("Semitones"), *parameterMap->getFloatParameter("Cents"));
 			for (uint32_t k = startSample; k < endSample; k++)
 			{
 				firstChannel[k] += oscillator[i].process();
 			}
 		}
-	}
-
-	for (uint32_t i = 1; i < buffer.getNumChannels(); i++)
-	{
-		auto channel = buffer.getWritePointer(i);
-		std::copy(firstChannel + startSample, firstChannel + endSample, channel + startSample);
 	}
 }
 
