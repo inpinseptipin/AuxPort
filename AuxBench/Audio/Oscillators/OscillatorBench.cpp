@@ -23,9 +23,9 @@ void AuxPort::Benchmarks::OscillatorBench::benchmark()
 				sample = oscillators[i].process();
 			}
 			stop();
-			benchmarkTimes[i] += getEllapsedTime();
-
+			benchmarkTimes[i] += getEllapsedTime(AuxPort::Timer::nano);
 		}
+		benchmarkTimes[i] /= numberOfIterations;
 	}
 }
 
@@ -44,7 +44,7 @@ void AuxPort::Benchmarks::OscillatorBench::Log()
 	for (uint32_t i = 0; i < oscillators.size(); i++)
 	{
 		std::cout << "Oscillator Name : " << oscillatorNames[i] << "\n";
-		std::cout << "Average Benchmark Time : " << benchmarkTimes[i] << "\n\n";
+		std::cout << "Average Benchmark Time : " << benchmarkTimes[i] << " ns" << "\n\n";
 	}
 	setColour(AuxPort::ColourType::White);
 }
