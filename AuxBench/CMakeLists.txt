@@ -1,6 +1,6 @@
 #
 #			AuxPort Library
-#			"Generic Modules to facilitate C++ Windows Application development" - inpinseptipin
+#			"Modules for Audio Software Development" - inpinseptipin
 #
 #			BSD 3-Clause License
 #
@@ -31,64 +31,12 @@
 #			CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 #			OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 #			OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#
 
-cmake_minimum_required(VERSION 3.10)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS  ON)
-
-
-
-
-
-option(AUXPORT_EXPERIMENTAL "Use Experimental Code" OFF)
-option(AUXPORT_BUILD_TESTS "Build AuxPort Test Library" OFF)
-option(AUXPORT_BUILD_SANDBOX "Build Sandbox Environment" OFF)
-option(AUXPORT_BUILD_BENCH "Build AuxPort Benchmark Library" OFF)
-
-if("${CMAKE_GENERATOR_PLATFORM}" STREQUAL "Win32")
-	option(AUXPORT_BUILD_FOR_RACKAFX "Build AuxPort for RackAFX" OFF)  
-endif()
-
-if(AUXPORT_EXPERIMENTAL)
-	add_compile_definitions(AUXPORT_EXP 1337)
-endif()
-project(AuxPort)
-add_subdirectory(AuxPort)
-
-
-
-
-if(AUXPORT_BUILD_FOR_RACKAFX)
-	set(AUXPORT_RACKAFX_COMPILE_OPTIONS_DEBUG "-MTd")
-	set(AUXPORT_RACKAFX_COMPILE_OPTIONS_RELEASE "-MT")
-	target_compile_options(${PROJECT_NAME} PUBLIC "$<$<CONFIG:Debug>:${AUXPORT_RACKAFX_COMPILE_OPTIONS_DEBUG}>")
-	target_compile_options(${PROJECT_NAME} PUBLIC "$<$<CONFIG:Release>:${AUXPORT_RACKAFX_COMPILE_OPTIONS_RELEASE}>")
- endif()
-
-
-if(AUXPORT_BUILD_SANDBOX)
-	set(SANDBOX_NAME "SandBox")
-	add_executable(
-		${SANDBOX_NAME}
-		main.cpp	
-	)
-	target_link_libraries(${SANDBOX_NAME} AuxPort)
-	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${SANDBOX_NAME})
-endif(AUXPORT_BUILD_SANDBOX)
-
-
-
-
-
-if(AUXPORT_BUILD_TESTS)
-	add_subdirectory(AuxTest)
-	target_link_libraries(${SANDBOX_NAME} AuxTest)
-endif(AUXPORT_BUILD_TESTS)
-
-if(AUXPORT_BUILD_BENCH)
-	add_subdirectory(AuxBench)
-	target_link_libraries(${SANDBOX_NAME} AuxBench)
-endif(AUXPORT_BUILD_BENCH)
-
+add_library(
+    AuxBench
+    ${PROJECT_SOURCE_DIR}/AuxBench/Audio/Oscillators/OscillatorBench.h
+    ${PROJECT_SOURCE_DIR}/AuxBench/Audio/Oscillators/OscillatorBench.cpp
+    ${PROJECT_SOURCE_DIR}/AuxBench/AuxBench.h
+)
