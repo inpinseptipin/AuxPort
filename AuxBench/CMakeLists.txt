@@ -36,7 +36,7 @@
 
 add_library(
     AuxBench
+    ${PROJECT_SOURCE_DIR}/AuxBench/AuxBench.h
     ${PROJECT_SOURCE_DIR}/AuxBench/Audio/Oscillators/OscillatorBench.h
     ${PROJECT_SOURCE_DIR}/AuxBench/Audio/Oscillators/OscillatorBench.cpp
-    ${PROJECT_SOURCE_DIR}/AuxBench/AuxBench.h
 )

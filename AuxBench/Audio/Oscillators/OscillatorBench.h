@@ -1,5 +1,5 @@
-#ifndef AUXBENCH_H
-#define AUXBENCH_H
+#ifndef OSCILLATOR_BENCH_H
+#define OSCILLATOR_BENCH_H
 /*
 *			AuxTest
 			"Test Test Test" - inpinseptipin
@@ -46,20 +46,21 @@ namespace AuxPort
 {
 	namespace Benchmarks
 	{
-		class Oscillator : protected AuxPort::Timer, AuxPort::ILog
+		class OscillatorBench : public AuxPort::Bench,AuxPort::Timer
 		{
 		public:
-			Oscillator() = default;
-			~Oscillator() = default;
-			Oscillator(const Oscillator& oscillators) = default;
-			void attachOscillator(AuxPort::Audio::Oscillator* oscillator);
-			void benchmark(size_t bufferSize = 1024, size_t numberOfIterations = 1000);
+			OscillatorBench() = default;
+			~OscillatorBench() = default;
+			OscillatorBench(const OscillatorBench& oscillatorBench) = default;
+			void setOscillators(const std::vector<AuxPort::Audio::Oscillator> oscillators, const std::vector<std::string> names);
+			void benchmark() override;
+			void setParameters(size_t bufferSize = 1024, size_t numberOfIterations = 1000);
 			void Log() override;
 		protected:
-			AuxPort::Audio::Oscillator* oscillator;
-			size_t bufferSize;
-			size_t numberOfIterations;
-			float benchmarkTime;
+			std::vector<AuxPort::Audio::Oscillator> oscillators;
+			std::vector<std::string> oscillatorNames;
+			size_t bufferSize = 1024;
+			size_t numberOfIterations = 1000;
 		};
 	}
 

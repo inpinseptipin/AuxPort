@@ -92,6 +92,19 @@ namespace AuxPort
 		std::string testID;
 		std::string testName;
 	};
+
+
+	class Bench : public ILog
+	{
+	public:
+		Bench() = default;
+		~Bench() = default;
+		Bench(const Bench& bench) = default;
+		virtual void benchmark() = 0;
+		virtual void Log() = 0;
+	protected:
+		std::vector<float> benchmarkTimes;
+	};
 }
 #endif
 
