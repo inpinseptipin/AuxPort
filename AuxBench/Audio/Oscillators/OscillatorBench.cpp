@@ -44,11 +44,7 @@ void AuxPort::Benchmarks::Oscillator::Log()
 	for (uint32_t i = 0; i < oscillators.size(); i++)
 	{
 		std::cout << "Oscillator Name : " << oscillatorNames[i] << "\n";
-<<<<<<< HEAD
 		std::cout << "Average Benchmark Time : " << benchmarkTimes[i] << "ns" << "\n\n";
-=======
-		std::cout << "Average Benchmark Time : " << benchmarkTimes[i] << " ns" << "\n\n";
->>>>>>> cccf14e74ce9cf565751dc2cba35579da0bed9ef
 	}
 	setColour(AuxPort::ColourType::White);
 }
