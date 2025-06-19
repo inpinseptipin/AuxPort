@@ -180,10 +180,7 @@ namespace AuxPort
 		static void Log(const std::vector<T>& messages, const LogType& logType = LogType::Info, const ColourType& colourType = ColourType::White, const AuxPort::Time::TimeType& timeType = AuxPort::Time::TimeType::time)
 		{
 			setColour(colourType);
-			for (int i = 0; i < messages.size(); i++)
-			{
-				logMessage(messages[i], logType, timeType);
-			}
+			logMessageAsVector(messages, logType, timeType);
 			setColour(ColourType::White);
 		}
 	
@@ -205,6 +202,22 @@ namespace AuxPort
 		static void logMessage(const T& message,const LogType& logType,const AuxPort::Time::TimeType& timeType)
 		{
 			std::cout << getMessageFormat(logType) <<" | "<< Time::getCurrentTime(timeType) << " | " << message << "\n";
+		}
+
+		///////////////////////////////////////////////////////////////////////////////////////
+		/// @brief This Function logs the messages as a vector onto the console, can only be called through public interfaces provided by the Class.
+		/// @param messages Message to be logged
+		/// @param logType This tells the function to which type of message is to be logged on the console. (Eg: Error, Warning, Success, Info)
+		/// @param timeType Allows you to choose between different date or time stamps for the logged messages.
+		///////////////////////////////////////////////////////////////////////////////////////
+		template<class T>
+		static void logMessageAsVector(const std::vector<T>& messages, const LogType& logType, const AuxPort::Time::TimeType& timeType)
+		{
+			std::cout << getMessageFormat(logType) << " | " << Time::getCurrentTime(timeType) << "\n";
+			std::cout << "[ ";
+			for (size_t i = 0; i < messages.size(); i++)
+				i == messages.size() - 1 ? std::cout << messages[i] : std::cout << messages[i] << ",";
+			std::cout << " ]\n";
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////

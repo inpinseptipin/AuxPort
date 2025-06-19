@@ -1,4 +1,3 @@
-#pragma once
 #ifndef AUXPORT_AUDIO_WINDOW_H
 #define AUXPORT_AUDIO_WINDOW_H
 /*
@@ -53,6 +52,10 @@ namespace AuxPort
 		class Window
 		{
 		public:
+			enum TrimType
+			{
+				fromStart,fromEnd
+			};
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// @brief Specifies the type of window
 			///////////////////////////////////////////////////////////////////////////////////////
@@ -100,7 +103,25 @@ namespace AuxPort
 				default:
 					return;
 				}
-				
+			}
+			/**
+			  @brief Trims a window from the start or end with a percent amount 
+			  @param windowBuffer
+			  @param trimType
+			  @param trimPercent
+			  \code{.cpp}
+			  auto window = AuxPort::Audio::Window::generate<float>(256);
+			  AuxPort::Audio::Window::trim<float>(window,AuxPort::Audio::Window::TrimType::fromStart,25);
+			  \endcode 
+			 */
+			template<class sample>
+			static void trim(std::vector<sample>& windowBuffer, TrimType trimType, float trimPercent)
+			{
+				AuxAssert(windowBuffer.size() > 0, "Cannot trim an empty window");
+				AuxAssert(trimPercent > 0 && trimPercent < 100, "Why would you even try that?");
+				trimPercent = trimType == TrimType::fromStart ? trimPercent : 100 - trimPercent;
+				auto endIndex = static_cast<size_t>(0.01 * trimPercent * windowBuffer.size());
+				windowBuffer.erase(windowBuffer.begin(), windowBuffer.begin() + endIndex);
 			}
 
 			///////////////////////////////////////////////////////////////////////////////////////
@@ -154,7 +175,6 @@ namespace AuxPort
 					return windowBuffer;
 				}
 			}
-
 		private:
 			template<class sample>
 			static void Rectangle(std::vector<sample>& windowBuffer)
