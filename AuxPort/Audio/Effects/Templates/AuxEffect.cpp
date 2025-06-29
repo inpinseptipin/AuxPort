@@ -41,7 +41,19 @@ void AuxPort::Audio::StereoEffect::process(float* leftChannel, float* rightChann
 
 float AuxPort::Audio::Synthesizer::midiToFreq(uint32_t midiNote)
 {
-	return 440 * std::powf(2, (static_cast<float>(midiNote) - 69) / 12.0f);
+	AuxAssert(midiNote >= 0, "Invalid Midi Note");
+	return referenceFrequency * std::powf(2, (static_cast<float>(midiNote) - referenceMidiNote) / 12.0f);
+}
+
+void AuxPort::Audio::Synthesizer::configureMidiToFreq(uint32_t midiNote, float frequency)
+{
+	AuxAssert(midiNote >= 0 && midiNote < 128, "Invalid reference Midinote");
+	AuxAssert(frequency > 0 && frequency < 20000, "Invalid reference frequency");
+	AuxAssert(frequency * std::powf(2, (static_cast<float>(0) - midiNote) / 12.0f > 0), "Invalid reference midi and frequency combination");
+	AuxAssert(frequency * std::powf(2, (static_cast<float>(127) - midiNote) / 12.0f < 20000), "Invalid reference midi and frequency combination");
+	this->referenceFrequency = frequency;
+	this->referenceMidiNote = midiNote;
+
 }
 
 void AuxPort::Audio::Synthesizer::handleMidiEvent(void* midiMessage)

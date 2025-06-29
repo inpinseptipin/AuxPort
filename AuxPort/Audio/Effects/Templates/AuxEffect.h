@@ -122,7 +122,10 @@ namespace AuxPort
             AuxPort::Timer timer;
         };
 
-
+        /**
+         * This is an Abstract class with all methods that you can use to create your Digital Synthesizer Module.
+         *  Subclass this and implement the virtual methods to implement your synthesizer
+         */
         class Synthesizer : public AuxPort::Audio::Effect
         {
         public:
@@ -130,11 +133,46 @@ namespace AuxPort
             ~Synthesizer() = default;
             Synthesizer(const Synthesizer& juceSynthesizer) = default;
         protected:
+            /**
+              @brief Converts a midi note number to the frequency it maps to.
+              A4 = 69 = 440Hz is taken as reference to map all the midi notes with.
+              @param midiNote
+              @return 
+              \code{.cpp}
+              auto frequency = midiToFreq(69)
+              \endcode 
+             */
             float midiToFreq(uint32_t midiNote);
+            /**
+              @brief Sets the reference midi note and frequency combination 
+              @param midiNote
+              @param frequency
+              \code{.cpp}
+              configureMidiToFreq(69,440);
+              \endcode 
+             */
+            void configureMidiToFreq(uint32_t midiNote, float frequency);
+            /**
+              @brief [Overridable] Implement this function to handle a particular midi event  
+             */
             virtual void handleMidiEvent(void* midiMessage);
+            /**
+              @brief [Overridable] Implement this function to handle a midi note "on" event 
+              @param midiMessage
+             */
             virtual void handleNoteOn(void* midiMessage);
+            /**
+              @brief [Overridable] Implement this function to handle a midi note "off" event
+              @param midiMessage
+             */
             virtual void handleNoteOff(void* midiMessage);
+             /**
+              @brief [Overridable] Implement this function to handle a midi "All notes off" event
+              @param midiMessage
+             */
             virtual void handleAllNotesOff(void* midiMessage);
+            float referenceFrequency = 440.0f;
+            uint32_t referenceMidiNote = 69;
         };
 	}
 }
