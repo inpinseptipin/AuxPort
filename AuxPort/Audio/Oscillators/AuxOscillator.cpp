@@ -3,6 +3,7 @@
 void AuxPort::Audio::Oscillator::setSampleRate(uint32_t sampleRate)
 {
 	this->sampleRate = sampleRate;
+	init();
 }
 
 void AuxPort::Audio::Oscillator::setFrequency(float frequency)
@@ -19,11 +20,22 @@ float AuxPort::Audio::Oscillator::process()
 void AuxPort::Audio::Oscillator::stop()
 {
 	inc = 0;
+	init();
 }
 
 bool AuxPort::Audio::Oscillator::isPlaying()
 {
 	return inc != 0;
+}
+
+void AuxPort::Audio::Oscillator::setStartingPhase(float phaseInDegrees)
+{
+	startingPhase = AuxPort::Utility::degreesToRadians<float>(phaseInDegrees);
+}
+
+void AuxPort::Audio::Oscillator::init()
+{
+	mod = 0;
 }
 
 void AuxPort::Audio::TunableOscillator::setDetune(float semitones, float cents)

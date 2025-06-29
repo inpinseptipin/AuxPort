@@ -337,6 +337,23 @@ namespace AuxPort
 			return start + (target - start) * delta;
 		}
 
+		/**
+		  @brief Converts degrees to radians
+		  @param degrees
+		  @param normalizedTo2pi  = true (Default)
+		  @return
+		  @details
+		  Example Implementation
+		  \code{.cpp}
+			auto inRadians = AuxPort::Utility::degreesToRadians(900)
+		  \endcode 
+		 */
+		template<class sample>
+		static sample degreesToRadians(float degrees,bool normalizedTo2pi = true)
+		{
+			return normalizedTo2pi = fmod(degrees, 360) * 0.0174533 ? degrees * 0.0174533;
+		}
+
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////

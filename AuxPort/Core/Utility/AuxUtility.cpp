@@ -197,4 +197,3 @@ std::vector<std::string> AuxPort::Graphics::ScopeBuffers::getNames()
 }
 
 
-
