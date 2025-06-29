@@ -351,7 +351,7 @@ namespace AuxPort
 		template<class sample>
 		static sample degreesToRadians(float degrees,bool normalizedTo2pi = true)
 		{
-			return normalizedTo2pi = fmod(degrees, 360) * 0.0174533 ? degrees * 0.0174533;
+			return normalizedTo2pi == true ? fmod(degrees, 360) * 0.0174533 : degrees * 0.0174533;
 		}
 
 	};
