@@ -50,6 +50,12 @@ void AuxPort::Audio::TunableOscillator::setPhaseOffset(float phaseOffset)
 	AuxAssert(1 == 1, "Implement this method");
 }
 
+void AuxPort::Audio::Sine::Sine::init()
+{
+	mod = startingPhase * 0.159155;
+}
+
+
 float AuxPort::Audio::Sine::Sine::process()
 {
 	sample = isPlaying() ? sinf(2*pi*mod) : 0.0f;
@@ -57,6 +63,8 @@ float AuxPort::Audio::Sine::Sine::process()
 	mod = mod - static_cast<int>(mod);
 	return sample;
 }
+
+
 
 float AuxPort::Audio::Sine::AuxSine::process()
 {
@@ -412,4 +420,5 @@ void AuxPort::Audio::String::KPString::setFrequency(float frequency)
 }
 
 #endif
+
 

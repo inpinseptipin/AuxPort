@@ -96,7 +96,9 @@ namespace AuxPort
 			JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(AuxScope)
 		};
 
-
+		/*
+			Creates an Oscilloscope component
+		*/
 		class OscilloScope : public AuxScope
 		{
 		public:
@@ -105,6 +107,10 @@ namespace AuxPort
 			void paint(juce::Graphics& g) override;
 			void resized() override;
 			void draw();
+			/**
+			  @brief Use this function to attach a AuxPort::Graphics::ScopeBuffers* 
+			  @param scopeBufferPointer
+			 */
 			void attachBuffer(AuxPort::Graphics::ScopeBuffers* scopeBufferPointer);
 		private:
 			void drawAnalytics(juce::Graphics& g, const juce::Rectangle<float>& analyticBounds) override;

@@ -77,7 +77,7 @@ namespace AuxPort
 			   \endcode 
 			*/
 			virtual void mix(juce::AudioBuffer<float>& buffer);
-			AuxPort::Extensions::ParameterMap* parameterMap;
+			AuxPort::Extensions::ParameterMap* parameterMap = nullptr;
 		};
 
 

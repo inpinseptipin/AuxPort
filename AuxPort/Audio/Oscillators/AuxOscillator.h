@@ -88,6 +88,7 @@ namespace AuxPort
 				/// @brief This function generates the sample from the Oscillator
 				///////////////////////////////////////////////////////////////////////////////////////
 				float process() override;
+				void init() override;
 			};
 
 			///////////////////////////////////////////////////////////////////////////////////////
@@ -502,6 +503,8 @@ namespace AuxPort
 				float process() override;
 			};
 		}
+
+
 		
 
 #if AUXPORT_EXP
