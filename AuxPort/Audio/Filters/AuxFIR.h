@@ -1,4 +1,4 @@
-#ifndef AUXPORT_FIR_H
+ #ifndef AUXPORT_FIR_H
 #define AUXPORT_FIR_H
 
 #include<vector>

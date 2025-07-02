@@ -344,12 +344,34 @@ void AuxPort::Audio::IIR::ParametricEQ::prepareToPlay(const std::vector<float>& 
     coefficients[index::b2] = toBoost ? delta / d0 : eta / e0;
 }
 
-float AuxPort::Audio::IIR::ParametricEQ::process(const float& sample)
+float AuxPort::Audio::IIR::ParametricEQ::process(const float sample)
 {
     output = sample * coefficients[index::a0] + z1;
     z1 = sample * coefficients[index::a1] + z2 - coefficients[index::b1] * output;
     z2 = sample * coefficients[index::a2] - coefficients[index::b2] * output;
     return output;
+}
+
+void AuxPort::Audio::IIR::ParametricEQ::process(float* buffer, uint32_t numberOfSamples)
+{
+    for (uint32_t i = 0; i < numberOfSamples; i++)
+    {
+        output = buffer[i] * coefficients[index::a0] + z1;
+        z1 = buffer[i] * coefficients[index::a1] + z2 - coefficients[index::b1] * output;
+        z2 = buffer[i] * coefficients[index::a2] - coefficients[index::b2] * output;
+        buffer[i] = output;
+    }
+}
+
+void AuxPort::Audio::IIR::ParametricEQ::process(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples)
+{
+    for (uint32_t i = 0; i < numberOfSamples; i++)
+    {
+        output = inputBuffer[i] * coefficients[index::a0] + z1;
+        z1 = inputBuffer[i] * coefficients[index::a1] + z2 - coefficients[index::b1] * output;
+        z2 = inputBuffer[i] * coefficients[index::a2] - coefficients[index::b2] * output;
+        outputBuffer[i] = output;
+    }
 }
 
 
@@ -373,7 +395,7 @@ void AuxPort::Audio::IIR::Engine::process(juce::AudioBuffer<float>& buffer)
     }
 }
 #else
-float AuxPort::Audio::IIR::Engine::process(const float& sample,uint32_t channelNumber)
+float AuxPort::Audio::IIR::Engine::process(const float sample,uint32_t channelNumber)
 {
     if (filter == ButterLPF6dB || filter == ButterHPF6dB || filter == ButterBPF6dB)
         return butter1[channelNumber].process(sample);
@@ -435,6 +457,28 @@ float AuxPort::Audio::IIR::General::processSample(float sample)
     return coefficients[index::d0] * sample + coefficients[index::c0] * output;
 }
 
+void AuxPort::Audio::IIR::General::process(float* buffer, uint32_t numberOfSamples)
+{
+    for (uint32_t i = 0; i < numberOfSamples; i++)
+    {
+        output = buffer[i] * coefficients[index::a0] + z1;
+        z1 = buffer[i] * coefficients[index::a1] + z2 - coefficients[index::b1] * output;
+        z2 = buffer[i] * coefficients[index::a2] - coefficients[index::b2] * output;
+        buffer[i] = coefficients[index::d0] * buffer[i] + coefficients[index::c0] * output;
+    }
+}
+
+void AuxPort::Audio::IIR::General::process(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples)
+{
+    for (uint32_t i = 0; i < numberOfSamples; i++)
+    {
+        output = inputBuffer[i] * coefficients[index::a0] + z1;
+        z1 = inputBuffer[i] * coefficients[index::a1] + z2 - coefficients[index::b1] * output;
+        z2 = inputBuffer[i] * coefficients[index::a2] - coefficients[index::b2] * output;
+        outputBuffer[i] = coefficients[index::d0] * inputBuffer[i] + coefficients[index::c0] * output;
+    }
+}
+
 AuxPort::Audio::IIR::FirstOrder::FirstOrder()
 {
     xh = 0;
@@ -449,7 +493,7 @@ void AuxPort::Audio::IIR::FirstOrder::prepareToPlay(const std::vector<float>& pa
     c = (tanf(AuxPort::pi * parameters[fc] / sampleRate) - 1) / (tanf(AuxPort::pi * parameters[fc] / sampleRate) + 1);
 }
 
-float AuxPort::Audio::IIR::FirstOrder::process(const float& sample)
+float AuxPort::Audio::IIR::FirstOrder::process(const float sample)
 {
     xh_new = sample - c * xh;
     output = c * xh_new + xh;
@@ -480,6 +524,22 @@ void AuxPort::Audio::IIR::FirstOrder::process(float* buffer, uint32_t numberofSa
     }
 }
 
+void AuxPort::Audio::IIR::FirstOrder::process(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples)
+{
+    for (uint32_t i = 0; i < numberOfSamples; i++)
+    {
+        xh_new = inputBuffer[i] - c * xh;
+        output = c * xh_new + xh;
+        xh = xh_new;
+        if (type == Allpass)
+            outputBuffer[i] = output;
+        if (type == Lowpass)
+            outputBuffer[i] = 0.5f * (inputBuffer[i] + output);
+        if (type == Highpass)
+            outputBuffer[i] = 0.5f * (inputBuffer[i] - output);
+    }
+}
+
 void AuxPort::Audio::IIR::IIRFilter::setSampleRate(float sampleRate)
 {
     this->sampleRate = sampleRate;
@@ -500,7 +560,12 @@ void AuxPort::Audio::IIR::IIRFilter::process(float* buffer, uint32_t numberOfSam
     return;
 }
 
-float AuxPort::Audio::IIR::IIRFilter::process(const float& sample)
+void AuxPort::Audio::IIR::IIRFilter::process(const float* input, float* output, uint32_t numberOfSamples)
+{
+    return;
+}
+
+float AuxPort::Audio::IIR::IIRFilter::process(const float sample)
 {
     return sample;
 }
@@ -558,14 +623,23 @@ void AuxPort::Audio::IIR::Butterworth::process(float* buffer, uint32_t numberOfS
         z2 = buffer[i] * coefficients[index::a2] - coefficients[index::b2] * output;
         buffer[i] = output;
     }
-
-   
 }
 
-float AuxPort::Audio::IIR::Butterworth::process(const float& sample)
+float AuxPort::Audio::IIR::Butterworth::process(const float sample)
 {
     output = sample * coefficients[index::a0] + z1;
     z1 = sample * coefficients[index::a1] + z2 - coefficients[index::b1] * output;
     z2 = sample * coefficients[index::a2] - coefficients[index::b2] * output;
     return output;
+}
+
+void AuxPort::Audio::IIR::Butterworth::process(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples)
+{
+    for (uint32_t i = 0; i < numberOfSamples; i++)
+    {
+        output = inputBuffer[i] * coefficients[index::a0] + z1;
+        z1 = inputBuffer[i] * coefficients[index::a1] + z2 - coefficients[index::b1] * inputBuffer[i];
+        z2 = inputBuffer[i] * coefficients[index::a2] - coefficients[index::b2] * inputBuffer[i];
+        outputBuffer[i] = output;
+    }
 }

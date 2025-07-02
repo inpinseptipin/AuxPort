@@ -52,7 +52,7 @@ void AuxPort::Audio::TunableOscillator::setPhaseOffset(float phaseOffset)
 
 void AuxPort::Audio::Sine::Sine::init()
 {
-	mod = startingPhase * 0.159155;
+	mod = startingPhase * 0.159155f;
 }
 
 
@@ -69,7 +69,7 @@ float AuxPort::Audio::Sine::Sine::process()
 float AuxPort::Audio::Sine::AuxSine::process()
 {
 	x = 2.0f * mod - 1.0f;
-	sample = isPlaying() ? x + x*x*x*(0.5*x*x-1.0f-0.5) : 0.0f;
+	sample = isPlaying() ? x + x*x*x*(0.5f*x*x-1.0f-0.5f) : 0.0f;
 	mod += inc;
 	mod = mod - static_cast<int>(mod);
 	return sample;
@@ -99,8 +99,8 @@ float AuxPort::Audio::Sine::ParabolicSine::process()
 
 float AuxPort::Audio::Sine::BhaskaraSine::process()
 {
-	modToPi = mod > 0.5 ? 2 * pi * (mod - 0.5) : 2 * pi * mod;
-	sample = isPlaying() ? (16 * modToPi * (pi - modToPi)) / (5 * pi * pi - 4 * modToPi * (pi - modToPi)):0.0f;
+	modToPi = mod > 0.5f ? 2.0f * pi * (mod - 0.5f) : 2.0f * pi * mod;
+	sample = isPlaying() ? (16.0f * modToPi * (pi - modToPi)) / (5.0f * pi * pi - 4.0f * modToPi * (pi - modToPi)):0.0f;
 	mod += inc;
 	mod = mod - static_cast<int>(mod);
 	return mod > 0.5 ? -sample:sample;
@@ -118,7 +118,7 @@ float AuxPort::Audio::Sine::JavidX9Sine::process()
 
 float AuxPort::Audio::Sine::JavidX9Sine2::process()
 {
-	sample = isPlaying() ? 20.785 * mod * (mod-0.5f) * (mod-1.0f) : 0.0f;
+	sample = isPlaying() ? 20.785f * mod * (mod-0.5f) * (mod-1.0f) : 0.0f;
 	mod += inc;
 	mod = mod - static_cast<int>(mod);
 	return sample;
@@ -242,7 +242,7 @@ float AuxPort::Audio::Triangle::DPWTriangle1::process()
 	mod += inc;
 	mod = mod - static_cast<int>(mod);
 	sample = abs(sample);
-	sample = 0.5 - sample;
+	sample = 0.5f- sample;
 	sample = sample * 2;
 	return sample;
 }

@@ -52,17 +52,20 @@ namespace AuxPort
 {
     namespace Audio
     {
-        ///////////////////////////////////////////////////////////////////////////////////////           
-        /// @brief This namespace contains IIR Filter Classes
-        ///////////////////////////////////////////////////////////////////////////////////////
+        /**
+         @brief This namespace contains IIR Filter Classes
+        */
         namespace IIR
-        {
-            ///////////////////////////////////////////////////////////////////////////////////////           
-            /// @brief Base class for all IIR Filters in AuxPort
-            ///////////////////////////////////////////////////////////////////////////////////////   
+        {  
+            /**
+             * @brief Base class for all IIR Filters in AuxPort
+             */
             class IIRFilter
             {
             public:
+                /**
+                 @brief Generalized enum for all filter types
+                 */
                 enum Type
                 {
                     Lowpass,Highpass,Bandpass,BandReject,Notch,LowShelf,HighShelf,Allpass
@@ -70,36 +73,88 @@ namespace AuxPort
                 IIRFilter() = default;
                 ~IIRFilter() = default;
                 IIRFilter(const IIRFilter& iirFilter) = default;
+                /**
+                  @brief Use this function to set the sample rate for the filter 
+                  @param sampleRate
+                 */
                 void setSampleRate(float sampleRate);
+                /**
+                  @brief Use this function to set the type of filter during runtime 
+                  @param type
+                 */
                 void setFilterType(Type type);
+                /**
+                  @brief Use this function to update the parameters for the filter [Overridable]
+                  @param parameters
+                 */
                 virtual void prepareToPlay(const std::vector<float>& parameters);
+                /**
+                  @brief Use this function to do in-place buffer processing [Overridable]
+                  @param buffer
+                  @param numberOfSamples
+                 */
                 virtual void process(float* buffer, uint32_t numberOfSamples);
-                virtual float process(const float& sample);
+                /**
+                  @brief Use this function to do out-place buffer processing [Overridable]
+                  @param input
+                  @param output
+                  @param numberOfSamples
+                 */
+                virtual void process(const float* input, float* output, uint32_t numberOfSamples);
+                /**
+                  @brief Use this function to filter a sample 
+                  @param sample
+                  @return 
+                 */
+                virtual float process(const float sample);
             protected:
                 Type type = Type::Lowpass;
-                float sampleRate;
+                float sampleRate = 44100;
                 std::vector<float> parameters;
                 std::vector<float> coefficients;
             };
 
-            ///////////////////////////////////////////////////////////////////////////////////////           
-            /// @brief Consist of Lowpass, Highpass and Bandpass 2nd order IIR filters based on the Butterworth Formula
-            ///////////////////////////////////////////////////////////////////////////////////////   
+
+            /**
+             @brief Consist of Lowpass, Highpass and Bandpass 2nd Order IIR filters based on the Butterworth Formula
+             */
             class Butterworth : public IIRFilter
             {
             public:
                 Butterworth();
                 ~Butterworth() = default;
-                Butterworth(const Butterworth& butterworth) = default;
-                ///////////////////////////////////////////////////////////////////////////////////////           
-                ///@brief
-                /// Expected Arguments for PrepareToPlay
-                /// fc : Cutoff Frequency
-                /// q : Q-Factor (Only for Bandpass)
-                ///////////////////////////////////////////////////////////////////////////////////////           
+                Butterworth(const Butterworth& butterworth) = default;   
+                /**
+                  @brief Use this function to set the parameters for the filter
+                  * Expected Arguments for Prepare To Play
+                  
+                  * fc : Cutoff Frequency 
+                  
+                  * q : Q-Factor (Only for Bandpass)
+                  
+                  * Use the enum Butterworth::Parameters for easy indexing
+                  @param parameters
+                 */
                 void prepareToPlay(const std::vector<float>& parameters) override;
+                /**
+                  @brief In-Place buffer processing
+                  @param buffer
+                  @param numberOfSamples
+                 */
                 void process(float* buffer, uint32_t numberOfSamples) override;
-                float process(const float& sample) override;
+                /**
+                  @brief In-Place buffer processing
+                  @param buffer
+                  @param numberOfSamples
+                 */
+                float process(const float sample) override;
+                /**
+                  @brief Out-Place buffer processing 
+                  @param inputBuffer
+                  @param outputBuffer
+                  @param numberOfSamples
+                 */
+                void process(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples) override;
             private:
                 enum Parameters
                 {
@@ -125,16 +180,39 @@ namespace AuxPort
                 ParametricEQ();
                 ~ParametricEQ() = default;
                 ParametricEQ(const ParametricEQ& peq) = default;
+                /**
+                  @brief Use this function to set the parameters for the filter
+                  * Expected Arguments for Prepare To Play
 
-                ///////////////////////////////////////////////////////////////////////////////////////            
-                /// @brief Prepares the Filter for playback
-                ///////////////////////////////////////////////////////////////////////////////////////
+                  * fc : Cutoff Frequency
+
+                  * q : Q-Factor
+                   
+                  * boost : Boost in (dB)
+
+                  * Use the enum Butterworth::Parameters for easy indexing
+                  @param parameters
+                 */
                 void prepareToPlay(const std::vector<float>& parameters) override;
-
-                ///////////////////////////////////////////////////////////////////////////////////////            
-                /// @brief Returns the sample after applying Filter to it
-                ///////////////////////////////////////////////////////////////////////////////////////
-                float process(const float& sample) override;
+                /**
+                  @brief Process a Sample through the filter 
+                  @param sample
+                  @return 
+                 */
+                float process(const float sample) override;
+                /**
+                  @brief In-Place buffer processing 
+                  @param buffer
+                  @param numberOfSamples
+                */
+                void process(float* buffer, uint32_t numberOfSamples) override;
+                /**
+                  @brief Out-Place Buffer processing 
+                  @param inputBuffer
+                  @param outputBuffer
+                  @param numberOfSamples
+                 */
+                void process(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples) override;
             private:
                 enum index
                 {
@@ -170,9 +248,23 @@ namespace AuxPort
                 ///////////////////////////////////////////////////////////////////////////////////////            
                 /// @brief Returns the sample after applying IIR Filter to it
                 ///////////////////////////////////////////////////////////////////////////////////////
-                float process(const float& sample) override;
-
+                float process(const float sample) override;
+                /**
+                  @brief Applies first-order Filter (In-Place Processing)
+                  @param buffer
+                  @param numberofSamples 
+                 */
                 void process(float* buffer, uint32_t numberofSamples) override;
+                /**
+                  @brief Applies first-order Filter (Out-Place buffer processing) 
+                  @param inputBuffer
+                  @param outputBuffer
+                  @param numberOfSamples
+                  \code{.cpp}
+                  
+                  \endcode 
+                 */
+                void process(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples) override;
             private:
                 enum Parameters
                 {
@@ -195,7 +287,6 @@ namespace AuxPort
                 ///////////////////////////////////////////////////////////////////////////////////////
                 /// @brief Specifies the type of Filter
                 ///////////////////////////////////////////////////////////////////////////////////////
-
                 General();
                 ~General() = default;
                 General(const General& general) = default;
@@ -209,6 +300,10 @@ namespace AuxPort
                 /// @brief Returns the sample after applying IIR Filter to it
                 ///////////////////////////////////////////////////////////////////////////////////////
                 float processSample(float sample);
+
+                void process(float* buffer, uint32_t numberOfSamples) override;
+
+                void process(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples) override;
             private:
                 enum index
                 {
@@ -278,7 +373,7 @@ namespace AuxPort
                 ///////////////////////////////////////////////////////////////////////////////////////            
                 /// @brief Returns the sample after applying IIR Filter to it
                 ///////////////////////////////////////////////////////////////////////////////////////
-                float process(const float& sample, uint32_t channelNumber);
+                float process(const float sample, uint32_t channelNumber);
             private:
                 std::vector<Butterworth> butter1;
                 std::vector<Butterworth> butter2;
