@@ -261,12 +261,12 @@ namespace AuxPort
 		  @brief Push a sample to the circular buffer 
 		  @param sample
 		 */
-		void push(float sample);
+		virtual void push(float sample);
 		/**
 		  @brief Pop a sample from the circular buffer 
 		  @return 
 		 */
-		float pop();
+		virtual float pop();
 		/**
 		  @brief Call this function to print out all the contents of the buffer. 
 		 */
@@ -277,7 +277,6 @@ namespace AuxPort
 		int writeIndex;
 		float poppedSample;
 		size_t bufferSize;
-
 	};
 }
 #endif
