@@ -53,6 +53,7 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxUtility.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxUtility.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxCircularBuffer.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxCircularBuffer.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxPascal.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxPascal.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxSeries.h

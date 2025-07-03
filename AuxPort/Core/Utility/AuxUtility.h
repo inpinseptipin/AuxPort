@@ -199,7 +199,7 @@ namespace AuxPort
 			AuxAssert(vec.size() > 0, "Cannot take the absolute sum of an empty vector");
 			sample sum = 0;
 			for (uint32_t i = 0; i < vec.size(); i++)
-				sum += abs(vec[i]);
+				sum += std::abs(vec[i]);
 			return sum;
 		}
 
@@ -352,6 +352,34 @@ namespace AuxPort
 		static sample degreesToRadians(float degrees,bool normalizedTo2pi = true)
 		{
 			return normalizedTo2pi == true ? fmod(degrees, 360) * 0.0174533 : degrees * 0.0174533;
+		}
+
+		/**
+		  @brief Performs Linear Search over a vector
+		  @param vector
+		  @param data 
+		  @return
+		 */
+		template<class sample>
+		static int search(const std::vector<sample>& vector, float data)
+		{
+			for (size_t i = 0; i < vector.size(); i++)
+				if (data == vector[i])
+					return i;
+			return -1;
+		}
+
+		
+		/**
+		  @brief Applies abs over a vector [In-Place]
+		  @param vector
+		  @param data 
+		  @return
+		 */
+		static void abs(std::vector<float>& vector)
+		{
+			for (size_t i = 0; i < vector.size(); i++)
+				vector[i] = std::fabsf(vector[i]);
 		}
 
 	};

@@ -16,3 +16,4 @@ void JuceExamples::Gain::process(juce::AudioBuffer<float>& buffer)
 		for (uint32_t j = 0;j < buffer.getNumSamples();j++)
 			buffer.setSample(i, j, buffer.getSample(i, j) * *parameterMap->getFloatParameter(parameterNames[outputGain]));
 }
+

@@ -275,7 +275,6 @@ namespace AuxPort
                 float xh;
                 float c;
                 float output;
-                Type type;
             };
 
             ///////////////////////////////////////////////////////////////////////////////////////
