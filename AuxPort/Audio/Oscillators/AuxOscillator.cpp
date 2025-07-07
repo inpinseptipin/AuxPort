@@ -286,16 +286,7 @@ void AuxPort::Audio::Sawtooth::PBWSaw::setSaturationLevel(float sat)
 	this->satVal = 1 / tanhf(satLevel);
 }
 
-AuxPort::Audio::Noise::WhiteNoise::WhiteNoise()
-{
-	gen.reset(new std::mt19937(randomDevice()));
-	distribution.reset(new std::uniform_real_distribution<>(-1, 1));
-}
 
-float AuxPort::Audio::Noise::WhiteNoise::process()
-{
-	return isPlaying() ? static_cast<float>(distribution->operator()(*gen)) : 0.0f;
-}
 
 float AuxPort::Audio::Noise::WhiteNoise2::process()
 {

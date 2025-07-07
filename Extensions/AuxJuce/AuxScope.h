@@ -113,7 +113,17 @@ namespace AuxPort
 			 */
 			void attachBuffer(AuxPort::Graphics::ScopeBuffers* scopeBufferPointer);
 		private:
+			/**
+			  @brief The function draws the oscilloscope analytics 
+			  @param g
+			  @param analyticBounds
+			 */
 			void drawAnalytics(juce::Graphics& g, const juce::Rectangle<float>& analyticBounds) override;
+			/**
+			  @brief The function draws the oscilloscope 
+			  @param g
+			  @param scopeBounds
+			 */
 			void drawScope(juce::Graphics& g, const juce::Rectangle<float>& scopeBounds) override;
 			std::mutex mutex;
 			bool canDraw = false;
@@ -124,6 +134,9 @@ namespace AuxPort
 			AuxMultiSelect multiSelect;
 			JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OscilloScope)
 		};
+
+
+
 	}
 }
 
