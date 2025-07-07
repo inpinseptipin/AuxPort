@@ -436,13 +436,9 @@ namespace AuxPort
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// @brief String Waveguide Model [Karplus Strong]
 			///////////////////////////////////////////////////////////////////////////////////////
-			class KPString : public Oscillator
+			class KPString : public TunableOscillator
 			{
 			public:
-				enum Parameters
-				{
-					Pick
-				};
 				KPString();
 				~KPString() = default;
 				KPString(const KPString& kpstring) = default;

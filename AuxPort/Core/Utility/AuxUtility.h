@@ -382,6 +382,18 @@ namespace AuxPort
 				vector[i] = std::fabsf(vector[i]);
 		}
 
+		static float x4(float x)
+		{
+			long* lp, l;
+			lp = (long*)(&x);
+			l = *lp;
+			l -= 0x3F800000L;
+			l <<= 2;
+			l += 0x3F800000L;
+			*lp = l;		
+			return x;
+		}
+
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////
