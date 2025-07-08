@@ -356,9 +356,9 @@ namespace AuxPort
 
 		static std::string convertToTime(uint32_t seconds)
 		{
-			auto hours = std::floorf(seconds / 3600);
-			auto mins = std::floorf((seconds - (hours * 3600)) / 60);
-			auto secs = std::floorf(seconds - (hours*3600) - (mins*60));
+			uint32_t hours = std::floorf(seconds / 3600);
+			uint32_t mins = std::floorf((seconds - (hours * 3600)) / 60);
+			uint32_t secs = std::floorf(seconds - (hours*3600) - (mins*60));
 			return std::to_string(hours) + " : " + std::to_string(mins) + " : " + std::to_string(secs);
 		}
 		 /*
