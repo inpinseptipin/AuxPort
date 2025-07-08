@@ -354,6 +354,14 @@ namespace AuxPort
 			return normalizedTo2pi == true ? fmod(degrees, 360) * 0.0174533 : degrees * 0.0174533;
 		}
 
+		static std::string convertToTime(uint32_t seconds)
+		{
+			auto hours = std::floorf(seconds / 3600);
+			auto mins = std::floorf((seconds - (hours * 3600)) / 60);
+			auto secs = std::floorf(seconds - (hours*3600) - (mins*60));
+			return std::to_string(hours) + " : " + std::to_string(mins) + " : " + std::to_string(secs);
+		}
+
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////
