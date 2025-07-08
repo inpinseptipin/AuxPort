@@ -232,5 +232,51 @@ namespace AuxPort
 			}
 		}
 	};
+
+
+
+	/**
+	 @brief Use this to turn any floating point array into a circular buffer
+	 */
+	class CircularBufferEngine : public virtual ILog
+	{
+	public:
+		CircularBufferEngine();
+		~CircularBufferEngine() = default;
+		CircularBufferEngine(const CircularBufferEngine& circularBuffer) = default;
+		/**
+		  @brief Use this function to attach a pointer to a floating-point array
+		  @param attachedBuffer
+		  @param bufferSize
+		  @details
+		  Code Implementation
+		  \code{.cpp}
+				float* buffer = new float[1024];
+				CircularBufferEngine cBuffer;
+				cBuffer.attachPointer(buffer,1024);
+		  \endcode 
+		 */
+		void attachPointer(float* attachedBuffer,size_t bufferSize);
+		/**
+		  @brief Push a sample to the circular buffer 
+		  @param sample
+		 */
+		virtual void push(float sample);
+		/**
+		  @brief Pop a sample from the circular buffer 
+		  @return 
+		 */
+		virtual float pop();
+		/**
+		  @brief Call this function to print out all the contents of the buffer. 
+		 */
+		void Log() override;
+	protected:
+		float* buffer;
+		int readIndex;
+		int writeIndex;
+		float poppedSample;
+		size_t bufferSize;
+	};
 }
 #endif

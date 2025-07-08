@@ -192,6 +192,7 @@ float AuxPort::Audio::Square::Square::process()
 	return sample;
 }
 
+
 float AuxPort::Audio::Sawtooth::BipolarSawtooth::process()
 {
 	sample = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
@@ -286,16 +287,7 @@ void AuxPort::Audio::Sawtooth::PBWSaw::setSaturationLevel(float sat)
 	this->satVal = 1 / tanhf(satLevel);
 }
 
-AuxPort::Audio::Noise::WhiteNoise::WhiteNoise()
-{
-	gen.reset(new std::mt19937(randomDevice()));
-	distribution.reset(new std::uniform_real_distribution<>(-1, 1));
-}
 
-float AuxPort::Audio::Noise::WhiteNoise::process()
-{
-	return isPlaying() ? static_cast<float>(distribution->operator()(*gen)) : 0.0f;
-}
 
 float AuxPort::Audio::Noise::WhiteNoise2::process()
 {
@@ -383,6 +375,9 @@ float AuxPort::Audio::ADSR::process()
 	return envelope;
 }
 
+#endif
+
+
 AuxPort::Audio::String::KPString::KPString()
 {
 	seedBuffer.resize(sampleRate);
@@ -419,6 +414,5 @@ void AuxPort::Audio::String::KPString::setFrequency(float frequency)
 	AuxPort::Utility::generateRandomValues<float>(seedBuffer);
 }
 
-#endif
 
 

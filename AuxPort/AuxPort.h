@@ -62,6 +62,7 @@
 #include "Audio/Effects/Templates/AuxEffect.h"
 #include "Audio/Effects/Distortion/AuxDistortion.h"
 #include "Audio/Effects/Gain/AuxPan.h"
+#include "Audio/Effects/Gain/AuxMixer.h"
 #include "Audio/Windows/AuxWindow.h"
 #include "Audio/FFT/AuxFFT.h"
 #include "Audio/Filters/AuxFIR.h"

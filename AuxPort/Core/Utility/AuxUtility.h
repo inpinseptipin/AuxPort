@@ -199,7 +199,7 @@ namespace AuxPort
 			AuxAssert(vec.size() > 0, "Cannot take the absolute sum of an empty vector");
 			sample sum = 0;
 			for (uint32_t i = 0; i < vec.size(); i++)
-				sum += abs(vec[i]);
+				sum += std::abs(vec[i]);
 			return sum;
 		}
 
@@ -360,6 +360,45 @@ namespace AuxPort
 			auto mins = std::floorf((seconds - (hours * 3600)) / 60);
 			auto secs = std::floorf(seconds - (hours*3600) - (mins*60));
 			return std::to_string(hours) + " : " + std::to_string(mins) + " : " + std::to_string(secs);
+		}
+		 /*
+		  @brief Performs Linear Search over a vector
+		  @param vector
+		  @param data 
+		  @return
+		 */
+		template<class sample>
+		static int search(const std::vector<sample>& vector, float data)
+		{
+			for (size_t i = 0; i < vector.size(); i++)
+				if (data == vector[i])
+					return i;
+			return -1;
+		}
+
+		
+		/**
+		  @brief Applies abs over a vector [In-Place]
+		  @param vector
+		  @param data 
+		  @return
+		 */
+		static void abs(std::vector<float>& vector)
+		{
+			for (size_t i = 0; i < vector.size(); i++)
+				vector[i] = std::fabsf(vector[i]);
+		}
+
+		static float x4(float x)
+		{
+			long* lp, l;
+			lp = (long*)(&x);
+			l = *lp;
+			l -= 0x3F800000L;
+			l <<= 2;
+			l += 0x3F800000L;
+			*lp = l;		
+			return x;
 		}
 
 	};

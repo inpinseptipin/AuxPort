@@ -43,7 +43,9 @@
 
 #include "../../../Core/Env/AuxEnv.h"
 #include "../../../Core/Log/AuxLog.h"
+#include "../../../Core/Utility/AuxUtility.h"
 #include <vector>
+#include <functional>
 
 namespace AuxPort
 {
@@ -98,6 +100,9 @@ namespace AuxPort
 			virtual void analysisBlock(const float* buffer, uint32_t bufferSize) = 0;
 			AuxPort::Timer timer;
 		};
+
+
+
 
         class StereoEffect : public Effect
         {
@@ -173,6 +178,24 @@ namespace AuxPort
             virtual void handleAllNotesOff(void* midiMessage);
             float referenceFrequency = 440.0f;
             uint32_t referenceMidiNote = 69;
+        };
+
+        /**
+            Inherit this class to your Effect and use it to find the optimal delay for Parallel FX Processing
+         */
+        class DelayTuner
+        {    
+        public:
+            /**
+              @brief Finds the location of the impulse after it goes through a FX chain 
+             */
+            float findDelayPeak();
+        protected:
+            /**
+                Implement this Lambda with your FX logic for the Delay Tuner to work.
+             */
+            std::function<void()> processBlock;
+            std::vector<float> delayTunerBuffer;
         };
 	}
 }
