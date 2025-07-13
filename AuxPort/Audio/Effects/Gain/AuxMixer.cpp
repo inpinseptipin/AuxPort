@@ -7,7 +7,7 @@ void AuxPort::Audio::DownMixer::stereoToMono(float* outputMonoChannel, float* le
 	AuxAssert(rightChannel != nullptr, "Reference to the right channel cannot be a nullptr");
 	AuxAssert(outputMonoChannel != nullptr, "Reference to the output mono channel cannot be a nullptr");
 	for (size_t i = 0; i < numberOfSamples; i++)
-		outputMonoChannel[i] = 0.707 * leftChannel[i] + 0.707 * rightChannel[i];
+		outputMonoChannel[i] = 0.707f * leftChannel[i] + 0.707f * rightChannel[i];
 }
 
 void AuxPort::Audio::UpMixer::monoToStereo(float* outputLeftChannel, float* outputRightChannel, float* inputMonoChannel, size_t numberOfSamples)
@@ -17,13 +17,13 @@ void AuxPort::Audio::UpMixer::monoToStereo(float* outputLeftChannel, float* outp
 	AuxAssert(outputRightChannel != nullptr, "Reference to the right channel cannot be a nullptr");
 	AuxAssert(inputMonoChannel != nullptr, "Reference to the input mono channel cannot be a nullptr");
 	for (size_t i = 0; i < numberOfSamples; i++)
-		outputLeftChannel[i] = outputRightChannel[i] = 0.707 * inputMonoChannel[i];
+		outputLeftChannel[i] = outputRightChannel[i] = 0.707f * inputMonoChannel[i];
 }
 
 AuxPort::Audio::Delay::Delay() : CircularBufferEngine()
 {
 	delayTime = 0.0f;
-	delayTimeInSamples = 0.0f;
+	delayTimeInSamples = 0;
 	sampleRate = 44100;
 	writeDelayIndex = 0;
 	readDelayIndex = 0;
@@ -44,7 +44,7 @@ void AuxPort::Audio::Delay::setDelay(float delayTime)
 	if (this->delayTime != delayTime)
 	{
 		this->delayTime = delayTime;
-		this->delayTimeInSamples = delayTime * sampleRate;
+		this->delayTimeInSamples = static_cast<size_t>(delayTime * sampleRate);
 		std::fill(delayBuffer.begin(), delayBuffer.end(), 0.0f);
 		writeDelayIndex = 0;
 		readDelayIndex = 0;
@@ -61,8 +61,8 @@ float AuxPort::Audio::Delay::pop()
 	delayBuffer[writeDelayIndex++] = buffer[writeIndex++];
 	writeIndex %= bufferSize;
 	writeDelayIndex %= delayBuffer.size();
-	readDelayIndex = writeDelayIndex - delayTimeInSamples;
-	readDelayIndex = readDelayIndex < 0 ? readDelayIndex + delayBuffer.size() : readDelayIndex;
+	readDelayIndex = writeDelayIndex - static_cast<int>(delayTimeInSamples);
+	readDelayIndex = readDelayIndex < 0 ? readDelayIndex + static_cast<int>(delayBuffer.size()) : readDelayIndex;
 	poppedSample = delayBuffer[readDelayIndex];
 	return poppedSample;
 }

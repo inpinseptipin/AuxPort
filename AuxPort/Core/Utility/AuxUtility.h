@@ -215,7 +215,7 @@ namespace AuxPort
 			std::mt19937 gen(rd());
 			std::uniform_real_distribution<> distr(rangeStart, rangeEnd);
 			for (uint32_t i = 0; i < vec.size(); i++)
-				vec[i] = distr(gen);
+				vec[i] = static_cast<sample>(distr(gen));
 			return vec;
 		}
 
@@ -351,14 +351,15 @@ namespace AuxPort
 		template<class sample>
 		static sample degreesToRadians(float degrees,bool normalizedTo2pi = true)
 		{
-			return normalizedTo2pi == true ? fmod(degrees, 360) * 0.0174533 : degrees * 0.0174533;
+			return normalizedTo2pi ? fmod(degrees, 360.0f) * 0.0174533f : degrees * 0.0174533f;
 		}
 
 		static std::string convertToTime(uint32_t seconds)
 		{
-			uint32_t hours = std::floorf(seconds / 3600);
-			uint32_t mins = std::floorf((seconds - (hours * 3600)) / 60);
-			uint32_t secs = std::floorf(seconds - (hours*3600) - (mins*60));
+			auto secondsInFloat = static_cast<float>(seconds);
+			float hours = std::floorf(secondsInFloat / 3600);
+			float mins = std::floorf((secondsInFloat - (hours * 3600)) / 60);
+			float secs = std::floorf(secondsInFloat - (hours*3600) - (mins*60));
 			return std::to_string(hours) + " : " + std::to_string(mins) + " : " + std::to_string(secs);
 		}
 		 /*
@@ -370,7 +371,7 @@ namespace AuxPort
 		template<class sample>
 		static int search(const std::vector<sample>& vector, float data)
 		{
-			for (size_t i = 0; i < vector.size(); i++)
+			for (int i = 0; i < vector.size(); i++)
 				if (data == vector[i])
 					return i;
 			return -1;
@@ -388,19 +389,43 @@ namespace AuxPort
 			for (size_t i = 0; i < vector.size(); i++)
 				vector[i] = std::fabsf(vector[i]);
 		}
-
-		static float x4(float x)
+#if AUXPORT_EXP == 1337
+		/**
+		  @brief Fast Approximation for conputing x^n 
+		  @param x
+		  @param n
+		  @return 
+		 */
+		static float pow(float x,int n)
 		{
 			long* lp, l;
 			lp = (long*)(&x);
 			l = *lp;
-			l -= 0x3F800000L;
-			l <<= 2;
-			l += 0x3F800000L;
+			l -= 0x3F800000l;
+			l <<= (n-1);
+			l += 0x3F800000l;
 			*lp = l;		
 			return x;
 		}
 
+		/**
+		  @brief Fast approximation for root of x 
+		  @param x
+		  @param n
+		  @return 
+		 */
+		static float root(float x, int n)
+		{
+			long* lp, l;
+			lp = (long*)(&x);
+			l = *lp;
+			l -= 0x3F800000l;
+			l >>= (n - 1);
+			l += 0x3F800000l;
+			*lp = l;
+			return x;
+		}
+#endif
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////

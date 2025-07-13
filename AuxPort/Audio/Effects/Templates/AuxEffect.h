@@ -187,9 +187,9 @@ namespace AuxPort
         {    
         public:
             /**
-              @brief Finds the location of the impulse after it goes through a FX chain 
+              @brief Finds the location of the impulse in samples after it goes through a FX chain 
              */
-            float findDelayPeak();
+            int findDelayPeak();
         protected:
             /**
                 Implement this Lambda with your FX logic for the Delay Tuner to work.

@@ -76,7 +76,7 @@ void AuxPort::Audio::Synthesizer::handleAllNotesOff(void* midiMessage)
 	AuxAssert(1 == 1, "Implement this Method");
 }
 
-float AuxPort::Audio::DelayTuner::findDelayPeak()
+int AuxPort::Audio::DelayTuner::findDelayPeak()
 {
 	std::fill(delayTunerBuffer.begin(), delayTunerBuffer.end(), 0.0f);
 	delayTunerBuffer[0] = 1;
