@@ -82,6 +82,8 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxMixer.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Oscillators/AuxOscillator.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Oscillators/AuxOscillator.cpp
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Stimulus/AuxStimulus.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Stimulus/AuxStimulus.cpp
    
 )
 

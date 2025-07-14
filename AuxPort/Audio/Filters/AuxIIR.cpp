@@ -402,9 +402,9 @@ float AuxPort::Audio::IIR::Engine::process(const float sample,uint32_t channelNu
     if (filter == ButterLPF12dB || filter == ButterHPF12dB || filter == ButterBPF12dB)
         return butter2[channelNumber].process(butter1[channelNumber].process(sample));
     if (filter == Shelf)
-        return general1[channelNumber].processSample(sample);
+        return general1[channelNumber].process(sample);
     if (filter == Shelfx2)
-        return general2[channelNumber].processSample(general1[channelNumber].processSample(sample));
+        return general2[channelNumber].process(general1[channelNumber].process(sample));
     if (filter == ParametericEQ)
         return paramEQ[channelNumber].process(sample);
     if (filter == APF1 || filter == LPF1 || filter == HPF1)
@@ -449,7 +449,7 @@ void AuxPort::Audio::IIR::General::prepareToPlay(const std::vector<float>& param
     }
 }
 
-float AuxPort::Audio::IIR::General::processSample(float sample)
+float AuxPort::Audio::IIR::General::process(const float sample)
 {
     output = sample * coefficients[index::a0] + z1;
     z1 = sample * coefficients[index::a1] + z2 - coefficients[index::b1] * output;

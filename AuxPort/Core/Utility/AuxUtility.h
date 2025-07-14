@@ -279,7 +279,15 @@ namespace AuxPort
 			for (uint32_t i = 0; i < vector1.size(); i++)
 				vector1[i] *= vector2[i];
 		}
-	
+		
+
+		template<class sample>
+		static inline void impulse(std::vector<sample>& vector, size_t numberOfSamples)
+		{
+			vector.resize(numberOfSamples);
+			std::fill(vector.begin(), vector.end(), 0.0f);
+			vector[0] = 1.0f;	
+		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Sinc(x) = sin(pi*x)/pi*x (Normalized Sinc Function)

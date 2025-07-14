@@ -298,7 +298,7 @@ namespace AuxPort
                 ///////////////////////////////////////////////////////////////////////////////////////            
                 /// @brief Returns the sample after applying IIR Filter to it
                 ///////////////////////////////////////////////////////////////////////////////////////
-                float processSample(float sample);
+                float process(const float sample) override;
 
                 void process(float* buffer, uint32_t numberOfSamples) override;
 

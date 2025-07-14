@@ -68,6 +68,7 @@
 #include "Audio/Filters/AuxFIR.h"
 #include "Audio/Filters/AuxIIR.h"
 #include "Audio/Oscillators/AuxOscillator.h"
+#include "Audio/Stimulus/AuxStimulus.h"
 
 
 

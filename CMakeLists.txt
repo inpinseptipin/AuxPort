@@ -69,13 +69,13 @@ if(AUXPORT_BUILD_FOR_RACKAFX)
 
 
 if(AUXPORT_BUILD_SANDBOX)
-	set(SANDBOX_NAME "SandBox")
+	set(AUXPORT_SANDBOX_NAME "SandBox")
 	add_executable(
-		${SANDBOX_NAME}
+		${AUXPORT_SANDBOX_NAME}
 		main.cpp	
 	)
-	target_link_libraries(${SANDBOX_NAME} AuxPort)
-	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${SANDBOX_NAME})
+	target_link_libraries(${AUXPORT_SANDBOX_NAME} AuxPort)
+	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${AUXPORT_SANDBOX_NAME})
 endif(AUXPORT_BUILD_SANDBOX)
 
 
@@ -84,11 +84,11 @@ endif(AUXPORT_BUILD_SANDBOX)
 
 if(AUXPORT_BUILD_TESTS)
 	add_subdirectory(AuxTest)
-	target_link_libraries(${SANDBOX_NAME} AuxTest)
+	target_link_libraries(${AUXPORT_SANDBOX_NAME} AuxTest)
 endif(AUXPORT_BUILD_TESTS)
 
 if(AUXPORT_BUILD_BENCH)
 	add_subdirectory(AuxBench)
-	target_link_libraries(${SANDBOX_NAME} AuxBench)
+	target_link_libraries(${AUXPORT_SANDBOX_NAME} AuxBench)
 endif(AUXPORT_BUILD_BENCH)
 
