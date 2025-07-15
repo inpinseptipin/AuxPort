@@ -76,13 +76,31 @@ void AuxPort::Audio::Synthesizer::handleAllNotesOff(void* midiMessage)
 	AuxAssert(1 == 1, "Implement this Method");
 }
 
-int AuxPort::Audio::DelayTuner::findDelayPeak()
+void AuxPort::Audio::DelayTuner::findDelayPeak()
 {
-	std::fill(delayTunerBuffer.begin(), delayTunerBuffer.end(), 0.0f);
-	delayTunerBuffer[0] = 1;
-	if (processBlock != nullptr)
-		processBlock();
-	AuxPort::Utility::abs(delayTunerBuffer);
-	float maxValue = AuxPort::Utility::getMax<float>(delayTunerBuffer);
-	return AuxPort::Utility::search<float>(delayTunerBuffer, maxValue);
+	for (uint32_t i = 0; i < delayTunerBuffers.size(); i++)
+	{
+		std::fill(delayTunerBuffers[i].begin(), delayTunerBuffers[i].end(), 0.0f);
+		delayTunerBuffers[i][0] = 1;
+		if (parallelBlockVector[i] != nullptr)
+			parallelBlockVector[i]();
+		AuxPort::Utility::abs(delayTunerBuffers[i]);
+		float maxValue = AuxPort::Utility::getMax<float>(delayTunerBuffers[i]);
+		delayValues[i] = AuxPort::Utility::search<float>(delayTunerBuffers[i], maxValue);
+	}
+}
+
+void AuxPort::Audio::DelayTuner::setNumberOfBlocks(int n)
+{
+	AuxAssert(n > 0, "Number of blocks cannot be negative");
+	delayTunerBuffers.resize(n);
+	parallelBlockVector.resize(n);
+	delayValues.resize(n);
+}
+
+void AuxPort::Audio::DelayTuner::setBlockBufferSize(size_t blockSize)
+{
+	AuxAssert(blockSize > 0 && blockSize < 8192, "Please input a sensible block Size");
+	for (uint32_t i = 0; i < delayTunerBuffers.size(); i++)
+		delayTunerBuffers[i].resize(blockSize);
 }

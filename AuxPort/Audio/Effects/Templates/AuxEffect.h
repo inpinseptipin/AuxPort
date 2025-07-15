@@ -189,13 +189,18 @@ namespace AuxPort
             /**
               @brief Finds the location of the impulse in samples after it goes through a FX chain 
              */
-            int findDelayPeak();
+            void findDelayPeak();
+
+            void setNumberOfBlocks(int n);
+
+            void setBlockBufferSize(size_t blockSize);
         protected:
             /**
                 Implement this Lambda with your FX logic for the Delay Tuner to work.
              */
-            std::function<void()> processBlock;
-            std::vector<float> delayTunerBuffer;
+            std::vector<std::function<void()>> parallelBlockVector;
+            std::vector<std::vector<float>> delayTunerBuffers;
+            std::vector<float> delayValues;
         };
 	}
 }
