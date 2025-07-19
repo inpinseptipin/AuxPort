@@ -69,12 +69,34 @@ if(AUXPORT_BUILD_FOR_RACKAFX)
 
 
 if(AUXPORT_BUILD_SANDBOX)
+	option(AUXPORT_BUILD_EXTENSION_FOR_AUDIOFILE "Build AuxPort Extensions for AudioFile" OFF)
+	
+
+
+
 	set(AUXPORT_SANDBOX_NAME "SandBox")
 	add_executable(
 		${AUXPORT_SANDBOX_NAME}
 		main.cpp	
+		${PROJECT_SOURCE_DIR}/Extensions/AuxAudioFile/AuxAudioFile.h
+		${PROJECT_SOURCE_DIR}/Extensions/AuxAudioFile/AuxAudioFile.cpp
 	)
 	target_link_libraries(${AUXPORT_SANDBOX_NAME} AuxPort)
+	
+	if(AUXPORT_BUILD_EXTENSION_FOR_AUDIOFILE)
+		include(FetchContent)
+		FetchContent_Declare(
+			audiofile
+			GIT_REPOSITORY https://github.com/adamstark/AudioFile.git
+			GIT_TAG master
+		)
+		FetchContent_MakeAvailable(audiofile)
+		target_include_directories(${AUXPORT_SANDBOX_NAME} PUBLIC "${AudioFile_SOURCE_DIR}/")
+		target_include_directories(${AUXPORT_SANDBOX_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/AuxPort")
+	endif(AUXPORT_BUILD_EXTENSION_FOR_AUDIOFILE)
+
+
+
 	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${AUXPORT_SANDBOX_NAME})
 endif(AUXPORT_BUILD_SANDBOX)
 
