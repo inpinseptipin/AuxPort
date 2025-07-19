@@ -98,8 +98,10 @@ float AuxPort::Audio::Sine::AuxSine2::process()
 
 float AuxPort::Audio::Sine::ParabolicSine::process()
 {
-	sample = isPlaying() ? B * mod + C * mod * abs(mod) : 0.0f;
-	mod = mod >= pi ? -pi : mod + inc;
+	x = 2*pi*mod;
+	sample = isPlaying() ? (x>=0 && x<=pi) ? B * x + C * x * abs(x) : -(B*(x-pi) + C*(x-pi)*(abs(x-pi))):0.0f;
+	mod += inc;
+	mod = mod - static_cast<int>(mod);
 	sample = P * (sample * abs(sample) - sample) + sample;
 	return sample;
 }
