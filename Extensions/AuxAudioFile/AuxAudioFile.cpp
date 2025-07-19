@@ -57,7 +57,7 @@ void AuxPort::Extensions::WaveWriter::writeBuffer()
 			break;
 		for (uint32_t j = 0; j < this->numberOfStreamChannels; j++)
 		{
-			this->file->samples[j][i] = streamingBuffer->at(j)[i];
+			this->file->samples[j][sampleCounter] = streamingBuffer->at(j)[i];
 		}
 		sampleCounter++;
 	}
