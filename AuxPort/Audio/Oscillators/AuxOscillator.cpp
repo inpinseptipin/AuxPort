@@ -70,10 +70,18 @@ float AuxPort::Audio::Sine::AuxSine::process()
 {
 	x = 2.0f * mod - 1.0f;
 	sample = isPlaying() ? x + x*x*x*(0.5f*x*x-1.0f-0.5f) : 0.0f;
+	sample *= 3.0471;
 	mod += inc;
 	mod = mod - static_cast<int>(mod);
 	return sample;
 }
+
+void AuxPort::Audio::Sine::AuxSine::init()
+{
+	mod = 0.5f;
+}
+
+
 
 float AuxPort::Audio::Sine::AuxSine2::process()
 {

@@ -101,6 +101,7 @@ namespace AuxPort
 				~AuxSine() = default;
 				AuxSine(const AuxSine& auxSine) = default;
 				float process() override;
+				void init() override;
 			protected:
 				float x = 0.0f;
 			};
