@@ -2,13 +2,14 @@
 
 
 
-void AuxPort::Extensions::WaveReader::attachFile(AudioFile<float>* file)
+
+void AuxPort::Extensions::WaveFile::attachFile(AudioFile<float>* file)
 {
 	this->file = file;
 	this->sampleCounter = 0;
 }
 
-void AuxPort::Extensions::WaveReader::attachStreamBuffer(std::vector<std::vector<float>>* streamingBuffer)
+void AuxPort::Extensions::WaveFile::attachStreamBuffer(std::vector<std::vector<float>>* streamingBuffer)
 {
 	AuxAssert(streamingBuffer->size() > 0, "Cannot attach a buffer with 0 channels");
 	AuxAssert(streamingBuffer->at(0).size() > 0, "Cannot attach a buffer with a buffer size of 0");
@@ -17,8 +18,10 @@ void AuxPort::Extensions::WaveReader::attachStreamBuffer(std::vector<std::vector
 	this->streamSize = streamingBuffer->at(0).size();
 }
 
+
 void AuxPort::Extensions::WaveReader::readBuffer()
 {
+	AuxAssert(file != nullptr, "Need a pointer to the AudioFile object to access the samples");
 	for (uint32_t i = 0; i < streamSize; i++)
 	{
 		for (uint32_t j = 0; j < numberOfStreamChannels; j++)
@@ -29,8 +32,6 @@ void AuxPort::Extensions::WaveReader::readBuffer()
 	}
 }
 
-
-
 void AuxPort::Extensions::WaveWriter::attachFile(AudioFile<float>* file, uint32_t numberOfChannels, uint32_t numberOfSamples)
 {
 	this->file = file;
@@ -40,17 +41,11 @@ void AuxPort::Extensions::WaveWriter::attachFile(AudioFile<float>* file, uint32_
 	this->sampleCounter = 0;
 }
 
-void AuxPort::Extensions::WaveWriter::attachStreamBuffer(std::vector<std::vector<float>>* streamingBuffer)
-{
-	AuxAssert(streamingBuffer->size() > 0, "Cannot attach a buffer with 0 channels");
-	AuxAssert(streamingBuffer->at(0).size() > 0, "Cannot attach a buffer with a buffer size of 0");
-	this->streamingBuffer = streamingBuffer;
-	this->numberOfStreamChannels = streamingBuffer->size();
-	this->streamSize = streamingBuffer->at(0).size();
-}
+
 
 void AuxPort::Extensions::WaveWriter::writeBuffer()
 {
+	AuxAssert(file != nullptr, "Need a pointer to the AudioFile object to access the samples");
 	for (uint32_t i = 0; i < streamSize; i++)
 	{
 		if (sampleCounter == this->file->samples[0].size() - 1)
@@ -62,3 +57,4 @@ void AuxPort::Extensions::WaveWriter::writeBuffer()
 		sampleCounter++;
 	}
 }
+
