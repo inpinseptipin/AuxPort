@@ -22,12 +22,13 @@ namespace AuxPort
 			  @param streamingBuffer
 			 */
 			void attachStreamBuffer(std::vector<std::vector<float>>* streamingBuffer);
-		protected:
 			/**
-			  @brief Use this function to attach an AudioFile pointer for reading/writing to a file. 
+			  @brief Use this function to attach an AudioFile pointer for reading/writing to a file.
 			  @param file
 			 */
 			virtual void attachFile(AudioFile<float>* file);
+		protected:
+
 			AudioFile<float>* file;
 			uint32_t streamSize;
 			uint32_t numberOfStreamChannels;
