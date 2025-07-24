@@ -5,8 +5,8 @@
  * \author Satyarth Arora
  * \date   March 2025
  *********************************************************************/
-#ifndef AUXSCOPE_H
-#define AUXSCOPE_H
+#ifndef AUXPORT_EXTENSIONS_JUCE_SCOPE_H
+#define AUXPORT_EXTENSIONS_JUCE_SCOPE_H
 
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <juce_graphics/juce_graphics.h>

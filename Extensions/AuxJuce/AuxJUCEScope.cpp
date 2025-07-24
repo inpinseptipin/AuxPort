@@ -1,4 +1,4 @@
-#include "AuxScope.h"
+#include "AuxJUCEScope.h"
 
 
 void AuxPort::Extensions::AuxMultiSelect::paint(juce::Graphics& g)

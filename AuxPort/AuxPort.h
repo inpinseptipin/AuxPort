@@ -71,8 +71,10 @@
 #include "Audio/Stimulus/AuxStimulus.h"
 
 
-
-
+/*
+*			Graphics Headers
+*/
+#include "Graphics/Scopes/AuxScope.h"
 
 
 
