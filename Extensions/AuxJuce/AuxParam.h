@@ -99,10 +99,15 @@ namespace AuxPort
 ///	@brief Retrieves the memory block from the DAW and update the parameter map
 ///////////////////////////////////////////////////////////////////////////////////////
 			void setStateInformation(const void* data, int sizeInBytes);
+
+			void saveToFile(const std::string& fileName);
+
+			void readFromFile(const std::string& fileName);
 		private:
 			std::unordered_map<std::string, uint32_t> parameters;
 			juce::AudioProcessor* audioProcessor;
 			juce::AudioProcessorParameter* getParameter(const std::string& parameterName);
+			AuxPort::CSV csv;
 		};
 	}
 }

@@ -60,6 +60,31 @@ void AuxPort::Extensions::ParameterMap::setStateInformation(const void* data, in
 	}
 }
 
+void AuxPort::Extensions::ParameterMap::saveToFile(const std::string& fileName)
+{
+	csv.open(fileName, AuxPort::File::Mode::Write, true);
+	csv.setHeader({ "Parameter","Value" });
+	auto juceParameters = audioProcessor->getParameters();
+	for (auto i = parameters.begin(); i != parameters.end(); i++)
+	{
+		csv.addDataRow({ i->first,std::to_string(juceParameters[i->second]->getValue()) });
+	}
+	csv.write();
+	csv.close();
+}
+
+void AuxPort::Extensions::ParameterMap::readFromFile(const std::string& fileName)
+{
+	csv.open(fileName, AuxPort::File::Mode::Read, true);
+	std::vector<std::vector<std::string>> data;
+	std::vector<std::string> header;
+	csv.read(data, header);
+	auto juceParameters = audioProcessor->getParameters();
+	for (uint32_t i = 0; i < data.size(); i++)
+		juceParameters[parameters.at(data[i][0])]->setValue(stof(data[i][1]));
+	csv.close();
+}
+
 juce::AudioProcessorParameter* AuxPort::Extensions::ParameterMap::getParameter(const std::string& parameterID)
 {
 	auto parameter = parameters.find(parameterID);
