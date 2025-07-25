@@ -83,6 +83,8 @@ void AuxPort::Extensions::ParameterMap::readFromFile(const std::string& fileName
 	for (uint32_t i = 0; i < data.size(); i++)
 		juceParameters[parameters.at(data[i][0])]->setValue(stof(data[i][1]));
 	csv.close();
+	if (updatePluginUI != nullptr)
+		updatePluginUI();
 }
 
 juce::AudioProcessorParameter* AuxPort::Extensions::ParameterMap::getParameter(const std::string& parameterID)
