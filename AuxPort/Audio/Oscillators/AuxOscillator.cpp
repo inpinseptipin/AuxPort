@@ -17,6 +17,11 @@ float AuxPort::Audio::Oscillator::process()
 	return 0.0f;
 }
 
+void AuxPort::Audio::Oscillator::process(float* buffer, uint32_t numberOfSamples)
+{
+	return;
+}
+
 void AuxPort::Audio::Oscillator::stop()
 {
 	inc = 0;
@@ -64,6 +69,19 @@ float AuxPort::Audio::Sine::Sine::process()
 	return sample;
 }
 
+void AuxPort::Audio::Sine::Sine::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		sample = isPlaying() ? sinf(2 * pi * mod) : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		buffer[i] = sample;
+	}
+}
+
 
 
 float AuxPort::Audio::Sine::AuxSine::process()
@@ -74,6 +92,21 @@ float AuxPort::Audio::Sine::AuxSine::process()
 	mod += inc;
 	mod = mod - static_cast<int>(mod);
 	return sample;
+}
+
+void AuxPort::Audio::Sine::AuxSine::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		x = 2.0f * mod - 1.0f;
+		sample = isPlaying() ? x + x * x * x * (0.5f * x * x - 1.0f - 0.5f) : 0.0f;
+		sample *= 3.0471;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		buffer[i] = sample;
+	}
 }
 
 void AuxPort::Audio::Sine::AuxSine::init()
@@ -95,6 +128,23 @@ float AuxPort::Audio::Sine::AuxSine2::process()
 	return sample;
 }
 
+void AuxPort::Audio::Sine::AuxSine2::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		x = 2 * pi * mod;
+		sample = isPlaying() ? (x >= 0 && x < 0.5 * pi ? x / pi * (pi - powf((2 * x) / pi, 2) * ((2 * pi - 5) - powf((2 * x) / pi, 2) * (pi - 3))) : sample) : 0.0f;
+		sample = isPlaying() ? (x > 0.5 * pi && x < pi ? -(x - pi) / pi * (pi - powf((2 * (x - pi)) / pi, 2) * ((2 * pi - 5) - powf((2 * (x - pi)) / pi, 2) * (pi - 3))) : sample) : 0.0f;
+		sample = isPlaying() ? (x >= pi && x < 1.5 * pi ? -(x - pi) / pi * (pi - powf((2 * (x - pi)) / pi, 2) * ((2 * pi - 5) - powf((2 * (x - pi)) / pi, 2) * (pi - 3))) : sample) : 0.0f;
+		sample = isPlaying() ? (x >= 1.5 * pi && x < 2 * pi ? (x - 2 * pi) / pi * (pi - powf((2 * (x - 2 * pi)) / pi, 2) * ((2 * pi - 5) - powf((2 * (x - 2 * pi)) / pi, 2) * (pi - 3))) : sample) : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		buffer[i] = sample;
+	}
+}
+
 
 float AuxPort::Audio::Sine::ParabolicSine::process()
 {
@@ -104,6 +154,21 @@ float AuxPort::Audio::Sine::ParabolicSine::process()
 	mod = mod - static_cast<int>(mod);
 	sample = P * (sample * abs(sample) - sample) + sample;
 	return sample;
+}
+
+void AuxPort::Audio::Sine::ParabolicSine::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		x = 2 * pi * mod;
+		sample = isPlaying() ? (x >= 0 && x <= pi) ? B * x + C * x * abs(x) : -(B * (x - pi) + C * (x - pi) * (abs(x - pi))) : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		sample = P * (sample * abs(sample) - sample) + sample;
+		buffer[i] = sample;
+	}
 }
 
 
@@ -116,6 +181,20 @@ float AuxPort::Audio::Sine::BhaskaraSine::process()
 	return mod > 0.5 ? -sample:sample;
 }
 
+void AuxPort::Audio::Sine::BhaskaraSine::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		modToPi = mod > 0.5f ? 2.0f * pi * (mod - 0.5f) : 2.0f * pi * mod;
+		sample = isPlaying() ? (16.0f * modToPi * (pi - modToPi)) / (5.0f * pi * pi - 4.0f * modToPi * (pi - modToPi)) : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		buffer[i] =  mod > 0.5 ? -sample : sample;
+	}
+}
+
 
 float AuxPort::Audio::Sine::JavidX9Sine::process()
 {
@@ -125,6 +204,19 @@ float AuxPort::Audio::Sine::JavidX9Sine::process()
 	return sample;
 }
 
+void AuxPort::Audio::Sine::JavidX9Sine::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		sample = isPlaying() ? (mod <= 0.5 ? (-16.0f * mod * mod) + (8.0f * mod) : (16.0f * mod * mod) - (24.0f * mod) + 8.0f) : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		buffer[i] = sample;
+	}
+}
+
 
 float AuxPort::Audio::Sine::JavidX9Sine2::process()
 {
@@ -132,6 +224,19 @@ float AuxPort::Audio::Sine::JavidX9Sine2::process()
 	mod += inc;
 	mod = mod - static_cast<int>(mod);
 	return sample;
+}
+
+void AuxPort::Audio::Sine::JavidX9Sine2::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		sample = isPlaying() ? 20.785f * mod * (mod - 0.5f) * (mod - 1.0f) : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		buffer[i] = sample;
+	}
 }
 
 
@@ -156,6 +261,25 @@ float AuxPort::Audio::Sine::FastSine::process()
 	return 0.0f;
 }
 
+void AuxPort::Audio::Sine::FastSine::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	if (isPlaying())
+	{
+		for (uint32_t i = 0; i < numberOfSamples; i++)
+		{
+			sample = x1;
+			x0 = x1 * a - x2;
+			x2 = x1;
+			x1 = x0;
+			buffer[i] = sample;
+		}
+	}
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+		buffer[i] = 0.0f;
+}
+
 void AuxPort::Audio::Sine::FastSine::stop()
 {
 	x0 = 0;
@@ -172,12 +296,38 @@ float AuxPort::Audio::Sawtooth::UnipolarSawtooth::process()
 	return sample;
 }
 
+void AuxPort::Audio::Sawtooth::UnipolarSawtooth::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		sample = isPlaying() ? mod : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		buffer[i] = sample;
+	}
+}
+
 float AuxPort::Audio::Sawtooth::SawSin2::process()
 {
 	sample = isPlaying() ? ((mod <=0) ? -sinf(pi * mod) : 2.0f * mod - powf(mod, 2) - 1.0f) : 0.0f;
 	mod += inc;
 	mod = mod - static_cast<int>(mod);
 	return sample;
+}
+
+void AuxPort::Audio::Sawtooth::SawSin2::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		sample = isPlaying() ? ((mod <= 0) ? -sinf(pi * mod) : 2.0f * mod - powf(mod, 2) - 1.0f) : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		buffer[i] = sample;
+	}
 }
 
 
@@ -187,6 +337,19 @@ float AuxPort::Audio::Sawtooth::SawSin1::process()
 	mod += inc;
 	mod = mod - static_cast<int>(mod);
 	return sample;
+}
+
+void AuxPort::Audio::Sawtooth::SawSin1::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		sample = isPlaying() ? ((mod > 0.5) ? -sinf(2 * pi * mod) : 2.0f * mod - 1.0f) : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		buffer[i] = sample;
+	}
 }
 
 void AuxPort::Audio::Square::Square::setPulseWidth(float pulseWidth)
@@ -202,6 +365,20 @@ float AuxPort::Audio::Square::Square::process()
 	return sample;
 }
 
+void AuxPort::Audio::Square::Square::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		sample = isPlaying() ? ((mod > pulseWidth) ? -1.0f : 1.0f) : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		buffer[i] = sample;
+	}
+}
+
+
 
 float AuxPort::Audio::Sawtooth::BipolarSawtooth::process()
 {
@@ -209,6 +386,19 @@ float AuxPort::Audio::Sawtooth::BipolarSawtooth::process()
 	mod += inc;
 	mod = mod - static_cast<int>(mod);
 	return sample;
+}
+
+void AuxPort::Audio::Sawtooth::BipolarSawtooth::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		sample = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		buffer[i] = sample;
+	}
 }
 
 float AuxPort::Audio::Triangle::Triangle::process()
@@ -219,12 +409,38 @@ float AuxPort::Audio::Triangle::Triangle::process()
 	return sample;
 }
 
+void AuxPort::Audio::Triangle::Triangle::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		sample = isPlaying() ? 2.0f * fabs(2.0f * mod - 1.0f) - 1.0f : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		buffer[i] = sample;
+	}
+}
+
 float AuxPort::Audio::Sawtooth::PBSaw::process()
 {
 	sample = isPlaying() ? ((mod >= -1 && mod <= 0) ? (mod * mod) + 2.0f * mod + 1.0f : 2.0f * mod - powf(mod, 2) - 1.0f) : 0.0f;
 	mod += inc;
 	mod = mod - static_cast<int>(mod)-1.0f;
 	return sample;
+}
+
+void AuxPort::Audio::Sawtooth::PBSaw::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		sample = isPlaying() ? ((mod >= -1 && mod <= 0) ? (mod * mod) + 2.0f * mod + 1.0f : 2.0f * mod - powf(mod, 2) - 1.0f) : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod) - 1.0f;
+		buffer[i] = sample;
+	}
 }
 
 #if AUXPORT_EXP
@@ -258,6 +474,22 @@ float AuxPort::Audio::Triangle::DPWTriangle1::process()
 	return sample;
 }
 
+void AuxPort::Audio::Triangle::DPWTriangle1::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		sample = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		sample = abs(sample);
+		sample = 0.5f - sample;
+		sample = sample * 2;
+		buffer[i] = sample;
+	}
+}
+
 float AuxPort::Audio::Sawtooth::DPWSaw::process()
 {
 	x = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
@@ -267,6 +499,22 @@ float AuxPort::Audio::Sawtooth::DPWSaw::process()
 	sample = x - x1;
 	x1 = x;
 	return sample * c;
+}
+
+void AuxPort::Audio::Sawtooth::DPWSaw::process(float* buffer, uint32_t numberOfSamples)
+{
+	AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples > 0, "Number of samples has to be > 0");
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		x = isPlaying() ? 2.0f * mod - 1.0f : 0.0f;
+		mod += inc;
+		mod = mod - static_cast<int>(mod);
+		x *= x;
+		sample = x - x1;
+		x1 = x;
+		buffer[i] = sample * c;
+	}
 }
 
 
@@ -290,6 +538,19 @@ float AuxPort::Audio::Sawtooth::PBWSaw::process()
 	mod = mod - static_cast<int>(mod)-1.0f;
 	return sample;
 }
+
+void AuxPort::Audio::Sawtooth::PBWSaw::process(float* buffer, uint32_t numberOfSamples)
+{
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+	{
+		sample = isPlaying() ? ((mod >= -1 && mod <= 0) ? tanhf(satLevel * (mod * mod) + 2.0f * mod + 1.0f) : tanhf(2.0f * mod - powf(mod, 2) - 1.0f)) : 0.0f;
+		sample *= satVal;
+		mod += inc;
+		mod = mod - static_cast<int>(mod) - 1.0f;
+		buffer[i] = sample;
+	}
+}
+
 
 void AuxPort::Audio::Sawtooth::PBWSaw::setSaturationLevel(float sat)
 {

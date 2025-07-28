@@ -30,6 +30,8 @@ namespace AuxPort
 			/// @brief This function generates the sample from the Oscillator [Overridable]
 			///////////////////////////////////////////////////////////////////////////////////////
 			virtual float process();
+
+			virtual void process(float* buffer, uint32_t numberOfSamples);
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// @brief Use this function to stop the Oscillator from generating samples [Overridable]
 			///////////////////////////////////////////////////////////////////////////////////////
@@ -88,6 +90,7 @@ namespace AuxPort
 				/// @brief This function generates the sample from the Oscillator
 				///////////////////////////////////////////////////////////////////////////////////////
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 				void init() override;
 			};
 
@@ -101,6 +104,7 @@ namespace AuxPort
 				~AuxSine() = default;
 				AuxSine(const AuxSine& auxSine) = default;
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 				void init() override;
 			protected:
 				float x = 0.0f;
@@ -116,6 +120,7 @@ namespace AuxPort
 				~AuxSine2() = default;
 				AuxSine2(const AuxSine2& auxSine2) = default;
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 			protected:
 				float x = 0.0f;
 			};
@@ -133,6 +138,7 @@ namespace AuxPort
 				/// @brief This function generates the sample from the Oscillator
 				///////////////////////////////////////////////////////////////////////////////////////
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples);
 			private:
 				float B = 4.0f / pi;
 				float C = -4.0f / (pi * pi);
@@ -150,6 +156,7 @@ namespace AuxPort
 				~BhaskaraSine() = default;
 				BhaskaraSine(const BhaskaraSine& bhaskaraSine) = default;
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 			private:
 				float modToPi = 0.0f;
 			};
@@ -165,6 +172,7 @@ namespace AuxPort
 				~JavidX9Sine() = default;
 				JavidX9Sine(const JavidX9Sine& javidX9) = default;
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 			};
 
 			///////////////////////////////////////////////////////////////////////////////////////
@@ -177,6 +185,7 @@ namespace AuxPort
 				~JavidX9Sine2() = default;
 				JavidX9Sine2(const JavidX9Sine2& javidX9) = default;
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 			};
 
 
@@ -191,6 +200,7 @@ namespace AuxPort
 				FastSine(const FastSine& fastSine) = default;
 				void setFrequency(float frequency) override;
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 				void stop() override;
 			private:
 				float x1 = 0;
@@ -219,6 +229,7 @@ namespace AuxPort
 				/// @brief This function generates the sample from the Oscillator
 				///////////////////////////////////////////////////////////////////////////////////////
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 			};
 
 			///////////////////////////////////////////////////////////////////////////////////////
@@ -235,6 +246,7 @@ namespace AuxPort
 				/// @brief This function generates the sample from the Oscillator
 				///////////////////////////////////////////////////////////////////////////////////////
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 			};
 
 			///////////////////////////////////////////////////////////////////////////////////////
@@ -250,6 +262,7 @@ namespace AuxPort
 				/// @brief This function generates the sample from the Oscillator
 				///////////////////////////////////////////////////////////////////////////////////////
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 			};
 
 			///////////////////////////////////////////////////////////////////////////////////////
@@ -266,6 +279,7 @@ namespace AuxPort
 				/// @brief This function generates the sample from the Oscillator
 				///////////////////////////////////////////////////////////////////////////////////////
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 
 				///////////////////////////////////////////////////////////////////////////////////////
 				/// @brief Sets the saturation level for the oscillator
@@ -293,6 +307,7 @@ namespace AuxPort
 				/// @brief This function generates the sample from the Oscillator [Overridable]
 				///////////////////////////////////////////////////////////////////////////////////////
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 			protected:
 				float x1 = 0.0f;
 				float x = 0.0f;
@@ -314,6 +329,7 @@ namespace AuxPort
 				/// @brief This function generates the sample from the Oscillator
 				///////////////////////////////////////////////////////////////////////////////////////
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 			};
 
 
@@ -330,6 +346,7 @@ namespace AuxPort
 				/// @brief This function generates the sample from the Oscillator
 				///////////////////////////////////////////////////////////////////////////////////////
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 			};
 
 		}
@@ -356,6 +373,7 @@ namespace AuxPort
 				/// @brief This function generates the sample from the Oscillator
 				///////////////////////////////////////////////////////////////////////////////////////
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 			protected:
 				float pulseWidth;
 			};
@@ -400,6 +418,7 @@ namespace AuxPort
 				/// @brief This function generates the sample from the Oscillator
 				///////////////////////////////////////////////////////////////////////////////////////
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 			};
 
 			///////////////////////////////////////////////////////////////////////////////////////
@@ -415,6 +434,7 @@ namespace AuxPort
 				/// @brief This function generates the sample from the Oscillator [Overriable]
 				///////////////////////////////////////////////////////////////////////////////////////
 				float process() override;
+				void process(float* buffer, uint32_t numberOfSamples) override;
 			};
 
 #if AUXPORT_EXP
