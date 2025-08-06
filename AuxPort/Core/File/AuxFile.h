@@ -187,7 +187,7 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		enum Mode
 		{
-			Idle = 0, Read = 1, Write = 2
+			Idle = 0, Read = 1, Write = 2, Update = 3
 		};
 
 		File();

@@ -131,7 +131,31 @@ bool AuxPort::TextFile::open(const std::string& fileName, const Mode& mode, bool
 			AuxPort::Logger::Log("Trying to Open " + fileName); //char(28)
 		try
 		{
-			fileWriter.reset(new std::ofstream(fileName));
+			fileWriter.reset(new std::ofstream(fileName,std::ofstream::out));
+			auto open = fileWriter->is_open();
+			if (log)
+			{
+				open == true ? AuxPort::Logger::Log(fileName + " opened successfully", AuxPort::LogType::Success, AuxPort::ColourType::Green) :
+					AuxPort::Logger::Log("Failed to open " + fileName, AuxPort::LogType::Error, AuxPort::ColourType::Red);
+			}
+			this->mode = mode;
+			this->fileName = fileName;
+			auto dotIndex = fileName.find('.');
+			this->fileExtension = fileName.substr(dotIndex + 1, fileName.size() - dotIndex);
+		}
+		catch (std::ofstream::failure fail)
+		{
+			AuxPort::Logger::Log("Failed to open " + fileName, AuxPort::LogType::Error, AuxPort::ColourType::Red);
+		}
+		return fileWriter->is_open();
+	}
+	else if(mode == Mode::Update)
+	{
+		if (log)
+			AuxPort::Logger::Log("Trying to Open " + fileName); //char(28)
+		try
+		{
+			fileWriter.reset(new std::ofstream(fileName, std::ofstream::out | std::ofstream::app));
 			auto open = fileWriter->is_open();
 			if (log)
 			{
@@ -171,7 +195,7 @@ bool AuxPort::TextFile::close(bool log)
 			return false;
 		}	
 	}
-	if (mode == Mode::Write && fileWriter->is_open())
+	if ((mode == Mode::Write || mode == Mode::Update) && fileWriter->is_open())
 	{
 		try
 		{
