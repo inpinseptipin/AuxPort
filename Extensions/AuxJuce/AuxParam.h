@@ -115,7 +115,7 @@ namespace AuxPort
 			std::unordered_map<std::string, uint32_t> parameters;
 			juce::AudioProcessor* audioProcessor;
 			juce::AudioProcessorParameter* getParameter(const std::string& parameterName);
-			AuxPort::CSV csv;
+			std::unique_ptr<AuxPort::CSV> csv;
 		};
 	}
 }
