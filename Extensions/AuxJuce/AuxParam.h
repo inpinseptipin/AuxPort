@@ -64,6 +64,10 @@ namespace AuxPort
 		class ParameterMap
 		{
 		public:
+			enum PType
+			{
+				Integer,Floating,Boolean,Choice
+			};
 			ParameterMap() = default;
 			~ParameterMap() = default;
 			ParameterMap(const ParameterMap& parameterMap) = default;
@@ -74,9 +78,8 @@ namespace AuxPort
 ///////////////////////////////////////////////////////////////////////////////////////
 ///	@brief Adds the parameter to the map, this function also adds it to the linked audio processor
 ///////////////////////////////////////////////////////////////////////////////////////
-			void addParameter(juce::AudioProcessorParameter* parameter);
-///////////////////////////////////////////////////////////////////////////////////////
-///	@brief Retrives the audio parameter corrosponding to the parameter ID and casts it to an AudioParameterFloat*
+			void addParameter(juce::AudioProcessorParameter* parameter,PType ptype = PType::Floating);
+/// ///	@brief Retrives the audio parameter corrosponding to the parameter ID and casts it to an AudioParameterFloat*
 ///////////////////////////////////////////////////////////////////////////////////////
 			juce::AudioParameterFloat* getFloatParameter(const std::string& parameterID);
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -112,11 +115,43 @@ namespace AuxPort
 ///////////////////////////////////////////////////////////////////////////////////////
 			std::function<void()> updatePluginUI;
 		private:
+			struct ParameterData
+			{
+				float minValue;
+				float maxValue;
+				float interval;
+			};
 			std::unordered_map<std::string, uint32_t> parameters;
+			std::unordered_map<std::string, ParameterData> parameterDataMap;
 			juce::AudioProcessor* audioProcessor;
 			juce::AudioProcessorParameter* getParameter(const std::string& parameterName);
 			std::unique_ptr<AuxPort::CSV> csv;
+
+		};
+
+		class PresetMenu : public juce::Component
+		{
+		public:
+			PresetMenu();
+			~PresetMenu();
+			void handleParameterMap(AuxPort::Extensions::ParameterMap* parameterMap);
+			void paint(juce::Graphics& g) override;
+			void resized() override;
+			void setPresetExtension(const std::string& presetExtension);
+			std::function<void()> updatePluginUI;
+		protected:
+			AuxPort::Extensions::ParameterMap* parameterMap;
+			juce::Label label;
+			juce::TextButton loadPresetButton;
+			juce::TextButton savePresetButton;
+			std::unique_ptr<juce::FileChooser> fileChooser;
+			std::string presetExtension;
+		private:
+			JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PresetMenu)
 		};
 	}
+
+
+
 }
 #endif
