@@ -397,6 +397,18 @@ namespace AuxPort
 			for (size_t i = 0; i < vector.size(); i++)
 				vector[i] = std::fabsf(vector[i]);
 		}
+
+		/**
+		  @brief Formats a floating point value to a string that's acceptable as a filename on a given OS
+		  @details
+		  Example :  0.05 will be convered to 0_05
+		 */
+		static std::string formatFloatForFileNames(float val)
+		{
+			auto data = std::to_string(val);
+			data = data.replace(data.find("."), data.find("."), "_");
+			return data;
+		}
 #if AUXPORT_EXP == 1337
 		/**
 		  @brief Fast Approximation for conputing x^n 
