@@ -75,6 +75,8 @@ std::vector<std::string>& AuxPort::File::getListOfFiles(const std::string& exten
 	return listOfFiles;
 }
 
+
+
 void AuxPort::File::Log()
 {
 	setColour(AuxPort::ColourType::Cyan);
@@ -484,6 +486,20 @@ std::vector<std::string> AuxPort::Directory::getListOfFiles(const std::string& f
 			auto extensionName = currentPath.extension().string();
 			if (extensionName == fileExtension)
 				files.push_back(currentPath.string());
+		}
+	return files;
+}
+
+std::vector<std::string> AuxPort::Directory::getListOfFilesWithoutPaths(const std::string& fileExtension)
+{
+	std::vector<std::string> files;
+	for(const auto& entry : std::filesystem::directory_iterator(path))
+		if (entry.is_regular_file())
+		{
+			std::filesystem::path currentPath(entry);
+			auto extensionName = currentPath.extension().string();
+			if (extensionName == fileExtension)
+				files.push_back(currentPath.filename().string());
 		}
 	return files;
 }
