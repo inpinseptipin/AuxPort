@@ -8,7 +8,7 @@ AuxPort::Audio::FourierTransform::FourierTransform(size_t fftSize)
 	_log2N = uint32(log2(fftSize));
 }
 
-void AuxPort::Audio::FourierTransform::computeTransform(const std::vector<float>& inputBuffer, std::vector<float>& outputBuffer)
+void AuxPort::Audio::FourierTransform::computeMagnitudeTransform(const std::vector<float>& inputBuffer, std::vector<float>& outputBuffer, bool normalized)
 {
 	AuxAssert(inputBuffer.size() == _fftValues.size(), "Size of input buffer not same as the FFT Engine's expectation");
 	AuxAssert(outputBuffer.size() == inputBuffer.size(), "FFT output buffer's size should be the same as the input audio buffer");
@@ -16,17 +16,54 @@ void AuxPort::Audio::FourierTransform::computeTransform(const std::vector<float>
 		_fftValues[i] = inputBuffer[i];
 	compute();
 	for (uint32_t i = 0; i < inputBuffer.size(); i++)
-		outputBuffer[i] = _fftValues[i].real();
+		outputBuffer[i] = normalized == true ? _fftValues[i].real() / outputBuffer.size(): _fftValues[i].real();
 }
+
+void AuxPort::Audio::FourierTransform::computeMagnitudeTransform(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples, bool normalized)
+{
+	AuxAssert(inputBuffer != nullptr, "Cannot process an undefined pointer to buffer");
+	AuxAssert(outputBuffer != nullptr, "Cannot process an undefined pointer to buffer");
+	AuxAssert(numberOfSamples == _fftValues.size(), "Size of input buffer not same as the FFT Engine's expectation");
+	for (uint32_t i = 0;i < numberOfSamples;i++)
+		_fftValues[i] = inputBuffer[i];
+	compute();
+	for (uint32_t i = 0;i < numberOfSamples;i++)
+		outputBuffer[i] = normalized == true ? _fftValues[i].real() / numberOfSamples : _fftValues[i].real();
+}
+
+void AuxPort::Audio::FourierTransform::computeTransform(const std::vector<float>& inputBuffer, std::vector<std::complex<float>>& complexVector)
+{
+	AuxAssert(inputBuffer.size() == _fftValues.size(), "Size of input buffer not same as the FFT Engine's expectation");
+	AuxAssert(complexVector.size() == inputBuffer.size(), "FFT output buffer's size should be the same as the input audio buffer");
+	for (uint32_t i = 0;i < inputBuffer.size();i++)
+		_fftValues[i] = inputBuffer[i];
+	compute();
+	for (uint32_t i = 0;i < inputBuffer.size();i++)
+		complexVector[i] = _fftValues[i];
+}
+
 
 void AuxPort::Audio::FourierTransform::computeInverseTransform(std::vector<float>& outputBuffer)
 {
+	AuxAssert(outputBuffer.size() == _fftValues.size(), "Size of input buffer not same as the FFT Engine's expectation");
 	for (uint32_t i = 0; i < _fftValues.size(); i++)
 		_fftValues[i] = std::conj(_fftValues[i]);
 	compute();
 	for (uint32_t i = 0; i < _fftValues.size(); i++)
 		_fftValues[i] = std::conj(_fftValues[i]);
 	for (uint32_t i = 0; i < _fftValues.size(); i++)
+		outputBuffer[i] = _fftValues[i].real();
+}
+
+void AuxPort::Audio::FourierTransform::computeInverseTransform(float* outputBuffer, uint32_t numberOfSamples)
+{
+	AuxAssert(numberOfSamples == _fftValues.size(), "Size of input buffer not same as the FFT Engine's expectation");
+	for (uint32_t i = 0;i < numberOfSamples;i++)
+		_fftValues[i] = std::conj(_fftValues[i]);
+	compute();
+	for (uint32_t i = 0; i < numberOfSamples; i++)
+		_fftValues[i] = std::conj(_fftValues[i]);
+	for (uint32_t i = 0; i < numberOfSamples; i++)
 		outputBuffer[i] = _fftValues[i].real();
 }
 
