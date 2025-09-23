@@ -110,6 +110,14 @@ namespace AuxPort
 			return 20.0f * log10f(val);
 		}
 
+		static inline std::vector<float> linearTodB(std::vector<float>& data)
+		{
+			auto dbData = data;
+			for (uint32_t i = 0;i < data.size();i++)
+				dbData[i] = 20.0f * log10f(data[i]);
+			return dbData;
+		}
+
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Converts double-precision float to decibels (dB)		
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -117,6 +125,7 @@ namespace AuxPort
 		{
 			return 20.0 * log10(val);
 		}
+
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Fill a standard vector with zeros		
@@ -261,7 +270,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// @brief Dot-Divide operation over a std::vector
+		/// @brief Dot-Multiply operation over a std::vector
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline void multiply(std::vector<sample>& vector, sample value)
@@ -271,7 +280,7 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// @brief Dot-Divide operation over a std::vector
+		/// @brief Dot-multiply operation over a std::vector
 		///////////////////////////////////////////////////////////////////////////////////////
 		template<class sample>
 		static inline void multiply(std::vector<sample>& vector1, const std::vector<sample>& vector2)
@@ -279,6 +288,8 @@ namespace AuxPort
 			for (uint32_t i = 0; i < vector1.size(); i++)
 				vector1[i] *= vector2[i];
 		}
+
+		
 		
 
 		template<class sample>

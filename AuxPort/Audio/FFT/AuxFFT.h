@@ -37,9 +37,12 @@
 
 */
 /*===================================================================================*/
-#include "../Buffer/AuxBuffer.h"
+#include "../../Core/Env/AuxEnv.h"
+#include "../Windows/AuxWindow.h"
+#include <vector>
 #include <complex>
 #include <valarray>
+#include "../../Core/Utility/AuxCircularBuffer.h"
 
 namespace AuxPort
 {
@@ -188,6 +191,31 @@ namespace AuxPort
 		private:
 
 			std::vector<float> _dctValues;
+		};
+
+		class STFT
+		{
+		public:
+			enum StateMachine
+			{
+				initial, full, end
+			};
+			STFT(uint32_t fftSize, uint32_t overlapPercentage,AuxPort::Audio::Window::Type window = AuxPort::Audio::Window::HannWin);
+			~STFT();
+			void computeMagnitudeTransform(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples, AuxPort::Audio::STFT::StateMachine stateMachine = AuxPort::Audio::STFT::StateMachine::full);
+		protected:
+
+			std::unique_ptr<AuxPort::Audio::FourierTransform> fourierTransform;
+			uint32_t fftSize;
+			uint32_t overlapPercentage;
+			std::vector<float> initialHalfWindow;
+			std::vector<float> lastHalfWindow;
+			std::vector<float> fullWindow;
+		
+			float* inputBufferData;
+			float* fftBuffer;
+			AuxPort::CircularBufferEngine circEngine;
+			StateMachine states;
 		};
 
 

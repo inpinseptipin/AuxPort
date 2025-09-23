@@ -251,3 +251,66 @@ size_t AuxPort::Audio::DiscreteCosineTransform::size() const
 {
 	return _dctValues.size();
 }
+
+AuxPort::Audio::STFT::STFT(uint32_t fftSize, uint32_t overlapPercentage, AuxPort::Audio::Window::Type window)
+{
+
+	AuxAssert(fftSize > 16 && fftSize < 16384, "FFT Size has to fall within [16,16384]");
+	AuxAssert(overlapPercentage >= 0 && overlapPercentage <= 75, "Overlap percentage has to fall within [0,75]");
+	uint32 isPowerOfTwo = (uint32)(fftSize & (fftSize - 1));
+	AuxAssert(isPowerOfTwo == 0, "Library is compatible for FFT sizes that are multiples of 2");
+	fourierTransform.reset(new AuxPort::Audio::FourierTransform(fftSize));
+	this->fftSize = fftSize;
+	this->overlapPercentage = overlapPercentage;
+	fullWindow = AuxPort::Audio::Window::generate<float>(fftSize, window);
+	fftBuffer = new float[fftSize];
+	inputBufferData = new float[fftSize];
+	circEngine.attachPointer(inputBufferData, fftSize);
+}
+
+AuxPort::Audio::STFT::~STFT()
+{
+	delete[] fftBuffer;
+	delete[] inputBufferData;
+}
+
+void AuxPort::Audio::STFT::computeMagnitudeTransform(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples, AuxPort::Audio::STFT::StateMachine stateMachine)
+{
+	states = stateMachine;
+	AuxAssert(inputBuffer != nullptr, "Input Buffer cannot be a nullptr");
+	AuxAssert(outputBuffer != nullptr, "Output Buffer cannot be a nullptr");
+	AuxAssert(numberOfSamples >= 16 && numberOfSamples <= 16384, "Number of Samples has to fall within [16,16384]");
+	AuxAssert(numberOfSamples == fftSize, "Number of samples == fftSize");
+	if (states == initial)
+	{
+		for (uint32_t i = 0;i < fftSize/2;i++)
+			circEngine.push(0.0f);
+		for (uint32_t i = fftSize /2;i < fftSize;i++)
+			circEngine.push(inputBuffer[i-fftSize/2]);
+		for (uint32_t i = 0;i < fftSize;i++)
+			fftBuffer[i] = circEngine.pop() * fullWindow[i];
+		circEngine.Log();
+		fourierTransform->computeMagnitudeTransform(fftBuffer, outputBuffer, fftSize);
+		for (uint32_t i = fftSize / 2;i < fftSize;i++)
+			circEngine.push(inputBuffer[i]);
+	}
+	else if (states == full)
+	{
+		for (uint32_t i = 0;i < fftSize/2;i++)
+			circEngine.push(inputBuffer[i]);
+		for (uint32_t i = 0;i < fftSize;i++)
+			fftBuffer[i] = circEngine.pop() * fullWindow[i];
+		circEngine.Log();
+		fourierTransform->computeMagnitudeTransform(fftBuffer, outputBuffer, fftSize);
+		for (uint32_t i = fftSize / 2;i < fftSize;i++)
+			circEngine.push(inputBuffer[i]);
+	}
+	else if (states == end)
+	{
+		for (uint32_t i = 0;i < fftSize / 2;i++)
+			circEngine.push(0.0f);
+		for (uint32_t i = 0;i < fftSize;i++)
+			fftBuffer[i] = circEngine.pop() * fullWindow[i];
+		fourierTransform->computeMagnitudeTransform(fftBuffer, outputBuffer, fftSize);
+	}
+}

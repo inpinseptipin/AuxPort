@@ -124,6 +124,28 @@ namespace AuxPort
 				windowBuffer.erase(windowBuffer.begin(), windowBuffer.begin() + endIndex);
 			}
 
+			/**
+			  @brief Trims a window from the start or end with a percent amount
+			  @param windowBuffer
+			  @param trimType
+			  @param trimPercent
+			  \code{.cpp}
+			  auto window = AuxPort::Audio::Window::generate<float>(256);
+			  AuxPort::Audio::Window::trim<float>(window,AuxPort::Audio::Window::TrimType::fromStart,25);
+			  \endcode
+			 */
+			template<class sample>
+			static std::vector<sample> trim_r(const std::vector<sample>& windowBuffer, TrimType trimType, float trimPercent)
+			{
+				AuxAssert(windowBuffer.size() > 0, "Cannot trim an empty window");
+				AuxAssert(trimPercent > 0 && trimPercent < 100, "Why would you even try that");
+				trimPercent = trimType == TrimType::fromStart ? trimPercent : 100 - trimPercent;
+				auto endIndex = static_cast<size_t>(0.01 * trimPercent * windowBuffer.size());
+				auto newWindowBuffer = windowBuffer;
+				newWindowBuffer.erase(newWindowBuffer.begin(), newWindowBuffer.begin() + endIndex);
+				return newWindowBuffer;
+			}
+
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// @brief Returns a std::vector with a Sampled Window Function
 			///////////////////////////////////////////////////////////////////////////////////////
