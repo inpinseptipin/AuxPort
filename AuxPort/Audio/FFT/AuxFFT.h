@@ -200,25 +200,40 @@ namespace AuxPort
 			{
 				initial, full, end
 			};
+			/**
+			  @brief Initializes the STFT engine (Only supports 50% overlap)
+			  @param fftSize
+			  @param overlapPercentage
+			  @param window
+			  \code{.cpp}
+			  
+			  \endcode 
+			 */
 			STFT(uint32_t fftSize, uint32_t overlapPercentage,AuxPort::Audio::Window::Type window = AuxPort::Audio::Window::HannWin);
 			~STFT();
+			/**
+			  @brief Computes the magnitude transform and returns a real valued 1-D vector of fftSize
+			  @param inputBuffer
+			  @param outputBuffer
+			  @param numberOfSamples
+			  @param stateMachine
+			  \code{.cpp}
+			  
+			  \endcode 
+			 */
 			void computeMagnitudeTransform(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples, AuxPort::Audio::STFT::StateMachine stateMachine = AuxPort::Audio::STFT::StateMachine::full);
 		protected:
-
 			std::unique_ptr<AuxPort::Audio::FourierTransform> fourierTransform;
 			uint32_t fftSize;
 			uint32_t overlapPercentage;
 			std::vector<float> initialHalfWindow;
 			std::vector<float> lastHalfWindow;
 			std::vector<float> fullWindow;
-		
 			float* inputBufferData;
 			float* fftBuffer;
 			AuxPort::CircularBufferEngine circEngine;
 			StateMachine states;
 		};
-
-
 	}
 }
 #endif

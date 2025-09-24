@@ -142,7 +142,7 @@ namespace AuxPort
 				trimPercent = trimType == TrimType::fromStart ? trimPercent : 100 - trimPercent;
 				auto endIndex = static_cast<size_t>(0.01 * trimPercent * windowBuffer.size());
 				auto newWindowBuffer = windowBuffer;
-				newWindowBuffer.erase(newWindowBuffer.begin(), newWindowBuffer.begin() + endIndex);
+				trimType == TrimType::fromStart ? newWindowBuffer.erase(newWindowBuffer.begin(), newWindowBuffer.begin() + endIndex) : newWindowBuffer.erase(newWindowBuffer.begin() + endIndex, newWindowBuffer.end());
 				return newWindowBuffer;
 			}
 
