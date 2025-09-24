@@ -16,7 +16,7 @@ void AuxPort::Audio::FourierTransform::computeMagnitudeTransform(const std::vect
 		_fftValues[i] = inputBuffer[i];
 	compute();
 	for (uint32_t i = 0; i < inputBuffer.size(); i++)
-		outputBuffer[i] = normalized == true ? _fftValues[i].real() / outputBuffer.size(): _fftValues[i].real();
+		outputBuffer[i] = normalized == true ? std::abs(_fftValues[i]) / outputBuffer.size(): std::abs(_fftValues[i]);
 }
 
 void AuxPort::Audio::FourierTransform::computeMagnitudeTransform(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples, bool normalized)
@@ -28,7 +28,7 @@ void AuxPort::Audio::FourierTransform::computeMagnitudeTransform(const float* in
 		_fftValues[i] = inputBuffer[i];
 	compute();
 	for (uint32_t i = 0;i < numberOfSamples;i++)
-		outputBuffer[i] = normalized == true ? _fftValues[i].real() / numberOfSamples : _fftValues[i].real();
+		outputBuffer[i] = normalized == true ? std::abs(_fftValues[i]) / numberOfSamples : std::abs(_fftValues[i]);
 }
 
 void AuxPort::Audio::FourierTransform::computeTransform(const std::vector<float>& inputBuffer, std::vector<std::complex<float>>& complexVector)
@@ -285,11 +285,10 @@ void AuxPort::Audio::STFT::computeMagnitudeTransform(const float* inputBuffer, f
 	{
 		for (uint32_t i = 0;i < fftSize/2;i++)
 			circEngine.push(0.0f);
-		for (uint32_t i = fftSize /2;i < fftSize;i++)
-			circEngine.push(inputBuffer[i-fftSize/2]);
+		for (uint32_t i = 0;i < fftSize/2;i++)
+			circEngine.push(inputBuffer[i]);
 		for (uint32_t i = 0;i < fftSize;i++)
 			fftBuffer[i] = circEngine.pop() * fullWindow[i];
-		circEngine.Log();
 		fourierTransform->computeMagnitudeTransform(fftBuffer, outputBuffer, fftSize);
 		for (uint32_t i = fftSize / 2;i < fftSize;i++)
 			circEngine.push(inputBuffer[i]);
@@ -300,7 +299,6 @@ void AuxPort::Audio::STFT::computeMagnitudeTransform(const float* inputBuffer, f
 			circEngine.push(inputBuffer[i]);
 		for (uint32_t i = 0;i < fftSize;i++)
 			fftBuffer[i] = circEngine.pop() * fullWindow[i];
-		circEngine.Log();
 		fourierTransform->computeMagnitudeTransform(fftBuffer, outputBuffer, fftSize);
 		for (uint32_t i = fftSize / 2;i < fftSize;i++)
 			circEngine.push(inputBuffer[i]);
