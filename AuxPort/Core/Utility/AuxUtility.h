@@ -420,6 +420,8 @@ namespace AuxPort
 			data = data.replace(data.find("."), data.find("."), "_");
 			return data;
 		}
+
+		
 #if AUXPORT_EXP == 1337
 		/**
 		  @brief Fast Approximation for conputing x^n 
@@ -593,6 +595,51 @@ namespace AuxPort
 
 	
 
+	///////////////////////////////////////////////////////////////////////////////////////
+	/// @brief Consist of Matrix Manipulation and Data Management operations
+	///////////////////////////////////////////////////////////////////////////////////////
+	namespace DataProcessing
+	{
+		class DataUtility
+		{
+		public:
+		   /**
+			   @brief Convert 2D String to Float Vector 
+			   @param inputData 
+			   @param outputData 
+		   **/
+			static void convertToFloat(const std::vector<std::vector<std::string>>& inputData, std::vector<std::vector<float>>& outputData);
+			
+		   /**
+			   @brief  Reshapes the 2D m*n to r*c vector 
+			   @tparam data       - uint32,int32,float,double,uint8_t,std::string,bool
+			   @param  inputData  - 
+			   @param  outputData - 
+			   @param  rows       - 
+			   @param  cols       - 
+		   **/
+			template<class data>
+			static void reshape(const std::vector<std::vector<data>>& inputData, std::vector<std::vector<data>>& outputData, int32_t rows, int32_t cols) //!< 
+			{
+				AuxAssert(rows * cols == inputData.size() * inputData[0].size(), "New Reshape Dimensions are not compatible");
+				int indexRow = 0;
+				int indexColumn = 0;
+				outputData.resize(rows);
+				for (uint32_t i = 0;i < outputData.size();i++)
+					outputData[i].resize(cols);
+				for (uint32_t i = 0;i < inputData.size();i++)
+				{
+					for (uint32_t j = 0;j < inputData[0].size();j++)
+					{
+						outputData[indexRow][indexColumn++] = inputData[i][j];
+						indexColumn = indexColumn == cols ? 0 : indexColumn;
+						indexRow = indexColumn == 0 ? indexRow + 1 : indexRow;
+					}
+				}
+			}
+		};
+		
+	}
 
 
 	

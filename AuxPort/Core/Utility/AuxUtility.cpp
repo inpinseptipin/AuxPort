@@ -115,6 +115,12 @@ float AuxPort::FastRandomFloat::getRandomFloat(float start, float end)
     return start + (end - start) * (getRandomFloat() + 1.0f) / 2.0f;
 }
 
-
-
-
+void AuxPort::DataProcessing::DataUtility::convertToFloat(const std::vector<std::vector<std::string>>& inputData, std::vector<std::vector<float>>& outputData)
+{
+    outputData.resize(inputData.size());
+    for (uint32_t i = 0;i < outputData.size();i++)
+        outputData[i].resize(inputData[0].size());
+    for (uint32_t i = 0;i < inputData.size();i++)
+        for (uint32_t j = 0;j < inputData[0].size();j++)
+            outputData[i][j] = std::stof(inputData[i][j]);
+}
