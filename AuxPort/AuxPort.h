@@ -75,6 +75,7 @@
 *			Graphics Headers
 */
 #include "Graphics/Scopes/AuxScope.h"
+#include "Graphics/Images/AuxImage.h"
 
 
 

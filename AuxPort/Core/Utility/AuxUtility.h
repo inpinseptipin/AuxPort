@@ -110,12 +110,16 @@ namespace AuxPort
 			return 20.0f * log10f(val);
 		}
 
-		static inline std::vector<float> linearTodB(std::vector<float>& data)
+		static inline void linearTodB(std::vector<float>& data)
 		{
-			auto dbData = data;
 			for (uint32_t i = 0;i < data.size();i++)
-				dbData[i] = 20.0f * log10f(data[i]);
-			return dbData;
+				data[i] = linearTodB(data[i]);
+		}
+
+		static inline void normFromNegInfinity(std::vector<float>& data, float normValue)
+		{
+			for (uint32_t i = 0;i < data.size();i++)
+				data[i] = data[i] < normValue ? normValue : data[i];
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -421,7 +425,16 @@ namespace AuxPort
 			return data;
 		}
 
-		
+		template<class sample>
+		static sample getMax(const std::vector<std::vector<sample>>& data)
+		{
+			sample val = data[0][0];
+			for (uint32_t i = 0;i < data.size();i++)
+				for (uint32_t j = 0;j < data[0].size();j++)
+					val = val < data[i][j] ? data[i][j] : val;
+			return val;
+		}
+
 #if AUXPORT_EXP == 1337
 		/**
 		  @brief Fast Approximation for conputing x^n 
@@ -637,6 +650,7 @@ namespace AuxPort
 					}
 				}
 			}
+
 		};
 		
 	}

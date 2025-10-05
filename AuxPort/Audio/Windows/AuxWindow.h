@@ -121,8 +121,9 @@ namespace AuxPort
 				AuxAssert(trimPercent > 0 && trimPercent < 100, "Why would you even try that?");
 				trimPercent = trimType == TrimType::fromStart ? trimPercent : 100 - trimPercent;
 				auto endIndex = static_cast<size_t>(0.01 * trimPercent * windowBuffer.size());
-				windowBuffer.erase(windowBuffer.begin(), windowBuffer.begin() + endIndex);
+				trimType == TrimType::fromStart ? windowBuffer.erase(windowBuffer.begin(), windowBuffer.begin() + endIndex) : windowBuffer.erase(windowBuffer.begin() + endIndex, windowBuffer.end());
 			}
+
 
 			/**
 			  @brief Trims a window from the start or end with a percent amount

@@ -11,10 +11,26 @@ void AuxPort::GrayScaleImage::setDimensions(uint32_t x, uint32_t y)
 		imageData[i].resize(x);
 }
 
-void AuxPort::GrayScaleImage::addColumn(const std::vector<float>& imageColumn, uint32_t columnNumber)
+void AuxPort::GrayScaleImage::addColumn(const std::vector<float>& imageColumn, uint32_t columnNumber,int minRange,int maxRange)
 {
 	AuxAssert(columnNumber <= width, "ColumnNumber is greater than the width of the image");
 	AuxAssert(imageColumn.size() == height,"Image Column size does not match the height of the image");
-	auto imageChannel = imageData[columnNumber];
+	auto imageChannel = imageData[columnNumber].data();
+	for (uint32_t i = 0;i < imageColumn.size();i++)
+		imageChannel[i] = static_cast<uint8_t>(std::round(AuxPort::Utility::remap<float>(imageColumn[i], 0, 255, minRange, maxRange)));
+}
 
+std::vector<std::vector<uint8_t>>* AuxPort::GrayScaleImage::getImageData()
+{
+	return &imageData;
+}
+
+int AuxPort::GrayScaleImage::getRows()
+{
+	return imageData.size();
+}
+
+int AuxPort::GrayScaleImage::getColumns()
+{
+	return imageData[0].size();
 }

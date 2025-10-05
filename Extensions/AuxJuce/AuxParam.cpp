@@ -103,7 +103,7 @@ void AuxPort::Extensions::ParameterMap::saveToFile(const std::string& fileName)
 {
 	csv.reset(new AuxPort::CSV());
 	csv->open(fileName, AuxPort::File::Mode::Write, true);
-	csv->setHeader({ "Parameter","Raw Value","Normalized Value","Normalized Max","Normalized Min"});
+	csv->setHeader({ "Parameter","Raw Value","Normalized Value","Normalized Max","Normalized Min","Interval"});
 	auto juceParameters = audioProcessor->getParameters();
 	for (auto i = parameters.begin(); i != parameters.end(); i++)
 	{

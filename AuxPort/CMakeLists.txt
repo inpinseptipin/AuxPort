@@ -86,6 +86,8 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Stimulus/AuxStimulus.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/Scopes/AuxScope.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/Scopes/AuxScope.cpp
+    ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/Images/AuxImage.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/Images/AuxImage.cpp
    
 )
 

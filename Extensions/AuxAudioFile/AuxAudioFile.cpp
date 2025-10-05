@@ -25,7 +25,9 @@ void AuxPort::Extensions::WaveReader::readBuffer()
 	for (uint32_t i = 0; i < streamSize; i++)
 	{
 		for (uint32_t j = 0; j < numberOfStreamChannels; j++)
+		{
 			streamingBuffer->at(j)[i] = file->samples[j][sampleCounter];
+		}
 		sampleCounter++;
 		if (sampleCounter == file->samples[0].size() - 1)
 			sampleCounter = 0;
