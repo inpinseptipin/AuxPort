@@ -435,6 +435,14 @@ namespace AuxPort
 			return val;
 		}
 
+		static inline std::string toAlphabet(uint32_t indexNumber)
+		{
+			AuxAssert(indexNumber >= 0 && indexNumber <= 25,"English alphabet only consist of 26 letters last I checked");
+			std::string letter;
+			letter.push_back(static_cast<char>(65 + indexNumber));
+			return letter;
+		}
+
 #if AUXPORT_EXP == 1337
 		/**
 		  @brief Fast Approximation for conputing x^n 
