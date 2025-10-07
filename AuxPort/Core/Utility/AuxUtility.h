@@ -295,13 +295,18 @@ namespace AuxPort
 
 		
 		
-
+		/**
+		  @brief Creates an impulse [in-place] of size vector 
+		  @param vector
+		  @param numberOfSamples
+		 */
 		template<class sample>
-		static inline void impulse(std::vector<sample>& vector, size_t numberOfSamples)
+		static inline void impulse(std::vector<sample>& vector, size_t numberOfSamples,uint32_t impulseIndex = 0)
 		{
+			AuxAssert(impulseIndex <= numberOfSamples, "Impulse index should not be greater than number of samples");
 			vector.resize(numberOfSamples);
 			std::fill(vector.begin(), vector.end(), 0.0f);
-			vector[0] = 1.0f;	
+			vector[impulseIndex] = 1.0f;	
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -425,6 +430,10 @@ namespace AuxPort
 			return data;
 		}
 
+		/**
+		  @brief  Returns the max value in a 1D vector
+		  @param data : 1D Vector
+		 */
 		template<class sample>
 		static sample getMax(const std::vector<std::vector<sample>>& data)
 		{
@@ -435,6 +444,13 @@ namespace AuxPort
 			return val;
 		}
 
+		/**
+		  @brief Returns a string with index of the english alphabet mapped to its String
+		  @param indexNumber
+		  @return 
+		  @details
+		  Example : toAlphabet(3) would return a string holding the value = "C"
+		 */
 		static inline std::string toAlphabet(uint32_t indexNumber)
 		{
 			AuxAssert(indexNumber >= 0 && indexNumber <= 25,"English alphabet only consist of 26 letters last I checked");
@@ -483,7 +499,7 @@ namespace AuxPort
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	/// @brief Provides funnctions to get Information about current Enviroment
+	/// @brief Provides funnctions to get Information about your PC
 	///////////////////////////////////////////////////////////////////////////////////////
 	class About
 	{
@@ -659,6 +675,8 @@ namespace AuxPort
 				}
 			}
 
+
+			
 		};
 		
 	}

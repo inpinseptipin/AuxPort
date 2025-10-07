@@ -6,6 +6,9 @@
 #include "../../Core/Utility/AuxUtility.h"
 namespace AuxPort
 {
+/**
+	[Abstract Class] Base class for all things Images
+ */
 	class Image : public virtual AuxPort::ILog
 	{
 	public:
@@ -29,6 +32,7 @@ namespace AuxPort
 		std::vector<std::vector<uint8_t>>* getImageData();
 		int getRows() override;
 		int getColumns() override;
+		void Log() override;
 	protected:
 		std::vector<std::vector<uint8_t>> imageData;
 		uint32_t width = 0;

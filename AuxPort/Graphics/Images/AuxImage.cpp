@@ -34,3 +34,11 @@ int AuxPort::GrayScaleImage::getColumns()
 {
 	return imageData[0].size();
 }
+
+void AuxPort::GrayScaleImage::Log()
+{
+	setColour(AuxPort::ColourType::Green);
+	std::cout <<"Image Type : Gray Scale\n";
+	std::cout <<"Size : " + std::to_string(getRows()) + "x" + std::to_string(getColumns()) + "\n";
+	setColour(AuxPort::ColourType::White);
+}
