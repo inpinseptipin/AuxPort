@@ -34,6 +34,12 @@ void AuxPort::Extensions::WaveReader::readBuffer()
 	}
 }
 
+void AuxPort::Extensions::WaveReader::seek(double timeInSeconds)
+{
+	AuxAssert(timeInSeconds > file->getLengthInSeconds(), "Seek time is greater than song length");
+	sampleCounter = (timeInSeconds * file->getSampleRate());
+}
+
 void AuxPort::Extensions::WaveWriter::attachFile(AudioFile<float>* file, uint32_t numberOfChannels, uint32_t numberOfSamples)
 {
 	this->file = file;
