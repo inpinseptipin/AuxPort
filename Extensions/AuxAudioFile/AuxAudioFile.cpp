@@ -19,7 +19,7 @@ void AuxPort::Extensions::WaveFile::attachStreamBuffer(std::vector<std::vector<f
 }
 
 
-void AuxPort::Extensions::WaveReader::readBuffer(bool zeroPadding)
+void AuxPort::Extensions::WaveReader::readBuffer(bool toLoop)
 {
 	AuxAssert(file != nullptr, "Need a pointer to the AudioFile object to access the samples");
 	for (uint32_t i = 0; i < streamSize; i++)
@@ -30,7 +30,7 @@ void AuxPort::Extensions::WaveReader::readBuffer(bool zeroPadding)
 		}
 		sampleCounter = sampleCounter == UINT_MAX ? UINT_MAX : sampleCounter++;
 		if (sampleCounter == file->samples[0].size() - 1)
-			sampleCounter = zeroPadding ? UINT_MAX : 0;
+			sampleCounter = toLoop ? UINT_MAX : 0;
 	}
 }
 
@@ -38,6 +38,11 @@ void AuxPort::Extensions::WaveReader::seek(double timeInSeconds)
 {
 	AuxAssert(timeInSeconds > file->getLengthInSeconds(), "Seek Time greater than length of song");
 	sampleCounter = timeInSeconds * file->getSampleRate();
+}
+
+void AuxPort::Extensions::WaveReader::reset()
+{
+	sampleCounter = 0;
 }
 
 void AuxPort::Extensions::WaveWriter::attachFile(AudioFile<float>* file, uint32_t numberOfChannels, uint32_t numberOfSamples)

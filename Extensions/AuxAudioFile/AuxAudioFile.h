@@ -21,7 +21,7 @@ namespace AuxPort
 			  @brief Use this function to attach a streaming buffer to write to read/write from a file 
 			  @param streamingBuffer
 			 */
-			void attachStreamBuffer(std::vector<std::vector<float>>* streamingBuffer);
+			virtual void attachStreamBuffer(std::vector<std::vector<float>>* streamingBuffer);
 			/**
 			  @brief Use this function to attach an AudioFile pointer for reading/writing to a file.
 			  @param file
@@ -36,6 +36,9 @@ namespace AuxPort
 			uint32_t sampleCounter;
 		};
 
+		/**
+			WaveReader is a buffer based wave reader class
+		*/
 		class WaveReader : public WaveFile
 		{
 		public:
@@ -44,16 +47,24 @@ namespace AuxPort
 			WaveReader(const WaveReader& waveReader) = default;
 			/**
 			  @brief Fill in the next n-samples in your streaming buffer 
-			  \code{.cpp}
-			  
-			  \endcode 
+			  @param toLoop
 			 */
-			void readBuffer(bool zeroPadding = true);
-
+			void readBuffer(bool toLoop = true);
+			/**
+			   @brief Seeks the track to particular time
+			   @param timeInSeconds
+			*/
 			void seek(double timeInSeconds);
+			/**
+			   @brief Resets the track to start
+			*/
+			void reset();
 		};
 
 
+		/**
+			WaveWriter is a buffer based wave writer class
+		*/
 		class WaveWriter : public WaveFile
 		{
 		public:
