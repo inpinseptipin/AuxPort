@@ -278,5 +278,6 @@ namespace AuxPort
 		float poppedSample;
 		size_t bufferSize;
 	};
+
 }
 #endif

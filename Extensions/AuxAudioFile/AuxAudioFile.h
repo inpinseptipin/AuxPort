@@ -48,7 +48,8 @@ namespace AuxPort
 			  
 			  \endcode 
 			 */
-			void readBuffer();
+			void readBuffer(bool zeroPadding = true);
+
 			void seek(double timeInSeconds);
 		};
 

@@ -234,6 +234,8 @@ namespace AuxPort
 			AuxPort::CircularBufferEngine circEngine;
 			StateMachine states;
 		};
+
+
 	}
 }
 #endif
