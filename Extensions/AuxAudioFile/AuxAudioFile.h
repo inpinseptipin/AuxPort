@@ -33,7 +33,7 @@ namespace AuxPort
 			uint32_t streamSize;
 			uint32_t numberOfStreamChannels;
 			std::vector<std::vector<float>>* streamingBuffer;
-			uint32_t sampleCounter;
+			uint32_t sampleCounter = 0;
 		};
 
 		/**
@@ -59,6 +59,13 @@ namespace AuxPort
 			   @brief Resets the track to start
 			*/
 			void reset();
+
+			void setLoop(double loopStartInSeconds,double loopEndInSeconds);
+			void enableLoop(bool loop);
+		protected:
+			size_t loopStartIndex;
+			size_t loopEndIndex;
+			bool userLoop = false;
 		};
 
 

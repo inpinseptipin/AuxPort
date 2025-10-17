@@ -1,12 +1,8 @@
 #include "AuxAudioFile.h"
 
-
-
-
 void AuxPort::Extensions::WaveFile::attachFile(AudioFile<float>* file)
 {
 	this->file = file;
-	this->sampleCounter = 0;
 }
 
 void AuxPort::Extensions::WaveFile::attachStreamBuffer(std::vector<std::vector<float>>* streamingBuffer)
@@ -28,6 +24,8 @@ void AuxPort::Extensions::WaveReader::readBuffer(bool toLoop)
 		{
 			streamingBuffer->at(j)[i] = sampleCounter == UINT_MAX ? 0.0f : file->samples[j][sampleCounter];
 		}
+		if (userLoop)
+			sampleCounter = sampleCounter >= loopEndIndex ? loopStartIndex : sampleCounter;
 		sampleCounter = sampleCounter == UINT_MAX ? UINT_MAX : sampleCounter++;
 		if (sampleCounter == file->samples[0].size() - 1)
 			sampleCounter = toLoop ? UINT_MAX : 0;
@@ -45,6 +43,24 @@ void AuxPort::Extensions::WaveReader::reset()
 	sampleCounter = 0;
 }
 
+void AuxPort::Extensions::WaveReader::setLoop(double loopStartInSeconds, double loopEndInSeconds)
+{
+	AuxAssert(loopEndInSeconds >= 0, "Loop End in seconds cannot be less than 0");
+	AuxAssert(loopStartInSeconds >= 0, "Loop Start in seconds cannot be less than 0");
+	AuxAssert(loopEndInSeconds <= file->getLengthInSeconds(), "Loop End has to be less than file length");
+	AuxAssert(loopStartInSeconds <= file->getLengthInSeconds(), "Loop Start has to be less than file length");
+	AuxAssert(loopEndInSeconds > loopStartInSeconds, "Loop End cannot be less than loop start");
+	this->loopStartIndex = loopStartInSeconds * file->getSampleRate();
+	this->loopEndIndex = loopEndInSeconds * file->getSampleRate();
+}
+
+void AuxPort::Extensions::WaveReader::enableLoop(bool loop)
+{
+	this->userLoop = loop;
+	sampleCounter = loopStartIndex;
+}
+
+
 void AuxPort::Extensions::WaveWriter::attachFile(AudioFile<float>* file, uint32_t numberOfChannels, uint32_t numberOfSamples)
 {
 	this->file = file;
@@ -53,8 +69,6 @@ void AuxPort::Extensions::WaveWriter::attachFile(AudioFile<float>* file, uint32_
 		file->samples[i].resize(numberOfSamples);
 	this->sampleCounter = 0;
 }
-
-
 
 void AuxPort::Extensions::WaveWriter::writeBuffer()
 {
