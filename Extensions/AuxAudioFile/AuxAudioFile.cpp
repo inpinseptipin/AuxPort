@@ -26,7 +26,7 @@ void AuxPort::Extensions::WaveReader::readBuffer(bool toLoop)
 		}
 		if (userLoop)
 			sampleCounter = sampleCounter >= loopEndIndex ? loopStartIndex : sampleCounter;
-		sampleCounter = sampleCounter == UINT_MAX ? UINT_MAX : sampleCounter++;
+		sampleCounter = sampleCounter == UINT_MAX ? UINT_MAX : sampleCounter+1;
 		if (sampleCounter == file->samples[0].size() - 1)
 			sampleCounter = toLoop ? UINT_MAX : 0;
 	}
@@ -58,6 +58,11 @@ void AuxPort::Extensions::WaveReader::enableLoop(bool loop)
 {
 	this->userLoop = loop;
 	sampleCounter = loopStartIndex;
+}
+
+double AuxPort::Extensions::WaveReader::getSongTime()
+{
+	return AuxPort::Utility::remap<double>(sampleCounter, 0, file->getLengthInSeconds(), 0, file->getNumSamplesPerChannel());
 }
 
 

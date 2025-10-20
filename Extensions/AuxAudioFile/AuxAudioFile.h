@@ -62,6 +62,7 @@ namespace AuxPort
 
 			void setLoop(double loopStartInSeconds,double loopEndInSeconds);
 			void enableLoop(bool loop);
+			double getSongTime();
 		protected:
 			size_t loopStartIndex;
 			size_t loopEndIndex;
