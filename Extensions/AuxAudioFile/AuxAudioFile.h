@@ -59,10 +59,37 @@ namespace AuxPort
 			   @brief Resets the track to start
 			*/
 			void reset();
-
-			void setLoop(double loopStartInSeconds,double loopEndInSeconds);
+			/**
+			   @brief Set loop start and end (in Seconds)
+			   @param loopStartInSeconds
+			   @param loopEndInSeconds
+			*/
+			void setLoopInSeconds(double loopStartInSeconds,double loopEndInSeconds);
+			/**
+			   @brief Set Loop [Start,End] = [0,1]
+			   @param loop
+			*/
+			void setLoop(double loopStart, double loopEnd);
+			/**
+			   @brief Enable Loop
+			   @param loop
+			*/
 			void enableLoop(bool loop);
-			double getSongTime();
+			/**
+			   @brief Get Current Playback Time
+			   @return 
+			*/
+			double getCurrentTime();
+			/**
+			   @brief Set Current Playback Time normalized to [0,1]
+			   @param time
+			*/
+			void setCurrentTime(double time);
+			/**
+			   @brief Set Current Playback Time (Seconds)
+			   @param time
+			*/
+			void setCurrentTimeInSeconds(double time);
 		protected:
 			size_t loopStartIndex;
 			size_t loopEndIndex;

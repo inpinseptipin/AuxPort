@@ -43,7 +43,7 @@ void AuxPort::Extensions::WaveReader::reset()
 	sampleCounter = 0;
 }
 
-void AuxPort::Extensions::WaveReader::setLoop(double loopStartInSeconds, double loopEndInSeconds)
+void AuxPort::Extensions::WaveReader::setLoopInSeconds(double loopStartInSeconds, double loopEndInSeconds)
 {
 	AuxAssert(loopEndInSeconds >= 0, "Loop End in seconds cannot be less than 0");
 	AuxAssert(loopStartInSeconds >= 0, "Loop Start in seconds cannot be less than 0");
@@ -54,15 +54,35 @@ void AuxPort::Extensions::WaveReader::setLoop(double loopStartInSeconds, double 
 	this->loopEndIndex = loopEndInSeconds * file->getSampleRate();
 }
 
+void AuxPort::Extensions::WaveReader::setLoop(double loopStart, double loopEnd)
+{
+	AuxAssert(loopStart >= 0 && loopStart < 1, "Loop Start has to be within the bounds of [0,LoopEnd]");
+	AuxAssert(loopEnd >= loopStart && loopEnd <= 1, "Loop End has to be within the bounds of [LoopStart,1]");
+	this->loopStartIndex = static_cast<uint32_t>(loopStart * file->getNumSamplesPerChannel());
+	this->loopEndIndex = static_cast<uint32_t>(loopEnd * file->getNumSamplesPerChannel());
+}
+
 void AuxPort::Extensions::WaveReader::enableLoop(bool loop)
 {
 	this->userLoop = loop;
 	sampleCounter = loopStartIndex;
 }
 
-double AuxPort::Extensions::WaveReader::getSongTime()
+double AuxPort::Extensions::WaveReader::getCurrentTime()
 {
 	return AuxPort::Utility::remap<double>(sampleCounter, 0, file->getLengthInSeconds(), 0, file->getNumSamplesPerChannel());
+}
+
+void AuxPort::Extensions::WaveReader::setCurrentTime(double time)
+{
+	AuxAssert(time >= 0 && time <= 1, "Time has to be in the range of [0,1]");
+	this->sampleCounter = static_cast<uint32_t>(time * file->getNumSamplesPerChannel());
+}
+
+void AuxPort::Extensions::WaveReader::setCurrentTimeInSeconds(double time)
+{
+	AuxAssert(time >= 0 && time <= file->getLengthInSeconds(), "Time has to be in the range of [0,Time Length]");
+	this->sampleCounter = AuxPort::Utility::remap<double>(time, 0, file->getNumSamplesPerChannel(), 0, file->getLengthInSeconds());
 }
 
 
