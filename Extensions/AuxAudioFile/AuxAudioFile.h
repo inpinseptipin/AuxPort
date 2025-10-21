@@ -91,8 +91,8 @@ namespace AuxPort
 			*/
 			void setCurrentTimeInSeconds(double time);
 		protected:
-			size_t loopStartIndex;
-			size_t loopEndIndex;
+			size_t loopStartIndex = 0;
+			size_t loopEndIndex = 0;
 			bool userLoop = false;
 		};
 
