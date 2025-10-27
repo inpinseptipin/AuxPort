@@ -1,6 +1,6 @@
 #include "AuxImage.h"
 
-void AuxPort::GrayScaleImage::setDimensions(uint32_t x, uint32_t y)
+void AuxPort::Graphics::GrayScaleImage::setDimensions(uint32_t x, uint32_t y)
 {
 	AuxAssert(x < 10000, "Can only accommodate realistic image resolutions");
 	AuxAssert(y < 10000, "Can only accomodate realistic image resolutions");
@@ -11,7 +11,7 @@ void AuxPort::GrayScaleImage::setDimensions(uint32_t x, uint32_t y)
 		imageData[i].resize(x);
 }
 
-void AuxPort::GrayScaleImage::addColumn(const std::vector<float>& imageColumn, uint32_t columnNumber,int minRange,int maxRange)
+void AuxPort::Graphics::GrayScaleImage::addColumn(const std::vector<float>& imageColumn, uint32_t columnNumber,int minRange,int maxRange)
 {
 	AuxAssert(columnNumber <= width, "ColumnNumber is greater than the width of the image");
 	AuxAssert(imageColumn.size() == height,"Image Column size does not match the height of the image");
@@ -20,22 +20,22 @@ void AuxPort::GrayScaleImage::addColumn(const std::vector<float>& imageColumn, u
 		imageChannel[i] = static_cast<uint8_t>(std::round(AuxPort::Utility::remap<float>(imageColumn[i], 0, 255, minRange, maxRange)));
 }
 
-std::vector<std::vector<uint8_t>>* AuxPort::GrayScaleImage::getImageData()
+std::vector<std::vector<uint8_t>>* AuxPort::Graphics::GrayScaleImage::getImageData()
 {
 	return &imageData;
 }
 
-int AuxPort::GrayScaleImage::getRows()
+int AuxPort::Graphics::GrayScaleImage::getRows()
 {
 	return imageData.size();
 }
 
-int AuxPort::GrayScaleImage::getColumns()
+int AuxPort::Graphics::GrayScaleImage::getColumns()
 {
 	return imageData[0].size();
 }
 
-void AuxPort::GrayScaleImage::Log()
+void AuxPort::Graphics::GrayScaleImage::Log()
 {
 	setColour(AuxPort::ColourType::Green);
 	std::cout <<"Image Type : Gray Scale\n";
