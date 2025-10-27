@@ -25,15 +25,24 @@ std::vector<std::vector<uint8_t>>* AuxPort::Graphics::GrayScaleImage::getImageDa
 	return &imageData;
 }
 
-int AuxPort::Graphics::GrayScaleImage::getRows()
+uint8_t AuxPort::Graphics::GrayScaleImage::getPoint(uint32_t x, uint32_t y) const noexcept
+{
+	AuxAssert(x < imageData.size(), "Queried Row is greater than number of rows");
+	AuxAssert(y < imageData[0].size(), "Queried Column is greater than number of columns");
+	return imageData[x][y];
+}
+
+
+int AuxPort::Graphics::GrayScaleImage::getRows() const noexcept
 {
 	return imageData.size();
 }
 
-int AuxPort::Graphics::GrayScaleImage::getColumns()
+int AuxPort::Graphics::GrayScaleImage::getColumns() const noexcept
 {
 	return imageData[0].size();
 }
+
 
 void AuxPort::Graphics::GrayScaleImage::Log()
 {

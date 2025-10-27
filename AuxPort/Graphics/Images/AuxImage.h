@@ -19,8 +19,8 @@ namespace AuxPort
 			Image(const Image& image) = default;
 			virtual void setDimensions(uint32_t x, uint32_t y) = 0;
 			virtual void addColumn(const std::vector<float>& imageColumn, uint32_t columnNumber, int minRange = 0, int maxRange = 1) = 0;
-			virtual int getRows() = 0;
-			virtual int getColumns() = 0;
+			virtual int getRows() const noexcept = 0;
+			virtual int getColumns() const noexcept = 0;
 		};
 
 		class GrayScaleImage : public Image
@@ -32,8 +32,9 @@ namespace AuxPort
 			void setDimensions(uint32_t x, uint32_t y) override;
 			void addColumn(const std::vector<float>& imageColumn, uint32_t columnNumber, int minRange = 0, int maxRange = 1) override;
 			std::vector<std::vector<uint8_t>>* getImageData();
-			int getRows() override;
-			int getColumns() override;
+			uint8_t getPoint(uint32_t x, uint32_t y) const noexcept;
+			int getRows() const noexcept override;
+			int getColumns() const noexcept override;
 			void Log() override;
 		protected:
 			std::vector<std::vector<uint8_t>> imageData;
