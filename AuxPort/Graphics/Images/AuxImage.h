@@ -31,13 +31,13 @@ namespace AuxPort
 			GrayScaleImage(const GrayScaleImage& grayScaleImage) = default;
 			void setDimensions(uint32_t x, uint32_t y) override;
 			void addColumn(const std::vector<float>& imageColumn, uint32_t columnNumber, int minRange = 0, int maxRange = 1) override;
-			std::vector<std::vector<uint8_t>>* getImageData();
+			std::vector<std::vector<float>>* getImageData();
 			uint8_t getPoint(uint32_t x, uint32_t y) const noexcept;
 			int getRows() const noexcept override;
 			int getColumns() const noexcept override;
 			void Log() override;
 		protected:
-			std::vector<std::vector<uint8_t>> imageData;
+			std::vector<std::vector<float>> imageData;
 			uint32_t width = 0;
 			uint32_t height = 0;
 		};

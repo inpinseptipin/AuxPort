@@ -17,10 +17,10 @@ void AuxPort::Graphics::GrayScaleImage::addColumn(const std::vector<float>& imag
 	AuxAssert(imageColumn.size() == height,"Image Column size does not match the height of the image");
 	auto imageChannel = imageData[columnNumber].data();
 	for (uint32_t i = 0;i < imageColumn.size();i++)
-		imageChannel[i] = static_cast<uint8_t>(std::round(AuxPort::Utility::remap<float>(imageColumn[i], 0, 255, minRange, maxRange)));
+		imageChannel[i] = AuxPort::Utility::remap<float>(imageColumn[i], 0, 1, minRange, maxRange);
 }
 
-std::vector<std::vector<uint8_t>>* AuxPort::Graphics::GrayScaleImage::getImageData()
+std::vector<std::vector<float>>* AuxPort::Graphics::GrayScaleImage::getImageData()
 {
 	return &imageData;
 }

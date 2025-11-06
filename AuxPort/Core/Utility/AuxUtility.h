@@ -169,6 +169,15 @@ namespace AuxPort
 			return outputStart + static_cast<range>(slope) * (input - inputStart);
 		}
 
+		template<class range>
+		static inline void remap(std::vector<range>& vector,range outputStart,range outputEnd,range inputStart,range inputEnd)
+		{
+			double slope = 1.0f * (outputEnd - outputStart) / (inputEnd - inputStart);
+			for (uint32_t i = 0; i < vector.size(); i++)
+				vector[i] = outputStart + static_cast<range>(slope) * (vector[i] - inputStart);
+		}
+
+
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Computes the mean for a vector		
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -293,6 +302,7 @@ namespace AuxPort
 				vector1[i] *= vector2[i];
 		}
 
+		
 		
 		
 		/**
