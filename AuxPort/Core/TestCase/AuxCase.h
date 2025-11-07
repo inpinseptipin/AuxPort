@@ -94,6 +94,10 @@ namespace AuxPort
 	};
 
 
+
+/**
+	Benchmarking class.
+ */
 	class Bench : public ILog
 	{
 	public:

@@ -20,7 +20,19 @@ void AuxPort::CircularBufferEngine::push(float sample)
 	AuxAssert(buffer != nullptr, "You need to attach a valid floating-point buffer to circular buffer it");
 	buffer[writeIndex++] = sample;
 	if (writeIndex >= bufferSize)
-		writeIndex %= bufferSize;
+		writeIndex = 0;
+}
+
+void AuxPort::CircularBufferEngine::push(float* buffer, size_t bufferSize)
+{
+	AuxAssert(this->buffer != nullptr, "You need to attach a valid floating-point buffer to the engine, Use the attach pointer to attach a pointer");
+	AuxAssert(buffer != nullptr, "The data you want to add has to be stored in a valid floating point buffer");
+	for (uint32_t i = 0; i < bufferSize; i++)
+	{
+		this->buffer[writeIndex++] = buffer[i];
+		if (writeIndex >= this->bufferSize)
+			writeIndex = 0;
+	}
 }
 
 float AuxPort::CircularBufferEngine::pop()

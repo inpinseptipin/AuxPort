@@ -266,6 +266,12 @@ namespace AuxPort
 		  @brief Pop a sample from the circular buffer 
 		  @return 
 		 */
+		/**
+		  @brief Pushes an entire floating point buffer to the Circular Buffer 
+		  @param buffer
+		  @param bufferSize
+		 */
+		virtual void push(float* buffer, size_t bufferSize);
 		virtual float pop();
 		/**
 		  @brief Call this function to print out all the contents of the buffer. 
