@@ -69,17 +69,17 @@ if(AUXPORT_BUILD_FOR_RACKAFX)
 
 
 if(AUXPORT_BUILD_SANDBOX)
-	option(AUXPORT_BUILD_EXTENSION_FOR_AUDIOFILE "Build AuxPort Extensions for AudioFile" OFF)
-
-
+	option(AUXPORT_BUILD_SANDBOX_EXTENSION_FOR_AUDIOFILE "Build AuxPort Sandbox with Extension for AudioFile" OFF)
+	option(AUXPORT_BUILD_SANDBOX_VANILLA "Build AuxPort Sandbox Vanilla Environment" ON)
 	set(AUXPORT_SANDBOX_NAME "SandBox")
+	if(AUXPORT_BUILD_SANDBOX_VANILLA)
 	add_executable(
 		${AUXPORT_SANDBOX_NAME}
-		main.cpp	
-		${PROJECT_SOURCE_DIR}/Extensions/AuxAudioFile/AuxAudioFile.h
-		${PROJECT_SOURCE_DIR}/Extensions/AuxAudioFile/AuxAudioFile.cpp
+		main.cpp
 	)
 	target_link_libraries(${AUXPORT_SANDBOX_NAME} AuxPort)
+	target_include_directories(${AUXPORT_SANDBOX_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/AuxPort")
+	endif(AUXPORT_BUILD_SANDBOX_VANILLA)
 	
 	if(AUXPORT_BUILD_EXTENSION_FOR_AUDIOFILE)
 		include(FetchContent)
@@ -89,6 +89,12 @@ if(AUXPORT_BUILD_SANDBOX)
 			GIT_TAG master
 		)
 		FetchContent_MakeAvailable(audiofile)
+		add_executable(
+			${AUXPORT_SANDBOX_NAME}
+			main.cpp	
+			${PROJECT_SOURCE_DIR}/Extensions/AuxAudioFile/AuxAudioFile.h
+			${PROJECT_SOURCE_DIR}/Extensions/AuxAudioFile/AuxAudioFile.cpp
+		)
 		target_include_directories(${AUXPORT_SANDBOX_NAME} PUBLIC "${AudioFile_SOURCE_DIR}/")
 		target_include_directories(${AUXPORT_SANDBOX_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/AuxPort")
 	endif(AUXPORT_BUILD_EXTENSION_FOR_AUDIOFILE)
