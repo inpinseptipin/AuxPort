@@ -102,6 +102,7 @@ namespace AuxPort
 			return pow(10.0, (val / 20.0));
 		}
 
+
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Converts single-precision float to decibels (dB)	
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -114,6 +115,12 @@ namespace AuxPort
 		{
 			for (uint32_t i = 0;i < data.size();i++)
 				data[i] = linearTodB(data[i]);
+		}
+
+		static inline void linearTodB(float* data, uint32_t bufferSize)
+		{
+			for (uint32_t i = 0; i < bufferSize; i++)
+					data[i] = linearTodB(data[i]);
 		}
 
 		static inline void normFromNegInfinity(std::vector<float>& data, float normValue)
@@ -177,6 +184,13 @@ namespace AuxPort
 				vector[i] = outputStart + static_cast<range>(slope) * (vector[i] - inputStart);
 		}
 
+		template<class range>
+		static inline void remap(range* vector, range outputStart, range outputEnd, range inputStart, range inputEnd)
+		{
+			double slope = 1.0f * (outputEnd - outputStart) / (inputEnd - inputStart);
+			for (uint32_t i = 0; i < vector.size(); i++)
+				vector[i] = outputStart + static_cast<range>(slope) * (vector[i] - inputStart);
+		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Computes the mean for a vector		
@@ -302,9 +316,6 @@ namespace AuxPort
 				vector1[i] *= vector2[i];
 		}
 
-		
-		
-		
 		/**
 		  @brief Creates an impulse [in-place] of size vector 
 		  @param vector
@@ -684,16 +695,8 @@ namespace AuxPort
 					}
 				}
 			}
-
-
-			
 		};
-		
 	}
-
-
-	
-
 }
 #endif
 
