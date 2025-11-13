@@ -152,6 +152,7 @@
 		typedef signed char int8;
 		typedef unsigned short uint16;
 		typedef signed short int16;
+#include <cstdint>
 	#else
 		#define AUXPORT_32 32
 		typedef int int32;

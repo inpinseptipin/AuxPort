@@ -40,6 +40,7 @@
 #include <vector>
 #include "../Log/AuxLog.h"
 #include "../Env/AuxEnv.h"
+#include "../Utility/AuxUtility.h"
 
 namespace AuxPort
 {

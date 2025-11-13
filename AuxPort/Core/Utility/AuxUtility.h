@@ -406,9 +406,9 @@ namespace AuxPort
 		static std::string convertToTime(uint32_t seconds)
 		{
 			auto secondsInFloat = static_cast<float>(seconds);
-			float hours = std::floorf(secondsInFloat / 3600);
-			float mins = std::floorf((secondsInFloat - (hours * 3600)) / 60);
-			float secs = std::floorf(secondsInFloat - (hours*3600) - (mins*60));
+			float hours = floorf(secondsInFloat / 3600);
+			float mins = floorf((secondsInFloat - (hours * 3600)) / 60);
+			float secs = floorf(secondsInFloat - (hours*3600) - (mins*60));
 			return std::to_string(hours) + " : " + std::to_string(mins) + " : " + std::to_string(secs);
 		}
 		 /*
@@ -436,7 +436,7 @@ namespace AuxPort
 		static void abs(std::vector<float>& vector)
 		{
 			for (size_t i = 0; i < vector.size(); i++)
-				vector[i] = std::fabsf(vector[i]);
+				vector[i] = fabsf(vector[i]);
 		}
 
 		/**

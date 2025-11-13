@@ -74,7 +74,7 @@ void AuxPort::AuxPascal::writeToFile(const std::string& fileName)
 		writeLineToFile("negative");
 	}
 
-	writeLineToFile(AuxPort::Casters::toStdString(pascalTriangle.size()));
+	writeLineToFile(AuxPort::Casters::toStdString(static_cast<uint64>(pascalTriangle.size())));
 
 	std::string currLine;
 	for (const std::vector<float>& row : pascalTriangle)

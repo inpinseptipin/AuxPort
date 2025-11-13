@@ -43,6 +43,7 @@
 #include <complex>
 #include <valarray>
 #include "../../Core/Utility/AuxCircularBuffer.h"
+#include <memory>
 
 namespace AuxPort
 {

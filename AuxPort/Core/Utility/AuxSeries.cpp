@@ -221,7 +221,7 @@ void AuxPort::AuxSeries::writeSeriesToFile(const std::string& fileName)
 	AuxAssert(fileExtension == "axs", "File must have .axs extension!");
 	open(fileName, AuxPort::File::Mode::Write);
 	writeLineToFile(getTypeAsString());
-	writeLineToFile(AuxPort::Casters::toStdString(terms.size()));
+	writeLineToFile(AuxPort::Casters::toStdString(static_cast<uint64>(terms.size())));
 	for (const TaylorTerms& term : terms)
 	{
 		writeLineToFile(AuxPort::Casters::toStdString(term.coefficient) + " " + AuxPort::Casters::toStdString(term.exponent));
