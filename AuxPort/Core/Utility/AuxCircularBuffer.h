@@ -239,10 +239,18 @@ namespace AuxPort
 	/**
 	 @brief Use this to turn any floating point array into a circular buffer
 	 */
+	template<class circData>
 	class CircularBufferEngine : public virtual ILog
 	{
 	public:
-		CircularBufferEngine();
+		CircularBufferEngine()
+		{
+			readIndex = 0;
+			writeIndex = 0;
+			buffer = nullptr;
+			bufferSize = 0;
+			poppedSample = 0;
+		}
 		~CircularBufferEngine() = default;
 		CircularBufferEngine(const CircularBufferEngine& circularBuffer) = default;
 		/**
@@ -257,12 +265,22 @@ namespace AuxPort
 				cBuffer.attachPointer(buffer,1024);
 		  \endcode 
 		 */
-		void attachPointer(float* attachedBuffer,size_t bufferSize);
+		void attachPointer(circData* attachedBuffer, size_t bufferSize)
+		{
+			this->buffer = attachedBuffer;
+			this->bufferSize = bufferSize;
+		}
 		/**
 		  @brief Push a sample to the circular buffer 
 		  @param sample
 		 */
-		virtual void push(float sample);
+		virtual void push(circData sample)
+		{
+			AuxAssert(buffer != nullptr, "You need to attach a valid floating-point buffer to circular buffer it");
+			buffer[writeIndex++] = sample;
+			if (writeIndex >= bufferSize)
+				writeIndex = 0;
+		}
 		/**
 		  @brief Pop a sample from the circular buffer 
 		  @return 
@@ -272,17 +290,40 @@ namespace AuxPort
 		  @param buffer
 		  @param bufferSize
 		 */
-		virtual void push(float* buffer, size_t bufferSize);
-		virtual float pop();
+		virtual void push(circData* buffer, size_t bufferSize)
+		{
+			AuxAssert(this->buffer != nullptr, "You need to attach a valid floating-point buffer to the engine, Use the attach pointer to attach a pointer");
+			AuxAssert(buffer != nullptr, "The data you want to add has to be stored in a valid floating point buffer");
+			for (uint32_t i = 0; i < bufferSize; i++)
+			{
+				this->buffer[writeIndex++] = buffer[i];
+				if (writeIndex >= this->bufferSize)
+					writeIndex = 0;
+			}
+		}
+		virtual float pop()
+		{
+			poppedSample = buffer[readIndex++];
+			readIndex %= bufferSize;
+			return poppedSample;
+		}
 		/**
 		  @brief Call this function to print out all the contents of the buffer. 
 		 */
-		void Log() override;
+		void Log() override
+		{
+			setColour(AuxPort::ColourType::Blue);
+			std::cout << "[";
+			for (uint32_t i = 0; i < bufferSize; i++)
+				i == bufferSize - 1 ? std::cout << buffer[i] : std::cout << buffer[i] << " , ";
+			std::cout << "]\n";
+			setColour(AuxPort::ColourType::White);
+		}
 	protected:
-		float* buffer;
+		circData* buffer;
 		int readIndex;
 		int writeIndex;
-		float poppedSample;
+		circData poppedSample;
 		size_t bufferSize;
 	};
 

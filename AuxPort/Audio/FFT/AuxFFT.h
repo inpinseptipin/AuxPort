@@ -232,7 +232,7 @@ namespace AuxPort
 			std::vector<float> fullWindow;
 			float* inputBufferData;
 			float* fftBuffer;
-			AuxPort::CircularBufferEngine circEngine;
+			AuxPort::CircularBufferEngine<float> circEngine;
 			StateMachine states;
 		};
 

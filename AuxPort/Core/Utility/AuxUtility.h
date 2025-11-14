@@ -285,6 +285,46 @@ namespace AuxPort
 			return max;
 		}
 
+		/**
+		   @brief Computes the min element in an std::vector
+		   @param vector
+		   @return 
+		   @details
+		   Example Definition/Implementation
+		   \code{.cpp}
+		   
+		   \endcode 
+		*/
+		template<class sample>
+		static inline sample getMin(const std::vector<sample>& vector)
+		{
+			AuxAssert(vector.size() > 0, "Vector size should be greater than 0");
+			if (vector.size() == 1)
+				return vector[0];
+			sample minValue = vector[0];
+			for (uint32_t i = 1; i < vector.size(); i++)
+				minValue = minValue < vector[i] ? vector[i] : minValue;
+			return minValue;
+		}
+
+		/**
+		   @brief Rotate a 1d vector representing a 2D vector by 90 degrees (Clockwise)
+		   @param vector
+		   @details
+		   Example Definition/Implementation
+		   \code{.cpp}
+		   
+		   \endcode 
+		*/
+		template<class sample>
+		static inline void rotateClockwiseBy90(std::vector<sample>& vector)
+		{
+			size_t rows = sqrt(vector.size());
+			for (size_t i = 0; i < rows; ++i)
+				for (size_t j = i + 1; j < rows; ++j) 
+					std::swap(vector[i * rows + j], vector[j * rows + i]);
+		}
+
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Dot-Divide operation over a std::vector
 		///////////////////////////////////////////////////////////////////////////////////////
