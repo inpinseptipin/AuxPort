@@ -40,7 +40,10 @@
 #include <vector>
 #include "../Log/AuxLog.h"
 #include "../Env/AuxEnv.h"
-#include "../Utility/AuxUtility.h"
+
+namespace AuxPort {
+	class Utility;
+}
 
 namespace AuxPort
 {
@@ -181,7 +184,10 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		void meanRemoval()
 		{
-			auto mean = AuxPort::Utility::mean(buffer);
+			auto mean = 0;
+			for (uint32_t i = 0;i<buffer.size();i++)
+				mean+=buffer[i];
+			mean/=buffer.size();
 			for (uint32_t i = 0; i < buffer.size(); i++)
 				buffer[i] -= mean;
 		}

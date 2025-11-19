@@ -39,6 +39,8 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Env/AuxEnv.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Log/AuxLog.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Log/AuxLog.cpp
+    ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxUtility.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxUtility.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/String/AuxString.h    
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/String/AuxString.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/String/AuxStringPair.h
@@ -50,8 +52,6 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/TestCase/AuxCase.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/TestCase/AuxCase.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxCaster.h
-    ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxUtility.h
-    ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxUtility.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxCircularBuffer.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxPascal.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxPascal.cpp
