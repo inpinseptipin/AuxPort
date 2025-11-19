@@ -39,6 +39,7 @@
 
 #include "../Env/AuxEnv.h"
 #include "../Log/AuxLog.h"
+#include "../Utility/AuxCircularBuffer.h"
 #include <complex>
 #include <random>
 #include <algorithm>
@@ -289,11 +290,6 @@ namespace AuxPort
 		   @brief Computes the min element in an std::vector
 		   @param vector
 		   @return 
-		   @details
-		   Example Definition/Implementation
-		   \code{.cpp}
-		   
-		   \endcode 
 		*/
 		template<class sample>
 		static inline sample getMin(const std::vector<sample>& vector)
@@ -310,11 +306,6 @@ namespace AuxPort
 		/**
 		   @brief Rotate a 1d vector representing a 2D vector by 90 degrees (Clockwise)
 		   @param vector
-		   @details
-		   Example Definition/Implementation
-		   \code{.cpp}
-		   
-		   \endcode 
 		*/
 		template<class sample>
 		static inline void rotateClockwiseBy90(std::vector<sample>& vector)
@@ -323,6 +314,49 @@ namespace AuxPort
 			for (size_t i = 0; i < rows; ++i)
 				for (size_t j = i + 1; j < rows; ++j) 
 					std::swap(vector[i * rows + j], vector[j * rows + i]);
+		}
+
+
+		/**
+		   @brief Flatten a 2D vector to 1D
+		   @param inputVector
+		   @param rows
+		   @param columns
+		   @param output
+		*/
+		template<class data>
+		static inline void flatten(float** inputVector, int rows, int columns, std::vector<float>& output)
+		{
+			AuxAssert(inputVector != nullptr, "Input Vector cannot be a nullptr");
+			AuxAssert(rows > 0, "Rows has to be greater than zero");
+			AuxAssert(columns > 0, "Columns has to be greater than zero");
+			output.resize(rows * columns);
+			AuxPort::CircularBufferEngine<data> circEngine;
+			circEngine.attachPointer(output.data(), output.size());
+			for (uint32_t i = 0;i < rows;i++)
+				for (uint32_t j = 0;j < columns;j++)
+					circEngine.push(inputVector[i][j]);
+		}
+
+		/**
+		   @brief Transpose a 2D Vector
+		   @param inputVector
+		   @param rows
+		   @param columns
+		   @param output
+		*/
+		template<class data>
+		static inline void transpose(data** inputVector, int rows, int columns, std::vector<std::vector<data>>& output)
+		{
+			AuxAssert(inputVector != nullptr, "Input Vector cannot be a nullptr");
+			AuxAssert(rows > 0, "Rows has to be greater than zero");
+			AuxAssert(columns > 0, "Columns has to be greater than zero");
+			output.resize(columns);
+			for (uint32_t i = 0;i < output.size();i++)
+				output[i].resize(rows);
+			for (uint32_t i = 0;i < columns;i++)
+				for (uint32_t j = 0; j < rows;j++)
+					output[i][j] = inputVector[j][i];
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
