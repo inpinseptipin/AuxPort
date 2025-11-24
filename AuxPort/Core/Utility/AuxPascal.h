@@ -64,7 +64,7 @@ namespace AuxPort
 		/// @param N Number of rows to be computed in the pascal triangle
 		/// @param type Type of Pascal Triangle (Positive or Negative)
 		///////////////////////////////////////////////////////////////////////////////////////
-		std::vector<std::vector<float>> computePascalTriangle(uint32 N, const Type& type = Type::Positive);
+		std::vector<std::vector<float>> computePascalTriangle(uint32_t N, const Type& type = Type::Positive);
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Logs the computed Pascal Triangle

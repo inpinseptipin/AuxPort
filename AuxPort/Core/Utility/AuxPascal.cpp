@@ -10,16 +10,16 @@ AuxPort::AuxPascal::AuxPascal()
 	this->uniqueIdentifier = "AXP v1.0";
 }
 
-std::vector<std::vector<float>> AuxPort::AuxPascal::computePascalTriangle(uint32 N, const Type& type)
+std::vector<std::vector<float>> AuxPort::AuxPascal::computePascalTriangle(uint32_t N, const Type& type)
 {
 	pascalTriangle.resize(N);
 	this->type = type;
-	for (uint32 i = 0; i < N; i++)
+	for (uint32_t i = 0; i < N; i++)
 	{
 		std::vector<float> currRow(i + 1);
 		currRow[0] = 1;
 		currRow[i] = 1;
-		for (uint32 j = 1; j < i; j++)
+		for (uint32_t j = 1; j < i; j++)
 		{
 			currRow[j] = pascalTriangle[i - 1][j - 1] + pascalTriangle[i - 1][j];
 		}
@@ -27,9 +27,9 @@ std::vector<std::vector<float>> AuxPort::AuxPascal::computePascalTriangle(uint32
 	}
 	if (type == Type::Negative)
 	{
-		for (uint32 i = 0; i < N; i++)
+		for (uint32_t i = 0; i < N; i++)
 		{
-			for (uint32 j = 1; j <= i; j += 2)
+			for (uint32_t j = 1; j <= i; j += 2)
 			{
 				pascalTriangle[i][j] = -pascalTriangle[i][j];
 			}
@@ -74,7 +74,7 @@ void AuxPort::AuxPascal::writeToFile(const std::string& fileName)
 		writeLineToFile("negative");
 	}
 
-	writeLineToFile(AuxPort::Casters::toStdString(static_cast<uint64>(pascalTriangle.size())));
+	writeLineToFile(std::to_string(pascalTriangle.size()));
 
 	std::string currLine;
 	for (const std::vector<float>& row : pascalTriangle)
@@ -120,7 +120,7 @@ void AuxPort::AuxPascal::readFromFile(const std::string& fileName)
 		if (fileReader->eof()) { throw std::runtime_error("Invalid File: Number of Rows not specified!"); }
 		readLineFromFile(currLine);
 		std::istringstream lineStream(currLine);
-		uint32 N;
+		uint32_t N;
 		lineStream >> N;
 
 		pascalTriangle.clear();

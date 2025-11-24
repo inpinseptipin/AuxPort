@@ -2,10 +2,10 @@
 
 AuxPort::Audio::FourierTransform::FourierTransform(size_t fftSize)
 {
-	uint32 isPowerOfTwo = (uint32)(fftSize & (fftSize - 1));
+	uint32_t isPowerOfTwo = (uint32_t)(fftSize & (fftSize - 1));
 	AuxAssert(isPowerOfTwo == 0, "Library is compatible for FFT sizes that are multiples of 2");
 	_fftValues.resize(fftSize);
-	_log2N = uint32(log2(fftSize));
+	_log2N = uint32_t(log2(fftSize));
 }
 
 void AuxPort::Audio::FourierTransform::computeMagnitudeTransform(const std::vector<float>& inputBuffer, std::vector<float>& outputBuffer, bool normalized)
@@ -123,7 +123,7 @@ void AuxPort::Audio::FourierTransform::compute()
 	}
 }
 
-uint32 AuxPort::Audio::FourierTransform::reverseBits(uint32 b)
+uint32_t AuxPort::Audio::FourierTransform::reverseBits(uint32_t b)
 {
 	b = (((b & 0xaaaaaaaa) >> 1) | ((b & 0x55555555) << 1));
 	b = (((b & 0xcccccccc) >> 2) | ((b & 0x33333333) << 2));
@@ -257,7 +257,7 @@ AuxPort::Audio::STFT::STFT(uint32_t fftSize, uint32_t overlapPercentage, AuxPort
 
 	AuxAssert(fftSize > 16 && fftSize < 16384, "FFT Size has to fall within [16,16384]");
 	AuxAssert(overlapPercentage >= 0 && overlapPercentage <= 75, "Overlap percentage has to fall within [0,75]");
-	uint32 isPowerOfTwo = (uint32)(fftSize & (fftSize - 1));
+	uint32_t isPowerOfTwo = (uint32_t)(fftSize & (fftSize - 1));
 	AuxAssert(isPowerOfTwo == 0, "Library is compatible for FFT sizes that are multiples of 2");
 	fourierTransform.reset(new AuxPort::Audio::FourierTransform(fftSize));
 	this->fftSize = fftSize;

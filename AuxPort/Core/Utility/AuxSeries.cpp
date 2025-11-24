@@ -52,13 +52,13 @@ AuxPort::AuxSeries::AuxSeries()
 	this->uniqueIdentifier = "AXS v1.0";
 }
 
-std::vector<AuxPort::AuxSeries::TaylorTerms>& AuxPort::AuxSeries::getTerms(uint32 N, const Type& type)
+std::vector<AuxPort::AuxSeries::TaylorTerms>& AuxPort::AuxSeries::getTerms(uint32_t N, const Type& type)
 {
 	computeTerms(N, type);
 	return terms;
 }
 
-void AuxPort::AuxSeries::computeTerms(uint32 N, const Type& type)
+void AuxPort::AuxSeries::computeTerms(uint32_t N, const Type& type)
 {
 	if (N == 0) { return; }
 	if (this->type == type && terms.size() == N) { return; }
@@ -73,7 +73,7 @@ void AuxPort::AuxSeries::computeTerms(uint32 N, const Type& type)
 		currTerm.coefficient = 1.0f;
 		currTerm.exponent = 1.0f;
 		terms[0] = currTerm;
-		for (uint32 i = 1; i < N; i++)
+		for (uint32_t i = 1; i < N; i++)
 		{
 			currTerm.coefficient /= ((currTerm.exponent + 1.0f) * (currTerm.exponent + 2.0f));
 			currTerm.coefficient = -currTerm.coefficient;
@@ -86,7 +86,7 @@ void AuxPort::AuxSeries::computeTerms(uint32 N, const Type& type)
 		currTerm.coefficient = 1.0f;
 		currTerm.exponent = 0.0f;
 		terms[0] = currTerm;
-		for (uint32 i = 1; i < N; i++)
+		for (uint32_t i = 1; i < N; i++)
 		{
 			currTerm.coefficient /= ((currTerm.exponent + 1.0f) * (currTerm.exponent + 2.0f));
 			currTerm.coefficient = -currTerm.coefficient;
@@ -99,7 +99,7 @@ void AuxPort::AuxSeries::computeTerms(uint32 N, const Type& type)
 		currTerm.coefficient = 1.0f;
 		currTerm.exponent = 1.0f;
 		terms[0] = currTerm;
-		for (uint32 i = 1; i < N; i++)
+		for (uint32_t i = 1; i < N; i++)
 		{
 			currTerm.coefficient /= ((currTerm.exponent + 1.0f) * (currTerm.exponent + 2.0f));
 			currTerm.exponent += 2.0f;
@@ -111,7 +111,7 @@ void AuxPort::AuxSeries::computeTerms(uint32 N, const Type& type)
 		currTerm.coefficient = 1.0f;
 		currTerm.exponent = 0.0f;
 		terms[0] = currTerm;
-		for (uint32 i = 1; i < N; i++)
+		for (uint32_t i = 1; i < N; i++)
 		{
 			currTerm.coefficient /= ((currTerm.exponent + 1.0f) * (currTerm.exponent + 2.0f));
 			currTerm.exponent += 2.0f;
@@ -123,18 +123,18 @@ void AuxPort::AuxSeries::computeTerms(uint32 N, const Type& type)
 		currTerm.coefficient = 1.0f;
 		currTerm.exponent = 1.0f;
 		terms[0] = currTerm;
-		for (uint32 i = 1; i < N; i++)
+		for (uint32_t i = 1; i < N; i++)
 		{
 			currTerm.exponent += 2.0f;
 			currTerm.coefficient = 0.0f;
-			for (uint32 j = 0; j < i; j++)
+			for (uint32_t j = 0; j < i; j++)
 			{
 				currTerm.coefficient += (terms[j].coefficient * terms[i - 1 - j].coefficient);
 			}
 			currTerm.coefficient /= currTerm.exponent;
 			terms[i] = currTerm;
 		}
-		for (uint32 i = 1; i < N; i += 2)
+		for (uint32_t i = 1; i < N; i += 2)
 		{
 			terms[i].coefficient = -terms[i].coefficient;
 		}
@@ -144,7 +144,7 @@ void AuxPort::AuxSeries::computeTerms(uint32 N, const Type& type)
 		currTerm.coefficient = 1.0f;
 		currTerm.exponent = 0.0f;
 		terms[0] = currTerm;
-		for (uint32 i = 1; i < N; i++)
+		for (uint32_t i = 1; i < N; i++)
 		{
 			currTerm.exponent += 1.0f;
 			currTerm.coefficient /= currTerm.exponent;
@@ -156,7 +156,7 @@ void AuxPort::AuxSeries::computeTerms(uint32 N, const Type& type)
 		currTerm.coefficient = 1.0f;
 		currTerm.exponent = 1.0f;
 		terms[0] = currTerm;
-		for (uint32 i = 1; i < N; i++)
+		for (uint32_t i = 1; i < N; i++)
 		{
 			currTerm.exponent += 2.0f;
 			currTerm.coefficient = 1.0f / currTerm.exponent;
@@ -169,7 +169,7 @@ void AuxPort::AuxSeries::computeTerms(uint32 N, const Type& type)
 		currTerm.coefficient = 1.0f;
 		currTerm.exponent = 1.0f;
 		terms[0] = currTerm;
-		for (uint32 i = 1; i < N; i++)
+		for (uint32_t i = 1; i < N; i++)
 		{
 			currTerm.exponent += 1.0f;
 			currTerm.coefficient = 1.0f / currTerm.exponent;
@@ -188,7 +188,7 @@ void AuxPort::AuxSeries::Log()
 		output = getTypeAsString();
 		output += "(x) = ";
 		output += AuxPort::Casters::toStdString(terms[0].coefficient) + "x^" + AuxPort::Casters::toStdString(terms[0].exponent);
-		for (uint32 i = 1; i < terms.size(); i++)
+		for (uint32_t i = 1; i < terms.size(); i++)
 		{
 			output += terms[i].coefficient < 0 ? " - " : " + ";
 			output += AuxPort::Casters::toStdString(abs(terms[i].coefficient)) + "x^" + AuxPort::Casters::toStdString(terms[i].exponent);
@@ -221,7 +221,7 @@ void AuxPort::AuxSeries::writeSeriesToFile(const std::string& fileName)
 	AuxAssert(fileExtension == "axs", "File must have .axs extension!");
 	open(fileName, AuxPort::File::Mode::Write);
 	writeLineToFile(getTypeAsString());
-	writeLineToFile(AuxPort::Casters::toStdString(static_cast<uint64>(terms.size())));
+	writeLineToFile(std::to_string(terms.size()));
 	for (const TaylorTerms& term : terms)
 	{
 		writeLineToFile(AuxPort::Casters::toStdString(term.coefficient) + " " + AuxPort::Casters::toStdString(term.exponent));
@@ -285,13 +285,13 @@ void AuxPort::AuxSeries::readSeriesFromFile(const std::string& fileName)
 		if (fileReader->eof()) { throw std::runtime_error("Invalid File: Number of terms Not specified!"); }
 		readLineFromFile(currLine);
 		std::istringstream lineStream(currLine);
-		uint32 N;
+		uint32_t N;
 		lineStream >> N;
 
 		terms.clear();
 		terms.resize(N);
 		TaylorTerms currTerm;
-		for (uint32 i = 0; i < N; i++)
+		for (uint32_t i = 0; i < N; i++)
 		{
 			if (fileReader->eof())
 			{
@@ -376,7 +376,7 @@ float AuxPort::AuxSeriesEngine::computeFunction(float x)
 	float currXPowN = powf(x, terms[0].exponent);
 	float exponentDiff;
 	float result = currXPowN * terms[0].coefficient;
-	for (uint32 i = 1; i < terms.size(); i++)
+	for (uint32_t i = 1; i < terms.size(); i++)
 	{
 		exponentDiff = terms[i].exponent - terms[i - 1].exponent;
 		for (int i = 0; i < exponentDiff; i++) currXPowN *= x;

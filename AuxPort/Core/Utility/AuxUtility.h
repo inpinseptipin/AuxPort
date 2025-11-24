@@ -65,15 +65,15 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Calculates the number of digits present in an integer.		
 		///////////////////////////////////////////////////////////////////////////////////////
-		static uint64 numberOfDigits(int64 number)
+		static uint64_t numberOfDigits(int64_t number)
 		{
-			uint64 noOfDigits = number ? 0l : 1l; while (number) { noOfDigits++, number /= 10; };
+			uint64_t noOfDigits = number ? 0l : 1l; while (number) { noOfDigits++, number /= 10; };
 			return noOfDigits;
 		}
 		
-		static uint64 numberOfDigits(uint64 number)
+		static uint64_t numberOfDigits(uint64_t number)
 		{
-			uint64 noOfDigits = number ? 0l : 1l; while (number) { noOfDigits++, number /= 10; };
+			uint64_t noOfDigits = number ? 0l : 1l; while (number) { noOfDigits++, number /= 10; };
 			return noOfDigits;
 		}
 #else	
@@ -145,7 +145,7 @@ namespace AuxPort
 		template<class sample>
 		static inline void zeroThis(std::vector<sample>& audio)
 		{
-			for (uint32 i = 0; i < audio.size(); i++)
+			for (uint32_t i = 0; i < audio.size(); i++)
 				audio[i] = 0;
 		}
 

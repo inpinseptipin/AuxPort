@@ -79,14 +79,14 @@ namespace AuxPort
 		/// @param N Number of terms to compute
 		/// @param type Type of function for which we need to compute Taylor Teries terms
 		///////////////////////////////////////////////////////////////////////////////////////
-		std::vector<TaylorTerms>& getTerms(uint32 N, const Type& type = Type::Sin);
+		std::vector<TaylorTerms>& getTerms(uint32_t N, const Type& type = Type::Sin);
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Computes Taylor Series terms and stores them in a vector internally
 		/// @param N Number of terms to compute
 		/// @param type Type of function for which we need to compute Taylor Teries terms
 		///////////////////////////////////////////////////////////////////////////////////////
-		void computeTerms(uint32 N, const Type& type = Type::Sin);
+		void computeTerms(uint32_t N, const Type& type = Type::Sin);
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Logs the Taylor Series terms that are present in the internal terms vector.

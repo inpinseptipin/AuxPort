@@ -40,6 +40,7 @@
 
 #include<cmath>
 #include<cstring>
+#include "../Env/AuxEnv.h"
 #include "../Log/AuxLog.h"
 #include "../Utility/AuxCaster.h"
 namespace AuxPort
@@ -69,12 +70,12 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Initializes a String object with a integer.
 		///////////////////////////////////////////////////////////////////////////////////////	
-		String(const uint64& string);
+		String(const uint64_t& string);
 #else
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Initializes a String object with a integer.
 		///////////////////////////////////////////////////////////////////////////////////////
-		String(const uint32& string);
+		String(const uint32_t& string);
 #endif
 
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -256,7 +257,7 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Returns the Substring in a String.
 		///////////////////////////////////////////////////////////////////////////////////////
-		String substring(const uint32& start = 0, const uint32& end = 1) const;
+		String substring(uint32_t start = 0, uint32_t end = 1) const;
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Overrides the Logging Module to Handle String Object Logging
@@ -280,7 +281,7 @@ namespace AuxPort
 		/// Example : @code String string = "123423"; @endcode
 		/// This can be cast into an signed 64 bit Integer.
 		///////////////////////////////////////////////////////////////////////////////////////
-		int64 toInt64() override;
+		int64_t toInt64() override;
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Casts the String into an unsigned 64-bit Integer (Only handles Numerical Strings)
@@ -288,7 +289,7 @@ namespace AuxPort
 		/// Example : @code String string = "123423"; @endcode
 		/// This can be cast into an Unsigned 64 bit Integer.
 		///////////////////////////////////////////////////////////////////////////////////////
-		uint64 toUInt64() override;
+		uint64_t toUInt64() override;
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Casts the String into a signed 32-bit Integer (Only handles Numerical Strings)
@@ -296,7 +297,7 @@ namespace AuxPort
 		/// Example : @code String string = "123423"; @endcode
 		/// This can be cast into an signed 32 bit Integer.
 		///////////////////////////////////////////////////////////////////////////////////////
-		int32 toInt32() override;
+		int32_t toInt32() override;
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Casts the String into a unsigned 32-bit Integer (Only handles Numerical Strings)
@@ -304,7 +305,7 @@ namespace AuxPort
 		/// Example : @code String string = "123423"; @endcode
 		/// This can be cast into an signed Unsigned 32-bit Integer.
 		///////////////////////////////////////////////////////////////////////////////////////
-		uint32 toUInt32() override;
+		uint32_t toUInt32() override;
 #else
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Casts the String into a signed 32-bit Integer (Only handles Numerical Strings)
@@ -312,7 +313,7 @@ namespace AuxPort
 		/// Example : @code String string = "123423"; @endcode
 		/// This can be cast into an signed 32 bit Integer.
 		///////////////////////////////////////////////////////////////////////////////////////
-		int32 toInt32() override;
+		int32_t toInt32() override;
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Casts the String into a unsigned 32-bit Integer (Only handles Numerical Strings)
@@ -320,7 +321,7 @@ namespace AuxPort
 		/// Example : @code String string = "123423"; @endcode
 		/// This can be cast into an signed Unsigned 32-bit Integer.
 		///////////////////////////////////////////////////////////////////////////////////////
-		uint32 toUInt32() override;
+		uint32_t toUInt32() override;
 
 #endif // AUXPORT_64
 

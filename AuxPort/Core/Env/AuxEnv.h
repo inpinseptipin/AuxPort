@@ -113,24 +113,10 @@
 #if _WIN32 || _WIN64
 	#if _WIN64
 		#define AUXPORT_64 64
-		typedef int int32;
-		typedef unsigned int uint32;
-		typedef long long int int64;
-		typedef unsigned long long int uint64;
-		typedef unsigned char uint8;
-		typedef signed char int8;
-		typedef unsigned short uint16;
-		typedef signed short int16;
 	#else
 		#define AUXPORT_32 32
-		typedef int int32;
-		typedef unsigned int uint32;
-		typedef unsigned char uint8;
-		typedef signed char int8;
-		typedef unsigned short uint16;
-		typedef signed short int16;
 	#endif
-
+#include <cstdint>
 	#define AUXPORT_WINDOWS 9999
 	#define STR(x) #x
 	#define XSTR(x) STR(x)
@@ -144,23 +130,9 @@
 #if __linux__
 	#if __x86_64__
 		#define AUXPORT_64 64
-		typedef int int32;
-		typedef unsigned int uint32;
-		typedef long long int int64;
-		typedef unsigned long long int uint64;
-		typedef unsigned char uint8;
-		typedef signed char int8;
-		typedef unsigned short uint16;
-		typedef signed short int16;
 #include <cstdint>
 	#else
 		#define AUXPORT_32 32
-		typedef int int32;
-		typedef unsigned int uint32;
-		typedef unsigned char uint8;
-		typedef signed char int8;
-		typedef unsigned short uint16;
-		typedef signed short int16;
 	#endif
 
 	#define AUXPORT_LINUX 9999
@@ -176,36 +148,15 @@
 #if __APPLE__ || __MACH__
 	#if __x86_64__ || _M_X64
 		#define AUXPORT_64 64
-		typedef int int32;
-		typedef unsigned int uint32;
-		typedef long long int int64;
-		typedef unsigned long long int uint64;
-		typedef unsigned char uint8;
-		typedef signed char int8;
-		typedef unsigned short uint16;
-		typedef signed short int16;
 	#elif i386 || __i386__ || __i386 || _M_IX86
 		#define AUXPORT_32 32
-		typedef int int32;
-		typedef unsigned int uint32;
-		typedef unsigned char uint8;
-		typedef signed char int8;
-		typedef unsigned short uint16;
-		typedef signed short int16;
 	#endif
 
 	#if __arm64__
 		#define AUXPORT_ARM 640
 		#define AUXPORT_64 64
-		typedef int int32;
-		typedef unsigned int uint32;
-		typedef long long int int64;
-		typedef unsigned long long int uint64;
-		typedef unsigned char uint8;
-		typedef signed char int8;
-		typedef unsigned short uint16;
-		typedef signed short int16;
 	#endif
+#include <cstdint>
 
 
 	#define AUXPORT_MAC 9999

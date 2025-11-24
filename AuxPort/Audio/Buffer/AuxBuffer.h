@@ -144,7 +144,7 @@ namespace AuxPort
 					}
 					_size = size;
 				}
-				for (int32 i = 0; i < _size; i++)
+				for (int32_t i = 0; i < _size; i++)
 					_buffer[i] = buffer[i];
 			}
 
@@ -166,7 +166,7 @@ namespace AuxPort
 					}
 					_size = buffer.size();
 				}
-				for (int32 i = 0; i < _size; i++)
+				for (int32_t i = 0; i < _size; i++)
 					_buffer[i] = buffer[i];
 			}
 
@@ -188,7 +188,7 @@ namespace AuxPort
 					}
 					_size = buffer.size();
 				}
-				for (int32 i = 0; i < _size; i++)
+				for (int32_t i = 0; i < _size; i++)
 					_buffer[i] = buffer[i];
 			}
 
@@ -197,7 +197,7 @@ namespace AuxPort
 			///////////////////////////////////////////////////////////////////////////////////////
 			void add(const sample& value)
 			{
-				for (uint32 i = 0; i < _size; i++)
+				for (uint32_t i = 0; i < _size; i++)
 				{
 					_buffer[i] += value;
 				}

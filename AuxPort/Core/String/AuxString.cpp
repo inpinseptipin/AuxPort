@@ -68,12 +68,12 @@ namespace AuxPort
 	}
 /*===================================================================================*/
 #ifdef AUXPORT_64
-	String::String(const uint64& string)
+	String::String(const uint64_t& string)
 	{
-		uint64 number = string;
+		uint64_t number = string;
 		_length = AuxPort::Utility::numberOfDigits(string);
 		_string = new char[_length + 1];
-		int32 i = 0;
+		int32_t i = 0;
 		while (number)
 		{
 			_string[i++] = AuxPort::Casters::toChar(number % 10);
@@ -82,12 +82,12 @@ namespace AuxPort
 		_string[_length] = '\0';
 	}
 #else
-	String::String(const uint32& string)
+	String::String(const uint32_t& string)
 	{
-		uint32 number = string;
+		uint32_t number = string;
 		_length = AuxPort::Utility::numberOfDigits(string);
 		_string = new char[_length + 1];
-		int32 i = 0;
+		int32_t i = 0;
 		while (number)
 		{
 			_string[i++] = AuxPort::Casters::toChar(number % 10);
@@ -103,7 +103,7 @@ namespace AuxPort
 	{
 		_length = strlen(string);
 		_string = new char[_length+1];
-		for (uint32 i = 0; i < _length; i++)
+		for (uint32_t i = 0; i < _length; i++)
 			_string[i] = string[i];
 		_string[_length] = '\0';
 	}
@@ -112,7 +112,7 @@ namespace AuxPort
 	{
 		_length = strlen(string);
 		_string = new char[_length+1]; 
-		for (uint32 i = 0; i < _length; i++)
+		for (uint32_t i = 0; i < _length; i++)
 			_string[i] = string[i];
 		_string[_length] = '\0';
 	}
@@ -121,7 +121,7 @@ namespace AuxPort
 	{
 		_length = string._length;
 		_string = new char[_length+1];
-		for (uint32 i = 0; i < _length; i++)
+		for (uint32_t i = 0; i < _length; i++)
 			_string[i] = string._string[i];
 		_string[_length] = '\0';
 	}
@@ -130,7 +130,7 @@ namespace AuxPort
 	{
 		_length = string._length;
 		_string = new char[_length+1];
-		for (uint32 i = 0; i < _length; i++)
+		for (uint32_t i = 0; i < _length; i++)
 			_string[i] = string._string[i];
 		_string[_length] = '\0';
 	}
@@ -139,7 +139,7 @@ namespace AuxPort
 	{
 		_length = string.length();
 		_string = new char[_length + 1];
-		for (uint32 i = 0; i < _length; i++)
+		for (uint32_t i = 0; i < _length; i++)
 			_string[i] = string[i];
 		_string[_length] = '\0';
 	}
@@ -148,7 +148,7 @@ namespace AuxPort
 	{
 		_length = string.length();
 		_string = new char[_length + 1];
-		for (uint32 i = 0; i < _length; i++)
+		for (uint32_t i = 0; i < _length; i++)
 			_string[i] = string[i];
 		_string[_length] = '\0';
 	}
@@ -178,7 +178,7 @@ namespace AuxPort
 		{
 			_length = c._length;
 			_string = new char[_length];
-			for (uint32 i = 0; i < _length; i++)
+			for (uint32_t i = 0; i < _length; i++)
 				_string[i] = c._string[i];
 		}
 		else
@@ -186,7 +186,7 @@ namespace AuxPort
 			delete[] _string;
 			_length = c._length;
 			_string = new char[_length];
-			for (uint32 i = 0; i < _length; i++)
+			for (uint32_t i = 0; i < _length; i++)
 				_string[i] = c._string[i];
 			
 		}
@@ -204,7 +204,7 @@ namespace AuxPort
 /*===================================================================================*/
 	std::ostream& operator << (std::ostream& out, const String& c)
 	{
-		for (uint32 i = 0; i < c._length; i++)
+		for (uint32_t i = 0; i < c._length; i++)
 			out << c._string[i];
 		
 		return out;
@@ -212,7 +212,7 @@ namespace AuxPort
 /*===================================================================================*/
 	std::ostream& operator << (std::ostream& out, String* c)
 	{
-		for (uint32 i = 0; i < c->length(); i++)
+		for (uint32_t i = 0; i < c->length(); i++)
 			out << c->_string[i];
 		
 		return out;
@@ -220,7 +220,7 @@ namespace AuxPort
 /*===================================================================================*/
 	void String::replaceCharacter(const char CharacterToReplace, const char replacementCharacter)
 	{
-		for (uint32 i = 0; i < _length; i++)
+		for (uint32_t i = 0; i < _length; i++)
 		{
 			if (_string[i] == CharacterToReplace)
 				_string[i] = replacementCharacter;
@@ -230,7 +230,7 @@ namespace AuxPort
 	void String::pushBack(const char c)
 	{
 		char* temp = new char[_length];
-		for (uint32 i = 0; i < _length; i++)
+		for (uint32_t i = 0; i < _length; i++)
 			temp[i] = _string[i];
 		
 		delete[] _string;
@@ -245,17 +245,17 @@ namespace AuxPort
 /*===================================================================================*/
 	void String::pushBack(const char* c)
 	{
-		uint32 length=uint32(strlen(c));
+		uint32_t length=uint32_t(strlen(c));
 		char* temp = new char[_length];
-		for (uint32 i = 0; i < _length; i++)
+		for (uint32_t i = 0; i < _length; i++)
 			temp[i] = _string[i];
 		
 		delete[] _string;
 		_string = new char[_length+length+1];
-		for (uint32 i = 0; i < _length; i++)
+		for (uint32_t i = 0; i < _length; i++)
 			_string[i] = temp[i];
 		
-		for(uint32 i = 0; i<length;i++)
+		for(uint32_t i = 0; i<length;i++)
 			_string[_length+i]=c[i];
 
 		_length+=length;
@@ -266,18 +266,18 @@ namespace AuxPort
 /*===================================================================================*/
 	void String::pushBack(const String& c)
 	{
-		uint32 length= uint32(c._length);
+		uint32_t length= uint32_t(c._length);
 		char* temp = new char[_length];
-		for(uint32 i=0;i<_length;i++)
+		for(uint32_t i=0;i<_length;i++)
 			temp[i]=_string[i];
 
 		delete[] _string;
 
 		_string = new char[_length+length+1];
-		for (uint32 i = 0; i < _length; i++)
+		for (uint32_t i = 0; i < _length; i++)
 			_string[i] = temp[i];
 		
-		for(uint32 i = 0; i<length;i++)
+		for(uint32_t i = 0; i<length;i++)
 			_string[_length+i]=c._string[i];
 
 		_length+=length;
@@ -290,16 +290,16 @@ namespace AuxPort
 	{
 		size_t length = c.size();
 		char* temp = new char[_length];
-		for (uint32 i = 0; i < _length; i++)
+		for (uint32_t i = 0; i < _length; i++)
 			temp[i] = _string[i];
 
 		delete[] _string;
 
 		_string = new char[_length + length + 1];
-		for (uint32 i = 0; i < _length; i++)
+		for (uint32_t i = 0; i < _length; i++)
 			_string[i] = temp[i];
 
-		for (uint32 i = 0; i < length; i++)
+		for (uint32_t i = 0; i < length; i++)
 			_string[_length + i] = c[i];
 
 		_length += length;
@@ -389,7 +389,7 @@ namespace AuxPort
 	}
 /*===================================================================================*/
 
-	String String::substring(const uint32& start, const uint32& end) const
+	String String::substring(uint32_t start, uint32_t end) const
 	{
 		String x = "Hello";
 		return x;
@@ -398,85 +398,85 @@ namespace AuxPort
 /*===================================================================================*/
 
 #ifdef AUXPORT_64
-	int64 String::toInt64()
+	int64_t String::toInt64()
 	{
 		double power = 0;
-		int64 Number = 0;
+		int64_t Number = 0;
 		if (_string[0] == '-')
 		{
-			for (uint32 i = uint32(_length - 1); i > 0; i--)
+			for (uint32_t i = uint32_t(_length - 1); i > 0; i--)
 			{
 				if (_string[i] >= 48 || _string[i] <= 57)
 				{
-					Number += Casters::toInt(_string[i]) * int64(pow(10, power++));
+					Number += Casters::toInt(_string[i]) * int64_t(pow(10, power++));
 				}
 			}
 			return Number * -1;
 		}
 		else
 		{
-			for (int32 i = int32(_length - 1); i >= 0; i--)
+			for (int32_t i = int32_t(_length - 1); i >= 0; i--)
 			{
 				if (_string[i] >= 48 || _string[i] <= 57)
 				{
-					Number += Casters::toInt(_string[i]) * int64(pow(10, power++));
+					Number += Casters::toInt(_string[i]) * int64_t(pow(10, power++));
 				}
 			}
 			return Number;
 		}
 	}
 	/*===================================================================================*/
-	uint64 String::toUInt64()
+	uint64_t String::toUInt64()
 	{
 		double power = 0;
-		uint64 Number = 0;
-		for (int32 i = int32(_length - 1); i >= 0; i--)
+		uint64_t Number = 0;
+		for (int32_t i = int32_t(_length - 1); i >= 0; i--)
 		{
 			if (_string[i] >= 48 || _string[i] <= 57)
 			{
-				Number += Casters::toInt(_string[i]) * int64(pow(10, power++));
+				Number += Casters::toInt(_string[i]) * int64_t(pow(10, power++));
 			}
 		}
 		return Number;
 	}
 
-	int32 String::toInt32()
+	int32_t String::toInt32()
 	{
 		double power = 0;
-		int32 Number = 0;
+		int32_t Number = 0;
 		if (_string[0] == '-')
 		{
-			for (uint32 i = uint32(_length - 1); i > 0; i--)
+			for (uint32_t i = uint32_t(_length - 1); i > 0; i--)
 			{
 				if (_string[i] >= 48 || _string[i] <= 57)
 				{
-					Number += int32(Casters::toInt(_string[i])) * int32(pow(10, power++));
+					Number += int32_t(Casters::toInt(_string[i])) * int32_t(pow(10, power++));
 				}
 			}
 			return Number * -1;
 		}
 		else
 		{
-			for (int32 i = int32(_length - 1); i >= 0; i--)
+			for (int32_t i = int32_t(_length - 1); i >= 0; i--)
 			{
 				if (_string[i] >= 48 || _string[i] <= 57)
 				{
-					Number += int32(Casters::toInt(_string[i]) * int32(pow(10, power++)));
+					Number += int32_t(Casters::toInt(_string[i]) * int32_t(pow(10, power++)));
 				}
 			}
 			return Number;
 		}
 	}
 	/*===================================================================================*/
-	uint32 String::toUInt32()
+	uint32_t String::toUInt32()
 	{
 		double power = 0;
-		uint32 Number = 0;
-		for (int32 i = int32(_length - 1); i >= 0; i--)
+		uint32_t Number = 0;
+		for (int32_t i = int32_t(_length - 1); i >= 0; i--)
 		{
 			if (_string[i] >= 48 || _string[i] <= 57)
 			{
-				Number += uint32(Casters::toInt(_string[i])) * uint32(pow(10, power++));
+				Number += uint32_t(Casters::toInt(_string[i])) * uint32_t(pow(10, power++));
 			}
 		}
 		return Number;
@@ -484,43 +484,43 @@ namespace AuxPort
 
 
 #else
-	int32 String::toInt32()
+	int32_t String::toInt32()
 	{
 		double power = 0;
-		int32 Number = 0;
+		int32_t Number = 0;
 		if (_string[0] == '-')
 		{
-			for (uint32 i = uint32(_length - 1); i > 0; i--)
+			for (uint32_t i = uint32_t(_length - 1); i > 0; i--)
 			{
 				if (_string[i] >= 48 || _string[i] <= 57)
 				{
-					Number += Casters::toInt(_string[i]) * int32(pow(10, power++));
+					Number += Casters::toInt(_string[i]) * int32_t(pow(10, power++));
 				}
 			}
 			return Number * -1;
 		}
 		else
 		{
-			for (int32 i = int32(_length - 1); i >= 0; i--)
+			for (int32_t i = int32_t(_length - 1); i >= 0; i--)
 			{
 				if (_string[i] >= 48 || _string[i] <= 57)
 				{
-					Number += Casters::toInt(_string[i]) * int32(pow(10, power++));
+					Number += Casters::toInt(_string[i]) * int32_t(pow(10, power++));
 				}
 			}
 			return Number;
 		}
 	}
 	/*===================================================================================*/
-	uint32 String::toUInt32()
+	uint32_t String::toUint32()
 	{
 		double power = 0;
-		uint32 Number = 0;
-		for (int32 i = int32(_length - 1); i >= 0; i--)
+		uint32_t Number = 0;
+		for (int32_t i = int32_t(_length - 1); i >= 0; i--)
 		{
 			if (_string[i] >= 48 || _string[i] <= 57)
 			{
-				Number += Casters::toInt(_string[i]) * int32(pow(10, power++));
+				Number += Casters::toInt(_string[i]) * int32_t(pow(10, power++));
 			}
 		}
 		return Number;
