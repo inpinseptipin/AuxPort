@@ -12,7 +12,7 @@ std::vector<float> AuxPort::Audio::Stimulus::generateImpulse(float lengthInTime,
     
 }
 
-std::vector<float> AuxPort::Audio::Stimulus::generateImpulse(size_t numberOfSamples)
+std::vector<float> AuxPort::Audio::Stimulus::generateImpulse(uint32_t numberOfSamples)
 {
     AuxAssert(numberOfSamples > 0 && numberOfSamples < 132000, "Number of Samples has to be greater than zero");
     std::vector<float> impulse;
@@ -28,7 +28,7 @@ std::vector<float> AuxPort::Audio::Stimulus::generateWhiteNoise(float lengthInTi
     return AuxPort::Utility::generateRandomValues<float>(numberOfSamples);
 }
 
-std::vector<float> AuxPort::Audio::Stimulus::generateWhiteNoise(size_t numberOfSamples)
+std::vector<float> AuxPort::Audio::Stimulus::generateWhiteNoise(uint32_t numberOfSamples)
 {
     AuxAssert(numberOfSamples > 0 && numberOfSamples < UINT_LEAST32_MAX, "Number of Samples has to be greater than zero");
     return AuxPort::Utility::generateRandomValues<float>(numberOfSamples);

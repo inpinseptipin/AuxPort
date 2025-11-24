@@ -80,9 +80,9 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Calculates the number of digits present in an integer.		
 		///////////////////////////////////////////////////////////////////////////////////////
-		static uint32 numberOfDigits(int32 number)
+		static uint32_t numberOfDigits(int32_t number)
 		{
-			uint32 noOfDigits = number ? 0 : 1; while (number) { noOfDigits++, number /= 10; };
+			uint32_t noOfDigits = number ? 0 : 1; while (number) { noOfDigits++, number /= 10; };
 			return noOfDigits;
 		}
 #endif 

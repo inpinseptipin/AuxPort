@@ -512,7 +512,7 @@ namespace AuxPort
 		}
 	}
 	/*===================================================================================*/
-	uint32_t String::toUint32()
+	uint32_t String::toUInt32() 
 	{
 		double power = 0;
 		uint32_t Number = 0;

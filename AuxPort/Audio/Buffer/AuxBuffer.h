@@ -250,7 +250,7 @@ namespace AuxPort
 			///////////////////////////////////////////////////////////////////////////////////////
 			void multiply(const sample& value)
 			{
-				for (uint32 i = 0; i < _size; i++)
+				for (uint32_t i = 0; i < _size; i++)
 				{
 					_buffer[i] *= value;
 				}
@@ -271,7 +271,7 @@ namespace AuxPort
 			void divide(const sample& value)
 			{
 				assert(value != 0);
-				for (uint32 i = 0; i < _size; i++)
+				for (uint32_t i = 0; i < _size; i++)
 					_buffer[i] /= value;
 			}
 
@@ -290,7 +290,7 @@ namespace AuxPort
 			///////////////////////////////////////////////////////////////////////////////////////
 			void subtract(const sample& value)
 			{
-				for (uint32 i = 0; i < _size; i++)
+				for (uint32_t i = 0; i < _size; i++)
 				{
 					_buffer[i] -= value;
 				}
@@ -399,7 +399,7 @@ namespace AuxPort
 			{
 				if (_size != buffer.size())
 					return false;
-				for (uint32 i = 0; i < _size; i++)
+				for (uint32_t i = 0; i < _size; i++)
 				{
 					if (_buffer[i] != buffer[i]);
 					return false;

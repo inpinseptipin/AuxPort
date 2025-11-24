@@ -63,18 +63,18 @@
 #ifdef AUXPORT_COMPILER_MSVC
 #if _WIN32 || _WIN64
 	#include <intrin.h>
-	#define AUXSIMD 1
+	
 	#define AUX64SIMD 1
 #endif
 #elif defined(AUXPORT_COMPILER_GCC) || defined(AUXPORT_COMPILER_CLANG)
 #if __x86_64__ || _M_X64 || _M_IX86 || i386 || __i386__ || __i386
 	#include <immintrin.h>
 	#include <cpuid.h>
-	#define AUXSIMD 1
+	
 	#define AUX64SIMD 1
 #elif __arm64__ || __APPLE__
 	#include <arm_neon.h>
-	#define AUXSIMD 1
+	
 	#define AUXNEON 1
 #endif
 #endif
@@ -130,10 +130,14 @@
 #if __linux__
 	#if __x86_64__
 		#define AUXPORT_64 64
-#include <cstdint>
-	#else
+	#elif __arm64__
+		#define AUXPORT_64 64
+	#else	
 		#define AUXPORT_32 32
 	#endif
+
+	#include <cstdint>
+
 
 	#define AUXPORT_LINUX 9999
 	#define STR(x) #x
@@ -277,6 +281,7 @@ namespace AuxPort
 			}
 #endif
 #endif
+			return false;
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -300,6 +305,7 @@ namespace AuxPort
 			}
 #endif
 #endif
+			return false;
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -323,6 +329,7 @@ namespace AuxPort
 			}
 #endif
 #endif
+			return false;
 		}
 
 
@@ -399,10 +406,12 @@ namespace AuxPort
 
 	private:
 #if AUXPORT_LINUX
-		static void cpuid(int info[4],int infoType)
-		{
-			__cpuid_count(infoType,0,info[0],info[1],info[2],info[3]);
-		}
+		#if AUXSIMD
+			static void cpuid(int info[4],int infoType)
+			{
+				__cpuid_count(infoType,0,info[0],info[1],info[2],info[3]);
+			}
+		#endif	
 #endif
 
 	};

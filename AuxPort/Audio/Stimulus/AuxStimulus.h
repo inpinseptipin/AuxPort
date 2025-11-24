@@ -1,8 +1,8 @@
 #ifndef AUXPORT_STIMULUS_H
 #define AUXPORT_STIMULUS_H
 
-#include <vector>
 #include "../../Core/Env/AuxEnv.h"
+#include<vector>
 
 namespace AuxPort
 {
@@ -26,7 +26,7 @@ namespace AuxPort
 			  @param numberOfSamples
 			  @return 
 			 */
-			static std::vector<float> generateImpulse(size_t numberOfSamples);
+			static std::vector<float> generateImpulse(uint32_t numberOfSamples);
 			/**
 			  @brief Generates White Noise 
 			  @param lengthInTime
@@ -42,7 +42,7 @@ namespace AuxPort
 			  
 			  \endcode 
 			 */
-			static std::vector<float> generateWhiteNoise(size_t numberOfSamples);
+			static std::vector<float> generateWhiteNoise(uint32_t numberOfSamples);
 
 			static std::vector<float> generateExponentialSineSweep(float lengthInTime, float startFrequency, float endFrequency, float sampleRate);
 

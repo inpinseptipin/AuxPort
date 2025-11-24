@@ -40,6 +40,11 @@ set(CMAKE_CXX_EXTENSIONS  ON)
 
 
 
+option(AUXPORT_SIMD "Use SIMD" OFF)
+
+if(AUXPORT_SIMD)
+	add_compile_definitions(AUXSIMD 1)
+endif()
 
 
 option(AUXPORT_EXPERIMENTAL "Use Experimental Code" OFF)
