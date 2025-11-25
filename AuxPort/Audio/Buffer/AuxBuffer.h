@@ -1,4 +1,3 @@
-#pragma once
 #ifndef AUXPORT_AUDIO_BUFFER_H
 #define AUXPORT_AUDIO_BUFFER_H
 /*

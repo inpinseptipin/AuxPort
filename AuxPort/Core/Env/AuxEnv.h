@@ -63,7 +63,6 @@
 #ifdef AUXPORT_COMPILER_MSVC
 #if _WIN32 || _WIN64
 	#include <intrin.h>
-	
 	#define AUX64SIMD 1
 #endif
 #elif defined(AUXPORT_COMPILER_GCC) || defined(AUXPORT_COMPILER_CLANG)
