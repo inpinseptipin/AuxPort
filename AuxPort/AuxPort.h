@@ -76,6 +76,7 @@
 */
 #include "Graphics/Scopes/AuxScope.h"
 #include "Graphics/Images/AuxImage.h"
+#include "Graphics/SVG/AuxSVG.h"
 
 
 
