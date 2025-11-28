@@ -239,7 +239,7 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		static bool supportsAVX()
 		{
-#if AUXSIMD
+#if AUXSIMD == 1
 #if AUXPORT_WINDOWS
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
@@ -264,7 +264,7 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		static bool supportsMMX()
 		{
-#if AUXSIMD
+#if AUXSIMD == 1 
 #if AUXPORT_WINDOWS
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
@@ -288,7 +288,7 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		static bool supportsSSE4_1()
 		{
-#if AUXSIMD
+#if AUXSIMD == 1
 #if AUXPORT_WINDOWS
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);
@@ -312,7 +312,7 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		static bool supportsSSE4_2()
 		{
-#if AUXSIMD
+#if AUXSIMD == 1
 #if AUXPORT_WINDOWS
 			int cpuInfo[4];
 			__cpuid(cpuInfo, 1);

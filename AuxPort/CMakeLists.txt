@@ -87,6 +87,12 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/Scopes/AuxScope.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/Images/AuxImage.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/Images/AuxImage.cpp
+    ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVGObject.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVGObject.cpp
+    ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVGColour.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVGColour.cpp
+    ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVGText.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVGText.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVG.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVG.cpp
    
