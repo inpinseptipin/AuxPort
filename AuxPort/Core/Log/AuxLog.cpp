@@ -42,7 +42,7 @@ namespace AuxPort
 	{
 		const std::time_t currentTime_t = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 		char timeBuffer[26];
-#if AUXPORT_LINUX
+#if AUXPORT_LINUX || AUXPORT_MAC
 		ctime_r(&currentTime_t,timeBuffer);
 #else
 		ctime_s(timeBuffer, sizeof(timeBuffer), &currentTime_t);

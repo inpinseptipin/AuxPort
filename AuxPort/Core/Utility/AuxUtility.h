@@ -186,10 +186,10 @@ namespace AuxPort
 		}
 
 		template<class range>
-		static inline void remap(range* vector, range outputStart, range outputEnd, range inputStart, range inputEnd)
+		static inline void remap(range* vector, size_t vectorSize,range outputStart, range outputEnd, range inputStart, range inputEnd)
 		{
 			double slope = 1.0f * (outputEnd - outputStart) / (inputEnd - inputStart);
-			for (uint32_t i = 0; i < vector.size(); i++)
+			for (uint32_t i = 0; i < vectorSize; i++)
 				vector[i] = outputStart + static_cast<range>(slope) * (vector[i] - inputStart);
 		}
 
