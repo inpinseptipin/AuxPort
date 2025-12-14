@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Arora"
+  given-names: "Satyarth"
+- family-names: "Arora"
+  given-names: "Siddhartha Arora"
+title: "AuxPort"
+version: 0.2
+url: "https://github.com/inpinseptipin/AuxPort"
