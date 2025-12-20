@@ -43,7 +43,7 @@ set(CMAKE_CXX_EXTENSIONS  ON)
 option(AUXPORT_SIMD "Build Library with SIMD Support" OFF)
 
 if(AUXPORT_SIMD)
-	add_compile_definitions(AUXSIMD 1)
+	add_compile_definitions(AUXSIMD)
 endif()
 
 
