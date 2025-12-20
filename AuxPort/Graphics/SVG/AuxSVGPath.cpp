@@ -18,25 +18,38 @@ void AuxPort::Graphics::SVG::Path::generateString()
             svgString += subPaths[i].commands[j] + " ";
         }
     }
+
+    // If there are any commands or subpaths, an extra space will be present
+    // Better than appending conditionally inside the loops
+    if (!commands.empty() || !subPaths.empty())
+    {
+        // Remove trailing space
+        svgString.pop_back();
+    }
     
     // Close the `d` attribute
     svgString += "\"";
     
     // Add stroke and fill attributes
-    svgString += " stroke=\"" + strokeColour.getSVGString() + "\"";
-    svgString += " fill=\"" + fillColour.getSVGString() + "\"";
-    svgString += " />";    
+    // Generate color strings first
+    strokeColour.generateString();
+    svgString += " stroke=" + strokeColour.getSVGString();
+    fillColour.generateString();
+    svgString += " fill=" + fillColour.getSVGString();
+
+    // Close the path element
+    svgString += " />";
 }
 
 void AuxPort::Graphics::SVG::Path::moveTo(float x, float y)
 {
-    commands.push_back("M " + std::to_string(x) + " " + std::to_string(y));
+    commands.push_back("M " + AuxPort::Casters::toStdString(x) + " " + AuxPort::Casters::toStdString(y));
 }
 
 void AuxPort::Graphics::SVG::Path::lineTo(float x, float y)
 {
     assertInitializedPath();
-    commands.push_back("L " + std::to_string(x) + " " + std::to_string(y));
+    commands.push_back("L " + AuxPort::Casters::toStdString(x) + " " + AuxPort::Casters::toStdString(y));
 }
 
 void AuxPort::Graphics::SVG::Path::closePath()

@@ -39,5 +39,7 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/AuxPort.h
     ${PROJECT_SOURCE_DIR}/AuxTest/String/AuxStringTest.h
     ${PROJECT_SOURCE_DIR}/AuxTest/String/AuxStringTest.cpp
+    ${PROJECT_SOURCE_DIR}/AuxTest/SVGPath/AuxSVGPathTest.h
+    ${PROJECT_SOURCE_DIR}/AuxTest/SVGPath/AuxSVGPathTest.cpp
     ${PROJECT_SOURCE_DIR}/AuxTest/AuxTest.h
 )

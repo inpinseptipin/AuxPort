@@ -3,6 +3,7 @@
 
 #include "AuxSVGObject.h"
 #include "AuxSVGColour.h"
+#include "../../Core//Utility/AuxCaster.h"
 #include <vector>
 
 namespace AuxPort

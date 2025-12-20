@@ -39,6 +39,7 @@
 
 #include "../AuxPort/AuxPort.h"
 #include "String/AuxStringTest.h"
+#include "SVGPath/AuxSVGPathTest.h"
 
 ///////////////////////////////////////////////////////////////////////////////////////
 /// @brief This namespace contains testing modules for the AuxPort Library
@@ -47,7 +48,7 @@ namespace AuxTest
 {
 	enum class UnitTest
 	{
-		String, Time
+		String, Time, SVGPath
 	};
 	std::vector<AuxPort::Case> testcases;
 }
