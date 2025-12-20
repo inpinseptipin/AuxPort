@@ -4,6 +4,7 @@
 #include "../../Core/File/AuxFile.h"
 #include "AuxSVGObject.h"
 #include "AuxSVGText.h"
+#include "AuxSVGPath.h"
 
 namespace AuxPort
 {
@@ -45,11 +46,13 @@ namespace AuxPort
 */
 				void addText(const std::string& text, float startX, float startY, float fontSize);
 				void addText(AuxPort::Graphics::SVG::Text& text);
+				void addPath(Path& path);
 			protected:
 				void generateString() override;
 				std::string svgData;
 				std::string backgroundData;
 				std::vector<std::string> textData;
+				std::vector<Path> paths;
 				float width;
 				float height;
 			};

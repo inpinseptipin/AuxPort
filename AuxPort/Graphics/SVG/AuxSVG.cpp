@@ -1,7 +1,5 @@
 #include "AuxSVG.h"
 
-
-
 void AuxPort::Graphics::SVG::SVG::addBackground(AuxPort::Graphics::SVG::Colour& colour)
 {
 	backgroundData.clear();
@@ -24,8 +22,18 @@ void AuxPort::Graphics::SVG::SVG::generateString()
 {
 	svgData += "<svg " + valueToString("width", width) + valueToString("height", height) + " xmlns = \"http://www.w3.org/2000/svg\">";
 	svgData += backgroundData;
-	for (uint32_t i = 0;i < textData.size();i++)
+	
+	// Add text data
+	for (uint32_t i = 0; i < textData.size(); i++)
 		svgData += textData[i];
+	
+	// Add paths
+	for (uint32_t i = 0; i < paths.size(); i++)
+	{
+		paths[i].generateString();
+		svgData += paths[i].getSVGString();
+	}
+
 	svgData += "</svg>";
 }
 
@@ -43,4 +51,7 @@ void AuxPort::Graphics::SVG::SVG::save()
 	this->close();
 }
 
-
+void AuxPort::Graphics::SVG::SVG::addPath(Path& path)
+{
+	paths.push_back(path);
+}
