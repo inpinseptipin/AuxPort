@@ -34,7 +34,7 @@ void AuxPort::Extensions::WaveReader::readBuffer(bool toLoop)
 
 void AuxPort::Extensions::WaveReader::seek(double timeInSeconds)
 {
-	AuxAssert(timeInSeconds > file->getLengthInSeconds(), "Seek Time greater than length of song");
+	AuxAssert(timeInSeconds < file->getLengthInSeconds(), "Seek Time greater than length of song");
 	sampleCounter = timeInSeconds * file->getSampleRate();
 }
 
