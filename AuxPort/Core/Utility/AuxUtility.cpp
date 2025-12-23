@@ -125,4 +125,16 @@ void AuxPort::DataProcessing::DataUtility::convertToFloat(const std::vector<std:
             outputData[i][j] = std::stof(inputData[i][j]);
 }
 
-
+std::vector<std::string> AuxPort::Utility::splitIntoTokens(std::string string, const std::string& delimiter)
+{
+    std::vector<std::string> tokens;
+    size_t pos = 0;
+    std::string token;
+    while ((pos = string.find(delimiter)) != std::string::npos) {
+        token = string.substr(0, pos);
+        tokens.push_back(token);
+        string.erase(0, pos + delimiter.length());
+    }
+    tokens.push_back(string);
+    return tokens;
+}

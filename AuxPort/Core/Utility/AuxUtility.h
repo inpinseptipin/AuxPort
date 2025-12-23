@@ -554,6 +554,7 @@ namespace AuxPort
 			return letter;
 		}
 
+		std::vector<std::string> splitIntoTokens(std::string string, const std::string& delimiter);
 #if AUXPORT_EXP == 1337
 		/**
 		  @brief Fast Approximation for conputing x^n 
