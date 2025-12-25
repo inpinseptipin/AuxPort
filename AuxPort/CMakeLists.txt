@@ -95,6 +95,8 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVGColour.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVGText.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVGText.cpp
+    ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVGPath.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVGPath.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVG.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/SVG/AuxSVG.cpp
    
