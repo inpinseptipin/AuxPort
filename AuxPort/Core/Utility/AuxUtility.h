@@ -286,6 +286,19 @@ namespace AuxPort
 			return max;
 		}
 
+
+		template<class sample>
+		static inline sample getMax(const std::vector<std::vector<sample>>& vector)
+		{
+			AuxAssert(vector.size() > 0, "Row size should be greater than 0");
+			AuxAssert(vector[0].size() > 0, "Columns size should be greater than 0");
+			sample maxValue = vector[0][0];
+			for (uint32_t i = 0; i < vector.size(); i++)
+				for (uint32_t j = 0; j < vector[0].size(); j++)
+					maxValue = maxValue < vector[i][j] ? vector[i][j] : maxValue;
+			return maxValue;
+		}
+
 		/**
 		   @brief Computes the min element in an std::vector
 		   @param vector
@@ -299,7 +312,19 @@ namespace AuxPort
 				return vector[0];
 			sample minValue = vector[0];
 			for (uint32_t i = 1; i < vector.size(); i++)
-				minValue = minValue < vector[i] ? vector[i] : minValue;
+				minValue = minValue > vector[i] ? vector[i] : minValue;
+			return minValue;
+		}
+
+		template<class sample>
+		static inline sample getMin(const std::vector<std::vector<sample>>& vector)
+		{
+			AuxAssert(vector.size() > 0, "Row size should be greater than 0");
+			AuxAssert(vector[0].size() > 0, "Columns size should be greater than 0");
+			sample minValue = vector[0][0];
+			for (uint32_t i = 0; i < vector.size(); i++)
+				for (uint32_t j = 0; j < vector[0].size(); j++)
+					minValue = minValue > vector[i][j] ? vector[i][j] : minValue;
 			return minValue;
 		}
 
@@ -356,6 +381,19 @@ namespace AuxPort
 				output[i].resize(rows);
 			for (uint32_t i = 0;i < columns;i++)
 				for (uint32_t j = 0; j < rows;j++)
+					output[i][j] = inputVector[j][i];
+		}
+
+		template<class data>
+		static inline void transpose(const std::vector<std::vector<data>>& inputVector, int rows, int columns, std::vector<std::vector<data>>& output)
+		{
+			AuxAssert(rows > 0, "Rows has to be greater than zero");
+			AuxAssert(columns > 0, "Columns has to be greater than zero");
+			output.resize(columns);
+			for (uint32_t i = 0; i < output.size(); i++)
+				output[i].resize(rows);
+			for (uint32_t i = 0; i < columns; i++)
+				for (uint32_t j = 0; j < rows; j++)
 					output[i][j] = inputVector[j][i];
 		}
 
@@ -525,19 +563,6 @@ namespace AuxPort
 			return data;
 		}
 
-		/**
-		  @brief  Returns the max value in a 1D vector
-		  @param data : 1D Vector
-		 */
-		template<class sample>
-		static sample getMax(const std::vector<std::vector<sample>>& data)
-		{
-			sample val = data[0][0];
-			for (uint32_t i = 0;i < data.size();i++)
-				for (uint32_t j = 0;j < data[0].size();j++)
-					val = val < data[i][j] ? data[i][j] : val;
-			return val;
-		}
 
 		/**
 		  @brief Returns a string with index of the english alphabet mapped to its String

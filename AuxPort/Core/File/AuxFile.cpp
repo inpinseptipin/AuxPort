@@ -413,6 +413,8 @@ AuxPort::Directory::Directory()
 	_count();
 }
 
+
+
 void AuxPort::Directory::setDirectory(const std::string& absolutePath)
 {
 	AuxAssert(absolutePath.length() > 0, "Path Length should be greater than 0");
