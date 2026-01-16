@@ -255,7 +255,6 @@ namespace AuxPort
 			writeIndex = 0;
 			buffer = nullptr;
 			bufferSize = 0;
-			poppedSample = 0;
 		}
 		~CircularBufferEngine() = default;
 		CircularBufferEngine(const CircularBufferEngine& circularBuffer) = default;
@@ -307,11 +306,11 @@ namespace AuxPort
 					writeIndex = 0;
 			}
 		}
-		virtual float pop()
+		virtual circData* pop()
 		{
 			poppedSample = buffer[readIndex++];
 			readIndex %= bufferSize;
-			return poppedSample;
+			return &poppedSample;
 		}
 		/**
 		  @brief Call this function to print out all the contents of the buffer. 
