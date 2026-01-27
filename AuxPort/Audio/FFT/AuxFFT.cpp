@@ -288,7 +288,7 @@ void AuxPort::Audio::STFT::computeMagnitudeTransform(const float* inputBuffer, f
 		for (uint32_t i = 0;i < fftSize/2;i++)
 			circEngine.push(inputBuffer[i]);
 		for (uint32_t i = 0;i < fftSize;i++)
-			fftBuffer[i] = circEngine.pop() * fullWindow[i];
+			fftBuffer[i] = *circEngine.pop() * fullWindow[i];
 		fourierTransform->computeMagnitudeTransform(fftBuffer, outputBuffer, fftSize);
 		for (uint32_t i = fftSize / 2;i < fftSize;i++)
 			circEngine.push(inputBuffer[i]);
@@ -298,7 +298,7 @@ void AuxPort::Audio::STFT::computeMagnitudeTransform(const float* inputBuffer, f
 		for (uint32_t i = 0;i < fftSize/2;i++)
 			circEngine.push(inputBuffer[i]);
 		for (uint32_t i = 0;i < fftSize;i++)
-			fftBuffer[i] = circEngine.pop() * fullWindow[i];
+			fftBuffer[i] = *circEngine.pop() * fullWindow[i];
 		fourierTransform->computeMagnitudeTransform(fftBuffer, outputBuffer, fftSize);
 		for (uint32_t i = fftSize / 2;i < fftSize;i++)
 			circEngine.push(inputBuffer[i]);
@@ -308,7 +308,7 @@ void AuxPort::Audio::STFT::computeMagnitudeTransform(const float* inputBuffer, f
 		for (uint32_t i = 0;i < fftSize / 2;i++)
 			circEngine.push(0.0f);
 		for (uint32_t i = 0;i < fftSize;i++)
-			fftBuffer[i] = circEngine.pop() * fullWindow[i];
+			fftBuffer[i] = *circEngine.pop() * fullWindow[i];
 		fourierTransform->computeMagnitudeTransform(fftBuffer, outputBuffer, fftSize);
 	}
 }
