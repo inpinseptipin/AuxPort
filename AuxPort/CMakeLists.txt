@@ -37,6 +37,7 @@
 add_library(
     AuxPort
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Env/AuxEnv.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Core/Env/AuxDebug.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Log/AuxLog.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Log/AuxLog.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxUtility.h
