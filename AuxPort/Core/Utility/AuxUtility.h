@@ -124,6 +124,11 @@ namespace AuxPort
 					data[i] = linearTodB(data[i]);
 		}
 
+		/**
+		  @brief Replaces all values in a 1D vector with -negInfinity to the norm value. 
+		  @param data
+		  @param normValue
+		 */
 		static inline void normFromNegInfinity(std::vector<float>& data, float normValue)
 		{
 			for (uint32_t i = 0;i < data.size();i++)
@@ -177,6 +182,15 @@ namespace AuxPort
 			return outputStart + static_cast<range>(slope) * (input - inputStart);
 		}
 
+		/**
+		  @brief Remaps the range of the values in a 1D vector from [inputStart,inputEnd] to [outputStart,outputEnd] 
+		  @param vector
+		  @param vectorSize
+		  @param outputStart
+		  @param outputEnd
+		  @param inputStart
+		  @param inputEnd
+		 */
 		template<class range>
 		static inline void remap(std::vector<range>& vector,range outputStart,range outputEnd,range inputStart,range inputEnd)
 		{
@@ -185,6 +199,15 @@ namespace AuxPort
 				vector[i] = outputStart + static_cast<range>(slope) * (vector[i] - inputStart);
 		}
 
+		/**
+		  @brief Remaps the range of the values in a 1D vector from [inputStart,inputEnd] to [outputStart,outputEnd] 
+		  @param vector
+		  @param vectorSize
+		  @param outputStart
+		  @param outputEnd
+		  @param inputStart
+		  @param inputEnd
+		 */
 		template<class range>
 		static inline void remap(range* vector, size_t vectorSize,range outputStart, range outputEnd, range inputStart, range inputEnd)
 		{
@@ -286,7 +309,10 @@ namespace AuxPort
 			return max;
 		}
 
-
+		/**
+		  @brief Gets maximum element in a 2D Vector 
+		  @param vector
+		 */
 		template<class sample>
 		static inline sample getMax(const std::vector<std::vector<sample>>& vector)
 		{
@@ -316,6 +342,11 @@ namespace AuxPort
 			return minValue;
 		}
 
+		/**
+		  @brief Gets minimum of a 2D Vector 
+		  @param vector
+		  @return 
+		 */
 		template<class sample>
 		static inline sample getMin(const std::vector<std::vector<sample>>& vector)
 		{
@@ -384,16 +415,26 @@ namespace AuxPort
 					output[i][j] = inputVector[j][i];
 		}
 
+		/**
+		  @brief Transposes a 2D vector 
+		  @param inputVector
+		  @param rows
+		  @param columns
+		  @param output
+		  \code{.cpp}
+		  
+		  \endcode 
+		 */
 		template<class data>
-		static inline void transpose(const std::vector<std::vector<data>>& inputVector, int rows, int columns, std::vector<std::vector<data>>& output)
+		static inline void transpose(const std::vector<std::vector<data>>& inputVector,std::vector<std::vector<data>>& output)
 		{
-			AuxAssert(rows > 0, "Rows has to be greater than zero");
-			AuxAssert(columns > 0, "Columns has to be greater than zero");
-			output.resize(columns);
+			AuxAssert(inputVector.size() > 0, "Rows has to be greater than zero");
+			AuxAssert(inputVector[0].size() > 0, "Columns has to be greater than zero");
+			output.resize(inputVector[0].size());
 			for (uint32_t i = 0; i < output.size(); i++)
-				output[i].resize(rows);
-			for (uint32_t i = 0; i < columns; i++)
-				for (uint32_t j = 0; j < rows; j++)
+				output[i].resize(inputVector.size();
+			for (uint32_t i = 0; i < outputVector.size(); i++)
+				for (uint32_t j = 0; j < outputVector[0].size(); j++)
 					output[i][j] = inputVector[j][i];
 		}
 
@@ -515,6 +556,16 @@ namespace AuxPort
 			return normalizedTo2pi ? fmod(degrees, 360.0f) * 0.0174533f : degrees * 0.0174533f;
 		}
 
+		/**
+		  @brief Converts seconds to a Time String | Format : hour:min:seconds 
+		  @param seconds
+		  @return
+		  @details 
+		  Example Implementation
+		  \code{.cpp}
+			auto timeInString = convertToTime(300);
+		  \endcode	
+		 */
 		static std::string convertToTime(uint32_t seconds)
 		{
 			auto secondsInFloat = static_cast<float>(seconds);
@@ -620,7 +671,7 @@ namespace AuxPort
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////
-	/// @brief Provides funnctions to get Information about your PC
+	/// @brief Provides funnctions to get Information about your device
 	///////////////////////////////////////////////////////////////////////////////////////
 	class About
 	{
