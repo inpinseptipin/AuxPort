@@ -18,8 +18,8 @@ namespace AuxPort
             AllocConsole();
             SetConsoleTitle(TEXT(windowName.c_str()));
             auto err = freopen("conin$", "r", stdin);
-            auto err = freopen("conout$", "w", stdout);
-            auto err = freopen("conout$", "w", stderr);
+            err = freopen("conout$", "w", stdout);
+            err = freopen("conout$", "w", stderr);
         }
         void clearWindow()
         {

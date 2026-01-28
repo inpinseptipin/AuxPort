@@ -432,7 +432,7 @@ namespace AuxPort
 			AuxAssert(inputVector[0].size() > 0, "Columns has to be greater than zero");
 			output.resize(inputVector[0].size());
 			for (uint32_t i = 0; i < output.size(); i++)
-				output[i].resize(inputVector.size();
+				output[i].resize(inputVector.size());
 			for (uint32_t i = 0; i < outputVector.size(); i++)
 				for (uint32_t j = 0; j < outputVector[0].size(); j++)
 					output[i][j] = inputVector[j][i];
