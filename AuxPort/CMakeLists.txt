@@ -86,6 +86,8 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Oscillators/AuxOscillator.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Stimulus/AuxStimulus.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Stimulus/AuxStimulus.cpp
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Transforms/AuxWH.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Transforms/AuxWH.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/Scopes/AuxScope.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/Scopes/AuxScope.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Graphics/Images/AuxImage.h

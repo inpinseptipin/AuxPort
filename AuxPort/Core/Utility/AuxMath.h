@@ -48,7 +48,6 @@ namespace AuxPort
 	///////////////////////////////////////////////////////////////////////////////////////
 	/// @brief This class provides an interface to calculate different types of errors
 	///////////////////////////////////////////////////////////////////////////////////////
-	template<class errorVal>
 	class Error
 	{
 	public:
@@ -82,6 +81,7 @@ namespace AuxPort
 		/// compared with the corresponding values in the second vector, and the error will be computed
 		/// based on the current error type.
 		///////////////////////////////////////////////////////////////////////////////////////
+		template<class errorVal>
 		float compute(const std::vector<errorVal>& calculatedValues, const std::vector<errorVal>& expectedValues)
 		{
 			AuxAssert(calculatedValues.size() == expectedValues.size(), "Vectors must be of same size!");

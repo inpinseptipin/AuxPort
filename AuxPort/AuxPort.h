@@ -69,7 +69,7 @@
 #include "Audio/Filters/AuxIIR.h"
 #include "Audio/Oscillators/AuxOscillator.h"
 #include "Audio/Stimulus/AuxStimulus.h"
-
+#include "Audio/Transforms/AuxWH.h"
 
 /*
 *			Graphics Headers
