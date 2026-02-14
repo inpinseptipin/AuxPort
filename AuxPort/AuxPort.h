@@ -4,7 +4,7 @@
 
 			BSD 3-Clause License
 
-			Copyright (c) 2023, Satyarth Arora
+			Copyright (c) 2026, Satyarth Arora
 			All rights reserved.
 
 			Redistribution and use in source and binary forms, with or without
@@ -40,6 +40,7 @@
 *			Core Headers
 */
 #include "Core/Env/AuxEnv.h"
+#include "Core/Env/AuxDebug.h"
 #include "Core/Log/AuxLog.h"
 #include "Core/Time/AuxTime.h"
 #include "Core/String/AuxString.h"
