@@ -60,6 +60,8 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxSeries.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxMath.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxMath.cpp
+    ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxThread.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Core/Utility/AuxThread.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/SIMD/AuxSimd.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/SIMD/AuxSimd.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Core/Crypto/AuxCrypto.h

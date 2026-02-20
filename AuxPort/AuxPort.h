@@ -50,6 +50,7 @@
 #include "Core/Utility/AuxSeries.h"
 #include "Core/Utility/AuxMath.h"
 #include "Core/Utility/AuxPascal.h"
+#include "Core/Utility/AuxThread.h"
 #include "Core/TestCase/AuxCase.h"
 #include "Core/SIMD/AuxSimd.h"
 #include "Core/Crypto/AuxCrypto.h"
