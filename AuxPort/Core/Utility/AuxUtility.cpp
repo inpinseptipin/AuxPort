@@ -125,6 +125,61 @@ void AuxPort::DataProcessing::DataUtility::convertToFloat(const std::vector<std:
             outputData[i][j] = std::stof(inputData[i][j]);
 }
 
+void AuxPort::Utility::join(std::string& str, const std::vector<std::string>& tokens, char delimiter)
+{
+    str = "";
+    if (tokens.empty()) return;
+    size_t tokensCount = tokens.size();
+    for (size_t i = 0; i < tokensCount - 1; i++)
+    {
+        str += tokens[i] + delimiter;
+    }
+    str += tokens[tokensCount - 1];
+}
+
+std::string AuxPort::Utility::join(const std::vector<std::string>& tokens, char delimiter)
+{
+    
+    if (tokens.empty()) return "";
+    std::string string = "";
+    size_t tokensCount = tokens.size();
+    for (size_t i = 0; i < tokensCount - 1; i++)
+    {
+        string += tokens[i] + delimiter;
+    }
+    string += tokens[tokensCount - 1];
+}
+
+std::string AuxPort::Utility::convertToTime(uint32_t seconds)
+{
+    auto secondsInFloat = static_cast<float>(seconds);
+    float hours = floorf(secondsInFloat / 3600);
+    float mins = floorf((secondsInFloat - (hours * 3600)) / 60);
+    float secs = floorf(secondsInFloat - (hours * 3600) - (mins * 60));
+    return std::to_string(hours) + " : " + std::to_string(mins) + " : " + std::to_string(secs);
+}
+
+inline void AuxPort::Utility::abs(std::vector<float>& vector)
+{
+    for (size_t i = 0; i < vector.size(); i++)
+        vector[i] = fabsf(vector[i]);
+}
+
+inline std::string AuxPort::Utility::formatFloatForFileNames(float val)
+{
+    auto data = std::to_string(val);
+    data = data.replace(data.find("."), data.find("."), "_");
+    return data;
+}
+
+inline std::string AuxPort::Utility::toAlphabet(uint32_t indexNumber)
+{
+    AuxAssert(indexNumber >= 0 && indexNumber <= 25, "English alphabet only consist of 26 letters last I checked");
+    std::string letter;
+    letter.push_back(static_cast<char>(65 + indexNumber));
+    return letter;
+}
+
 std::vector<std::string> AuxPort::Utility::splitIntoTokens(std::string string, const std::string& delimiter)
 {
     std::vector<std::string> tokens;
@@ -137,4 +192,43 @@ std::vector<std::string> AuxPort::Utility::splitIntoTokens(std::string string, c
     }
     tokens.push_back(string);
     return tokens;
+}
+
+void AuxPort::Utility::splitIntoTokens(std::vector<std::string>& tokens, std::string string, const std::string& delimiter)
+{
+    tokens.clear();
+    size_t pos = 0;
+    std::string token;
+    while ((pos = string.find(delimiter)) != std::string::npos) {
+        token = string.substr(0, pos);
+        tokens.push_back(token);
+        string.erase(0, pos + delimiter.length());
+    }
+    tokens.push_back(string);
+}
+
+void AuxPort::About::printAbout()
+{
+    Env::isArm() ? AuxPort::Logger::Log("Detected Architecture : Arm", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("Detected Architecture : x86_64", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+    if (Env::isWindowsOS())
+        AuxPort::Logger::Log("Detected OS : Windows", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+    else if (Env::isLinuxOS())
+        AuxPort::Logger::Log("Detected OS : Linux", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+    else if (Env::isMacOS())
+        AuxPort::Logger::Log("Detected OS : Mac", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+    else
+        AuxPort::Logger::Log("Unknown OS", AuxPort::LogType::Warning, AuxPort::ColourType::Red);
+
+#if AUXSIMD
+    Env::supportsMMX() == true ? AuxPort::Logger::Log("MMX is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("MMX is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+    Env::supportsAVX() == true ? AuxPort::Logger::Log("AVX is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("AVX is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+    Env::supportsSSE() == true ? AuxPort::Logger::Log("SSE is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("SSE is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+    Env::supportsSSE2() == true ? AuxPort::Logger::Log("SSE2 is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("SSE2 is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+    Env::supportsSSE4_1() == true ? AuxPort::Logger::Log("SSE4.1 is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("SSE4.1 is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+    Env::supportsSSE4_2() == true ? AuxPort::Logger::Log("SSE4.2 is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("SSE4.2 is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+    Env::supportsNeon() == true ? AuxPort::Logger::Log("Neon is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("Neon is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
+
+#else
+    AuxPort::Logger::Log("SIMD is not enabled", AuxPort::LogType::Warning, AuxPort::ColourType::Yellow);
+#endif
 }

@@ -503,33 +503,14 @@ namespace AuxPort
 		}
 
 		///////////////////////////////////////////////////////////////////////////////////////
-		/// @brief Splits the given string in a vector of tokens based on the given delimiter
+		/// @brief Joins the given vector of tokens using the given delimiter to form a string
 		///////////////////////////////////////////////////////////////////////////////////////
-		static void split(std::vector<std::string>& tokens, const std::string& str, const char& delimiter)
-		{
-			tokens.clear();
-			std::stringstream stream(str);
-			std::string token;
-			while (getline(stream, token, delimiter))
-			{
-				tokens.push_back(token);
-			}
-		}
-
+		static void join(std::string& str, const std::vector<std::string>& tokens, char delimiter);
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Joins the given vector of tokens using the given delimiter to form a string
 		///////////////////////////////////////////////////////////////////////////////////////
-		static void join(std::string& str, const std::vector<std::string>& tokens, const char& delimiter)
-		{
-			str = "";
-			if (tokens.empty()) return;
-			size_t tokensCount = tokens.size();
-			for (size_t i = 0; i < tokensCount - 1; i++)
-			{
-				str += tokens[i] + delimiter;
-			}
-			str += tokens[tokensCount - 1];
-		}
+		std::string join(const std::vector<std::string>& tokens, char delimiter);
+
 
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Linear Interpolation
@@ -566,14 +547,8 @@ namespace AuxPort
 			auto timeInString = convertToTime(300);
 		  \endcode	
 		 */
-		static std::string convertToTime(uint32_t seconds)
-		{
-			auto secondsInFloat = static_cast<float>(seconds);
-			float hours = floorf(secondsInFloat / 3600);
-			float mins = floorf((secondsInFloat - (hours * 3600)) / 60);
-			float secs = floorf(secondsInFloat - (hours*3600) - (mins*60));
-			return std::to_string(hours) + " : " + std::to_string(mins) + " : " + std::to_string(secs);
-		}
+		static std::string convertToTime(uint32_t seconds);
+
 		 /*
 		  @brief Performs Linear Search over a vector
 		  @param vector
@@ -596,23 +571,16 @@ namespace AuxPort
 		  @param data 
 		  @return
 		 */
-		static void abs(std::vector<float>& vector)
-		{
-			for (size_t i = 0; i < vector.size(); i++)
-				vector[i] = fabsf(vector[i]);
-		}
+		static void abs(std::vector<float>& vector);
+
 
 		/**
 		  @brief Formats a floating point value to a string that's acceptable as a filename on a given OS
 		  @details
 		  Example :  0.05 will be convered to 0_05
 		 */
-		static std::string formatFloatForFileNames(float val)
-		{
-			auto data = std::to_string(val);
-			data = data.replace(data.find("."), data.find("."), "_");
-			return data;
-		}
+		static std::string formatFloatForFileNames(float val);
+
 
 
 		/**
@@ -622,15 +590,11 @@ namespace AuxPort
 		  @details
 		  Example : toAlphabet(3) would return a string holding the value = "C"
 		 */
-		static inline std::string toAlphabet(uint32_t indexNumber)
-		{
-			AuxAssert(indexNumber >= 0 && indexNumber <= 25,"English alphabet only consist of 26 letters last I checked");
-			std::string letter;
-			letter.push_back(static_cast<char>(65 + indexNumber));
-			return letter;
-		}
+		static inline std::string toAlphabet(uint32_t indexNumber);
+
 
 		static std::vector<std::string> splitIntoTokens(std::string string, const std::string& delimiter);
+		static void splitIntoTokens(std::vector<std::string>& tokens, std::string string, const std::string& delimiter);
 #if AUXPORT_EXP == 1337
 		/**
 		  @brief Fast Approximation for conputing x^n 
@@ -676,31 +640,8 @@ namespace AuxPort
 	class About
 	{
 	public:	
-		static void printAbout()
-		{
-			Env::isArm() ? AuxPort::Logger::Log("Detected Architecture : Arm",AuxPort::LogType::Success,AuxPort::ColourType::Light_Purple):AuxPort::Logger::Log("Detected Architecture : x86_64",AuxPort::LogType::Success,AuxPort::ColourType::Light_Purple);
-			if (Env::isWindowsOS())
-				AuxPort::Logger::Log("Detected OS : Windows", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
-			else if (Env::isLinuxOS())
-				AuxPort::Logger::Log("Detected OS : Linux", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
-			else if (Env::isMacOS())
-				AuxPort::Logger::Log("Detected OS : Mac", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
-			else
-				AuxPort::Logger::Log("Unknown OS", AuxPort::LogType::Warning, AuxPort::ColourType::Red);
+		static void printAbout();
 
-#if AUXSIMD
-			Env::supportsMMX() == true ? AuxPort::Logger::Log("MMX is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("MMX is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
-			Env::supportsAVX() == true ? AuxPort::Logger::Log("AVX is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("AVX is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
-			Env::supportsSSE() == true ? AuxPort::Logger::Log("SSE is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("SSE is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
-			Env::supportsSSE2() == true ? AuxPort::Logger::Log("SSE2 is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("SSE2 is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
-			Env::supportsSSE4_1() == true ? AuxPort::Logger::Log("SSE4.1 is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("SSE4.1 is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
-			Env::supportsSSE4_2() == true ? AuxPort::Logger::Log("SSE4.2 is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("SSE4.2 is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
-			Env::supportsNeon() == true ? AuxPort::Logger::Log("Neon is Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple) : AuxPort::Logger::Log("Neon is not Supported", AuxPort::LogType::Success, AuxPort::ColourType::Light_Purple);
-
-#else
-			AuxPort::Logger::Log("SIMD is not enabled",AuxPort::LogType::Warning,AuxPort::ColourType::Yellow);
-#endif
-		}
 	private:
 	};
 

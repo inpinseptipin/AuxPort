@@ -76,3 +76,21 @@ void AuxPort::TimerWithCallback::stopTimer()
 	threadLoopBool = false;
 	this->millisecond = 0;
 }
+
+AuxPort::ProcessQueue::ProcessQueue()
+{
+	work = [this]
+		{
+			while (!processQueue.empty())
+			{
+				system(processQueue.front().c_str());
+				processQueue.pop();
+			}
+		};
+}
+
+void AuxPort::ProcessQueue::addProcess(const std::string& processString)
+{
+	std::lock_guard lockGuard(processMutex);
+	processQueue.push(processString);
+}

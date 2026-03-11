@@ -4,6 +4,7 @@
 #include <functional>
 #include <thread>
 #include <mutex>
+#include <queue>
 #include "../Log/AuxLog.h"
 namespace AuxPort
 {
@@ -43,6 +44,18 @@ namespace AuxPort
 		virtual void timerCallback() = 0;
 	protected:
 		uint32_t millisecond = 0;
+	};
+
+
+	class ProcessQueue : private ParallelThread
+	{
+	public:
+		ProcessQueue();
+		~ProcessQueue() = default;
+		void addProcess(const std::string& processQueue);
+	protected:
+		std::mutex processMutex;
+		std::queue<std::string> processQueue;
 	};
 
 }
