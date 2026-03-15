@@ -148,6 +148,7 @@ std::string AuxPort::Utility::join(const std::vector<std::string>& tokens, char 
         string += tokens[i] + delimiter;
     }
     string += tokens[tokensCount - 1];
+    return string;
 }
 
 std::string AuxPort::Utility::convertToTime(uint32_t seconds)
@@ -205,6 +206,33 @@ void AuxPort::Utility::splitIntoTokens(std::vector<std::string>& tokens, std::st
         string.erase(0, pos + delimiter.length());
     }
     tokens.push_back(string);
+}
+
+void AuxPort::Utility::splitIntoTokens(std::vector<std::string>& tokens, std::string string, char delimiter)
+{
+    size_t pos = 0;
+    tokens.clear();
+    std::string token;
+    while ((pos = string.find(delimiter)) != std::string::npos) {
+        token = string.substr(0, pos);
+        tokens.push_back(token);
+        string.erase(0, pos + 1);
+    }
+    tokens.push_back(string);
+}
+
+std::vector<std::string> AuxPort::Utility::splitIntoTokens(std::string string, char delimiter)
+{
+    std::vector<std::string> tokens;
+    size_t pos = 0;
+    std::string token;
+    while ((pos = string.find(delimiter)) != std::string::npos) {
+        token = string.substr(0, pos);
+        tokens.push_back(token);
+        string.erase(0, pos + 1);
+    }
+    tokens.push_back(string);
+    return tokens;
 }
 
 void AuxPort::About::printAbout()

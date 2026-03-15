@@ -84,7 +84,6 @@ AuxPort::ProcessQueue::ProcessQueue()
 			while (!processQueue.empty())
 			{
 				system(processQueue.front().c_str());
-				processQueue.pop();
 			}
 		};
 }

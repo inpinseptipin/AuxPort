@@ -334,13 +334,13 @@ void AuxPort::CSV::read(std::vector<std::vector<std::string>>& data, std::vector
 	{
 		if (readLineFromFile(currLine))
 		{
-			AuxPort::Utility::splitIntoTokens(header, currLine, std::to_string(delimiter));
+			AuxPort::Utility::splitIntoTokens(header, currLine, delimiter);
 		}
 	}
 	while (readLineFromFile(currLine))
 	{
 		std::vector<std::string> dataRow;
-		AuxPort::Utility::splitIntoTokens(dataRow, currLine, std::to_string(delimiter));
+		AuxPort::Utility::splitIntoTokens(dataRow, currLine, delimiter);
 		data.push_back(dataRow);
 	}
 }

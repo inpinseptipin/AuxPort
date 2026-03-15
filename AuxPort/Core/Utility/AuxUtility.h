@@ -433,8 +433,8 @@ namespace AuxPort
 			output.resize(inputVector[0].size());
 			for (uint32_t i = 0; i < output.size(); i++)
 				output[i].resize(inputVector.size());
-			for (uint32_t i = 0; i < outputVector.size(); i++)
-				for (uint32_t j = 0; j < outputVector[0].size(); j++)
+			for (uint32_t i = 0; i < output.size(); i++)
+				for (uint32_t j = 0; j < output[0].size(); j++)
 					output[i][j] = inputVector[j][i];
 		}
 
@@ -509,7 +509,7 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Joins the given vector of tokens using the given delimiter to form a string
 		///////////////////////////////////////////////////////////////////////////////////////
-		std::string join(const std::vector<std::string>& tokens, char delimiter);
+		static std::string join(const std::vector<std::string>& tokens, char delimiter);
 
 
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -595,6 +595,8 @@ namespace AuxPort
 
 		static std::vector<std::string> splitIntoTokens(std::string string, const std::string& delimiter);
 		static void splitIntoTokens(std::vector<std::string>& tokens, std::string string, const std::string& delimiter);
+		static void splitIntoTokens(std::vector<std::string>& tokens, std::string string, char delimiter);
+		static std::vector<std::string> splitIntoTokens(std::string string, char delimiter);
 #if AUXPORT_EXP == 1337
 		/**
 		  @brief Fast Approximation for conputing x^n 
