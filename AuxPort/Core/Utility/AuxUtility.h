@@ -61,6 +61,8 @@ namespace AuxPort
 	{
 	public:
 		
+		static void convertToVectorChar(const std::string& string, std::vector<char>& vectorChar);
+
 #ifdef AUXPORT_64	
 		///////////////////////////////////////////////////////////////////////////////////////
 		/// @brief Calculates the number of digits present in an integer.		

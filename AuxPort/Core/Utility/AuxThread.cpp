@@ -79,12 +79,38 @@ void AuxPort::TimerWithCallback::stopTimer()
 
 AuxPort::ProcessQueue::ProcessQueue()
 {
+#if AUXPORT_WINDOWS
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&pi, sizeof(pi));
+#endif
+	workDispatched = false;
 	work = [this]
 		{
+
 			while (!processQueue.empty())
 			{
-				system(processQueue.front().c_str());
-				processQueue.pop();
+				if (WaitForSingleObject(pi.hProcess, 0) == WAIT_OBJECT_0 || workDispatched == false)
+				{
+					CloseHandle(pi.hProcess);
+					CloseHandle(pi.hThread);
+					AuxPort::Logger::Log(processQueue.front());
+					std::string commandInString = processQueue.front();
+					LPSTR command = commandInString.data();
+					if (!CreateProcess(NULL,
+						command,
+						NULL,
+						NULL,
+						FALSE,
+						0,
+						NULL,
+						NULL,
+						&si,
+						&pi
+					));
+					processQueue.pop();
+					workDispatched = true;
+				}
 			}
 		};
 }

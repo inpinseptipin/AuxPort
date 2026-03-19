@@ -6,6 +6,12 @@
 #include <mutex>
 #include <queue>
 #include "../Log/AuxLog.h"
+#include "../Utility/AuxUtility.h"
+
+#if AUXPORT_WINDOWS
+#include <Windows.h>
+#include <tchar.h>
+#endif
 namespace AuxPort
 {
 	/**
@@ -47,7 +53,7 @@ namespace AuxPort
 	};
 
 
-	class ProcessQueue : private ParallelThread
+	class ProcessQueue : public ParallelThread
 	{
 	public:
 		ProcessQueue();
@@ -56,6 +62,11 @@ namespace AuxPort
 	protected:
 		std::mutex processMutex;
 		std::queue<std::string> processQueue;
+#if AUXPORT_WINDOWS
+		STARTUPINFO si;
+		PROCESS_INFORMATION pi;
+		bool workDispatched;
+#endif
 	};
 
 }

@@ -125,6 +125,13 @@ void AuxPort::DataProcessing::DataUtility::convertToFloat(const std::vector<std:
             outputData[i][j] = std::stof(inputData[i][j]);
 }
 
+void AuxPort::Utility::convertToVectorChar(const std::string& string, std::vector<char>& vectorChar)
+{
+    vectorChar.resize(string.size());
+    for (uint32_t i = 0; i < vectorChar.size(); i++)
+        vectorChar[i] = string[i];
+}
+
 void AuxPort::Utility::join(std::string& str, const std::vector<std::string>& tokens, char delimiter)
 {
     str = "";
