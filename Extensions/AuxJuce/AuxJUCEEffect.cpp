@@ -1,4 +1,4 @@
-#include "AuxEffect.h"
+#include "AuxJUCEEffect.h"
 
 void AuxPort::Extensions::JuceEffect::setParameterNames(const std::vector<std::string>& parameterNames)
 {

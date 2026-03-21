@@ -539,17 +539,6 @@ namespace AuxPort
 			return normalizedTo2pi ? fmod(degrees, 360.0f) * 0.0174533f : degrees * 0.0174533f;
 		}
 
-		/**
-		  @brief Converts seconds to a Time String | Format : hour:min:seconds 
-		  @param seconds
-		  @return
-		  @details 
-		  Example Implementation
-		  \code{.cpp}
-			auto timeInString = convertToTime(300);
-		  \endcode	
-		 */
-		static std::string convertToTime(uint32_t seconds);
 
 		 /*
 		  @brief Performs Linear Search over a vector
@@ -573,7 +562,11 @@ namespace AuxPort
 		  @param data 
 		  @return
 		 */
-		static void abs(std::vector<float>& vector);
+		static void absolute(std::vector<float>& vector)
+		{
+			for (uint32_t i = 0;i < vector.size();i++)
+				vector[i] = fabsf(vector[i]);
+		}
 
 
 		/**

@@ -1,9 +1,8 @@
 #ifndef AUXJUCE_EFFECT_H
 #define AUXJUCE_EFFECT_H
 
-#include <juce_audio_processors/juce_audio_processors.h>
-#include "AuxPort.h"
 #include "AuxParam.h"
+#include <juce_audio_processors/juce_audio_processors.h>
 
 namespace AuxPort
 {

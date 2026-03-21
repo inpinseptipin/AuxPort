@@ -158,20 +158,9 @@ std::string AuxPort::Utility::join(const std::vector<std::string>& tokens, char 
     return string;
 }
 
-std::string AuxPort::Utility::convertToTime(uint32_t seconds)
-{
-    auto secondsInFloat = static_cast<float>(seconds);
-    uint32_t hours = static_cast<uint32_t>(floorf(secondsInFloat / 3600));
-    uint32_t mins = static_cast<uint32_t>(floorf((secondsInFloat - (hours * 3600)) / 60));
-    uint32_t secs = static_cast<uint32_t>(floorf(secondsInFloat - (hours * 3600) - (mins * 60)));
-    return std::to_string(hours) + " : " + std::to_string(mins) + " : " + std::to_string(secs);
-}
 
-inline void AuxPort::Utility::abs(std::vector<float>& vector)
-{
-    for (size_t i = 0; i < vector.size(); i++)
-        vector[i] = fabsf(vector[i]);
-}
+
+
 
 inline std::string AuxPort::Utility::formatFloatForFileNames(float val)
 {

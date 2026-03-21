@@ -84,7 +84,7 @@ void AuxPort::Audio::DelayTuner::findDelayPeak()
 		delayTunerBuffers[i][0] = 1;
 		if (parallelBlockVector[i] != nullptr)
 			parallelBlockVector[i]();
-		AuxPort::Utility::abs(delayTunerBuffers[i]);
+		AuxPort::Utility::absolute(delayTunerBuffers[i]);
 		float maxValue = AuxPort::Utility::getMax<float>(delayTunerBuffers[i]);
 		delayValues[i] = AuxPort::Utility::search<float>(delayTunerBuffers[i], maxValue);
 	}

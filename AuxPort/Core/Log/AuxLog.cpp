@@ -69,6 +69,15 @@ namespace AuxPort
 		return currentTime;
 	}
 
+	std::string Time::convertToTime(uint32_t seconds)
+	{
+		auto secondsInFloat = static_cast<float>(seconds);
+		uint32_t hours = static_cast<uint32_t>(floorf(secondsInFloat / 3600));
+		uint32_t mins = static_cast<uint32_t>(floorf((secondsInFloat - (hours * 3600)) / 60));
+		uint32_t secs = static_cast<uint32_t>(floorf(secondsInFloat - (hours * 3600) - (mins * 60)));
+		return std::to_string(hours) + " : " + std::to_string(mins) + " : " + std::to_string(secs);
+	}
+
 
 
 	void Logger::setColour(const ColourType& colourType)

@@ -42,11 +42,9 @@
 
 
 #include "../../../Core/Env/AuxEnv.h"
-#include "../../../Core/Log/AuxLog.h"
-#include "../../../Core/Utility/AuxUtility.h"
 #include <vector>
 #include <functional>
-
+#include "../../../Core/Utility/AuxUtility.h"
 namespace AuxPort
 {
 	namespace Audio

@@ -72,6 +72,18 @@ namespace AuxPort
 		/// @param timeType TimeType is a type that can be used to set Formatting rules for the values returned by getCurrentTime() function
 		///////////////////////////////////////////////////////////////////////////////////////  
 		static std::string getCurrentTime(const TimeType& timeType);
+
+		/**
+		  @brief Converts seconds to a Time String | Format : hour:min:seconds
+		  @param seconds
+		  @return
+		  @details
+		  Example Implementation
+		  \code{.cpp}
+			auto timeInString = convertToTime(300);
+		  \endcode
+		 */
+		static std::string convertToTime(uint32_t seconds);
 	};
 
 	///////////////////////////////////////////////////////////////////////////////////////  
