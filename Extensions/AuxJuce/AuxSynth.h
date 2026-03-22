@@ -157,7 +157,7 @@ namespace AuxPort
 			void handleNoteOn(void* midiMessage) override;
 			void handleNoteOff(void* midiMessage) override;
 			void handleAllNotesOff(void* midiMessage) override;
-			std::vector<AuxPort::Audio::Sine::Sine> oscillator;
+			std::vector<AuxPort::Audio::Sawtooth::PBSaw> oscillator;
 		};
 
 	}

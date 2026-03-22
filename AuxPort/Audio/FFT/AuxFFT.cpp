@@ -42,6 +42,22 @@ void AuxPort::Audio::FourierTransform::computeTransform(const std::vector<float>
 		complexVector[i] = _fftValues[i];
 }
 
+void AuxPort::Audio::FourierTransform::computeTransform(const std::vector<float>& inputBuffer)
+{
+	AuxAssert(inputBuffer.size() == _fftValues.size(), "Size of input buffer not same as the FFT Engine's expectation");
+	for (uint32_t i = 0;i < inputBuffer.size();i++)
+		_fftValues[i] = inputBuffer[i];
+	compute();
+}
+
+void AuxPort::Audio::FourierTransform::computeTransform(const float* inputBuffer, uint32_t fftSize)
+{
+	AuxAssert(fftSize == _fftValues.size(), "Size of input buffer not same as the FFT Engine's expectation");
+	for (uint32_t i = 0;i < fftSize;i++)
+		_fftValues[i] = inputBuffer[i];
+	compute();
+}
+
 
 void AuxPort::Audio::FourierTransform::computeInverseTransform(std::vector<float>& outputBuffer)
 {

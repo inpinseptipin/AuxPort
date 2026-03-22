@@ -7,6 +7,7 @@
 #include <functional>
 #include "../Windows/AuxWindow.h"
 #include "../../Core/Utility/AuxCircularBuffer.h"
+#include "../FFT/AuxFFT.h"
 namespace AuxPort
 {
 	namespace Audio
@@ -239,7 +240,28 @@ namespace AuxPort
 			/// @brief Returns the sample value after convolving the current sample with given IR
 			///////////////////////////////////////////////////////////////////////////////////////
 			float process(float sample);
-		};		
+		};
+
+
+		class FastConvolution : protected AuxPort::Audio::STFT
+		{
+		public:
+			FastConvolution(uint32_t fftSize);
+			~FastConvolution() = default;
+			void setIR(const std::vector<float>& impulseResponse);
+			void process(const float* input, float* output, uint32_t bufferSize);
+			void reset()
+			{
+				states = STFT::StateMachine::initial;
+			}
+		protected:
+			void computeMagnitudeTransform(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples, AuxPort::Audio::STFT::StateMachine stateMachine = AuxPort::Audio::STFT::StateMachine::full) override;
+			std::vector<float> impulseResponse;
+			std::vector<std::complex<float>>* fftFrame;
+			std::vector<std::complex<float>>* filterFFTFrame;
+			std::unique_ptr<AuxPort::Audio::FourierTransform> filterFourierTransform;
+		};
+
 	}
 }
 

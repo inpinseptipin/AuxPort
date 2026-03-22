@@ -64,6 +64,10 @@ namespace AuxPort
 			/// @brief Performs FFT on the AudioBuffer passed in the argument and returns a complex vector with raw FFT values
 			///////////////////////////////////////////////////////////////////////////////////////
 			void computeTransform(const std::vector<float>& inputBuffer, std::vector<std::complex<float>>& complexVector);
+
+			void computeTransform(const std::vector<float>& inputBuffer);
+			void computeTransform(const float* inputBuffer, uint32_t fftSize);
+
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// @brief Performs FFT on the AudioBuffer passed in the argument and returns an AudioBuffer with FFT Values.
 			///////////////////////////////////////////////////////////////////////////////////////
@@ -93,7 +97,7 @@ namespace AuxPort
 			/// @brief Returns the size
 			///////////////////////////////////////////////////////////////////////////////////////
 			size_t size() const;
-		private:
+		protected:
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// @brief Performs in-place FFT
 			///////////////////////////////////////////////////////////////////////////////////////
@@ -222,7 +226,7 @@ namespace AuxPort
 			  
 			  \endcode 
 			 */
-			void computeMagnitudeTransform(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples, AuxPort::Audio::STFT::StateMachine stateMachine = AuxPort::Audio::STFT::StateMachine::full);
+			virtual void computeMagnitudeTransform(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples, AuxPort::Audio::STFT::StateMachine stateMachine = AuxPort::Audio::STFT::StateMachine::full);
 		protected:
 			std::unique_ptr<AuxPort::Audio::FourierTransform> fourierTransform;
 			uint32_t fftSize;
