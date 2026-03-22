@@ -296,4 +296,7 @@ void AuxPort::Audio::FastConvolution::computeMagnitudeTransform(const float* inp
 			fftFrame->at(i) *= filterFFTFrame->at(i);
 		fourierTransform->computeInverseTransform(outputBuffer, fftSize);
 	}
+
+	for (uint32_t i = 0;i < numberOfSamples;i++)
+		outputBuffer[i] /= numberOfSamples;
 }
