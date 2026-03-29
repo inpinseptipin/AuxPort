@@ -213,6 +213,7 @@ namespace AuxPort
 		///////////////////////////////////////////////////////////////////////////////////////
 		class Convolution
 		{
+		protected:
 			std::vector<float> impulseResponse;
 			AuxPort::CircularBuffer<float> inputBuffer;
 			size_t irSize;
@@ -224,42 +225,58 @@ namespace AuxPort
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// @brief Sets the Impulse Response for Convolution using the given vector
 			///////////////////////////////////////////////////////////////////////////////////////
-			void setImpulseResponse(const std::vector<float>& impulseResponse);
+			virtual void setImpulseResponse(const std::vector<float>& impulseResponse);
 
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// @brief Sets the Impulse Response for Convolution using the given array pointer
 			///////////////////////////////////////////////////////////////////////////////////////
-			void setImpulseResponse(float* impulseResponse, uint32_t size);
+			virtual void setImpulseResponse(const float* impulseResponse, uint32_t size);
 
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// @brief Sets the Impulse Response for Convolution using the given vector pointer
 			///////////////////////////////////////////////////////////////////////////////////////
-			void setImpulseResponse(std::vector<float>* impulseResponse, uint32_t size);
+			virtual void setImpulseResponse(std::vector<float>* impulseResponse, uint32_t size);
 
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// @brief Returns the sample value after convolving the current sample with given IR
 			///////////////////////////////////////////////////////////////////////////////////////
-			float process(float sample);
+			virtual float process(float sample);
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief Returns the sample value after convolving the current sample with given IR
+			///////////////////////////////////////////////////////////////////////////////////////
+			virtual void process(const float* inputBuffer, float* outputBuffer, uint32_t bufferSize);
 		};
 
 
-		class FastConvolution : protected AuxPort::Audio::STFT
+		class FastConvolution : Convolution
 		{
 		public:
 			FastConvolution(uint32_t fftSize);
 			~FastConvolution() = default;
-			void setIR(const std::vector<float>& impulseResponse);
+			void setImpulseResponse(const std::vector<float>& impulseResponse) override;
+			void setImpulseResponse(const float* impulseResponse, uint32_t size) override;
 			void process(const float* input, float* output, uint32_t bufferSize);
-			void reset()
-			{
-				states = STFT::StateMachine::initial;
-			}
+			void reset();
 		protected:
-			void computeMagnitudeTransform(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples, AuxPort::Audio::STFT::StateMachine stateMachine = AuxPort::Audio::STFT::StateMachine::full) override;
-			std::vector<float> impulseResponse;
+			void compute();
+			STFT::StateMachine states;
 			std::vector<std::complex<float>>* fftFrame;
 			std::vector<std::complex<float>>* filterFFTFrame;
 			std::unique_ptr<AuxPort::Audio::FourierTransform> filterFourierTransform;
+			std::unique_ptr<AuxPort::Audio::FourierTransform> audioFourierTransform;
+
+			std::vector<float> inputDataBuffer;
+			std::vector<float> overlapBuffer;
+			std::vector<float> outputDataBuffer;
+			std::vector<float> fftInputBuffer;
+			std::vector<float> fftOutputBuffer;
+
+			uint32_t writeIndex;
+			uint32_t readIndex;
+
+			size_t impulseResponseSize;
+
+
 		};
 
 	}

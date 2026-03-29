@@ -231,12 +231,13 @@ namespace AuxPort
 			std::unique_ptr<AuxPort::Audio::FourierTransform> fourierTransform;
 			uint32_t fftSize;
 			uint32_t overlapPercentage;
-			std::vector<float> initialHalfWindow;
-			std::vector<float> lastHalfWindow;
 			std::vector<float> fullWindow;
+			std::vector<float> lastHalfWindow;
+			std::vector<float> overlapBuffer;
 			float* inputBufferData;
 			float* fftBuffer;
 			AuxPort::CircularBufferEngine<float> circEngine;
+			AuxPort::CircularBufferEngine<float> overlapCircEngine;
 			StateMachine states;
 		};
 

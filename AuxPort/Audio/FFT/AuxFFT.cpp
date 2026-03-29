@@ -279,9 +279,13 @@ AuxPort::Audio::STFT::STFT(uint32_t fftSize, uint32_t overlapPercentage, AuxPort
 	this->fftSize = fftSize;
 	this->overlapPercentage = overlapPercentage;
 	fullWindow = AuxPort::Audio::Window::generate<float>(fftSize, window);
+	lastHalfWindow.resize(fftSize / 2);
+	std::copy(fullWindow.begin(), fullWindow.begin() + fftSize / 2, lastHalfWindow.begin());
 	fftBuffer = new float[fftSize];
 	inputBufferData = new float[fftSize];
 	circEngine.attachPointer(inputBufferData, fftSize);
+	overlapBuffer.resize(fftSize / 2);
+	overlapCircEngine.attachPointer(overlapBuffer.data(), overlapBuffer.size());
 }
 
 AuxPort::Audio::STFT::~STFT()

@@ -192,7 +192,7 @@ void AuxPort::Audio::Convolution::setImpulseResponse(const std::vector<float>& i
 	inputBuffer.resize(irSize);
 }
 
-void AuxPort::Audio::Convolution::setImpulseResponse(float* impulseResponse, uint32_t size)
+void AuxPort::Audio::Convolution::setImpulseResponse(const float* impulseResponse, uint32_t size)
 {
 	AuxAssert(impulseResponse != nullptr, "Impulse Response can't be a nullptr");
 	AuxAssert(size > 0, "IR size should be greater than 0");
@@ -227,76 +227,94 @@ float AuxPort::Audio::Convolution::process(float sample)
 	return outputSample;
 }
 
-AuxPort::Audio::FastConvolution::FastConvolution(uint32_t fftSize) : STFT(fftSize,50,AuxPort::Audio::Window::HannWin)
+void AuxPort::Audio::Convolution::process(const float* input, float* output, uint32_t bufferSize)
 {
-	filterFourierTransform.reset(new FourierTransform(fftSize));
-	fftFrame = this->fourierTransform->getFourierTransformFrame();
-	impulseResponse.resize(fftSize);
-	this->states = initial;
+	AuxAssert(input != nullptr,"Input Buffer cannot be a nullptr");
+	AuxAssert(output != nullptr, "Output Buffer cannot be a nullptr");
+	AuxAssert(bufferSize > 0, "Buffer Size has to be greater than 0");
+	float outputSample = 0;
+	for (uint32_t i = 0;i < bufferSize;i++)
+	{
+		inputBuffer.push(input[i]);
+		for (uint32_t h = 0;h < irSize;h++)
+			outputSample += impulseResponse[h] * inputBuffer.getShiftedElement(-static_cast<int>(h));
+		inputBuffer.pop();
+		output[i] = outputSample;
+	}
 }
 
-void AuxPort::Audio::FastConvolution::setIR(const std::vector<float>& impulseResponse)
+AuxPort::Audio::FastConvolution::FastConvolution(uint32_t fftSize)
 {
-	for (uint32_t i = 0;i < impulseResponse.size();i++)
-		this->impulseResponse[i] = impulseResponse[i];
+	filterFourierTransform.reset(new FourierTransform(fftSize));
+	audioFourierTransform.reset(new FourierTransform(fftSize));
+	fftFrame = audioFourierTransform->getFourierTransformFrame();
+	impulseResponse.resize(fftSize);
+	this->states = STFT::initial;
+
+	fftInputBuffer.resize(fftSize);
+	fftOutputBuffer.resize(fftSize);
+	writeIndex = 0;
+	readIndex = 0;
+}
+
+void AuxPort::Audio::FastConvolution::setImpulseResponse(const std::vector<float>& impulseResponse)
+{
+	setImpulseResponse(impulseResponse.data(), impulseResponse.size());
+}
+
+void AuxPort::Audio::FastConvolution::setImpulseResponse(const float* impulseResponse, uint32_t size)
+{
+	AuxAssert(impulseResponse != nullptr, "Impulse response cannot be a nullptr");
+	AuxAssert(size > 0, "Impulse response size has to be greater than zero");
+	AuxAssert(this->impulseResponse.size() > size, "FFT Size not compatible with filter length, initialize the Fast Convolution Engine with a longer FFT Size ");
+	impulseResponseSize = size;
+	overlapBuffer.resize(impulseResponseSize-1);
+	inputDataBuffer.resize(fftInputBuffer.size() - overlapBuffer.size());
+	outputDataBuffer = inputDataBuffer;
+	std::fill(overlapBuffer.begin(), overlapBuffer.end(), 0.0f);
+	if (size < this->impulseResponse.size())
+	{
+		std::copy(impulseResponse, impulseResponse + size, this->impulseResponse.begin());
+		std::fill(this->impulseResponse.begin() + size, this->impulseResponse.end(), 0.0f);
+	}
+	else
+		std::copy(impulseResponse, impulseResponse + size, this->impulseResponse.begin());
 	filterFourierTransform->computeTransform(this->impulseResponse);
 	filterFFTFrame = filterFourierTransform->getFourierTransformFrame();
 }
 
 void AuxPort::Audio::FastConvolution::process(const float* input, float* output, uint32_t bufferSize)
 {
-	computeMagnitudeTransform(input, output, fftSize,states);
-	if (states == initial)
-		states = full;
+	AuxAssert(input != nullptr, "Input Buffer pointer can't be a nullptr");
+	AuxAssert(output != nullptr, "Output Buffer pointer can't be a nullptr ");
+	AuxAssert(bufferSize > 0, "Buffer Size has to be greater than zero");
+	for (uint32_t i = 0;i < bufferSize;i++)
+	{
+		inputDataBuffer[writeIndex++] = input[i];
+		output[i] = outputDataBuffer[readIndex++];
+
+		if (writeIndex == inputDataBuffer.size())
+		{
+			compute();
+			writeIndex = 0;
+		}
+		if (readIndex == outputDataBuffer.size())
+			readIndex = 0;
+	}
 }
 
-void AuxPort::Audio::FastConvolution::computeMagnitudeTransform(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples, AuxPort::Audio::STFT::StateMachine stateMachine)
+void AuxPort::Audio::FastConvolution::compute()
 {
-	states = stateMachine;
-	AuxAssert(inputBuffer != nullptr, "Input Buffer cannot be a nullptr");
-	AuxAssert(outputBuffer != nullptr, "Output Buffer cannot be a nullptr");
-	AuxAssert(numberOfSamples >= 16 && numberOfSamples <= 16384, "Number of Samples has to fall within [16,16384]");
-	AuxAssert(numberOfSamples == fftSize, "Number of samples == fftSize");
-	if (states == initial)
+	std::copy(overlapBuffer.begin(), overlapBuffer.end(), fftInputBuffer.begin());
+	std::copy(inputDataBuffer.begin(), inputDataBuffer.end(), fftInputBuffer.begin() + overlapBuffer.size());
+	audioFourierTransform->computeTransform(fftInputBuffer.data(), fftInputBuffer.size());
+	for (uint32_t i = 0;i < fftInputBuffer.size();i++)
 	{
-		for (uint32_t i = 0;i < fftSize / 2;i++)
-			circEngine.push(0.0f);
-		for (uint32_t i = 0;i < fftSize / 2;i++)
-			circEngine.push(inputBuffer[i]);
-		for (uint32_t i = 0;i < fftSize;i++)
-			fftBuffer[i] = *circEngine.pop() * fullWindow[i];
-		fourierTransform->computeTransform(fftBuffer,fftSize);
-		for (uint32_t i = 0;i < fftSize;i++)
-			fftFrame->at(i) *= filterFFTFrame->at(i);
-		fourierTransform->computeInverseTransform(outputBuffer, fftSize);
-		for (uint32_t i = fftSize / 2;i < fftSize;i++)
-			circEngine.push(inputBuffer[i]);
+		fftFrame->at(i) *= filterFFTFrame->at(i);
 	}
-	else if (states == full)
-	{
-		for (uint32_t i = 0;i < fftSize / 2;i++)
-			circEngine.push(inputBuffer[i]);
-		for (uint32_t i = 0;i < fftSize;i++)
-			fftBuffer[i] = *circEngine.pop() * fullWindow[i];
-		fourierTransform->computeTransform(fftBuffer, fftSize);
-		for (uint32_t i = 0;i < fftSize;i++)
-			fftFrame->at(i) *= filterFFTFrame->at(i);
-		fourierTransform->computeInverseTransform(outputBuffer, fftSize);
-		for (uint32_t i = fftSize / 2;i < fftSize;i++)
-			circEngine.push(inputBuffer[i]);
-	}
-	else if (states == end)
-	{
-		for (uint32_t i = 0;i < fftSize / 2;i++)
-			circEngine.push(0.0f);
-		for (uint32_t i = 0;i < fftSize;i++)
-			fftBuffer[i] = *circEngine.pop() * fullWindow[i];
-		fourierTransform->computeTransform(fftBuffer, fftSize);
-		for (uint32_t i = 0;i < fftSize;i++)
-			fftFrame->at(i) *= filterFFTFrame->at(i);
-		fourierTransform->computeInverseTransform(outputBuffer, fftSize);
-	}
-
-	for (uint32_t i = 0;i < numberOfSamples;i++)
-		outputBuffer[i] /= numberOfSamples;
+	audioFourierTransform->computeInverseTransform(fftOutputBuffer.data(), fftOutputBuffer.size());
+	std::copy(inputDataBuffer.begin() + (inputDataBuffer.size() - overlapBuffer.size()), inputDataBuffer.end(), overlapBuffer.begin());
+	std::copy(fftOutputBuffer.begin() + overlapBuffer.size(), fftOutputBuffer.end(), outputDataBuffer.begin());
+	for (uint32_t i = 0;i < outputDataBuffer.size();i++)
+		outputDataBuffer[i] = outputDataBuffer[i] / fftOutputBuffer.size();
 }
