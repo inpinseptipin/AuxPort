@@ -481,28 +481,60 @@ std::vector<std::string> AuxPort::Directory::getList(Type type, PathFormat pathF
 std::vector<std::string> AuxPort::Directory::getListOfFiles(const std::string& fileExtension)
 {
 	std::vector<std::string> files;
+	std::vector<std::pair<std::string, uint64_t>> fileData;
 	for (const auto& entry : std::filesystem::directory_iterator(path))
 		if (entry.is_regular_file())
 		{
 			std::filesystem::path currentPath(entry);
 			auto extensionName = currentPath.extension().string();
 			if (extensionName == fileExtension)
-				files.push_back(currentPath.string());
+			{
+				auto time = std::filesystem::last_write_time(entry);
+				std::pair<std::string, uint64_t> file;
+				file.second = std::chrono::duration_cast<std::chrono::seconds>(time.time_since_epoch()).count();
+				file.first = currentPath.string();
+				fileData.push_back(file);
+
+			}
 		}
+	std::sort(fileData.begin(), fileData.end(), [](const auto& a, const auto& b)
+		{
+			return a.second < b.second;
+		});
+
+	for (uint32_t i = 0; i < fileData.size(); i++)
+		files.push_back(fileData[i].first);
 	return files;
 }
 
 std::vector<std::string> AuxPort::Directory::getListOfFilesWithoutPaths(const std::string& fileExtension)
 {
 	std::vector<std::string> files;
+	std::vector<std::pair<std::string,uint64_t>> fileData;
 	for(const auto& entry : std::filesystem::directory_iterator(path))
 		if (entry.is_regular_file())
 		{
 			std::filesystem::path currentPath(entry);
 			auto extensionName = currentPath.extension().string();
 			if (extensionName == fileExtension)
-				files.push_back(currentPath.filename().string());
+			{
+				auto time = std::filesystem::last_write_time(entry);
+				std::pair<std::string,uint64_t> file;
+				file.second = std::chrono::duration_cast<std::chrono::seconds>(time.time_since_epoch()).count();
+				file.first = currentPath.filename().string();
+				fileData.push_back(file);
+			}
 		}
+
+
+	std::sort(fileData.begin(), fileData.end(), [](const auto& a, const auto& b)
+		{
+			return a.second < b.second;
+		});
+
+	for (uint32_t i = 0; i < fileData.size(); i++)
+		files.push_back(fileData[i].first);
+
 	return files;
 }
 
@@ -528,6 +560,8 @@ void AuxPort::Directory::_count()
 		else
 			numberOfDirectories++;
 }
+
+
 
 unsigned long long AuxPort::Directory::getSize()
 {
