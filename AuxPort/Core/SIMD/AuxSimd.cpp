@@ -80,6 +80,8 @@ void AuxPort::Simd::Float256::fma(std::vector<float>& result, const std::vector<
 }
 
 
+
+
 void AuxPort::Simd::Float128::add(std::vector<float>& result, const std::vector<float>& vec1, const std::vector<float>& vec2)
 {
 #if AUXSIMD && AUX64SIMD
@@ -210,4 +212,53 @@ void AuxPort::Simd::Float128::fma(std::vector<float>& result, const std::vector<
 #else
 	AuxPort::Logger::Log("SIMD Instruction set not available");
 #endif
+}
+
+void AuxPort::Simd::Float128::complexMultiply(std::vector<std::complex<float>>& input, std::vector<std::complex<float>>& output, std::vector<float>& AuxReal, std::vector<float>& AuxImag)
+{
+#if AUXSIMD && AUX64SIMD
+	AuxAssert(AuxPort::Env::supportsSSE(), "The current processor does not support SSE and hence 128-bit SIMD instructions cannot be performed.");
+	AuxAssert(input.size() == output.size() && input.size() == AuxReal.size() && output.size() == AuxImag.size(), "The sizes of the Input Vectors and the Result Vector have to be the same");
+	AuxAssert(input.size() % 4 == 0, "Vectors should be sizes of 4");
+	auto numberOfIterations = input.size() / 8;
+	uint32_t firstHalf = 0;
+	uint32_t secondHalf = firstHalf + 4;
+	for (uint32_t i = 0;i < numberOfIterations;i++)
+	{
+		firstHalf = 8 * i;
+		secondHalf = firstHalf + 4;
+		auto complex1_a = _mm_load_ps(reinterpret_cast<float*>(input.data()) + firstHalf);
+		auto complex1_b = _mm_load_ps(reinterpret_cast<float*>(input.data()) + secondHalf);
+		auto complex2_a = _mm_load_ps(reinterpret_cast<float*>(output.data()) + firstHalf);
+		auto complex2_b = _mm_load_ps(reinterpret_cast<float*>(output.data()) + secondHalf);
+
+
+		auto realVector1 = _mm_shuffle_ps(complex1_a, complex1_b, _MM_SHUFFLE(2, 0, 2, 0));
+		auto imagVector1 = _mm_shuffle_ps(complex1_a, complex1_b, _MM_SHUFFLE(3, 1, 3, 1));
+
+		auto realVector2 = _mm_shuffle_ps(complex2_a, complex2_b, _MM_SHUFFLE(2, 0, 2, 0));
+		auto imagVector2 = _mm_shuffle_ps(complex2_a, complex2_b, _MM_SHUFFLE(3, 1, 3, 1));
+
+
+		auto real12 = _mm_mul_ps(realVector1, realVector2);
+		auto imag12 = _mm_mul_ps(imagVector1, imagVector2);
+		auto realResult = _mm_sub_ps(real12, imag12);
+
+
+		auto real1Imag2 = _mm_mul_ps(realVector1, imagVector2);
+		auto imag2Real1 = _mm_mul_ps(imagVector1, realVector2);
+		auto imagResult = _mm_add_ps(real1Imag2, imag2Real1);
+
+
+
+
+		_mm_storeu_ps(AuxReal.data() + firstHalf, realResult);
+		_mm_storeu_ps(AuxImag.data() + firstHalf, imagResult);
+		for (uint32_t index = firstHalf;index < firstHalf + 4;index++)
+			output[index] = { AuxReal[index],AuxImag[index] };
+	}
+#else
+	AuxPort::Logger::Log("SIMD Instruction set not available");
+#endif
+
 }
