@@ -46,6 +46,8 @@
 #include <functional>
 #include <unordered_map>
 #include <memory>
+#include <iomanip>
+#include <format>
 
 #ifdef WIN32
 #include <direct.h>
@@ -171,10 +173,15 @@ namespace AuxPort
 		/// current working directory.
 		///////////////////////////////////////////////////////////////////////////////////////
 		void _count();
-		
+
 		std::filesystem::path path;
 		uint32_t numberOfFiles = 0;
 		uint32_t numberOfDirectories = 0;
+
+
+		
+
+
 	};
 #endif
 
