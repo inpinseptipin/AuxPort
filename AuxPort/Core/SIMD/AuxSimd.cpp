@@ -220,9 +220,11 @@ void AuxPort::Simd::Float128::complexMultiply(std::vector<std::complex<float>>& 
 	AuxAssert(AuxPort::Env::supportsSSE(), "The current processor does not support SSE and hence 128-bit SIMD instructions cannot be performed.");
 	AuxAssert(input.size() == output.size() && input.size() == AuxReal.size() && output.size() == AuxImag.size(), "The sizes of the Input Vectors and the Result Vector have to be the same");
 	AuxAssert(input.size() % 4 == 0, "Vectors should be sizes of 4");
-	auto numberOfIterations = input.size() / 8;
+	auto numberOfIterations = input.size() / 4;
 	uint32_t firstHalf = 0;
 	uint32_t secondHalf = firstHalf + 4;
+	uint32_t readIndex = 0;
+	uint32_t writeIndex = 0;
 	for (uint32_t i = 0;i < numberOfIterations;i++)
 	{
 		firstHalf = 8 * i;
@@ -252,10 +254,16 @@ void AuxPort::Simd::Float128::complexMultiply(std::vector<std::complex<float>>& 
 
 
 
-		_mm_storeu_ps(AuxReal.data() + firstHalf, realResult);
-		_mm_storeu_ps(AuxImag.data() + firstHalf, imagResult);
-		for (uint32_t index = firstHalf;index < firstHalf + 4;index++)
-			output[index] = { AuxReal[index],AuxImag[index] };
+		_mm_storeu_ps(AuxReal.data() + readIndex, realResult);
+		_mm_storeu_ps(AuxImag.data() + readIndex, imagResult);
+
+		for (uint32_t j = 0; j < 4; j++)
+		{
+			output[readIndex] = { AuxReal[readIndex],AuxImag[readIndex] };
+			readIndex++;
+		}
+	
+		
 	}
 #else
 	AuxPort::Logger::Log("SIMD Instruction set not available");
