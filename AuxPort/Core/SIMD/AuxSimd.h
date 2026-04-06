@@ -42,6 +42,7 @@ namespace AuxPort
 
 			virtual void complexMultiply(std::vector<std::complex<float>>& input, std::vector<std::complex<float>>& output,std::vector<float>& AuxReal, std::vector<float>& AuxImag) = 0;
 
+
 		};
 
 		///////////////////////////////////////////////////////////////////////////////////////
@@ -77,6 +78,7 @@ namespace AuxPort
 			void fma(std::vector<float>& result, const std::vector<float>& vec1, const std::vector<float>& vec2, const std::vector<float>& vec3) override;
 
 			void complexMultiply(std::vector<std::complex<float>>& input, std::vector<std::complex<float>>& output, std::vector<float>& AuxReal, std::vector<float>& AuxImag) override;
+
 
 		};
 

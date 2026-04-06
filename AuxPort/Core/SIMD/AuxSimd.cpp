@@ -79,6 +79,85 @@ void AuxPort::Simd::Float256::fma(std::vector<float>& result, const std::vector<
 #endif
 }
 
+void AuxPort::Simd::Float256::complexMultiply(std::vector<std::complex<float>>& input, std::vector<std::complex<float>>& output, std::vector<float>& AuxReal, std::vector<float>& AuxImag)
+{
+#if AUXSIMD && AUX64SIMD
+	AuxAssert(AuxPort::Env::supportsSSE(), "The current processor does not support SSE and hence 128-bit SIMD instructions cannot be performed.");
+	AuxAssert(input.size() == output.size() && input.size() == AuxReal.size() && output.size() == AuxImag.size(), "The sizes of the Input Vectors and the Result Vector have to be the same");
+	AuxAssert(input.size() % 8 == 0, "Vectors should be sizes of multiples of 8");
+	auto numberOfIterations = input.size() / 8;
+	uint32_t firstHalf = 0;
+	uint32_t readIndex = 0;
+	for (uint32_t i = 0; i < numberOfIterations; i++)
+	{
+		auto complex1_a = _mm_load_ps(reinterpret_cast<float*>(input.data()) + firstHalf);
+		auto complex1_b = _mm_load_ps(reinterpret_cast<float*>(input.data()) + firstHalf+4);
+		auto complex1_c = _mm_load_ps(reinterpret_cast<float*>(input.data()) + firstHalf+8);
+		auto complex1_d = _mm_load_ps(reinterpret_cast<float*>(input.data()) + firstHalf+12);
+
+
+		auto complex2_a = _mm_load_ps(reinterpret_cast<float*>(output.data()) + firstHalf);
+		auto complex2_b = _mm_load_ps(reinterpret_cast<float*>(output.data()) + firstHalf + 4);
+		auto complex2_c = _mm_load_ps(reinterpret_cast<float*>(output.data()) + firstHalf + 8);
+		auto complex2_d = _mm_load_ps(reinterpret_cast<float*>(output.data()) + firstHalf + 12);
+
+
+		auto realVector1a = _mm_shuffle_ps(complex1_a, complex1_b, _MM_SHUFFLE(2, 0, 2, 0));
+		auto realVector1b = _mm_shuffle_ps(complex1_c, complex1_d, _MM_SHUFFLE(2, 0, 2, 0));
+
+		auto imagVector1a = _mm_shuffle_ps(complex1_a, complex1_b, _MM_SHUFFLE(3, 1, 3, 1));
+		auto imagVector1b = _mm_shuffle_ps(complex1_c, complex1_d, _MM_SHUFFLE(3, 1, 3, 1));
+
+		auto realVector2a = _mm_shuffle_ps(complex2_a, complex2_b, _MM_SHUFFLE(2, 0, 2, 0));
+		auto realVector2b = _mm_shuffle_ps(complex2_c, complex2_d, _MM_SHUFFLE(2, 0, 2, 0));
+
+		auto imagVector2a = _mm_shuffle_ps(complex2_a, complex2_b, _MM_SHUFFLE(3, 1, 3, 1));
+		auto imagVector2b = _mm_shuffle_ps(complex2_c, complex2_d, _MM_SHUFFLE(3, 1, 3, 1));
+
+
+
+
+		auto realVector1ab = _mm256_castps128_ps256(realVector1a);
+		realVector1ab = _mm256_insertf128_ps(realVector1ab, realVector1b, 1);
+
+		auto imagVector1ab = _mm256_castps128_ps256(imagVector1a);
+		imagVector1ab = _mm256_insertf128_ps(imagVector1ab, imagVector1b, 1);
+
+		auto realVector2ab = _mm256_castps128_ps256(realVector2a);
+		realVector2ab = _mm256_insertf128_ps(realVector2ab, realVector2b, 1);
+
+		auto imagVector2ab = _mm256_castps128_ps256(imagVector2a);
+		imagVector2ab = _mm256_insertf128_ps(imagVector2ab, imagVector2b, 1);
+
+
+
+		auto real12 = _mm256_mul_ps(realVector1ab, realVector2ab);
+		auto imag12 = _mm256_mul_ps(imagVector1ab, imagVector2ab);
+		auto realResult = _mm256_sub_ps(real12, imag12);
+
+		auto imag2Real1 = _mm256_mul_ps(imagVector2ab, realVector1ab);
+		auto imag1Real2 = _mm256_mul_ps(imagVector1ab, realVector2ab);
+		auto imagResult = _mm256_add_ps(imag2Real1, imag1Real2);
+
+
+
+		_mm256_storeu_ps(AuxReal.data() + readIndex, realResult);
+		_mm256_storeu_ps(AuxImag.data() + readIndex, imagResult);
+
+		for (uint32_t j = 0; j < 8; j++)
+		{
+			output[readIndex] = { AuxReal[readIndex],AuxImag[readIndex] };
+			readIndex++;
+		}
+		firstHalf += 16;
+
+	}
+
+#else
+	AuxPort::Logger::Log("SIMD Instruction set not available");
+#endif
+}
+
 
 
 
@@ -224,7 +303,6 @@ void AuxPort::Simd::Float128::complexMultiply(std::vector<std::complex<float>>& 
 	uint32_t firstHalf = 0;
 	uint32_t secondHalf = firstHalf + 4;
 	uint32_t readIndex = 0;
-	uint32_t writeIndex = 0;
 	for (uint32_t i = 0;i < numberOfIterations;i++)
 	{
 		firstHalf = 8 * i;
