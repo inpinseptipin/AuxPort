@@ -305,12 +305,11 @@ void AuxPort::Simd::Float128::complexMultiply(std::vector<std::complex<float>>& 
 	uint32_t readIndex = 0;
 	for (uint32_t i = 0;i < numberOfIterations;i++)
 	{
-		firstHalf = 8 * i;
-		secondHalf = firstHalf + 4;
+
 		auto complex1_a = _mm_load_ps(reinterpret_cast<float*>(input.data()) + firstHalf);
-		auto complex1_b = _mm_load_ps(reinterpret_cast<float*>(input.data()) + secondHalf);
+		auto complex1_b = _mm_load_ps(reinterpret_cast<float*>(input.data()) + firstHalf + 4);
 		auto complex2_a = _mm_load_ps(reinterpret_cast<float*>(output.data()) + firstHalf);
-		auto complex2_b = _mm_load_ps(reinterpret_cast<float*>(output.data()) + secondHalf);
+		auto complex2_b = _mm_load_ps(reinterpret_cast<float*>(output.data()) + firstHalf +4);
 
 
 		auto realVector1 = _mm_shuffle_ps(complex1_a, complex1_b, _MM_SHUFFLE(2, 0, 2, 0));
@@ -340,7 +339,8 @@ void AuxPort::Simd::Float128::complexMultiply(std::vector<std::complex<float>>& 
 			output[readIndex] = { AuxReal[readIndex],AuxImag[readIndex] };
 			readIndex++;
 		}
-	
+		firstHalf +=8;
+
 		
 	}
 #else
