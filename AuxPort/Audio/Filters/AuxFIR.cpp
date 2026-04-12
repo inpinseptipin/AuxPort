@@ -249,7 +249,6 @@ AuxPort::Audio::FastConvolution::FastConvolution(uint32_t fftSize)
 	audioFourierTransform.reset(new FourierTransform(fftSize));
 	fftFrame = audioFourierTransform->getFourierTransformFrame();
 	impulseResponse.resize(fftSize);
-	this->states = STFT::initial;
 
 	fftInputBuffer.resize(fftSize);
 	fftOutputBuffer.resize(fftSize);
@@ -301,6 +300,12 @@ void AuxPort::Audio::FastConvolution::process(const float* input, float* output,
 		if (readIndex == outputDataBuffer.size())
 			readIndex = 0;
 	}
+}
+
+void AuxPort::Audio::FastConvolution::reset()
+{
+	writeIndex = 0;
+	readIndex = 0;
 }
 
 void AuxPort::Audio::FastConvolution::compute()

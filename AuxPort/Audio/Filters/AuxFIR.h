@@ -248,18 +248,51 @@ namespace AuxPort
 		};
 
 
+		/**
+		 * Fast Convolution implements overlap-save for Fast FIR filtering
+		 */
 		class FastConvolution : Convolution
 		{
 		public:
+			/**
+			  @brief Constructor that takes in the fft size to initialize the engine 
+			  @param fftSize
+			  \code{.cpp}
+			  
+			  \endcode 
+			 */
 			FastConvolution(uint32_t fftSize);
 			~FastConvolution() = default;
+			/**
+			  @brief Initializes the Filter module with the impulse response provided 
+			  @param impulseResponse
+			 */
 			void setImpulseResponse(const std::vector<float>& impulseResponse) override;
+			/**
+			  @brief Initializes the Filter module with the impulse response provided
+			  @param impulseResponse
+			 */
 			void setImpulseResponse(const float* impulseResponse, uint32_t size) override;
+			/**
+			  @brief Fast Convolution, in-place and out-place, Buffer Size does not have to equal FFT Size
+			  @param impulseResponse
+			 */
 			void process(const float* input, float* output, uint32_t bufferSize);
+			/**
+			  @brief Resets the convolution kernel, to start of playback 
+			  \code{.cpp}
+			  
+			  \endcode 
+			 */
 			void reset();
 		protected:
+			/**
+			  @brief Performs Overlap-save based Fast Convolution 
+			  \code{.cpp}
+			  
+			  \endcode 
+			 */
 			void compute();
-			STFT::StateMachine states;
 			std::vector<std::complex<float>>* fftFrame;
 			std::vector<std::complex<float>>* filterFFTFrame;
 			std::unique_ptr<AuxPort::Audio::FourierTransform> filterFourierTransform;

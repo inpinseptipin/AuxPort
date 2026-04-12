@@ -15,7 +15,7 @@
 namespace AuxPort
 {
 	/**
-		Abstract Class for Multithreading
+		Abstract Class for Threads
 	*/
 	class Thread
 	{
@@ -35,7 +35,16 @@ namespace AuxPort
 		ParallelThread();
 		~ParallelThread();
 		ParallelThread(const ParallelThread& parallelThread) = default;
+		/**
+		  @brief Joins the thread with the main application thread and terminates it 
+		  \code{.cpp}
+		  
+		  \endcode 
+		 */
 		void quit();
+		/**
+			Assign this function pointer with another function to perform a stask that should be done by this thread.
+		 */
 		std::function<void()> work;
 	};
 
@@ -45,8 +54,27 @@ namespace AuxPort
 		TimerWithCallback();
 		~TimerWithCallback();
 		TimerWithCallback(const TimerWithCallback& timerWithCallback) = default;
+		/**
+		  @brief Sets the timer in milliseconds 
+		  @param millisecond
+		  \code{.cpp}
+		  
+		  \endcode 
+		 */
 		void startTimer(uint32_t millisecond);
+		/**
+		  @brief Stops the Timer 
+		  \code{.cpp}
+		  
+		  \endcode 
+		 */
 		void stopTimer();
+		/**
+		  @brief Redefine this callback with the work to be done. 
+		  \code{.cpp}
+		  
+		  \endcode 
+		 */
 		virtual void timerCallback() = 0;
 	protected:
 		uint32_t millisecond = 0;
@@ -58,6 +86,13 @@ namespace AuxPort
 	public:
 		ProcessQueue();
 		~ProcessQueue() = default;
+		/**
+		  @brief Use this function to add a process command to the queue for execution 
+		  @param processQueue
+		  \code{.cpp}
+		  
+		  \endcode 
+		 */
 		void addProcess(const std::string& processQueue);
 	protected:
 		std::mutex processMutex;
