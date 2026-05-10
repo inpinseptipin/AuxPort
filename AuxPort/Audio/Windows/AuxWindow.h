@@ -64,13 +64,19 @@ namespace AuxPort
 				HannWin, HammWin, BlackmanWin, BartlettWin, BartlettHannWin, NuttallWin, FlatWin, BlackmanHarrisWin,RectangleWin
 			};
 
+			enum SamplingType
+			{
+				periodic,symmetric
+			};
+
 			///////////////////////////////////////////////////////////////////////////////////////
 			/// @brief Samples a Window function and fills it in a memory allocated std::vector
 			///////////////////////////////////////////////////////////////////////////////////////
 			template<class sample>
-			static void generate(std::vector<sample>& windowBuffer, const Type& windowType = Type::HannWin)
+			static void generate(std::vector<sample>& windowBuffer, const Type& windowType = Type::HannWin, SamplingType samplingType = SamplingType::symmetric)
 			{
 				AuxAssert(windowBuffer.size() > 0, "Cannot generate a Window of Size <= 0");
+				samplingType == SamplingType::symmetric ? windowBuffer.resize(windowSize) : windowBuffer.resize(windowSize + 1);
 				switch (windowType)
 				{
 				case Type::HannWin:
@@ -103,6 +109,8 @@ namespace AuxPort
 				default:
 					return;
 				}
+				if (samplingType == SamplingType::periodic)
+					windowBuffer.erase(windowBuffer.end() - 1, windowBuffer.end());
 			}
 			/**
 			  @brief Trims a window from the start or end with a percent amount 
@@ -151,52 +159,46 @@ namespace AuxPort
 			/// @brief Returns a std::vector with a Sampled Window Function
 			///////////////////////////////////////////////////////////////////////////////////////
 			template<class sample>
-			static std::vector<sample> generate(size_t windowSize, Type windowType = Type::HannWin)
+			static std::vector<sample> generate(size_t windowSize, Type windowType = Type::HannWin, SamplingType samplingType = SamplingType::symmetric)
 			{
 				AuxAssert(windowSize > 0,"Cannot generate a Window of Size <= 0");
 				std::vector<sample> windowBuffer;
-				windowBuffer.resize(windowSize);
+				samplingType == SamplingType::symmetric ? windowBuffer.resize(windowSize) : windowBuffer.resize(windowSize+1);
 				switch (windowType)
 				{
 				case Type::HannWin:
 					Hann<sample>(windowBuffer);
-					return windowBuffer;
 					break;
 				case Type::HammWin:
 					Hamming<sample>(windowBuffer);
-					return windowBuffer;
 					break;
 				case Type::BlackmanWin:
 					Blackman<sample>(windowBuffer);
-					return windowBuffer;
 					break;
 				case Type::BartlettWin:
 					Bartlett<sample>(windowBuffer);
-					return windowBuffer;
 					break;
 				case Type::BartlettHannWin:
 					BartlettHanning<sample>(windowBuffer);
-					return windowBuffer;
 					break;
 				case Type::NuttallWin:
 					Nuttall<sample>(windowBuffer);
-					return windowBuffer;
 					break;
 				case Type::FlatWin:
 					Flat<sample>(windowBuffer);
-					return windowBuffer;
 					break;
 				case Type::BlackmanHarrisWin:
 					BlackmanHarris<sample>(windowBuffer);
-					return windowBuffer;
 					break;
 				case Type::RectangleWin:
 					Rectangle<sample>(windowBuffer);
-					return windowBuffer;
 					break;
 				default:
 					return windowBuffer;
 				}
+				if (samplingType == SamplingType::periodic)
+					windowBuffer.erase(windowBuffer.end()-1,windowBuffer.end());
+				return windowBuffer;
 			}
 		private:
 			template<class sample>
