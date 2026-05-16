@@ -643,3 +643,85 @@ void AuxPort::Audio::IIR::Butterworth::process(const float* inputBuffer, float* 
         outputBuffer[i] = output;
     }
 }
+
+AuxPort::Audio::IIR::LinkwitzRiley::LinkwitzRiley()
+{
+    coefficients.resize(5);
+    theta_c = 0;
+    omega_c = 0;
+    delta = 0;
+    output = 0;
+    k = 0;
+    x1 = 0;
+    x2 = 0;
+    y1 = 0;
+    y2 = 0;
+    type = Lowpass;
+}
+
+void AuxPort::Audio::IIR::LinkwitzRiley::prepareToPlay(const std::vector<float>& parameters)
+{
+    if (type == Lowpass)
+    {
+        theta_c = pi * parameters[fc] / sampleRate;
+        omega_c = pi * parameters[fc];
+        k = omega_c / tan(theta_c);
+        delta = (k+omega_c) * (k+omega_c);
+        coefficients[index::a0] = (omega_c * omega_c) / delta;
+        coefficients[index::a1] = 2 * coefficients[index::a0];
+        coefficients[index::a2] = coefficients[a0];
+        coefficients[index::b1] = ((- 2 * k * k) + (2*omega_c*omega_c)) / delta;
+        coefficients[index::b2] = ((k * k) + (omega_c * omega_c) - (2 * k * omega_c)) / delta;
+    }
+
+    if (type == Highpass)
+    {
+        theta_c = pi * parameters[fc] / sampleRate;
+        omega_c = pi * parameters[fc];
+        k = omega_c / tan(theta_c);
+        delta = (k + omega_c) * (k + omega_c);
+        coefficients[index::a0] = (k * k) / delta;
+        coefficients[index::a1] = -2 * coefficients[index::a0];
+        coefficients[index::a2] = coefficients[a0];
+        coefficients[index::b1] = ((-2 * k * k) + (2 * omega_c * omega_c)) / delta;
+        coefficients[index::b2] = ((k * k) + (omega_c * omega_c) - (2 * k * omega_c)) / delta;
+    }
+    
+}
+
+float AuxPort::Audio::IIR::LinkwitzRiley::process(float sample)
+{
+    output = coefficients[index::a0] * sample + coefficients[index::a1] * x1 + coefficients[index::a2] * x2 - coefficients[index::b1] * y1 - coefficients[index::b2] * y2;
+    y2 = y1;
+    y1 = output;
+    x2 = x1;
+    x1 = sample;
+    return output;
+}
+
+void AuxPort::Audio::IIR::LinkwitzRiley::process(float* buffer, uint32_t numberOfSamples)
+{
+    for (uint32_t i = 0; i < numberOfSamples; i++)
+    {
+        output = coefficients[index::a0] * buffer[i] + coefficients[index::a1] * x1 + coefficients[index::a2] * x2 - coefficients[index::b1] * y1 - coefficients[index::b2] * y2;
+        y2 = y1;
+        y1 = output;
+        x2 = x1;
+        x1 = buffer[i];
+        buffer[i] = output;
+    }
+    
+}
+
+void AuxPort::Audio::IIR::LinkwitzRiley::process(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples)
+{
+    for (uint32_t i = 0; i < numberOfSamples; i++)
+    {
+        output = coefficients[index::a0] * inputBuffer[i] + coefficients[index::a1] * x1 + coefficients[index::a2] * x2 - coefficients[index::b1] * y1 - coefficients[index::b2] * y2;
+        y2 = y1;
+        y1 = output;
+        x2 = x1;
+        x1 = inputBuffer[i];
+        outputBuffer[i] = output;
+    }
+}

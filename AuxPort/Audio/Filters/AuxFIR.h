@@ -277,7 +277,7 @@ namespace AuxPort
 			  @brief Fast Convolution, in-place and out-place, Buffer Size does not have to equal FFT Size
 			  @param impulseResponse
 			 */
-			void process(const float* input, float* output, uint32_t bufferSize);
+			virtual void process(const float* input, float* output, uint32_t bufferSize);
 			/**
 			  @brief Resets the convolution kernel, to start of playback 
 			  \code{.cpp}
@@ -310,6 +310,17 @@ namespace AuxPort
 			size_t impulseResponseSize;
 
 
+		};
+
+		/**  Fast Convolution 2 implements overlap-add */
+		class FastConvolution2 : public FastConvolution
+		{
+		public:
+			FastConvolution2() = default;
+			~FastConvolution2() = default;
+			FastConvolution2(const FastConvolution2& fastConvolutionv2) = default;
+			void process(const float* input, float* output, uint32_t bufferSize) override;
+		protected:
 		};
 
 	}

@@ -289,19 +289,21 @@ namespace AuxPort
                 General();
                 ~General() = default;
                 General(const General& general) = default;
-
                 ///////////////////////////////////////////////////////////////////////////////////////            
                 /// @brief Prepares the IIR Filter for playback
                 ///////////////////////////////////////////////////////////////////////////////////////
                 void prepareToPlay(const std::vector<float>& parameters) override;
-
                 ///////////////////////////////////////////////////////////////////////////////////////            
                 /// @brief Returns the sample after applying IIR Filter to it
                 ///////////////////////////////////////////////////////////////////////////////////////
                 float process(const float sample) override;
-
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// @brief Processes a buffer [In-Place]
+                ///////////////////////////////////////////////////////////////////////////////////////
                 void process(float* buffer, uint32_t numberOfSamples) override;
-
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// @brief Processes a buffer [Out-Place]
+                ///////////////////////////////////////////////////////////////////////////////////////
                 void process(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples) override;
             private:
                 enum index
@@ -314,6 +316,48 @@ namespace AuxPort
                 };
                 float z1;
                 float z2;
+                float output;
+            };
+
+            class LinkwitzRiley : public IIRFilter
+            {
+            public:
+                LinkwitzRiley();
+                ~LinkwitzRiley() = default;
+                LinkwitzRiley(const LinkwitzRiley& link) = default;
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// @brief Use this function set the parameters to the filter
+                ///////////////////////////////////////////////////////////////////////////////////////
+                void prepareToPlay(const std::vector<float>& parameters) override;
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// @brief Returns the sample after applying IIR Filter to it
+                ///////////////////////////////////////////////////////////////////////////////////////
+                float process(float sample) override;
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// @brief Processes a buffer [In-Place]
+                ///////////////////////////////////////////////////////////////////////////////////////
+                void process(float* buffer, uint32_t numberOfSamples) override;
+                ///////////////////////////////////////////////////////////////////////////////////////            
+                /// @brief Processes a buffer [Out-Place]
+                ///////////////////////////////////////////////////////////////////////////////////////
+                void process(const float* inputBuffer, float* outputBuffer, uint32_t numberOfSamples) override;
+            protected:
+                enum index
+                {
+                    a0, a1, a2, b1, b2, c0, d0
+                };
+                enum Parameters
+                {
+                    fc, q, boost
+                };
+                double theta_c;
+                double omega_c;
+                double k;
+                double delta;
+                float x1;
+                float x2;
+                float y1;
+                float y2;
                 float output;
             };
 

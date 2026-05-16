@@ -40,7 +40,13 @@ namespace AuxPort
 			///////////////////////////////////////////////////////////////////////////////////////
 			virtual void fma(std::vector<float>& result, const std::vector<float>& vec1, const std::vector<float>& vec2, const std::vector<float>& vec3) = 0;
 
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief Returns result after Complex Multiply using SIMD extensions of a std::complex input. It takes in auxilarry vectors to store real and imaginary components[Overridable].
+			/// For example: result[i] will be equal to std::complex(ac + i(bd) , ad + i(bc)) 
+			///////////////////////////////////////////////////////////////////////////////////////
 			virtual void complexMultiply(std::vector<std::complex<float>>& input, std::vector<std::complex<float>>& output,std::vector<float>& AuxReal, std::vector<float>& AuxImag) = 0;
+
+			virtual void complexMultiply(std::vector<float>& resultReal, std::vector<float>& resultImag, const std::vector<float>& real1, const std::vector<float>& imag1, const std::vector<float>& real2, const std::vector<float>& imag2) = 0;
 
 
 		};
@@ -78,6 +84,7 @@ namespace AuxPort
 			void fma(std::vector<float>& result, const std::vector<float>& vec1, const std::vector<float>& vec2, const std::vector<float>& vec3) override;
 
 			void complexMultiply(std::vector<std::complex<float>>& input, std::vector<std::complex<float>>& output, std::vector<float>& AuxReal, std::vector<float>& AuxImag) override;
+			void complexMultiply(std::vector<float>& resultReal, std::vector<float>& resultImag, const std::vector<float>& real1, const std::vector<float>& imag1, const std::vector<float>& real2, const std::vector<float>& imag2) override;
 
 
 		};
@@ -114,6 +121,8 @@ namespace AuxPort
 			void fma(std::vector<float>& result, const std::vector<float>& vec1, const std::vector<float>& vec2, const std::vector<float>& vec3) override;
 
 			void complexMultiply(std::vector<std::complex<float>>& input, std::vector<std::complex<float>>& output, std::vector<float>& AuxReal, std::vector<float>& AuxImag) override;
+
+			void complexMultiply(std::vector<float>& resultReal, std::vector<float>& resultImag, const std::vector<float>& real1, const std::vector<float>& imag1, const std::vector<float>& real2, const std::vector<float>& imag2) override;
 
 		};
 	}
