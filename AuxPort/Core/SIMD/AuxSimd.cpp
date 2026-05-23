@@ -161,8 +161,34 @@ void AuxPort::Simd::Float256::complexMultiply(std::vector<std::complex<float>>& 
 void AuxPort::Simd::Float256::complexMultiply(std::vector<float>& resultReal, std::vector<float>& resultImag, const std::vector<float>& real1, const std::vector<float>& imag1, const std::vector<float>& real2, const std::vector<float>& imag2)
 {
 #if AUXSIMD && AUX64SIMD
+	AuxAssert(AuxPort::Env::supportsSSE(), "The current processor does not support SSE and hence 128-bit SIMD instructions cannot be performed.");
+	AuxAssert(resultReal.size() == resultImag.size() && real1.size() == real2.size() && imag1.size() == imag2.size(), "The sizes of the Input Vectors and the Result Vector have to be the same");
+	AuxAssert(resultReal.size() % 8 == 0, "Vectors should be sizes of 8");
+	auto numberOfIterations = resultReal.size() / 8;
+	auto readPointer = 0;
+	for (uint32_t i = 0; i < numberOfIterations; i++)
+	{
+		auto realVector1 = _mm256_load_ps(real1.data() + readPointer);
+		auto imagVector1 = _mm256_load_ps(imag1.data() + readPointer);
+		auto realVector2 = _mm256_load_ps(real2.data() + readPointer);
+		auto imagVector2 = _mm256_load_ps(imag2.data() + readPointer);
+
+		auto real12 = _mm256_mul_ps(realVector1, realVector2);
+		auto imag12 = _mm256_mul_ps(imagVector1, imagVector2);
+		auto realResult = _mm256_sub_ps(real12, imag12);
+
+		auto real1Imag2 = _mm256_mul_ps(realVector1, imagVector2);
+		auto imag2Real1 = _mm256_mul_ps(imagVector1, realVector2);
+		auto imagResult = _mm256_add_ps(real1Imag2, imag2Real1);
+
+		_mm256_storeu_ps(resultReal.data() + readPointer, realResult);
+		_mm256_storeu_ps(resultImag.data() + readPointer, imagResult);
+		readPointer += 8;
+	}
 #else
+	AuxPort::Logger::Log("SIMD Instruction set not available");
 #endif
+
 }
 
 
@@ -363,19 +389,17 @@ void AuxPort::Simd::Float128::complexMultiply(std::vector<float>& resultReal, st
 	AuxAssert(resultReal.size() == resultImag.size() && real1.size() == real2.size() && imag1.size() == imag2.size(), "The sizes of the Input Vectors and the Result Vector have to be the same");
 	AuxAssert(resultReal.size() % 4 == 0, "Vectors should be sizes of 4");
 	auto numberOfIterations = resultReal.size() / 4;
-	auto readPointer = 0;
-	
+	auto readPointer = 0;	
 	for (uint32_t i = 0; i < numberOfIterations; i++)
 	{
 		auto realVector1 = _mm_load_ps(real1.data() + readPointer);
-		auto realVector2 = _mm_load_ps(imag1.data() + readPointer);
-		auto imagVector1 = _mm_load_ps(real2.data() + readPointer);
+		auto imagVector1 = _mm_load_ps(imag1.data() + readPointer);
+		auto realVector2 = _mm_load_ps(real2.data() + readPointer);
 		auto imagVector2 = _mm_load_ps(imag2.data() + readPointer);
 
 		auto real12 = _mm_mul_ps(realVector1, realVector2);
 		auto imag12 = _mm_mul_ps(imagVector1, imagVector2);
 		auto realResult = _mm_sub_ps(real12, imag12);
-
 
 		auto real1Imag2 = _mm_mul_ps(realVector1, imagVector2);
 		auto imag2Real1 = _mm_mul_ps(imagVector1, realVector2);
@@ -387,6 +411,5 @@ void AuxPort::Simd::Float128::complexMultiply(std::vector<float>& resultReal, st
 	}
 #else
 	AuxPort::Logger::Log("SIMD Instruction set not available");
-
 #endif
 }

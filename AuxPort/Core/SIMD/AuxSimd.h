@@ -46,6 +46,10 @@ namespace AuxPort
 			///////////////////////////////////////////////////////////////////////////////////////
 			virtual void complexMultiply(std::vector<std::complex<float>>& input, std::vector<std::complex<float>>& output,std::vector<float>& AuxReal, std::vector<float>& AuxImag) = 0;
 
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief Returns result after Complex Multiply using SIMD extensions of a std::complex input.[Overridable].
+			/// For example: result[i] will be equal to std::complex(ac + i(bd) , ad + i(bc)) 
+			///////////////////////////////////////////////////////////////////////////////////////
 			virtual void complexMultiply(std::vector<float>& resultReal, std::vector<float>& resultImag, const std::vector<float>& real1, const std::vector<float>& imag1, const std::vector<float>& real2, const std::vector<float>& imag2) = 0;
 
 
