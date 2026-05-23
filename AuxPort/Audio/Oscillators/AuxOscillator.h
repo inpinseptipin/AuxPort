@@ -500,6 +500,25 @@ namespace AuxPort
 				WhiteNoise2(const WhiteNoise2& whitenoise2) = default;
 				float process() override;
 			};
+
+			///////////////////////////////////////////////////////////////////////////////////////
+			/// @brief Pink Noise Implementation [Inspired by Trammel]
+			///////////////////////////////////////////////////////////////////////////////////////
+			class PinkNoise : public Oscillator, FastRandomFloat
+			{
+			public:
+				PinkNoise();
+				~PinkNoise() = default;
+				PinkNoise(const PinkNoise& pinkNoise) = default;
+				float process() override;
+			protected:
+				std::vector<float> b; 
+				std::vector<float> a;
+				std::vector<float> states;
+				float offset;
+				float randFloatMin;
+			};
+
 		}
 
 

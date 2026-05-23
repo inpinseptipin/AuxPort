@@ -685,5 +685,27 @@ void AuxPort::Audio::String::KPString::setFrequency(float frequency)
 	AuxPort::Utility::generateRandomValues<float>(seedBuffer);
 }
 
+AuxPort::Audio::Noise::PinkNoise::PinkNoise()
+{
+	b = { 0.2109238, 0.07113478, 0.68873558 };
+	a = { 0.3190,0.7756,0.9613 };
+	states.resize(3);
+	offset = a[0] + a[1] + a[2];
+	randFloatMin = 4.0 / float(RAND_MAX);
+}
 
-
+float AuxPort::Audio::Noise::PinkNoise::process()
+{
+	if (isPlaying())
+	{
+		auto temp = rand();
+		states[0] = a[0] * (states[0] - temp) + temp;
+		temp = rand();
+		states[1] = a[1] * (states[1] - temp) + temp;
+		temp = rand();
+		states[2] = a[2] * (states[2] - temp) + temp;
+		return (b[0] * states[0] + b[1] * states[1] + b[2] * states[2]) * randFloatMin - offset;
+	}
+	return 0.0f;
+	
+}
