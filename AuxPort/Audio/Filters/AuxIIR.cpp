@@ -447,6 +447,8 @@ void AuxPort::Audio::IIR::General::prepareToPlay(const std::vector<float>& param
         coefficients[index::c0] = mu - 1.0f;
         coefficients[index::d0] = 1.0f;
     }
+    AuxPort::Utility::divide(coefficients, coefficients[0]);
+
 }
 
 float AuxPort::Audio::IIR::General::process(const float sample)
@@ -612,6 +614,8 @@ void AuxPort::Audio::IIR::Butterworth::prepareToPlay(const std::vector<float>& p
         coefficients[index::b1] = -coefficients[index::a0] * (c * d);
         coefficients[index::b2] = coefficients[index::a0] * (c - 1.0f);
     }
+
+    AuxPort::Utility::divide(coefficients, coefficients[0]);
 }
 
 void AuxPort::Audio::IIR::Butterworth::process(float* buffer, uint32_t numberOfSamples)
@@ -686,7 +690,8 @@ void AuxPort::Audio::IIR::LinkwitzRiley::prepareToPlay(const std::vector<float>&
         coefficients[index::b1] = ((-2 * k * k) + (2 * omega_c * omega_c)) / delta;
         coefficients[index::b2] = ((k * k) + (omega_c * omega_c) - (2 * k * omega_c)) / delta;
     }
-    
+    AuxPort::Utility::divide(coefficients, coefficients[0]);
+
 }
 
 float AuxPort::Audio::IIR::LinkwitzRiley::process(float sample)

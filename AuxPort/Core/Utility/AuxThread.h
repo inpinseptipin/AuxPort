@@ -36,10 +36,10 @@ namespace AuxPort
 		~ParallelThread();
 		ParallelThread(const ParallelThread& parallelThread) = default;
 		/**
-		  @brief Joins the thread with the main application thread and terminates it 
+		  @brief Joins the thread with the main application thread and terminates it
 		  \code{.cpp}
-		  
-		  \endcode 
+
+		  \endcode
 		 */
 		void quit();
 		/**
@@ -55,25 +55,25 @@ namespace AuxPort
 		~TimerWithCallback();
 		TimerWithCallback(const TimerWithCallback& timerWithCallback) = default;
 		/**
-		  @brief Sets the timer in milliseconds 
+		  @brief Sets the timer in milliseconds
 		  @param millisecond
 		  \code{.cpp}
-		  
-		  \endcode 
+
+		  \endcode
 		 */
 		void startTimer(uint32_t millisecond);
 		/**
-		  @brief Stops the Timer 
+		  @brief Stops the Timer
 		  \code{.cpp}
-		  
-		  \endcode 
+
+		  \endcode
 		 */
 		void stopTimer();
 		/**
-		  @brief Redefine this callback with the work to be done. 
+		  @brief Redefine this callback with the work to be done.
 		  \code{.cpp}
-		  
-		  \endcode 
+
+		  \endcode
 		 */
 		virtual void timerCallback() = 0;
 	protected:
@@ -87,11 +87,11 @@ namespace AuxPort
 		ProcessQueue();
 		~ProcessQueue() = default;
 		/**
-		  @brief Use this function to add a process command to the queue for execution 
+		  @brief Use this function to add a process command to the queue for execution
 		  @param processQueue
 		  \code{.cpp}
-		  
-		  \endcode 
+
+		  \endcode
 		 */
 		void addProcess(const std::string& processQueue);
 	protected:
@@ -103,7 +103,5 @@ namespace AuxPort
 		bool workDispatched;
 #endif
 	};
-
-}
-
 #endif
+}

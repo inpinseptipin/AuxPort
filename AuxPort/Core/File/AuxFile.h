@@ -47,7 +47,10 @@
 #include <unordered_map>
 #include <memory>
 #include <iomanip>
+
+#if AUXPORT_CXX_VER >= 20
 #include <format>
+#endif
 
 #ifdef WIN32
 #include <direct.h>

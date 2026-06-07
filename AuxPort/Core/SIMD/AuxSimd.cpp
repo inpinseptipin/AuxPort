@@ -161,7 +161,7 @@ void AuxPort::Simd::Float256::complexMultiply(std::vector<std::complex<float>>& 
 void AuxPort::Simd::Float256::complexMultiply(std::vector<float>& resultReal, std::vector<float>& resultImag, const std::vector<float>& real1, const std::vector<float>& imag1, const std::vector<float>& real2, const std::vector<float>& imag2)
 {
 #if AUXSIMD && AUX64SIMD
-	AuxAssert(AuxPort::Env::supportsSSE(), "The current processor does not support SSE and hence 128-bit SIMD instructions cannot be performed.");
+	AuxAssert(AuxPort::Env::supportsSSE(), "The current processor does not support SSE and hence 256-bit SIMD instructions cannot be performed.");
 	AuxAssert(resultReal.size() == resultImag.size() && real1.size() == real2.size() && imag1.size() == imag2.size(), "The sizes of the Input Vectors and the Result Vector have to be the same");
 	AuxAssert(resultReal.size() % 8 == 0, "Vectors should be sizes of 8");
 	auto numberOfIterations = resultReal.size() / 8;
@@ -360,9 +360,6 @@ void AuxPort::Simd::Float128::complexMultiply(std::vector<std::complex<float>>& 
 		auto real1Imag2 = _mm_mul_ps(realVector1, imagVector2);
 		auto imag2Real1 = _mm_mul_ps(imagVector1, realVector2);
 		auto imagResult = _mm_add_ps(real1Imag2, imag2Real1);
-
-
-
 
 		_mm_storeu_ps(AuxReal.data() + readIndex, realResult);
 		_mm_storeu_ps(AuxImag.data() + readIndex, imagResult);
