@@ -41,9 +41,6 @@
 #include "../Log/AuxLog.h"
 #include "../Env/AuxEnv.h"
 
-namespace AuxPort {
-	class Utility;
-}
 
 namespace AuxPort
 {

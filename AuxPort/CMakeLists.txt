@@ -73,6 +73,11 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Templates/AuxEffect.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Distortion/AuxDistortion.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Distortion/AuxDistortion.cpp
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxPan.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxPan.cpp
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxMixer.h
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxMixer.cpp
+    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Delay/AuxDelay.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Windows/AuxWindow.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/FFT/AuxFFT.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/FFT/AuxFFT.cpp
@@ -80,10 +85,6 @@ add_library(
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Filters/AuxFIR.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Filters/AuxIIR.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Filters/AuxIIR.cpp
-    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxPan.h
-    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxPan.cpp
-    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxMixer.h
-    ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Effects/Gain/AuxMixer.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Oscillators/AuxOscillator.h
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Oscillators/AuxOscillator.cpp
     ${PROJECT_SOURCE_DIR}/AuxPort/Audio/Stimulus/AuxStimulus.h

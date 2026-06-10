@@ -47,10 +47,19 @@ namespace AuxPort
 		/**
 			Static Delay Implementation
 		*/
-		class Delay : public AuxPort::CircularBufferEngine
+		template<class circData>
+		class Delay : public AuxPort::CircularBufferEngine<circData>
 		{
 		public:
-			Delay();
+			Delay() : AuxPort::CircularBufferEngine<circData>()
+			{
+				delayTime = 0.0f;
+				delayTimeInSamples = 0;
+				sampleRate = 44100;
+				writeDelayIndex = 0;
+				readDelayIndex = 0;
+				maxDelayTime = 0;
+			}
 			~Delay() = default;
 			Delay(const Delay& delay) = default;
 			/**
@@ -58,23 +67,53 @@ namespace AuxPort
 			  @param sampleRate
 			  @param maxDelayTime
 			 */
-			void setMaxDelayTime(size_t sampleRate, float maxDelayTime);
+			void setMaxDelayTime(size_t sampleRate, float maxDelayTime)
+			{
+				AuxAssert(maxDelayTime > 0, "Max Delay cannot be less than 0");
+				this->maxDelayTime = maxDelayTime;
+				this->sampleRate = sampleRate;
+				delayBuffer.resize(static_cast<size_t>(sampleRate * maxDelayTime));
+			}
 			/**
 			  @brief Set the delay time
 			  @param delayTime
 			 */
-			void setDelay(float delayTime);
+			void setDelay(float delayTime)
+			{
+				AuxAssert(delayTime < maxDelayTime, "Delay time cannot be greater than max delay time");
+				if (this->delayTime != delayTime)
+				{
+					this->delayTime = delayTime;
+					this->delayTimeInSamples = static_cast<size_t>(delayTime * sampleRate);
+					std::fill(delayBuffer.begin(), delayBuffer.end(), 0.0f);
+					writeDelayIndex = 0;
+					readDelayIndex = 0;
+				}
+			}
 			/**
 			  @brief Gets the delayed sample and automatically updates the next delayed sample
 			  @return
 			 */
-			float pop() override;
+			circData* pop() override
+			{
+				AuxAssert(buffer != nullptr, "Buffer cannot be a nullptr");
+				delayBuffer[writeDelayIndex++] = buffer[writeIndex++];
+				writeIndex %= bufferSize;
+				writeDelayIndex %= delayBuffer.size();
+				readDelayIndex = writeDelayIndex - static_cast<int>(delayTimeInSamples);
+				readDelayIndex = readDelayIndex < 0 ? readDelayIndex + static_cast<int>(delayBuffer.size()) : readDelayIndex;
+				poppedSample = delayBuffer[readDelayIndex];
+				return &poppedSample;
+			}
 		protected:
 			/**
 			  @brief Push the sample into the delay buffer
 			  @param sample
 			 */
-			void push(float sample) override;
+			void push(circData sample) override
+			{
+				return;
+			}
 			float maxDelayTime;
 			size_t sampleRate;
 			std::vector<float> delayBuffer;
